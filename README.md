@@ -1,4 +1,3 @@
-kitycharts
-==========
+Kity Charts
+===========
 
-kitycharts
