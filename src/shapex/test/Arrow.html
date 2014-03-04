@@ -59,10 +59,10 @@
             <p>
                 <label>t: </label>
                 <select name="t">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option value="0">0 (straight)</option>
+                    <option value="1">1 (horizon)</option>
+                    <option value="2">2 (parrale with bug)</option>
+                    <option value="3">3 (vertical)</option>
                     <option value="custom">custom</option>
                 </select>
             </p>
@@ -77,6 +77,10 @@
                 <label>t.y: </label>
                 <input name="ty" type="range" min="-100" max="100" value="0" />
                 <span>0</span>
+            </p>
+            <p>
+                <label></label>
+                <button type="reset">reset</button>
             </p>
         </form>
     </body>
@@ -108,9 +112,20 @@
             if(e && e.target.nextElementSibling) {
                 e.target.nextElementSibling.innerText = e.target.value;
             }
+            if(e && e.type == 'reset') {
+                var span = document.querySelectorAll('span');
+                Array.prototype.forEach.call( span, function(s) {
+                    s.innerText = s.previousElementSibling.value;
+                });
+            }
         }
         redraw();
         document.param.onchange = redraw;
         document.param.oninput = redraw;
+        document.param.onreset = function(e) {
+            setTimeout(function() {
+                redraw(e);
+            }, 1);
+        }
     </script>
 </html>
