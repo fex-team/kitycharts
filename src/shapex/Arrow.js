@@ -1,32 +1,23 @@
-Array.prototype.flatten = function () {
-    var result = [],
-        length = this.length;
-    for ( var i = 0; i < length; i++ ) {
-        if ( this[ i ] instanceof Array ) {
-            result = result.concat( this[ i ].flatten() );
-        } else {
-            result.push( this[ i ] );
-        }
-    }
-    return result;
-};
 
-var Arrow = kity.Arrow = kity.createShape( 'Arrow', {
+
+var Arrow = kity.Arrow = kity.createClass( 'Arrow', {
     base: kity.Path,
     constructor: function ( opt ) {
+        this.callBase();
         this.option = kity.Utils.extend( {
             w: 100,
-            h: 12,
-            a: 30,
+            h: 20,
+            a: 40,
             b: 20,
             c: 20,
-            d: 5,
-            t: 2
+            d: 20,
+            t: 0
         }, opt );
+        this.draw();
     },
     draw: function ( opt ) {
         opt = this.option = kity.Utils.extend( this.option, opt );
-        
+
         var w = opt.w,
             h = opt.h,
             hh = h / 2,
@@ -50,6 +41,7 @@ var Arrow = kity.Arrow = kity.createShape( 'Arrow', {
             p3 = [ w + a - b - b * hh / c, -hh - c ];
             break;
         case 2:
+            // have bug with that
             var x = w - b - 0.5 * c * ( b * h + a * c ) / ( b * b + c * c );
             var y = c * ( x - w - a ) / b;
             p3 = [ x, y ];
@@ -57,8 +49,12 @@ var Arrow = kity.Arrow = kity.createShape( 'Arrow', {
         case 3:
             p3 = [ w - b, -c * ( a + b ) / b ];
             break;
+        default:
+            if ( t instanceof Array ) {
+                p3 = [ p2[ 0 ] + t[ 0 ], p2[ 1 ] + t[ 1 ] ];
+            }
         }
-
+        // x 轴镜像
         function m( p ) {
             return [ p[ 0 ], -p[ 1 ] ];
         }
@@ -78,7 +74,7 @@ var Arrow = kity.Arrow = kity.createShape( 'Arrow', {
         path.push( [ 'L', pp0 ] );
         path.push( [ 'L', p5 ] );
         path.push( [ 'L', p0 ] );
-        path.push( 'C' );
-        this.setPathData( path.flatten().join( ' ' ) );
+        path.push( 'z' );
+        this.setPathData( path );
     }
 } );

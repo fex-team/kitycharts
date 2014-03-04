@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Regular Polygon Shape Test</title>
+        <script src="../../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../Star.js"></script>
+        <style>
+            label {
+                display: inline-block;
+                width: 15%;
+                min-width: 150px;
+                padding-right: 10px;
+                text-align: right;
+            }
+            input {
+                width: 60%;
+            }
+        </style>
+    </head>
+    <body>
+        <form name="param" style="">
+            <p>
+                <label>vertex: </label>
+                <input name="vertex" type="range" min="3" max="20" value="5" />
+                <span></span>
+            </p>
+
+            <p>
+                <label>outerRadius:</label>
+                <input name="outerRadius" type="range" min="10" max="200" value="100" />
+                <span></span>
+            </p>
+
+            <p>
+                <label>innerRadius: </label>
+                <input name="innerRadius" type="range" min="10" max="200" value="50" />
+                <span></span>
+            </p>
+
+            <p>
+                <label>offset.x: </label>
+                <input name="offsetX" type="range" min="-100" max="100" value="0" />
+                <span></span>
+            </p>
+
+            <p>
+                <label>offset.y: </label>
+                <input name="offsetY" type="range" min="-100" max="100" value="0" />
+                <span></span>
+            </p>
+
+            <p>
+                <label>angleOffset</label>
+                <input name="angleOffset" type="range" min="0" max="360" value="0" />
+                <span></span>
+            </p>
+        </form>
+    </body>
+    <script>
+        var paper = new kity.Paper(document.body);
+        var star = new kity.Star(6, 100, 10).translate(200, 200).fill('red');
+        paper.setWidth( 400 ).setHeight(400);
+        paper.addShape( star );
+
+        function redraw (e) {
+            var p = document.param;
+            star.vertex = p.vertex.value | 0;
+            star.outerRadius = p.outerRadius.value | 0;
+            star.innerRadius = p.innerRadius.value | 0;
+            star.innerOffset = {
+                x: p.offsetX.value | 0,
+                y: p.offsetY.value | 0
+            };
+            star.angleOffset = p.angleOffset.value | 0;
+            star.draw();
+            if(e) {
+                e.target.nextElementSibling.innerText = e.target.value;
+            }
+        }
+        redraw();
+        document.param.onchange = redraw;
+        document.param.oninput = redraw;
+    </script>
+</html>
