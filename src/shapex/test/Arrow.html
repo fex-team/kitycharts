@@ -5,13 +5,112 @@
         <title>Arrow Shape Test</title>
         <script src="../../../kity/dist/kitygraph.all.min.js"></script>
         <script src="../Arrow.js"></script>
+        <style>
+            label {
+                display: inline-block;
+                width: 15%;
+                min-width: 150px;
+                padding-right: 10px;
+                text-align: right;
+            }
+            input {
+                width: 60%;
+            }
+        </style>
     </head>
     <body>
-        
+        <form name="param" style="">
+            <p>
+                <label>w:</label>
+                <input name="w" type="range" min="-100" max="400" value="100" />
+                <span>100</span>
+            </p>
+
+            <p>
+                <label>h:</label>
+                <input name="h" type="range" min="1" max="400" value="20" />
+                <span>20</span>
+            </p>
+
+            <p>
+                <label>a: </label>
+                <input name="a" type="range" min="-100" max="200" value="40" />
+                <span>40</span>
+            </p>
+
+            <p>
+                <label>b: </label>
+                <input name="b" type="range" min="-100" max="100" value="20" />
+                <span>20</span>
+            </p>
+
+            <p>
+                <label>c: </label>
+                <input name="c" type="range" min="-100" max="100" value="20" />
+                <span>20</span>
+            </p>
+
+            <p>
+                <label>d: </label>
+                <input name="d" type="range" min="-100" max="100" value="20" />
+                <span>20</span>
+            </p>
+
+            <p>
+                <label>t: </label>
+                <select name="t">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="custom">custom</option>
+                </select>
+            </p>
+
+            <p>
+                <label>t.x: </label>
+                <input name="tx" type="range" min="-100" max="100" value="0" />
+                <span>0</span>
+            </p>
+
+            <p>
+                <label>t.y: </label>
+                <input name="ty" type="range" min="-100" max="100" value="0" />
+                <span>0</span>
+            </p>
+        </form>
     </body>
     <script>
         var paper = new kity.Paper(document.body);
-        var arrow = new kity.Arrow().translate(100, 100).fill('red');
+
+        var arrow = new kity.Arrow().translate(150, 200).fill('red');
         paper.addShape(arrow);
+        paper.setWidth(600).setHeight(400);
+
+        var custom_t = document.getElementById('custom_t');
+        function redraw (e) {
+            var p = document.param;
+            var opt = {
+                w: p.w.value | 0,
+                h: p.h.value | 0,
+                a: p.a.value | 0,
+                b: p.b.value | 0,
+                c: p.c.value | 0,
+                d: p.d.value | 0
+            };
+            if(p.t.value == 'custom') {
+                opt.t = [(p.tx.value | 0), (p.ty.value | 0)];
+            } else {
+                opt.t = p.t.value | 0;
+            }
+            p.tx.disabled = p.ty.disabled = p.t.value != 'custom';
+            arrow.draw(opt);
+            if(e && e.target.nextElementSibling) {
+                e.target.nextElementSibling.innerText = e.target.value;
+            }
+        }
+        redraw();
+        document.param.onchange = redraw;
+        document.param.oninput = redraw;
     </script>
 </html>
