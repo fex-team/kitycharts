@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bar test</title>
+        <script src="../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../build.js"></script>
+    </head>
+    <body>
+        <form name="params">
+            <input type="range" name="height" min-value="0" max-value="200" value="0" />
+        </form>
+    </body>
+    <script>
+    var MyChart = kity.createClass("MyChart", {
+        base: kc.Chart,
+        constructor: function () {
+            this.callBase();
+            this.addElement('bar', this.bar = new kc.Bar());
+            this.bar.setPosition(100, 100);
+            this.bar.flipY();
+        },
+        update: function(height) {
+            this.bar.animate({
+                height: height
+            });
+        }
+    });
+    var paper = new kity.Paper(document.body);
+    var chart = new MyChart();
+    chart.renderTo(paper);
+    document.params.height.onchange = function() {
+        chart.update(this.value | 0);
+    }
+    </script>
+</html>

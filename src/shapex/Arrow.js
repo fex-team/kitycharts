@@ -1,4 +1,6 @@
-
+/**
+ * @build
+ */
 
 var Arrow = kity.Arrow = kity.createClass( 'Arrow', {
     base: kity.Path,

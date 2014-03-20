@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Pie Shape Test</title>
+        <script src="../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../build.js"></script>
+        <style>
+            label {
+                display: inline-block;
+                width: 15%;
+                min-width: 150px;
+                padding-right: 10px;
+                text-align: right;
+            }
+            input {
+                width: 60%;
+            }
+        </style>
+    </head>
+    <body>
+        <form name="param" style="">
+            <p>
+                <label>outerRadius:</label>
+                <input name="outerRadius" type="range" min="-100" max="400" value="100" />
+                <span>100</span>
+            </p>
+
+            <p>
+                <label>pieAngle: </label>
+                <input name="pieAngle" type="range" min="-360" max="360" value="90" />
+                <span>90</span>
+            </p>
+
+            <p>
+                <label>startAngle:</label>
+                <input name="startAngle" type="range" min="-360" max="360" value="0" />
+                <span>0</span>
+            </p>
+
+            <p>
+                <label>innerRadius: </label>
+                <input name="innerRadius" type="range" min="-100" max="100" value="50" />
+                <span>50</span>
+            </p>
+        </form>
+    </body>
+    <script>
+        var paper = new kity.Paper(document.body);
+
+        var pie = new kity.Pie().translate(10, 10).fill('red');
+        paper.addShape(pie);
+        paper.setWidth(600).setHeight(400);
+
+        var custom_t = document.getElementById('custom_t');
+        function redraw (e) {
+            var p = document.param;
+            pie.innerRadius = p.innerRadius.value | 0;
+            pie.outerRadius = p.outerRadius.value | 0;
+            pie.startAngle = p.startAngle.value | 0;
+            pie.pieAngle = p.pieAngle.value | 0;
+
+            pie.draw();
+            if(e && e.target.nextElementSibling) {
+                e.target.nextElementSibling.innerText = e.target.value;
+            }
+        }
+        redraw();
+        document.param.onchange = redraw;
+        document.param.oninput = redraw;
+    </script>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+body{
+  color:#444;
+  font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman',
+              "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
+  font-size:12px;
+  line-height:1.5em;
+  background:#fefefe;
+  width: 45em;
+  margin: 10px auto;
+  padding: 1em;
+  outline: 1300px solid #FAFAFA;
+}
+
+a{ color: #0645ad; text-decoration:none;}
+a:visited{ color: #0b0080; }
+a:hover{ color: #06e; }
+a:active{ color:#faa700; }
+a:focus{ outline: thin dotted; }
+a:hover, a:active{ outline: 0; }
+
+span.backtick {
+  border:1px solid #EAEAEA;
+  border-radius:3px;
+  background:#F8F8F8;
+  padding:0 3px 0 3px;
+}
+
+::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
+::selection{background:rgba(255,255,0,0.3);color:#000}
+
+a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
+a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
+
+p{
+margin:1em 0;
+}
+
+img{
+max-width:100%;
+}
+
+h1,h2,h3,h4,h5,h6{
+font-weight:normal;
+color:#111;
+line-height:1em;
+}
+h4,h5,h6{ font-weight: bold; }
+h1{ font-size:2.5em; }
+h2{ font-size:2em; border-bottom:1px solid silver; padding-bottom: 5px; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+blockquote{
+color:#666666;
+margin:0;
+padding-left: 3em;
+border-left: 0.5em #EEE solid;
+}
+hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
+
+
+pre , code, kbd, samp { 
+  color: #000; 
+  font-family: monospace; 
+  font-size: 0.88em; 
+  border-radius:3px;
+  background-color: #F8F8F8;
+  border: 1px solid #CCC; 
+}
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px 12px;}
+pre code { border: 0px !important; padding: 0;}
+code { padding: 0 3px 0 3px; }
+
+b, strong { font-weight: bold; }
+
+dfn { font-style: italic; }
+
+ins { background: #ff9; color: #000; text-decoration: none; }
+
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
+li p:last-child { margin:0 }
+dd { margin: 0 0 0 2em; }
+
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+
+@media only screen and (min-width: 480px) {
+body{font-size:14px;}
+}
+
+@media only screen and (min-width: 768px) {
+body{font-size:16px;}
+}
+
+@media print {
+  * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
+  body{font-size:12pt; max-width:100%; outline:none;}
+  a, a:visited { text-decoration: underline; }
+  hr { height: 1px; border:0; border-bottom:1px solid black; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+  pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page :left { margin: 15mm 20mm 15mm 10mm; }
+  @page :right { margin: 15mm 10mm 15mm 20mm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+}
+</style><title>架构介绍</title></head><body><h1 id="kitycharts">KityCharts 介绍</h1>
+<h2 id="_1">定位</h2>
+<p>KityCharts 提供构建数据可视化产品的机制和工具，不提供具体数据可视化的产品。源码里的 charts 目录是一些示例和参考。</p>
+<h2 id="_2">基本思路</h2>
+<p>KityCharts 主要包括三个部分的内容：组件（Component）、工具（Utility）、数据（Data）</p>
+<p>要使用 KityCharts 构建一个数据可视化的图表，需要关心：</p>
+<ol>
+<li>我的数据都是什么格式</li>
+<li>我需要用什么组件来呈现我的数据</li>
+<li>我如何把我的数据变成组件需要的参数</li>
+</ol>
+<p>一个数据可视化产品的更新流程是这样的：</p>
+<ol>
+<li>数据发生变化（<code>Data.update()</code>)</li>
+<li>Chart 的 update 方法被触发（<code>Chart.update()</code>）
+    2.1 获取最新的数据
+    2.2 格式化数据
+    2.3 利用数据更新包含的组件</li>
+</ol>
+<h2 id="_3">数据格式化</h2>
+<p>对于很多时候，前后端的数据格式可能不是一致的。需要明确概念：后端返回的数据叫做<code>原始数据</code>，而直接驱动数据可视化产品的数据叫做<code>标准数据</code>。</p>
+<p>从<code>原始数据</code>到<code>标准数据</code>的转换过程称为<code>数据格式化</code>。从原始数据到标准数据的转换，可能会涉及到数据的拆分、聚合、分组等操作。</p>
+<p>建议每个数据可视化产品都定义一种标准数据，因为这样以后想要适应不同的原始数据的时候，只需要重新定义数据格式化的过程即可。</p>
+<p>数据格式化通过继承 Data 类实现，只需要复写 format 方法即可。</p>
+<h2 id="_4">更新组件</h2>
+<p>对于每一个组件，都有其参数，比如高度、颜色、角度、文本等。图表应该把标准数据分发映射到组件的参数里，然后调用其 update 方法。KityCharts 内置了一些简单的组件，比如 Label、Tooltip、Categories、Line、Mesh 等。</p>
+<p>提供的组件不一定能满足所有数据可视化产品的需求，很多时候需要拓展原有组件或者开发新的组件。KityCharts 组件有一套约定的更新机制，开发组件应该遵循这套机制。</p>
+<ol>
+<li>确定组件的参数，组件的外观全部由这套参数来控制，比如 color、height、size 等。</li>
+<li>确定更新规则，更新规则通过实现 registerUpdateRules 方法来实现，并且注意和父类的规则合并：</li>
+</ol>
+<pre><code class="js">registerUpdateRules: function() {
+    return kity.Utils.extend(this.callBase(), {
+        updateSize: [ 'size' ],
+        updateStyle: [ 'color', 'font' ]
+    });
+},
+
+updateSize: function( size ) {
+
+},
+
+updateFont: function( color, font ) {
+
+}
+</code></pre>
+
+<ol>
+<li>
+<p>调用组件的 <code>update( param )</code> 方法时，会是以下的过程：</p>
+<p>3.1 param 参数作为更新参数列表，如果为空，以当前组件参数（this.param）为更新参数列表</p>
+<p>3.2 如果是首次更新，会把现有的参数加到更新参数列表中，并且获取更新规则（调用 registerUpdateRules()）</p>
+<p>3.3 对于每一条更新规则，使用规则去更新参数：</p>
+<pre><code>3.3.1 规则中的参数有至少一个被包含在如果更新参数列表中，继续下一步，否则结束更新
+
+3.3.2 使用规则中的方法名，得到更新方法，并且把参数列表中的参数按规则指定的顺序传到更新方法中更新。如果更新参数列表中缺少规则中需要的参数，则从给出组件当前参数对应的值
+</code></pre>
+<p>3.4 对于更新参数中未匹配更新规则的参数，会去查找组件中是否有键值和参数名称同名的子组件，如果有，用该参数更新子组件</p>
+</li>
+</ol>
+<p>这套更新机制解决了以下问题：</p>
+<ul>
+<li>强制拆分组件的更新方法，比较好维护</li>
+<li>让组件可以局部更新，而且不需要关心什么时候更新哪个局部</li>
+<li>自动判断是否无效更新，如果参数没有变，不调用更新方法</li>
+</ul></body></html>

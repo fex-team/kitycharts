@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Scatter Chart test</title>
+        <script src="../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../build.js"></script>
+        <style>
+            #chart {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+    <script>
+        var paper, chart;
+
+        chart = new kc.ScatterChart('chart');
+        chart.getData().update({"success":true,"message":"...","data_dim":4,"data_average_x":0.42,"data_average_y":0.50,"unit_x":"%","unit_y":"%","data_record":[{"x":0.45,"y":0.65,"label":"Baidu","value":500,"percent":0.3},{"x":0.20,"y":0.30,"label":"Google","value":20,"percent":0.4},{"x":0.34,"y":0.77,"label":"Microsoft","value":800,"percent":0.1},{"x":0.80,"y":0.76,"label":"360","value":250,"percent":0.1},{"x":0.12,"y":0.40,"label":"Taobao","value":300,"percent":0.9}]});
+
+        window.onresize = function () {
+            chart.update();
+        }
+    </script>
+</html>

@@ -1,3 +1,7 @@
+/**
+ * @build
+ */
+
 var RegularPolygon = kity.RegularPolygon = kity.createClass( 'RegularPolygon', ( function () {
     function p2o( length, angle ) {
         return [ length * Math.cos( angle ), -length * Math.sin( angle ) ];

@@ -1,28 +1,32 @@
 var Chart = kc.Chart = kity.createClass( 'Chart', {
-    base: kc.ChartElement,
-    constructor: function ( data, elements ) {
-        this.data = data || new kc.Data();
-        this.elements = elements || [];
+    base: kc.AnimatedChartElement,
+    constructor: function ( target, param ) { //传入render目标
+        this.callBase( param );
+        this.setData( {} );
+
+        this.paper = new kity.Paper( target );
+        this.paper.addShape( this.canvas );
     },
-    addElement: function ( chartElement ) {
-        this.elements.push( chartElement );
-        this.canvas.addShape( chartElement.canvas );
+    getWidth: function () {
+        return this.paper.getContainer().clientWidth;
     },
-    removeElement: function ( chartElement ) {
-        var index = this.elements.indexOf( chartElement );
-        if ( ~index ) {
-            this.elements.splice( index, 1 );
-            this.canvas.removeShape( chartElement.canvas );
+    getHeight: function () {
+        return this.paper.getContainer().clientHeight;
+    },
+    setData: function ( data ) {
+        if ( this._dataBind ) {
+            this.data.off( 'update', this._dataBind );
         }
+        this.data = data instanceof kc.Data ? data : new kc.Data( data );
+        this.data.on( 'update', this._dataBind = ( function () {
+            this.update();
+        } ).bind( this ) );
     },
-    getData: function() {
+    getData: function () {
         return this.data;
     },
-    setData: function(data) {
-        this.data = data;
-    },
-    /* abstract class */
-    update: function() {
-        // 子类应该重载该方法，根据数据渲染图表
+    update: function ( param ) {
+        var data = this.data.format();
+        this.callBase( param, data );
     }
 } );

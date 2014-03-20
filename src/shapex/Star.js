@@ -1,3 +1,7 @@
+/**
+ * @build
+ */
+
 var Star = kity.Star = kity.createClass( 'Star', ( function () {
     function p2o( length, angle ) {
         return [ length * Math.cos( angle ), -length * Math.sin( angle ) ];

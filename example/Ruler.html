@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bar test</title>
+        <script src="../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../build.js"></script>
+    </head>
+    <body>
+        <form name="params">
+            <input type="range" name="height" min-value="0" max-value="200" value="0" />
+        </form>
+    </body>
+    <script>
+    var paper = new kity.Paper(document.body);
+    var ruler = new kc.Ruler(0, 100);
+    ruler.map(0, 800);
+    console.log(ruler.gridByCount(30, 5));
+    console.table(ruler.gridByCount(30, 6));
+    </script>
+</html>
