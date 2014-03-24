@@ -84,6 +84,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     registerUpdateRules: function () {
         return {
             'setPosition': [ 'x', 'y' ],
+            'setOpacity': [ 'opacity' ],
             'setVisible': [ 'visible' ]
         };
     },
@@ -176,5 +177,9 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
 
     setParam: function ( k, v ) {
         this.param[ k ] = v;
+    },
+
+    setOpacity: function( opacity ) {
+        this.canvas.setOpacity( opacity );
     }
 } );
