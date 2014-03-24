@@ -14,14 +14,15 @@
     <script>
     var MyChart = kity.createClass("MyChart", {
         base: kc.Chart,
-        constructor: function () {
-            this.callBase();
+        constructor: function ( target ) {
+            this.callBase( target );
             this.bars = [];
             for(var i = 0; i < 12; i++) {
-                var bar = new kc.Bar({
-                    offset: 20 * i
+                var bar = new kc.Bar();
+                bar.update({
+                    x: 20 * i
                 });
-                this.addElement(bar);
+                this.addElement('bar' + i, bar);
                 bar.tooltip({
                     content: function(bar) {
                         return bar.param.height;
@@ -44,9 +45,7 @@
         }
     });
 
-    var paper = new kity.Paper(document.body);
-    var chart = new MyChart();
-    chart.renderTo(paper);
+    var chart = new MyChart(document.body);
     chart.setPosition(100, 300);
     document.params.height.onchange = function() {
         chart.update(this.value | 0);

@@ -58,23 +58,6 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 		this.canvas.addShapes( [ this.bPie, this.fPie ] );
 		this.addElement( 'label', new kc.Label() );
 		this.addElement( 'plabel', new kc.Label() );
-
-		this.on( 'mouseover', function () {
-			if ( this.param.collapsed === 1 ) {
-				this.animate( {
-					collapsed: 0
-				} );
-				this.restoreCollapsed = 1;
-			}
-		} );
-		this.on( 'mouseout', function () {
-			if ( this.param.collapsed === 0 && this.restoreCollapsed !== undefined ) {
-				this.animate({
-					collapsed: 1
-				});
-				delete this.restoreCollapsed;
-			}
-		} );
 	},
 
 	registerUpdateRules: function () {

@@ -47,7 +47,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
                     element.animate( list[ index ] );
                 }, delay ) );
 
-                delay += 20 + Math.random() * 100;
+                delay += 10 + Math.random() * 20;
 
             } else {
 

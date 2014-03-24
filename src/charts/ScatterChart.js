@@ -70,7 +70,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         this.marquee = new kc.Marquee( this );
         this.setData( new kc.ScatterData() );
 
-        //this.initMarqueeZoom();
+        this.initMarqueeZoom();
     },
 
     initMarqueeZoom: function () {
@@ -124,8 +124,8 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             if ( getPointInRange( data, rulerX, rulerY, left, right, top, bottom ) < 2 ) return;
 
             var range = {
-                rangeX: [ rulerX.measure( left - oxy.x ), rulerX.measure( right - oxy.x ) ],
-                rangeY: [ rulerY.measure( bottom - oxy.y ), rulerY.measure( top - oxy.y ) ]
+                rangeX: [ rulerX.measure( left ), rulerX.measure( right ) ],
+                rangeY: [ rulerY.measure( bottom ), rulerY.measure( top ) ]
             };
 
             zoomStack.push( range );
@@ -133,12 +133,14 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             updateRange( oxy, range, param, data );
         } );
 
-        this.on( 'dblclick', function () {
-            var oxy = this.getElement( 'oxy' ),
-                param = this.param,
-                data = this.data.format(),
-                range = zoomStack[ zoomStack.length - 1 ];
-            updateRange( oxy, range, param, data );
+        this.paper.on( 'dblclick', function () {
+            var oxy = me.getElement( 'oxy' ),
+                param = me.param,
+                data = me.data.format(),
+                range = zoomStack[ zoomStack.length - 2 ];
+            if ( range ) {
+                updateRange( oxy, range, param, data );
+            }
             if ( zoomStack.length > 1 ) zoomStack.pop();
         } );
     },
@@ -332,7 +334,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 if ( list[ i ].collapsed ) continue;
                 for ( j = i + 1; j < list.length; j++ ) {
                     if ( list[ j ].collapsed ) continue;
-                    if ( isOverlap( list[ i ], list[ j ], 20 ) ) {
+                    if ( isOverlap( list[ i ], list[ j ], 30 ) ) {
                         list[ j ].collapsed = 1;
                     }
                 }

@@ -13,7 +13,7 @@ var Marquee = kc.Marquee = kity.createClass( "Marquee", {
     bind: function ( paper ) {
         var rect = new kity.Rect().setRadius( 2 ).fill( 'rgba(240,240,255, 0.3)' ).stroke( '#aaf' );
         var startPosition = null,
-            currentPosition, delta;
+            currentPosition, delta, activated = false;
         var me = this;
 
         function start( e ) {
@@ -27,21 +27,24 @@ var Marquee = kc.Marquee = kity.createClass( "Marquee", {
             currentPosition = e.getPosition();
             delta = kity.Vector.fromPoints( startPosition, currentPosition );
             if ( delta.length() > 10 ) {
+                activated = true;
                 paper.addShape( rect );
                 rect.setSize( delta.x | 0, delta.y | 0 );
             }
         }
 
         function end( e ) {
-            if ( !startPosition ) return;
-            me.trigger( 'marquee', {
-                start: startPosition,
-                end: currentPosition,
-                size: {
-                    width: delta.x,
-                    height: delta.y
-                }
-            } );
+            if ( activated ) {
+                me.trigger( 'marquee', {
+                    start: startPosition,
+                    end: currentPosition,
+                    size: {
+                        width: delta.x,
+                        height: delta.y
+                    }
+                } );
+            }
+            activated = false;
             startPosition = null;
             paper.removeShape( rect );
             paper.off( 'mousemove', move );

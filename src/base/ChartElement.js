@@ -56,7 +56,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     },
 
     setPosition: function ( x, y ) {
-        if ( y === undefined ) {
+        if ( ( typeof ( x ) == 'object' ) && ( 'x' in x ) && ( 'y' in x ) ) {
             y = x.y || 0;
             x = x.x || 0;
         }

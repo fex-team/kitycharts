@@ -46,7 +46,7 @@
 
                 background: 'rgba(0,0,0,.8)',
 
-                at: 'top',
+                at: 'up',
                 padding: [ 6, 12, 6, 12 ],
                 borderRadius: 6,
                 anchorSize: 6
@@ -132,6 +132,10 @@
             drawer.carcTo( borderRadius, d1.rp[ 1 ].x, d1.rp[ 1 ].y, 0, 1 );
             drawer.close();
 
+            this.updatePosition();
+        },
+
+        updatePosition: function() {
             if ( this.param.target ) {
                 this.setPosition( this.param.target.getInterestPoint() );
             }
@@ -142,6 +146,7 @@
         },
 
         show: function () {
+            this.updatePosition();
             this.setVisible( true );
         },
 
@@ -152,13 +157,15 @@
 
     kity.extendClass( kc.ChartElement, {
         tooltip: function ( param ) {
-            if ( this.chart ) {
-                param.target = this;
-                var tooltip = new Tooltip( param );
-                this.canvas.on( 'mouseover', tooltip.show.bind( tooltip ) );
-                this.canvas.on( 'mouseout', tooltip.hide.bind( tooltip ) );
-                this.chart.addElement( tooltip );
+            if ( this._tooltip ) {
+                return this._tooltip.update( param );
             }
+            param.target = this;
+            var tooltip = new Tooltip( param );
+            this.canvas.on( 'mouseover', tooltip.show.bind( tooltip ) );
+            this.canvas.on( 'mouseout', tooltip.hide.bind( tooltip ) );
+            this.canvas.container.addShape( tooltip.canvas );
+            this._tooltip = tooltip;
         }
     } );
 
