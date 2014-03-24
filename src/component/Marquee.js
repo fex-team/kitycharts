@@ -11,7 +11,7 @@ var Marquee = kc.Marquee = kity.createClass( "Marquee", {
         this.callMixin();
     },
     bind: function ( paper ) {
-        var rect = new kity.Rect().setRadius( 2 ).fill( 'rgba(240,240,255, 0.3)' ).stroke( '#aaf' );
+        var rect = new kity.Rect().fill( 'rgba(240,240,255, 0.3)' ).stroke( '#aaf' );
         var startPosition = null,
             currentPosition, delta, activated = false;
         var me = this;

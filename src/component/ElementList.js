@@ -31,7 +31,6 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         var elementList = this.elementList,
             growth = list.length - elementList.length,
             fx = kc.fx && this.param.fx,
-            delay = 0,
             fxTimers = this.fxTimers;
 
         this.adjust( growth );
@@ -45,10 +44,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             if ( fx && ( 'animate' in element ) ) {
                 fxTimers.push( setTimeout( function () {
                     element.animate( list[ index ] );
-                }, delay ) );
-
-                delay += 10 + Math.random() * 20;
-
+                }, Math.random() * 300 ) );
             } else {
 
                 element.update( list[ index ] );
@@ -79,7 +75,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             this.canvas.addShape( element.canvas );
             this.elementList.push( element );
             element.update( this.param.common );
-            element.canvas.setOpacity(0).fadeIn(500, 'ease');
+            element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
         }
     },
 
