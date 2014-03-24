@@ -31,7 +31,9 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
                 meshX: true,
                 meshY: true,
                 formatX: null,
-                formatY: null
+                formatY: null,
+                rangeX: null,
+                rangeY: null
             }, param ) );
 
             this._initRulers();
@@ -76,7 +78,7 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                updateAll: [ 'dataSet', 'width', 'height', 'heading', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY' ]
+                updateAll: [ 'dataSet', 'width', 'height', 'heading', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY' ]
             } );
         },
         getXRuler: function () {
@@ -85,16 +87,9 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
         getYRuler: function () {
             return this.yRuler;
         },
-        updateAll: function ( dataSet, width, height, heading, unitX, unitY, meshX, meshY, formatX, formatY ) {
+        updateAll: function ( dataSet, width, height, heading,
+            unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY ) {
             var query = new kc.Query( dataSet ),
-
-                xMin = query.count() && query.min( 'x' ).x || 0,
-                yMin = query.count() && query.min( 'y' ).y || 0,
-                xMax = query.count() && query.max( 'x' ).x || 0,
-                yMax = query.count() && query.max( 'y' ).y || 0,
-
-                xDur = xMax - xMin,
-                yDur = yMax - yMin,
 
                 xAxis = this.getElement( 'xAxis' ),
                 yAxis = this.getElement( 'yAxis' ),
@@ -110,17 +105,41 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
                 xMesh = this.getElement( 'xMesh' ),
                 yMesh = this.getElement( 'yMesh' ),
 
+                xMin, yMin, xMax, yMax,
+
+                xDur, yDur,
+
                 xGrid, yGrid, xCount, yCount;
 
             var x0, y0;
 
-            xDur = xDur || 40;
-            yDur = yDur || 40;
+            if ( rangeX && rangeY ) {
 
-            xMin -= xDur / 4;
-            yMin -= yDur / 4;
-            xMax += xDur / 4;
-            yMax += yDur / 4;
+                xMin = rangeX[ 0 ];
+                xMax = rangeX[ 1 ];
+                yMin = rangeY[ 0 ];
+                yMax = rangeY[ 1 ];
+                xDur = xMax - xMin;
+                yDur = yMax - yMin;
+
+            } else {
+
+                xMin = query.count() && query.min( 'x' ).x || 0;
+                xMax = query.count() && query.max( 'x' ).x || 0;
+                yMin = query.count() && query.min( 'y' ).y || 0;
+                yMax = query.count() && query.max( 'y' ).y || 0;
+
+                xDur = xMax - xMin;
+                yDur = yMax - yMin;
+
+                xDur = xDur || 40;
+                yDur = yDur || 40;
+
+                xMin -= xDur / 4;
+                yMin -= yDur / 4;
+                xMax += xDur / 4;
+                yMax += yDur / 4;
+            }
 
             xRuler.ref( xMin, xMax ).map( 0, width );
             yRuler.ref( yMin, yMax ).map( height, 0 );

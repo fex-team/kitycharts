@@ -27,6 +27,9 @@
  *
  * @param {String} pieColor
  *        扇环的颜色
+ *
+ * @param {Float} collapsed
+ *        圆环的折叠率，为 0 不折叠，并且显示标签；为 1 折叠成一个半径为 2 的小圆点；大于 0 标签不显示
  */
 var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 
@@ -43,6 +46,7 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 			angle: 0,
 			percent: 0,
 			showPercent: true,
+			collapsed: 0,
 
 			background: '#ccc',
 			color: '#62a9dd'
@@ -54,20 +58,37 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 		this.canvas.addShapes( [ this.bPie, this.fPie ] );
 		this.addElement( 'label', new kc.Label() );
 		this.addElement( 'plabel', new kc.Label() );
+
+		this.on( 'mouseover', function () {
+			if ( this.param.collapsed === 1 ) {
+				this.animate( {
+					collapsed: 0
+				} );
+				this.restoreCollapsed = 1;
+			}
+		} );
+		this.on( 'mouseout', function () {
+			if ( this.param.collapsed === 0 && this.restoreCollapsed !== undefined ) {
+				this.animate({
+					collapsed: 1
+				});
+				delete this.restoreCollapsed;
+			}
+		} );
 	},
 
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
-			updatePies: [ 'innerRadius', 'outerRadius', 'angle', 'percent' ],
+			updatePies: [ 'innerRadius', 'outerRadius', 'angle', 'percent', 'collapsed' ],
 			updatePiesColor: [ 'color', 'background' ],
-			updateLabel: [ 'labelText', 'labelColor', 'labelPosition', 'outerRadius', 'showPercent' ],
-			updatePercentLabel: [ 'labelColor', 'innerRadius', 'outerRadius', 'percent', 'showPercent' ]
+			updateLabel: [ 'labelText', 'labelColor', 'labelPosition', 'outerRadius', 'showPercent', 'collapsed' ],
+			updatePercentLabel: [ 'labelColor', 'innerRadius', 'outerRadius', 'percent', 'showPercent', 'collapsed' ]
 		} );
 	},
 
 	getAnimatedParam: function () {
 		return [ 'labelColor', 'innerRadius', 'outerRadius',
-			'angle', 'percent' ];
+			'angle', 'percent', 'collapsed' ];
 	},
 
 	updatePiesColor: function ( color, bg ) {
@@ -75,8 +96,12 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 		this.bPie.fill( bg );
 	},
 
-	updatePies: function ( innerRadius, outerRadius, angle, percent ) {
-		var pieLength = percent / 100;
+	updatePies: function ( innerRadius, outerRadius, angle, percent, collapsed ) {
+		var pieLength = percent / 100,
+			collapsedRadius = 3.5;
+
+		innerRadius *= ( 1 - collapsed );
+		outerRadius = collapsedRadius + ( outerRadius - collapsedRadius ) * ( 1 - collapsed );
 
 		this.bPie.innerRadius = this.fPie.innerRadius = innerRadius;
 		this.bPie.outerRadius = this.fPie.outerRadius = outerRadius;
@@ -90,20 +115,25 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 		this.fPie.draw();
 	},
 
-	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, showPercent ) {
-		this.getElement( 'label' ).update( {
-			text: labelText,
-			color: labelColor,
-			at: showPercent ? 'bottom' : labelPosition,
-			margin: outerRadius + 10
-		} );
+	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, showPercent, collapsed ) {
+		if ( collapsed === 0 ) {
+			this.getElement( 'label' ).setVisible( true );
+			this.getElement( 'label' ).update( {
+				text: labelText,
+				color: labelColor,
+				at: showPercent ? 'bottom' : labelPosition,
+				margin: outerRadius + 10
+			} );
+		} else {
+			this.getElement( 'label' ).setVisible( false );
+		}
 	},
 
-	updatePercentLabel: function ( labelColor, innerRadius, outerRadius, percent, showPercent ) {
+	updatePercentLabel: function ( labelColor, innerRadius, outerRadius, percent, showPercent, collapsed ) {
 		var plabel = this.getElement( 'plabel' );
-		plabel.setVisible( showPercent );
+		plabel.setVisible( showPercent && collapsed === 0 );
 
-		if ( showPercent ) {
+		if ( showPercent && collapsed === 0 ) {
 			var labelWidth = plabel.getSize().width;
 			plabel.update( {
 				at: labelWidth < innerRadius * 1.8 ? 'center' : 'top',

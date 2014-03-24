@@ -28,7 +28,7 @@ var Line = kc.Line = kity.createClass( "Line", {
 
     draw: function ( x1, y1, x2, y2, bound ) {
         var drawer = this.line.getDrawer(),
-            s = kc.sugar.sharpen;
+            s = kc.sharpen;
 
         if ( bound ) {
             bound = this.boundTo( x1, y1, x2, y2, bound );

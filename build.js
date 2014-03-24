@@ -6,9 +6,12 @@ var dependience = [
 
     'src/kitycharts.js',
 
-    'src/base/sugar.js',
-    'src/base/Query.js',
-    'src/base/Ruler.js',
+    'src/util/align.js',
+    'src/util/parallel.js',
+    'src/util/Query.js',
+    'src/util/Ruler.js',
+    'src/util/sharpen.js',
+
     'src/base/ChartEvent.js',
     'src/base/EventHandler.js',
     'src/base/Data.js',
@@ -34,6 +37,7 @@ var dependience = [
     'src/component/CircleDot.js',
     'src/component/Mesh.js',
     'src/component/Categories.js',
+    'src/component/Marquee.js',
 
     'src/charts/ScatterChart.js'
 ];

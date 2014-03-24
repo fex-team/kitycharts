@@ -62,22 +62,27 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
 
     // find a good mod
     fagm: function ( count ) {
-        var dur = this._ref.dur | 0,
-            digit = dur.toString().length,
-            h_mod = Math.pow( 10, digit - 1 ),
-            l = dur % h_mod,
-            h = dur - l;
-        if ( count < 10 ) return h / 10;
-        else if ( count < 20 ) return h / 20;
-        else if ( count < 50 ) return h / 50;
-        else if ( count < 100 ) return h / 100;
-        return h / 1000;
+        var dur = this._ref.dur,
+            sdur = dur / count,
+            adjust = 1;
+
+        while(sdur > 100) {
+            sdur /= 10;
+            adjust *= 10;
+        }
+
+        while(sdur < 10) {
+            sdur *= 10;
+            adjust /= 10;
+        }
+
+        return (sdur | 0) * adjust;
     },
 
     gridByCount: function ( count, mod ) {
         mod = mod || this.fagm( count );
         var ref = this._ref;
-        var start = kc.sugar.snap( ref.from, mod, 'right' );
+        var start = kc.align( ref.from, mod, 'right' );
         var size = mod;
         while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size );

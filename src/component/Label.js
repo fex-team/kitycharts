@@ -28,7 +28,9 @@ var Label = kc.Label = kity.createClass( "Label", {
             style: {},
             color: 'black'
         } );
-        this.text = new kity.Text();
+        this.text = new kity.Text().setStyle( {
+            'font-size': 12
+        } );
         this.canvas.addShape( this.text );
     },
 
@@ -80,7 +82,7 @@ var Label = kc.Label = kity.createClass( "Label", {
             break;
         case 'up':
         case 'top':
-            this.text.setTextAnchor( 'center' ).setPosition( 0, -hh - margin );
+            this.text.setTextAnchor( 'center' ).setPosition( 0, hh - margin );
             break;
         case 'down':
         case 'bottom':

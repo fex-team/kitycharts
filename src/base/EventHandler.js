@@ -31,14 +31,14 @@ var EventHandler = kc.EventHandler = kity.createClass( 'EventHandler', ( functio
         off: function ( e, callback ) {
 
         },
-        trigger: function ( e ) {
+        trigger: function ( e, p ) {
             if ( ~DOMEvents.indexOf( e ) && this.canvas ) {
-                this.canvas.fire( e );
+                this.canvas.fire( e, p );
             } else {
-                this._fire( e );
+                this._fire( e, p );
             }
         },
-        _fire: function ( eve ) {
+        _fire: function ( eve, p ) {
             var me = this;
             var e;
             if ( typeof eve === 'string' ) {
@@ -47,12 +47,13 @@ var EventHandler = kc.EventHandler = kity.createClass( 'EventHandler', ( functio
             } else {
                 e = eve;
             }
+            e.data = p;
             var _callbacks = me._eventCallbacks[ e.name ];
             if ( !_callbacks ) {
                 return false;
             }
             for ( var i = 0; i < _callbacks.length; i++ ) {
-                _callbacks[ i ]( e );
+                _callbacks[ i ].call( me, e );
             }
         },
         _initEvents: function () {

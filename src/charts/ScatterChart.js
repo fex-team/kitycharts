@@ -66,11 +66,83 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             padding: [ 2, 10, 2, 10 ],
             anchorSize: 4
         } ) );
-        
-        this.firstDraw = true;
+
+        this.marquee = new kc.Marquee( this );
         this.setData( new kc.ScatterData() );
+
+        //this.initMarqueeZoom();
     },
-    
+
+    initMarqueeZoom: function () {
+        var me = this;
+        var zoomStack = [ {
+            rangeX: null,
+            rangeY: null
+        } ];
+
+        function inRange( x, a, b ) {
+            return ( a <= x && x <= b ) || ( a >= x && x >= b );
+        }
+
+        function getPointInRange( data, rulerX, rulerY, left, right, top, bottom ) {
+            var count = 0;
+            data = data.data_record;
+
+            left = rulerX.measure( left );
+            right = rulerX.measure( right );
+            top = rulerY.measure( top );
+            bottom = rulerY.measure( bottom );
+
+            for ( var i = 0; i < data.length; i++ ) {
+                if ( inRange( data[ i ].x, left, right ) && inRange( data[ i ].y, bottom, top ) ) {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        function updateRange( oxy, range, param, data ) {
+            oxy.update( range );
+            me.drawAverage( param, data, oxy );
+            me.drawScatter( param, data, oxy );
+        }
+
+        this.marquee.on( 'marquee', function ( e ) {
+            var ed = e.data,
+                start = ed.start,
+                end = ed.end,
+                param = me.param,
+                data = me.data.format(),
+                oxy = me.getElement( 'oxy' ),
+                rulerX = oxy.getXRuler().reverse(),
+                rulerY = oxy.getYRuler().reverse(),
+                left = Math.min( start.x, end.x ) - oxy.x,
+                right = Math.max( start.x, end.x ) - oxy.x,
+                top = Math.min( start.y, end.y ) - oxy.y,
+                bottom = Math.max( start.y, end.y ) - oxy.y;
+
+            if ( getPointInRange( data, rulerX, rulerY, left, right, top, bottom ) < 2 ) return;
+
+            var range = {
+                rangeX: [ rulerX.measure( left - oxy.x ), rulerX.measure( right - oxy.x ) ],
+                rangeY: [ rulerY.measure( bottom - oxy.y ), rulerY.measure( top - oxy.y ) ]
+            };
+
+            zoomStack.push( range );
+
+            updateRange( oxy, range, param, data );
+        } );
+
+        this.on( 'dblclick', function () {
+            var oxy = this.getElement( 'oxy' ),
+                param = this.param,
+                data = this.data.format(),
+                range = zoomStack[ zoomStack.length - 1 ];
+            updateRange( oxy, range, param, data );
+            if ( zoomStack.length > 1 ) zoomStack.pop();
+        } );
+    },
+
     update: function () {
         var param = this.param,
             data = this.data.format(),
@@ -218,6 +290,55 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 .map( minRadius, maxRadius );
         }
 
+        var list = query.map( function ( data ) {
+            var radius = dim > 2 ? radiusRuler.measure( sqrt( data ) ) : 5;
+            return {
+                // common params
+                x: oxy.x + xRuler.measure( data.x ),
+                y: oxy.y + yRuler.measure( data.y ),
+
+                labelText: data.label,
+
+                // param for CircleDot
+                radius: radius,
+                labelPosition: 'auto',
+
+                // param for PieDot
+                angel: -90,
+                innerRadius: radius,
+                outerRadius: radius + 6,
+                percent: data.percent,
+                showPercent: true,
+
+                collapsed: 0
+            };
+        } ).list();
+
+        function isOverlap( c1, c2, tolerance ) {
+            var r1 = c1.outerRadius || c1.radius,
+                r2 = c2.outerRadius || c2.radius,
+                dd = r1 + r2 + tolerance,
+                dx = c1.x - c2.x,
+                dy = c1.y - c2.y;
+            return dx * dx + dy * dy < dd * dd;
+        }
+
+        if ( dim > 2 ) {
+            list.sort( function ( y, x ) {
+                return ( x.outerRadius || x.radius ) - ( y.outerRadius || y.radius );
+            } );
+            var i, j;
+            for ( i = 0; i < list.length; i++ ) {
+                if ( list[ i ].collapsed ) continue;
+                for ( j = i + 1; j < list.length; j++ ) {
+                    if ( list[ j ].collapsed ) continue;
+                    if ( isOverlap( list[ i ], list[ j ], 20 ) ) {
+                        list[ j ].collapsed = 1;
+                    }
+                }
+            }
+        }
+
         scatter.update( {
 
             elementClass: {
@@ -226,27 +347,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 '4': kc.PieDot
             }[ dim ],
 
-            list: query.map( function ( data ) {
-                var radius = dim > 2 ? radiusRuler.measure( sqrt( data ) ) : 5;
-                return {
-                    // common params
-                    x: oxy.x + xRuler.measure( data.x ),
-                    y: oxy.y + yRuler.measure( data.y ),
-
-                    labelText: data.label,
-
-                    // param for CircleDot
-                    radius: radius,
-                    labelPosition: 'auto',
-
-                    // param for PieDot
-                    angel: -90,
-                    innerRadius: radius,
-                    outerRadius: radius + 6,
-                    percent: data.percent,
-                    showPercent: true
-                };
-            } ).list()
+            list: list
         } );
     }
 } );
