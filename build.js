@@ -39,7 +39,8 @@ var dependience = [
     'src/component/Categories.js',
     'src/component/Marquee.js',
 
-    'src/charts/ScatterChart.js'
+    'src/charts/ScatterChart.js',
+    'src/charts/ForceChart.js'
 ];
 
 function nodeBuild() {
