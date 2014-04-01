@@ -6,10 +6,8 @@ var Bezier = kc.Bezier = kity.createClass( "Bezier", {
             y1: 0,
             x2: 100,
             y2: 0,
-            bound: null,
             width: 1,
-            color: 'black',
-            dash: null
+            color: 'black'
         }, param ) );
         this.line = new kity.Bezier();
         this.canvas.addShape( this.line );
@@ -26,21 +24,10 @@ var Bezier = kc.Bezier = kity.createClass( "Bezier", {
         } );
     },
 
-    draw: function ( x1, y1, x2, y2, bound ) {
-        var drawer = this.line.getDrawer(),
-            s = kc.sharpen;
-
-        if ( bound ) {
-            bound = this.boundTo( x1, y1, x2, y2, bound );
-        }
-        bound = bound || [
-            [ x1, y1 ],
-            [ x2, y2 ]
-        ];
-        drawer.clear();
-        drawer.moveTo( s( bound[ 0 ][ 0 ] ), s( bound[ 0 ][ 1 ] ) );
-        drawer.lineTo( s( bound[ 1 ][ 0 ] ), s( bound[ 1 ][ 1 ] ) );
-
+    draw: function ( x1, y1, x2, y2 ) {
+        var sPos = new kity.BezierPoint( x1, y1 );
+        var endPos = new kity.BezierPoint( x2, y2 );
+        this.line.setPoints( [ sPos, endPos ] );
     },
 
     stroke: function ( color, width, dash ) {

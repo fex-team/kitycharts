@@ -72,6 +72,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].fxEasing = null;
 		}
 		if ( mode === "circle" ) {
+			lineClass = kc.Bezier;
 			//圆形排列
 			var Ox = paperWidth / 2;
 			var Oy = paperHeight / 2;
@@ -148,22 +149,23 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			};
 			setPos();
 			lineClass = kc.Line;
-			for ( var n = 0; n < list.length; n++ ) {
-				var source = list[ n ];
-				var sourceConnects = source.connects;
-				for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
-					var rbrand = sourceConnects[ n1 ].relatedbrand;
-					if ( sourceConnects[ n1 ].relation > 0 ) {
-						connectList.push( {
-							x1: source.x,
-							y1: source.y,
-							x2: list[ rbrand ].x,
-							y2: list[ rbrand ].y,
-							color: source.color,
-							width: sourceConnects[ n1 ].relation / 200,
-							fx: 0
-						} );
-					}
+		}
+		//处理连线
+		for ( var n = 0; n < list.length; n++ ) {
+			var source = list[ n ];
+			var sourceConnects = source.connects;
+			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
+				var rbrand = sourceConnects[ n1 ].relatedbrand;
+				if ( sourceConnects[ n1 ].relation > 0 ) {
+					connectList.push( {
+						x1: source.x,
+						y1: source.y,
+						x2: list[ rbrand ].x,
+						y2: list[ rbrand ].y,
+						color: source.color,
+						width: sourceConnects[ n1 ].relation / 200,
+						fx: 0
+					} );
 				}
 			}
 		}

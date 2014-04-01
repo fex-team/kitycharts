@@ -25,6 +25,7 @@ var dependience = [
     'src/shapex/Star.js',
 
     'src/component/Line.js',
+    'src/component/Bezier.js',
     'src/component/Label.js',
     'src/component/Bar.js',
     'src/component/Coordinate.js',
