@@ -65,7 +65,8 @@
         $.ajax({
             url: 'ForceChart.json',
             success: function( data ) {
-                d = JSON.parse(data);
+                d = data; 
+                //d = JSON.parse(data);
                 chart.getData().update(d["men"]);
             }
         });
