@@ -14,15 +14,30 @@
                 right: 10px;
                 bottom: 10px;
             }
+
+            #collapse-checker-wrapper {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                font-size: 12px;
+                vertical-align: middle;
+            }
+            #collapse-checker {
+                vertical-align: middle;
+            }
         </style>
     </head>
     <body>
-        <div id="chart"></div>
+        <div id="chart">
+            <label id="collapse-checker-wrapper"><input id="collapse-checker" type="checkbox" checked />允许缩放</label>
+        </div>
     </body>
     <script>
         var paper, chart;
 
-        chart = new kc.ScatterChart('chart');
+        chart = new kc.ScatterChart('chart', {
+            enableCollapse: true
+        });
         chart.update();
         $.ajax({
             url: 'ScatterChart.json',
@@ -36,6 +51,11 @@
 
         window.onresize = function () {
             chart.update();
+        }
+
+        var checker = document.getElementById('collapse-checker');
+        checker.onchange = function() {
+            chart.enableCollapse(checker.checked);
         }
     </script>
 </html>
