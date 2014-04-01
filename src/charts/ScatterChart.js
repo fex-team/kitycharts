@@ -153,7 +153,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         this.drawScatter( param, data, oxy );
     },
 
-    enableCollapse: function( value ) {
+    enableCollapse: function ( value ) {
         this.param.enableCollapse = value;
         this.update();
     },
@@ -329,7 +329,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 dy = c1.y - c2.y;
             return dx * dx + dy * dy < dd * dd;
         }
-        
+
         list.sort( function ( y, x ) {
             return ( x.outerRadius || x.radius ) - ( y.outerRadius || y.radius );
         } );

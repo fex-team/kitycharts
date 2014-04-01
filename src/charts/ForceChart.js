@@ -161,6 +161,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 							y2: list[ rbrand ].y,
 							color: source.color,
 							width: sourceConnects[ n1 ].relation / 200,
+							fx: 0
 						} );
 					}
 				}
