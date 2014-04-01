@@ -72,10 +72,10 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].fxEasing = null;
 		}
 		if ( mode === "circle" ) {
-			lineClass = kc.Bezier;
-			//圆形排列
 			var Ox = paperWidth / 2;
 			var Oy = paperHeight / 2;
+			lineClass = kc.Bezier;
+			//圆形排列
 			var R = ( Ox < Oy ? Ox : Oy ) - 50;
 			var total = 0;
 			for ( var j = 0; j < list.length; j++ ) {
@@ -86,6 +86,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				sDelta += list[ j1 ].radius;
 				list[ j1 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
 				list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
+				list[ j1 ].cx = R * 0.5 * Math.cos( sDelta * Math.PI / total ) + Ox;
+				list[ j1 ].cy = R * 0.5 * Math.sin( sDelta * Math.PI / total ) + Oy;
 				sDelta += list[ j1 ].radius;
 			}
 		} else {
@@ -163,8 +165,16 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 						x2: list[ rbrand ].x,
 						y2: list[ rbrand ].y,
 						color: source.color,
-						width: sourceConnects[ n1 ].relation / 200,
-						fx: 0
+						width: sourceConnects[ n1 ].relation / 150,
+						fx: 'off',
+						cx1: source.cx,
+						cy1: source.cy,
+						cx2: list[ rbrand ].cx,
+						cy2: list[ rbrand ].cy,
+						vx1: source.x,
+						vy1: source.y,
+						vx2: list[ rbrand ].x,
+						vy2: list[ rbrand ].y
 					} );
 				}
 			}
