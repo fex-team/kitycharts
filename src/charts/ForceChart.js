@@ -45,17 +45,20 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	base: kc.Chart,
 	constructor: function ( target, param ) {
 		this.callBase( target, param );
+		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
 		this.setData( new kc.ForceData() );
 	},
 	adjustScatter: function ( mode ) {
 		var scatter = this.getElement( 'scatter' );
+		var connects = this.getElement( "connects" );
 		var data = this.data.format();
 		var param = this.param;
 		var colors = param.colors;
 		var list = data.brandList;
 		var paperWidth = this.getWidth();
 		var paperHeight = this.getHeight();
+		var lineClass, connectList = [];
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].x = Math.random() * paperWidth;
 			list[ i ].y = Math.random() * paperHeight;
@@ -91,7 +94,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			};
 			//debugger;
 			var setPos = function () {
-				var K = 0.68;
+				var K = 1;
 				for ( var t = 0; t < 90; t++ ) {
 					for ( var k = 0; k < list.length; k++ ) {
 						var source = list[ k ];
@@ -144,14 +147,37 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				}
 			};
 			setPos();
+			lineClass = kc.Line;
+			for ( var n = 0; n < list.length; n++ ) {
+				var source = list[ n ];
+				var sourceConnects = source.connects;
+				for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
+					var rbrand = sourceConnects[ n1 ].relatedbrand;
+					if ( sourceConnects[ n1 ].relation > 0 ) {
+						connectList.push( {
+							x1: source.x,
+							y1: source.y,
+							x2: list[ rbrand ].x,
+							y2: list[ rbrand ].y,
+							color: source.color,
+							width: sourceConnects[ n1 ].relation / 200,
+						} );
+					}
+				}
+			}
 		}
 		scatter.update( {
 			elementClass: kc.CircleDot,
 			list: list
 		} );
+		connects.update( {
+			elementClass: lineClass,
+			list: connectList
+		} );
 	},
 	update: function ( mode ) {
 		this.adjustScatter( mode );
+		this.updateConnects( mode );
 	},
 	switchLayout: function () {
 

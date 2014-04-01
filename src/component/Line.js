@@ -1,3 +1,13 @@
+// {
+//             x1: 0,
+//             y1: 0,
+//             x2: 100,
+//             y2: 0,
+//             bound: null,
+//             width: 1,
+//             color: 'black',
+//             dash: null
+//         }
 var Line = kc.Line = kity.createClass( "Line", {
     base: kc.AnimatedChartElement,
     constructor: function ( param ) {
