@@ -106,9 +106,8 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
             }
         } );
-
         this.timeline = animator.start( this,
-            duration || this.param.fxTiming || this.fxTiming || 500,
+            duration || this.param.fxTiming || this.fxTiming || 2000,
             easing || this.param.fxEasing || this.fxEasing || 'ease',
             callback );
         //console.log( this.param );

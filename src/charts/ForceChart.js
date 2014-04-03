@@ -69,18 +69,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var lineClass, connectList = [];
 		var Ox = paperWidth / 2;
 		var Oy = paperHeight / 2;
-		// t: current time（当前时间）；
-		// b: beginning value（初始值）；
-		// c: change in value（变化量）；
-		// d: duration（持续时间）。
-		var BallEasing = function ( t, b, c, d, s ) {
-			if ( s === undefined ) s = 1.70158;
-			if ( ( t /= d / 2 ) < 1 ) return c / 2 * ( t * t * ( ( ( s *= ( 1.525 ) ) + 1 ) * t - s ) ) + b;
-			return c / 2 * ( ( t -= 2 ) * t * ( ( ( s *= ( 1.525 ) ) + 1 ) * t + s ) + 2 ) + b;
-		};
 		for ( var i = 0; i < list.length; i++ ) {
-			list[ i ].x = Math.random() * paperWidth;
-			list[ i ].y = Math.random() * paperHeight;
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			list[ i ].radius = list[ i ].percent * 40;
 			list[ i ].label = {
@@ -90,27 +79,30 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			};
 			list[ i ].connectLines = [];
 			list[ i ].fxEasing = null;
+			list[ i ].mode = mode;
 		}
-		brandTop.x = Ox;
-		brandTop.y = Oy;
-		if ( mode === "circle" ) {
+		//初始化布局
+		var R = ( Ox < Oy ? Ox : Oy ) - 50;
+		var total = 0;
+		for ( var j = 0; j < list.length; j++ ) {
+			total += list[ j ].radius;
+		}
+		var sDelta = 0;
+		for ( var j1 = 0; j1 < list.length; j1++ ) {
+			sDelta += list[ j1 ].radius;
+			list[ j1 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
+			list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
+			list[ j1 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
+			list[ j1 ].cy = R * 0.2 * Math.sin( sDelta * Math.PI / total ) + Oy;
+			sDelta += list[ j1 ].radius;
+		}
 
+		if ( mode !== 'circle' ) {
+			brandTop.x = Ox;
+			brandTop.y = Oy;
+		}
+		if ( mode === "circle" ) {
 			lineClass = kc.Bezier;
-			//圆形排列
-			var R = ( Ox < Oy ? Ox : Oy ) - 50;
-			var total = 0;
-			for ( var j = 0; j < list.length; j++ ) {
-				total += list[ j ].radius;
-			}
-			var sDelta = 0;
-			for ( var j1 = 0; j1 < list.length; j1++ ) {
-				sDelta += list[ j1 ].radius;
-				list[ j1 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
-				list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
-				list[ j1 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
-				list[ j1 ].cy = R * 0.2 * Math.sin( sDelta * Math.PI / total ) + Oy;
-				sDelta += list[ j1 ].radius;
-			}
 		} else {
 			//取向量的模
 			var mod = function ( x, y ) {

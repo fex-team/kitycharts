@@ -56,7 +56,7 @@
                 duration || this.param.fxTiming || this.fxTiming || 500,
                 easing || this.param.fxEasing || this.fxEasing || 'ease',
                 callback );
-            
+
             return this;
         }
     } );
