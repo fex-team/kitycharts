@@ -69,6 +69,15 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var lineClass, connectList = [];
 		var Ox = paperWidth / 2;
 		var Oy = paperHeight / 2;
+		// t: current time（当前时间）；
+		// b: beginning value（初始值）；
+		// c: change in value（变化量）；
+		// d: duration（持续时间）。
+		var BallEasing = function ( t, b, c, d, s ) {
+			if ( s === undefined ) s = 1.70158;
+			if ( ( t /= d / 2 ) < 1 ) return c / 2 * ( t * t * ( ( ( s *= ( 1.525 ) ) + 1 ) * t - s ) ) + b;
+			return c / 2 * ( ( t -= 2 ) * t * ( ( ( s *= ( 1.525 ) ) + 1 ) * t + s ) + 2 ) + b;
+		};
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].x = Math.random() * paperWidth;
 			list[ i ].y = Math.random() * paperHeight;
@@ -79,6 +88,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				color: 'black',
 				at: 'bottom',
 			};
+			list[ i ].connectLines = [];
 			list[ i ].fxEasing = null;
 		}
 		brandTop.x = Ox;
@@ -164,39 +174,39 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			setPos();
 			lineClass = kc.ConnectLine;
 		}
-		//处理连线
+		connects.removeElement();
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
 			var sourceConnects = source.connects;
 			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
 				var rbrand = sourceConnects[ n1 ].relatedbrand;
 				if ( sourceConnects[ n1 ].relation > 0 && rbrand > n ) {
-					connectList.push( {
+					var cnt = new kc.ConnectLine( {
 						x1: source.x,
 						y1: source.y,
 						x2: list[ rbrand ].x,
 						y2: list[ rbrand ].y,
 						color: source.color,
-						width: sourceConnects[ n1 ].relation / 300,
-						cx1: source.cx,
-						cy1: source.cy,
-						cx2: list[ rbrand ].cx,
-						cy2: list[ rbrand ].cy,
-						vx1: source.x,
-						vy1: source.y,
-						vx2: list[ rbrand ].x,
-						vy2: list[ rbrand ].y
+						width: sourceConnects[ n1 ].relation / 300
+					} );
+					connects.addElement(
+						'cnt' + n + n1, cnt
+					);
+					cnt.update();
+					source.connectLines.push( {
+						position: 'start',
+						line: cnt
+					} );
+					list[ rbrand ].connectLines.push( {
+						position: 'end',
+						line: cnt
 					} );
 				}
 			}
 		}
 		scatter.update( {
-			elementClass: kc.CircleDot,
+			elementClass: kc.ConnectCircleDot,
 			list: list
-		} );
-		connects.update( {
-			elementClass: lineClass,
-			list: connectList
 		} );
 	},
 	update: function ( mode ) {

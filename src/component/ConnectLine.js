@@ -24,7 +24,6 @@ var ConnectLine = kc.ConnectLine = kity.createClass( "ConnectLine", {
         this.line = new kity.Path();
         this.canvas.addShape( this.line );
     },
-
     getAnimatedParam: function () {
         return [ 'x1', 'y1', 'x2', 'y2', 'width' ];
     },

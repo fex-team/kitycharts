@@ -82,7 +82,6 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
         }
     },
-
     shrink: function ( size ) {
         var removed = this.elementList.splice( -size );
         while ( removed.length ) {

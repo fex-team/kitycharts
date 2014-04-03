@@ -37,6 +37,7 @@ var dependience = [
     'src/component/Tooltip.js',
     'src/component/PieDot.js',
     'src/component/CircleDot.js',
+    'src/component/ConnectCircleDot.js',
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
