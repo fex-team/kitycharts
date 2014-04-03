@@ -19,7 +19,7 @@
         },
 
         animate: function ( afterAnimated, duration, easing, callback ) {
-
+            //return this.update( afterAnimated );
             if ( !this.fxEnabled() ) {
                 return this.update( afterAnimated );
             }
@@ -55,7 +55,7 @@
 
             this.timeline = animator.start( this,
                 duration || this.param.fxTiming || this.fxTiming || 500,
-                easing || this.param.fxEasing || this.fxEasing || 'ease',
+            easing || this.param.fxEasing || this.fxEasing || 'ease',
                 callback );
 
             return this;

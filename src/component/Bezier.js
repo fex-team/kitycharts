@@ -1,5 +1,5 @@
 var Bezier = kc.Bezier = kity.createClass( "Bezier", {
-    base: kc.AnimatedChartElement,
+    base: kc.ChartElement,
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
             cx1: 0,
@@ -18,7 +18,7 @@ var Bezier = kc.Bezier = kity.createClass( "Bezier", {
     },
 
     getAnimatedParam: function () {
-        return [ 'x1', 'y1', 'x2', 'y2', 'width' ];
+        return [ 'cx1', 'cy1', 'cx2', 'cy2', 'vx1', 'vy1', 'vx2', 'vy2', 'width' ];
     },
 
     registerUpdateRules: function () {

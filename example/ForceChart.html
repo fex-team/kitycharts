@@ -10,21 +10,27 @@
             body{
                 margin: 0;
                 padding: 0;
+                background: #718993;
+            }
+            .container{
+                width: 1020px;
+                height: 651px;
+                margin: 10px auto;
+                background: white;
+                position: relative;
             }
             #sidebar{
-                width: 20%;
-                background-color: #eee;
+                width: 250px;
                 float: left;
-                height: 630px;
+                height: 651px;
             }
             #chart {
                 position: absolute;
-                left: 20%;
+                left: 250px;
                 right: 0;
-                height: 600px;
+                margin: 5px 20px 45px 20px;
+                height: 601px;
                 width: 700px;
-                margin-left: 30px;
-                margin-top: 30px;
             }
             .select{
                 display: inline-block;
@@ -34,19 +40,21 @@
         </style>
     </head>
     <body>
-        <div id="sidebar">
-            <div class="select">
-                <p>布局</p>
-                <a href="javascript:void(0)" id="s-force">力导向</a>
-                <a href="javascript:void(0)" id="s-circle">关联</a>
+        <div class="container">
+            <div id="sidebar">
+                <div class="select">
+                    <p>布局</p>
+                    <a href="javascript:void(0)" id="s-force">力导向</a>
+                    <a href="javascript:void(0)" id="s-circle">关联</a>
+                </div>
+                <div class="select">
+                    <p>性别</p>
+                    <a href="javascript:void(0)" id="s-men">男</a>
+                    <a href="javascript:void(0)" id="s-women">女</a>
+                </div>
             </div>
-            <div class="select">
-                <p>性别</p>
-                <a href="javascript:void(0)" id="s-men">男</a>
-                <a href="javascript:void(0)" id="s-women">女</a>
+            <div id="chart">
             </div>
-        </div>
-        <div id="chart">
         </div>
     </body>
     <script>
@@ -68,8 +76,8 @@
         $.ajax({
             url: 'ForceChart.json',
             success: function( data ) {
-                d = data; 
-                //d = JSON.parse(data);
+                //d = data; 
+                d = JSON.parse(data);
                 chart.getData().update(d["men"]);
             }
         });

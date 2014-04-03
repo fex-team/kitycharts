@@ -38,7 +38,6 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
             'updateText': [ 'labelText' ]
         } );
     },
-
     updateText: function ( text ) {
         this.getElement( 'label' ).update( {
             text: text
