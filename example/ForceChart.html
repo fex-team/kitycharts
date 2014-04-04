@@ -81,17 +81,23 @@
                 chart.getData().update(d["men"]);
             }
         });
+        var curmode = 'force';
         document.getElementById("s-force").addEventListener("click",function(){
-            chart.update();
+            curmode='force';
+            chart.update({mode:curmode});
         },false);
         document.getElementById("s-circle").addEventListener("click",function(){
-            chart.update("circle");
+            curmode = 'circle';
+            chart.update({mode:curmode});
         },false);
         document.getElementById("s-men").addEventListener("click",function(){
             chart.getData().update(d["men"]);
         },false);
         document.getElementById("s-women").addEventListener("click",function(){
             chart.getData().update(d["women"]);
+        },false);
+        document.getElementById("sidebar").addEventListener("click",function(){
+            chart.highlightBrand();
         },false);
     </script>
 </html>

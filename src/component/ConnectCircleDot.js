@@ -26,11 +26,11 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         }, param ) );
 
         this.circle = new kity.Circle();
-
+        var selfparam = this.param;
         this.canvas.addShapes( [ this.circle ] );
         this.addElement( 'label', new kc.Label() );
-        this.on( "click", function () {
-
+        this.on( "click", function ( e ) {
+            selfparam.chart.highlightBrand( e );
         } );
     },
 
@@ -95,44 +95,44 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                         finish = false;
                     }
                 }
-                if ( param.x || param.y ) {
-                    var cl = target.param.connectLines;
-                    var Cx = param.x || target.x;
-                    var Cy = param.y || target.y;
-                    for ( var i = 0; i < cl.length; i++ ) {
-                        if ( cl[ i ].position === 'start' ) {
-                            cl[ i ].line.update( {
-                                x1: Cx,
-                                y1: Cy
-                            } );
-                        } else {
-                            cl[ i ].line.update( {
-                                x2: Cx,
-                                y2: Cy
-                            } );
-                        }
-                    }
-                    var targetparam = target.param;
-                    var label = target.getElement( 'label' );
-                    if ( targetparam.mode === 'circle' ) {
-                        label.update( {
-                            'color': targetparam.color,
+                //if ( param.x || param.y ) {
+                var cl = target.param.connectLines;
+                var Cx = param.x || target.x;
+                var Cy = param.y || target.y;
+                for ( var i = 0; i < cl.length; i++ ) {
+                    if ( cl[ i ].position === 'start' ) {
+                        cl[ i ].line.update( {
+                            x1: Cx,
+                            y1: Cy
                         } );
-                        var curRx = Cx - targetparam.Ox;
-                        var curRy = Cy - targetparam.Oy;
-                        var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
-                        var cosDelta = curRx / curR;
-                        var sinDelta = curRy / curR;
-                        var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 5;
-                        label.canvas.setTransform(
-                            new kity.Matrix()
-                            .rotate( 180 * targetparam.sDelta / targetparam.total )
-                            .translate( transR * cosDelta - curRx, transR * sinDelta - curRy )
-                        );
                     } else {
-                        label.canvas.resetTransform();
+                        cl[ i ].line.update( {
+                            x2: Cx,
+                            y2: Cy
+                        } );
                     }
                 }
+                var targetparam = target.param;
+                var label = target.getElement( 'label' );
+                if ( targetparam.mode === 'circle' ) {
+                    label.update( {
+                        'color': targetparam.color,
+                    } );
+                    var curRx = Cx - targetparam.Ox;
+                    var curRy = Cy - targetparam.Oy;
+                    var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
+                    var cosDelta = curRx / curR;
+                    var sinDelta = curRy / curR;
+                    var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 5;
+                    label.canvas.setTransform(
+                        new kity.Matrix()
+                        .rotate( 180 * targetparam.sDelta / targetparam.total )
+                        .translate( transR * cosDelta - curRx, transR * sinDelta - curRy )
+                    );
+                } else {
+                    label.canvas.resetTransform();
+                }
+                //}
             }
         } );
 

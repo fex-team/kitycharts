@@ -33,6 +33,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			connects.push( {
 				brand: brandId,
 				relatedbrand: relatedbrandId,
+				relatedbrandname: connectList[ i ].relatedbrand,
 				relation: connectList[ i ].relation
 			} );
 		}
@@ -55,9 +56,54 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
 		this.setData( new kc.ForceData() );
+	},
+	highlightBrand: function ( e ) {
+		var scatter = this.getElement( "scatter" );
+		var connects = this.getElement( "connects" );
+		var elList = scatter.elementList;
+		var cntList = connects.elements;
+		if ( e === undefined ) {
+			for ( var c = 0; c < elList.length; c++ ) {
+				elList[ c ].canvas.setOpacity( 1 );
+			}
+			for ( var k in cntList ) {
+				cntList[ k ].canvas.setOpacity( 1 );
+			}
+			return false;
+		}
+		var clickedbrand = e.target.param.brand;
+		var clickedbrandConnects = e.target.param.connects;
+		//console.log( clickedbrandConnects );
+		var checkrelate = function ( brand ) {
+			for ( var s = 0; s < clickedbrandConnects.length; s++ ) {
+				if ( brand === clickedbrandConnects[ s ].relatedbrandname ) return true;
+			}
+			return false;
+		};
+		//console.log( clickedbrandConnects );
+		for ( var i = 0; i < elList.length; i++ ) {
+			var b = elList[ i ].param.brand;
+			if ( b === clickedbrand || checkrelate( b ) ) {
+				elList[ i ].canvas.setOpacity( 1 );
+			} else {
+				elList[ i ].canvas.setOpacity( 0.2 );
+			}
+		}
+		for ( var key in cntList ) {
+			cntList[ key ].canvas.setOpacity( 0 );
+		}
+		var connectLines = e.target.param.connectLines;
+		//console.log( e.target.param );
+		for ( var j = 0; j < connectLines.length; j++ ) {
+			connectLines[ j ].line.canvas.setOpacity( 1 );
+
+		}
+	},
+	renderLegend: function ( target ) {
 
 	},
-	adjustScatter: function ( mode ) {
+	adjustScatter: function () {
+		var mode = this.param.mode;
 		var scatter = this.getElement( 'scatter' );
 		var connects = this.getElement( "connects" );
 		var data = this.data.format();
@@ -85,6 +131,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].Ox = Ox;
 			list[ i ].Oy = Oy;
 			list[ i ].R = R;
+			list[ i ].chart = this;
 		}
 		//初始化布局
 
@@ -209,13 +256,10 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list: list
 		} );
 	},
-	update: function ( mode ) {
-		this.adjustScatter( mode );
-	},
-	switchLayout: function () {
-
-	},
-	switchPosition: function () {
-
+	update: function ( args ) {
+		for ( var key in args ) {
+			this.param[ key ] = args[ key ];
+		}
+		this.adjustScatter();
 	}
 } );
