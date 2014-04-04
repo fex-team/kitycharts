@@ -29,6 +29,9 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
 
         this.canvas.addShapes( [ this.circle ] );
         this.addElement( 'label', new kc.Label() );
+        this.on( "click", function () {
+
+        } );
     },
 
     registerUpdateRules: function () {
@@ -84,10 +87,16 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             beginValue: beginParam,
             finishValue: finishParam,
             setter: function ( target, param ) {
+                //console.log( target.getElement( 'label' ) );
                 target.update( param );
+                var finish = true;
+                for ( var k in param ) {
+                    if ( param[ k ] !== finishParam[ k ] ) {
+                        finish = false;
+                    }
+                }
                 if ( param.x || param.y ) {
                     var cl = target.param.connectLines;
-                    //console.log( target.param );
                     var Cx = param.x || target.x;
                     var Cy = param.y || target.y;
                     for ( var i = 0; i < cl.length; i++ ) {
@@ -103,9 +112,30 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                             } );
                         }
                     }
+                    var targetparam = target.param;
+                    var label = target.getElement( 'label' );
+                    if ( targetparam.mode === 'circle' ) {
+                        label.update( {
+                            'color': targetparam.color,
+                        } );
+                        var curRx = Cx - targetparam.Ox;
+                        var curRy = Cy - targetparam.Oy;
+                        var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
+                        var cosDelta = curRx / curR;
+                        var sinDelta = curRy / curR;
+                        var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 5;
+                        label.canvas.setTransform(
+                            new kity.Matrix()
+                            .rotate( 180 * targetparam.sDelta / targetparam.total )
+                            .translate( transR * cosDelta - curRx, transR * sinDelta - curRy )
+                        );
+                    } else {
+                        label.canvas.resetTransform();
+                    }
                 }
             }
         } );
+
         this.timeline = animator.start( this,
             duration || this.param.fxTiming || this.fxTiming || 2000,
             easing || this.param.fxEasing || this.fxEasing || 'ease',

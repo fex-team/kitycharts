@@ -55,6 +55,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
 		this.setData( new kc.ForceData() );
+
 	},
 	adjustScatter: function ( mode ) {
 		var scatter = this.getElement( 'scatter' );
@@ -69,6 +70,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var lineClass, connectList = [];
 		var Ox = paperWidth / 2;
 		var Oy = paperHeight / 2;
+		var R = ( Ox < Oy ? Ox : Oy ) - 50;
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			list[ i ].radius = list[ i ].percent * 40;
@@ -80,9 +82,12 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].connectLines = [];
 			list[ i ].fxEasing = null;
 			list[ i ].mode = mode;
+			list[ i ].Ox = Ox;
+			list[ i ].Oy = Oy;
+			list[ i ].R = R;
 		}
 		//初始化布局
-		var R = ( Ox < Oy ? Ox : Oy ) - 50;
+
 		var total = 0;
 		for ( var j = 0; j < list.length; j++ ) {
 			total += list[ j ].radius;
@@ -94,6 +99,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
 			list[ j1 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
 			list[ j1 ].cy = R * 0.2 * Math.sin( sDelta * Math.PI / total ) + Oy;
+			list[ j1 ].sDelta = sDelta;
+			list[ j1 ].total = total;
 			sDelta += list[ j1 ].radius;
 		}
 
@@ -173,7 +180,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
 				var rbrand = sourceConnects[ n1 ].relatedbrand;
 				if ( sourceConnects[ n1 ].relation > 0 && rbrand > n ) {
-					var cnt = new kc.ConnectLine( {
+					var cnt;
+					cnt = new kc.ConnectLine( {
 						x1: source.x,
 						y1: source.y,
 						x2: list[ rbrand ].x,
