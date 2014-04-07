@@ -8,8 +8,8 @@
 //             color: 'black',
 //             dash: null
 //         }
-var Line = kc.Line = kity.createClass( "Line", {
-    base: kc.AnimatedChartElement,
+var ConnectLine = kc.ConnectLine = kity.createClass( "ConnectLine", {
+    base: kc.ChartElement,
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
             x1: 0,
@@ -24,7 +24,6 @@ var Line = kc.Line = kity.createClass( "Line", {
         this.line = new kity.Path();
         this.canvas.addShape( this.line );
     },
-
     getAnimatedParam: function () {
         return [ 'x1', 'y1', 'x2', 'y2', 'width' ];
     },

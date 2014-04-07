@@ -38,6 +38,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
             delete chartElement.chart;
             this.canvas.removeShape( chartElement.canvas );
             delete this.elements[ key ];
+        } else if ( key === undefined ) {
+            for ( var k in this.elements ) {
+                chartElement = this.elements[ k ];
+                delete chartElement.chart;
+                this.canvas.removeShape( chartElement.canvas );
+                delete this.elements[ k ];
+            }
         }
     },
 

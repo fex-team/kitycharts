@@ -1,3 +1,14 @@
+//参数格式
+// {
+//             label: {
+//                 at: 'bottom',
+//                 color: 'black',
+//                 text: null,
+//             },
+//             color: '#62a9dd',
+//             radius: 0,
+//             fxEasing: 'easeOutElastic'
+// }
 var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
 
     base: kc.AnimatedChartElement,
@@ -6,20 +17,18 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
         this.callBase( kity.Utils.extend( {
             label: {
                 at: 'bottom',
-                color: 'black'
+                color: 'black',
+                text: null,
             },
-            labelText: null,
             color: '#62a9dd',
             radius: 0,
             fxEasing: 'easeOutElastic'
         }, param ) );
 
-        this.addElement( 'label', new kc.Label() );
-
         this.circle = new kity.Circle();
-        this.label = new kc.Label();
 
         this.canvas.addShapes( [ this.circle ] );
+        this.addElement( 'label', new kc.Label() );
     },
 
     registerUpdateRules: function () {
@@ -29,11 +38,10 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
             'updateText': [ 'labelText' ]
         } );
     },
-
     updateText: function ( text ) {
-        this.getElement('label').update({
+        this.getElement( 'label' ).update( {
             text: text
-        });
+        } );
     },
 
     updateRadius: function ( radius ) {

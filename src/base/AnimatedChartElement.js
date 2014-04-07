@@ -19,7 +19,7 @@
         },
 
         animate: function ( afterAnimated, duration, easing, callback ) {
-
+            //return this.update( afterAnimated );
             if ( !this.fxEnabled() ) {
                 return this.update( afterAnimated );
             }
@@ -30,7 +30,6 @@
                 finishParam = {},
                 staticParam = {},
                 animator;
-
             canAnimated.push( 'x' );
             canAnimated.push( 'y' );
 
