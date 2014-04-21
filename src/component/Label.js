@@ -25,11 +25,14 @@ var Label = kc.Label = kity.createClass( "Label", {
             text: '',
             at: 'center',
             margin: 0,
-            style: {},
+            style: {
+                family: 'Arial'
+            },
             color: 'black'
         } );
         this.text = new kity.Text().setStyle( {
-            'font-size': 12
+            'font-size': 12,
+            'family': 'Arial'
         } );
         this.canvas.addShape( this.text );
     },
