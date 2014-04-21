@@ -25,12 +25,14 @@ var dependience = [
     'src/shapex/Star.js',
 
     'src/component/Line.js',
+    'src/component/Polyline.js',
     'src/component/ConnectLine.js',
     'src/component/Bezier.js',
     'src/component/Label.js',
     'src/component/Bar.js',
     'src/component/Coordinate.js',
     'src/component/XYCoordinate.js',
+    'src/component/CategoryCoordinate.js',
     'src/component/PolarCoordinate.js',
     'src/component/ElementList.js',
     'src/component/Legend.js',
@@ -43,7 +45,8 @@ var dependience = [
     'src/component/Marquee.js',
 
     'src/charts/ScatterChart.js',
-    'src/charts/ForceChart.js'
+    'src/charts/ForceChart.js',
+    'src/charts/LineChart.js'
 ];
 
 function nodeBuild() {
