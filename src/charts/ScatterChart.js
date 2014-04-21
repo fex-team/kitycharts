@@ -22,8 +22,6 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
     }
 } );
 
-
-
 function appendUnit( unit ) {
     return function ( num ) {
         return ( ( num * 10 ) | 0 ) / 10 + ( unit || '' );
@@ -36,7 +34,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
     constructor: function ( target, param ) {
         this.callBase( target, param );
 
-        this.addElement( 'oxy', new kc.XYCoordinate() );
+        this.addElement( 'oxy', new kc.CategoryCoordinate() );
         this.addElement( "scatter", new kc.ElementList() );
         this.addElement( 'avg-x-line', new kc.Line( {
             color: '#f39488',

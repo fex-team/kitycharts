@@ -74,10 +74,10 @@
         chart = new kc.ForceChart('chart',{colors:colors});
         var d;
         $.ajax({
-            url: 'ForceChart.json',
+            url: 'data/ForceChart.json',
             success: function( data ) {
-                //d = data; 
-                d = JSON.parse(data);
+                d = data; 
+                // d = JSON.parse(data);
                 chart.getData().update(d["men"]);
             }
         });
