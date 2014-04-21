@@ -40,15 +40,15 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         return map.from + ( value - ref.from ) / ref.dur * map.dur;
     },
 
-    grid: function ( start, step, alignMax ) {
+    grid: function ( start, step, alignRight ) {
         var ref = this._ref,
             map = this._map,
             ref_grid = [],
             map_grid = [],
             current;
-        var op = alignMax ? '<=' : '<';
+        var op = alignRight ? '<=' : '<';
 
-        for ( current = start; eval('current ' + op + ' ref.to + step'); current += step ) {
+        for ( current = start; eval('current ' + op + ' ref.to'); current += step ) {
             ref_grid.push( current );
             map_grid.push( this.measure( current ) );
         }
@@ -132,13 +132,13 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             value - left < right - value ? left : right ) );
     },
 
-    gridByCount: function ( count, mod, alignMax ) {
+    gridByCount: function ( count, mod, alignRight ) {
         mod = mod || this.fagm( count );
         var ref = this._ref;
         var start = this.align( ref.from, mod, 'right' );
         var size = mod;
         while ( size * count < ref.dur ) size += mod;
-        return this.grid( start, size, alignMax );
+        return this.grid( start, size, alignRight );
     },
 
     checkOverflow: function ( value ) {

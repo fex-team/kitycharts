@@ -23,6 +23,7 @@
                 background-color: rgba(0, 0, 0, 0.5);
                 color: #FFF;
                 font-size: 12px;
+                z-index: 2;
             }
 
             .tip .head{
@@ -86,7 +87,7 @@
            mask.hide();
         });
 
-        // linechart.update();
+        linechart.update();
         $.ajax({
             url: 'data/liuliang_chart.json',
             // url: 'data/lld2.json',

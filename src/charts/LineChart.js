@@ -10,37 +10,46 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         if( count > 0 ){
             for(var i = 0; i < count; i++){
                 tmp = origin[ i + '' ];
+
+                var pvReal = tmp['pv']['real'],
+                    adPvReal = tmp['adPv']['real'],
+                    pvPred = tmp['pv']['pred'],
+                    adPvPred = tmp['adPv']['pred'];
+
+                    pvPred.unshift( pvReal[ pvReal.length - 1 ] );
+                    adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
+
                 series = series.concat([
                     {
-                        "name": "pv",
+                        "name": tmp["label"] + "-pv",
                         "segments" : [
                             {
                                 "dash" : null,
-                                "data" : tmp['pv']['real']
+                                "data" : pvReal
                             },
                             {
                                 "dash" : [2],
-                                "data" : tmp['pv']['pred']
+                                "data" : pvPred
                             }
                         ]
                     },
                     {
-                        "name": "adPv",
+                        "name": tmp["label"] + "-adPv",
                         "segments" : [
                             {
                                 "dash" : null,
-                                "data" : tmp['adPv']['real']
+                                "data" : adPvReal
                             },
                             {
                                 "dash" : [2],
-                                "data" : tmp['adPv']['pred']
+                                "data" : adPvPred
                             }
                         ]
                     }
                 ]);
             }
 
-            var length = origin[0]['pv']['real'].length;
+            var length = origin[0]['pv']['real'].length + origin[0]['pv']['pred'].length;
 
             for(var i = 0; i < length; i++){
                 xAxis.push(i+1+'');
@@ -103,8 +112,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.setData( new kc.LineData() );
 
         this.bindAction();
-
-
     },
 
     update: function () {
@@ -130,6 +137,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.updateCircle( data );
         this.updateIndicatrix(-100, 0);
 
+        this.addLegend( data, oxy );
     },
 
     updateCircle : function( data ){
@@ -207,7 +215,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             var i, l = self.circleArr.lenth;
             
             var reuslt = oxy.xRuler.leanTo( x - oxy.param.x, 'map' );
-            if( !reuslt ) return;
+            if( !reuslt || reuslt.index > data.series[0].positions.length - 1 ) return;
 
             var pX = reuslt.value + oxy.param.x;
 
@@ -328,6 +336,61 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         });
 
         return data;
+    },
+
+    addLegend : function( data, oxy ){
+        if( data.series && data.series.length > 0 ){
+            var i,
+            name,
+            ele,
+            param = oxy.param,
+            container = this.paper.container,
+            legendLines,
+            entry,
+            list = [],
+            top = 0,
+            left = 0,
+            tmpL, tmpT,
+            line;
+
+            if(this.legend){
+                this.legend.html('');
+            }else{
+                this.legend = $('<div></div>').css({
+                    position: 'absolute',
+                    bottom: '-20px',
+                    left : oxy.param.x + 'px',
+                    height : '30px',
+                    width : 'auto',     
+                }).appendTo(container);
+            }
+
+            for (var i = 0; i < data.series.length; i++) {
+                entry = data.series[i];
+
+                top = oxy.param.height + (i*20) + 50;
+                left = oxy.param.x + 10;
+
+                ele = $('<div>' + entry.name + '</div>').css({
+                    marginRight : '5px',
+                    fontSize : '12px',
+                    float : 'left'
+                }).appendTo(this.legend);
+
+                tmpL = left + $(ele).width() + 10;
+                tmpT = top + 6;
+
+                line = $('<div></div>').css({
+                    marginRight : '20px',
+                    marginTop : '5px',
+                    height : '2px',
+                    width : '40px',
+                    float : 'left',
+                    backgroundColor : (entry.color || entry.segments[0].color || defaultColors[i])
+                }).appendTo(this.legend);
+            }
+
+        }
     }
 
 } );
