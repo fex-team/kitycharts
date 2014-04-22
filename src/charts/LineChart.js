@@ -6,18 +6,19 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         var tmp, series = [], xAxis = [], min = 0, max = 100;
 
         var count =  '1' in this.origin? 2 : '0' in this.origin ? 1 : 0;
+        var pvReal, adPvReal, pvPred, adPvPred;
 
         if( count > 0 ){
             for(var i = 0; i < count; i++){
                 tmp = origin[ i + '' ];
 
-                var pvReal = tmp['pv']['real'],
-                    adPvReal = tmp['adPv']['real'],
-                    pvPred = tmp['pv']['pred'],
-                    adPvPred = tmp['adPv']['pred'];
+                pvReal = tmp['pv']['real'];
+                adPvReal = tmp['adPv']['real'];
+                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred'] ));
+                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']['pred'] ));
 
-                    pvPred.unshift( pvReal[ pvReal.length - 1 ] );
-                    adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
+                pvPred.unshift( pvReal[ pvReal.length - 1 ] );
+                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
 
                 series = series.concat([
                     {
@@ -52,7 +53,7 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
             var length = origin[0]['pv']['real'].length + origin[0]['pv']['pred'].length;
 
             for(var i = 0; i < length; i++){
-                xAxis.push(i+1+'');
+                xAxis.push('第'+(i+1)+'天');
             }
 
             var all = [], tmp;
@@ -72,7 +73,14 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         }
 
         return {
-            xAxisCategories :  xAxis || [],
+            xAxis :  {
+                categories : xAxis || [],
+                step : 100
+            },
+            // yAxis :  {
+            //     categories : yAxis || [],
+            //     step : 10
+            // },
             series : series || [],
             rangeY : [min, max]
         };
@@ -91,11 +99,12 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.callBase( target, param );
 
         var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate({
-            components : [ 'xAxis', 'yAxis', 'yCat']
+            // components : [ 'xAxis', 'yAxis', 'yCat', 'yCat', 'yMesh'],
+            heading : 50
         }) );
 
         this.yLine = this.addElement( 'avg-y-line', new kc.Line( {
-            color : '#DDD',
+            color : 'red', //'#DDD',
             width : 1
         } ) );
 
@@ -121,9 +130,10 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         var oxy = this.coordinate = this.drawOxy( param, data );
 
         if( oxy.param.rangeY ){
-            var y1 = oxy.yRuler.measure(oxy.param.rangeY[0]);
-            var y2 = oxy.yRuler.measure(oxy.param.rangeY[1]);
-            var averageY = (y1 + y2)/2;
+            var grid = oxy.yRuler.map_grid;
+            var y1 = grid[0];
+            var y2 = grid[ grid.length-1 ];
+            var averageY = (y1 + y2)/2 + oxy.param.y;
 
             this.yLine.update( {
                     x1: oxy.param.x,
@@ -322,8 +332,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             var offset = offset || 0;
             var pointsArr = [];
             for (j = 0; j < lineData.length; j++) {
-                yPos = oxy.yRuler.measure( lineData[j] );
-                point = [ xRuler.map_grid[j] + oxy.param.x + offset, yPos];
+                yPos = oxy.yRuler.measure( lineData[j], oxy.param.height-oxy.param.heading ) + oxy.param.y + oxy.param.heading;
+                point = [ xRuler.map_grid[j] + oxy.param.x + offset, yPos ];
                 pointsArr.push( point );
             }
             return pointsArr;

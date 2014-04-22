@@ -130,8 +130,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
         updateAll: function ( dataSet, width, height, heading, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY ) {
 
-            var xCategories = dataSet.xAxisCategories;
-            var yCategories = dataSet.yAxisCategories;
+            var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
+            var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
 
             var query = new kc.Query( dataSet ),
 
@@ -185,29 +185,27 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             }
 
-            xRuler.ref( xMin, xMax ).map( 0, width );
-            var xMod, xAlignRight;
+            xRuler.ref( xMin, xMax ).map( 0, width-heading );
+            var w = width-heading;
             if(xCategories){
-                xCount = xCategories.length;
-                xMod = 1;
-                xAlignRight = true;
+                xGrid = xRuler.gridByCategories( xCategories.length, w, dataSet.xAxis.step );
             }else{
                 xCount = width / 60 | 0;
+                xGrid = xRuler.gridByCount( xCount, null );
             }
-            xGrid = xRuler.gridByCount( xCount, xMod, xAlignRight );
-
-
-            yRuler.ref( yMin, yMax ).map( height, 0 );
-            var yMod, yAlignRight;
+            
+            yRuler.ref( yMin, yMax ).map( height-heading, 0 );
+            var h = height-heading;
             if(yCategories){
-                yCount = yCategories.length;
-                yMod = 1;
-                yAlignRight = true;
+                yGrid = yRuler.gridByCategories( yCategories.length, h, dataSet.yAxis.step );
             }else{
                 yCount = height / 40 | 0;
+                yGrid = yRuler.gridByCount( yCount, null );
             }
-            yGrid = yRuler.gridByCount( yCount, yMod, yAlignRight );
-
+            
+            for (var i = 0; i < yGrid.map.length; i++) {
+                yGrid.map[i] = yGrid.map[i] + heading;
+            }
 
             var xAxis = this.getElement( 'xAxis' ),
                 yAxis = this.getElement( 'yAxis' ),
@@ -235,7 +233,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xCat.update( {
                     rules: xGrid.map,
                     labels: xLabels,
-                    y: height
+                    y: height,
+                    step: dataSet.xAxis && dataSet.xAxis.step || 1
                 } );
             }
             if(xCategories){
@@ -247,7 +246,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yCat.update( {
                     rules: yGrid.map,
                     labels: yLabels,
-                    x: 0
+                    x: 0,
+                    step: dataSet.yAxis && dataSet.yAxis.step || 1
                 } );
             }
             if(yCategories){
@@ -257,14 +257,16 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             xMesh && xMesh.update( {
                 rules: xGrid.map,
                 length: height - yGrid.map[ yGrid.map.length - 1 ],
-                y: height
+                y: height,
+                step: dataSet.xAxis && dataSet.xAxis.step || 1
             } );
 
             yMesh && yMesh.update( {
                 rules: yGrid.map,
                 length: xGrid.map[ xGrid.map.length - 1 ],
                 x: 0,
-                y: 0
+                y: 0,
+                step: dataSet.yAxis && dataSet.yAxis.step || 1
             } );
 
             this.xArrow && this.xArrow.setTransform( new kity.Matrix().translate( width, height + 0.5 ) );
