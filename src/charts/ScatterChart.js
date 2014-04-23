@@ -147,6 +147,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         var param = this.param,
             data = this.data.format(),
             oxy = this.drawOxy( param, data );
+
         this.drawAverage( param, data, oxy );
         this.drawScatter( param, data, oxy );
     },

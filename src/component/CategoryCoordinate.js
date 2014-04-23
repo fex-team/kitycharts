@@ -186,21 +186,19 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             }
 
             xRuler.ref( xMin, xMax ).map( 0, width-heading );
-            var w = width-heading;
             if(xCategories){
-                xGrid = xRuler.gridByCategories( xCategories.length, w, dataSet.xAxis.step );
+                xGrid = xRuler.gridByCategories( xCategories.length, dataSet.xAxis.step );
             }else{
                 xCount = width / 60 | 0;
-                xGrid = xRuler.gridByCount( xCount, null );
+                xGrid = xRuler.gridByCount( xCount, null, true );
             }
             
             yRuler.ref( yMin, yMax ).map( height-heading, 0 );
-            var h = height-heading;
             if(yCategories){
-                yGrid = yRuler.gridByCategories( yCategories.length, h, dataSet.yAxis.step );
+                yGrid = yRuler.gridByCategories( yCategories.length, dataSet.yAxis.step );
             }else{
                 yCount = height / 40 | 0;
-                yGrid = yRuler.gridByCount( yCount, null );
+                yGrid = yRuler.gridByCount( yCount, null, true );
             }
             
             for (var i = 0; i < yGrid.map.length; i++) {

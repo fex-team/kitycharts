@@ -11,6 +11,10 @@ body{
 	font-size: 12px;
 }
 
+a:visited{
+	color: #000;
+}
+
 .wrapper{
 	width: 1000px;
 	height: 100%;

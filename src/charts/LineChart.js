@@ -99,12 +99,12 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.callBase( target, param );
 
         var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate({
-            // components : [ 'xAxis', 'yAxis', 'yCat', 'yCat', 'yMesh'],
+            components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
             heading : 50
-        }) );
+        }) );   
 
         this.yLine = this.addElement( 'avg-y-line', new kc.Line( {
-            color : 'red', //'#DDD',
+            color : '#DDD',
             width : 1
         } ) );
 
@@ -148,6 +148,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.updateIndicatrix(-100, 0);
 
         this.addLegend( data, oxy );
+
     },
 
     updateCircle : function( data ){
@@ -198,7 +199,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             height: this.getHeight() - 50,
             x: 60,
             y: 20,
-            components: []
             // formatX: appendUnit( data.unit_x ),
             // formatY: appendUnit( data.unit_y )
         }
@@ -370,7 +370,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     position: 'absolute',
                     bottom: '-20px',
                     left : oxy.param.x + 'px',
-                    height : '30px',
+                    height : '20px',
                     width : 'auto',     
                 }).appendTo(container);
             }

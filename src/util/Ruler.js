@@ -38,17 +38,10 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         var ref = this._ref,
             map = this._map;
 
-        // return map.from + ( value - ref.from ) / ref.dur * map.dur;
-        //应该是讲坐标边界的起始点对应
-
-        var ref_grid = this.ref_grid;
-        var range = ref_grid[ ref_grid.length-1 ] -  ref_grid[ 0 ];
-
-        // return ( value - ref_grid[0] ) / range * length;
-        return map.from + ( value - ref_grid[0] ) / range * map.dur;
+        return map.from + ( value - ref.from ) / ref.dur * map.dur;
     },
 
-    grid: function ( start, step ) {
+    grid: function ( start, step, alignRef ) {
         var ref = this._ref,
             map = this._map,
             ref_grid = [],
@@ -60,6 +53,10 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         }
 
         this.ref_grid = ref_grid;
+
+        if(alignRef){
+            this.ref( ref_grid[0], ref_grid[ref_grid.length-1] );
+        }
 
         for ( var i = 0; i < ref_grid.length; i++ ) {
             map_grid.push( this.measure( ref_grid[i] ) );
@@ -108,22 +105,21 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             value - left < right - value ? left : right ) );
     },
 
-    gridByCount: function ( count, mod, length ) {
+    gridByCount: function ( count, mod, alignRef ) {
         mod = mod || this.fagm( count );
         var ref = this._ref;
         var start = this.align( ref.from, mod, 'left' );
         var size = mod;
         while ( size * count < ref.dur ) size += mod;
-        return this.grid( start, size, length );
+        return this.grid( start, size, alignRef );
     },
 
-    gridByCategories : function( count, step ){
-        var step = step || 1,
-            ref_grid = [],
+    gridByCategories : function( count ){
+        var ref_grid = [],
             map_grid = [],
             i;
         for (i = 0; i < count; i++) {
-            ref_grid.push( i*step );
+            ref_grid.push( i );
         }
 
         this.ref_grid = ref_grid;
