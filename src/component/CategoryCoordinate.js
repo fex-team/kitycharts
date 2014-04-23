@@ -128,62 +128,36 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return this.yLabels;
         },
 
+        measurePoint : function(point){
+            var p = this.param;
+            var x = this.xRuler.measure(point[0]) + p.x,
+                y = this.yRuler.measure(point[1]) + p.y + p.heading;
+            return [ x, y ];
+        },
+
         updateAll: function ( dataSet, width, height, heading, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY ) {
 
             var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
             var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
 
-            var query = new kc.Query( dataSet ),
+            var xFormat = formatX || defaultFormat,
+                yFormat = formatY || defaultFormat;
 
-                xFormat = formatX || defaultFormat,
-                yFormat = formatY || defaultFormat
-
-                ;
-
-            var xRuler = this.xRuler, xMin, xMax, xDur, xGrid, xCount;
-            var yRuler = this.yRuler, yMin, yMax, yDur, yGrid, yCount;
+            var xRuler = this.xRuler, xMin, xMax, xGrid, xCount;
+            var yRuler = this.yRuler, yMin, yMax, yGrid, yCount;
 
             if( xCategories ){
                 rangeX = [0, xCategories.length-1];
             }
+            xMin = rangeX[ 0 ];
+            xMax = rangeX[ 1 ];
 
             if( yCategories ){
                 rangeY = [0, yCategories.length-1];
             }
+            yMin = rangeY[ 0 ];
+            yMax = rangeY[ 1 ]; 
 
-            if ( rangeX ) {
-
-                xMin = rangeX[ 0 ];
-                xMax = rangeX[ 1 ];
-                xDur = xMax - xMin;
-
-            } else {
-
-                xMin = query.count() && query.min( 'x' ).x || 0;
-                xMax = query.count() && query.max( 'x' ).x || 0;
-                xDur = xMax - xMin;
-                xDur = xDur || 40;
-                xMin -= xDur / 4;
-                xMax += xDur / 4;
-
-            }
-
-            if ( rangeY ) {
-
-                yMin = rangeY[ 0 ];
-                yMax = rangeY[ 1 ];
-                yDur = yMax - yMin;
-
-            } else {
-
-                yMin = query.count() && query.min( 'y' ).y || 0;
-                yMax = query.count() && query.max( 'y' ).y || 0;     
-                yDur = yMax - yMin;
-                yDur = yDur || 40;
-                yMin -= yDur / 4;
-                yMax += yDur / 4;
-
-            }
 
             xRuler.ref( xMin, xMax ).map( 0, width-heading );
             if(xCategories){
