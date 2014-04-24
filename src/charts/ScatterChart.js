@@ -3,13 +3,7 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
     format: function () {
         var origin = this.origin;
         var isEmpty = !( 'data_record' in origin );
-        return {
-            data_dim: +origin.data_dim,
-            data_average_x: isEmpty ? 0 : +origin.data_average_x * 100,
-            data_average_y: isEmpty ? 0 : +origin.data_average_y * 100,
-            unit_x: origin.unit_x,
-            unit_y: origin.unit_y,
-            data_record: origin.data_record && origin.data_record.map( function ( r ) {
+        var data_record = origin.data_record && origin.data_record.map( function ( r ) {
                 return {
                     x: +r.x * 100,
                     y: +r.y * 100,
@@ -17,7 +11,35 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
                     value: r.value,
                     percent: +r.percent * 100
                 };
-            } ) || []
+            } ) || [];
+
+        var query = new kc.Query( data_record );
+
+        var xMin, xMax, xDur;
+        xMin = query.count() && query.min( 'x' ).x || 0;
+        xMax = query.count() && query.max( 'x' ).x || 0;
+        xDur = xMax - xMin;
+        xDur = xDur || 40;
+        xMin -= xDur / 4;
+        xMax += xDur / 4;
+
+        var yMin, yMax, yDur;
+        yMin = query.count() && query.min( 'y' ).y || 0;
+        yMax = query.count() && query.max( 'y' ).y || 0;     
+        yDur = yMax - yMin;
+        yDur = yDur || 40;
+        yMin -= yDur / 4;
+        yMax += yDur / 4;
+
+        return {
+            data_dim: +origin.data_dim,
+            data_average_x: isEmpty ? 0 : +origin.data_average_x * 100,
+            data_average_y: isEmpty ? 0 : +origin.data_average_y * 100,
+            unit_x: origin.unit_x,
+            unit_y: origin.unit_y,
+            data_record: data_record,
+            rangeX : [xMin, xMax],
+            rangeY : [yMin, yMax]
         };
     }
 } );
@@ -147,6 +169,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         var param = this.param,
             data = this.data.format(),
             oxy = this.drawOxy( param, data );
+
         this.drawAverage( param, data, oxy );
         this.drawScatter( param, data, oxy );
     },
@@ -166,7 +189,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             x: 60,
             y: 20,
             formatX: appendUnit( data.unit_x ),
-            formatY: appendUnit( data.unit_y )
+            formatY: appendUnit( data.unit_y ),
+            rangeX : data.rangeX,
+            rangeY : data.rangeY
         } );
 
         return oxy;

@@ -28,6 +28,7 @@ var Mesh = kc.Mesh = kity.createClass( "Mesh", {
             color: '#CCC',
             rules: [],
             dash: [ 2, 2 ],
+            step: 1,
             fx: true
         }, param ) );
         this.addElement( 'lines', new kc.ElementList( {
@@ -38,30 +39,38 @@ var Mesh = kc.Mesh = kity.createClass( "Mesh", {
 
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
-            'updateRules': [ 'rules', 'type', 'dir', 'length' ],
+            'updateRules': [ 'rules', 'type', 'dir', 'length', 'step' ],
             'updateLines': [ 'width', 'color', 'dash' ]
         } );
     },
 
-    updateRules: function ( rules, type, dir, length ) {
+    updateRules: function ( rules, type, dir, length, step ) {
+
+        var i, rule, list=[], tmp;
+
+        for (var i = 0; i < rules.length; i += step) {
+            rule = rules[i];
+            if ( type == 'vertical' ) {
+                tmp = {
+                    x1: rule,
+                    x2: rule,
+                    y1: 0,
+                    y2: dir * length,
+                };
+            } else {
+                tmp = {
+                    x1: 0,
+                    x2: dir * length,
+                    y1: rule,
+                    y2: rule,
+                };
+            }
+
+            list.push(tmp);
+        };
+
         this.getElement( 'lines' ).update( {
-            list: rules.map( function ( rule ) {
-                if ( type == 'vertical' ) {
-                    return {
-                        x1: rule,
-                        x2: rule,
-                        y1: 0,
-                        y2: dir * length,
-                    };
-                } else {
-                    return {
-                        x1: 0,
-                        x2: dir * length,
-                        y1: rule,
-                        y2: rule,
-                    };
-                }
-            } )
+            list: list
         } );
     },
 

@@ -102,7 +102,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         for ( i = 0; i < methodParams.length; i++ ) {
             k = methodParams[ i ];
             // 值没有改变的话，不更新
-            if ( k in param && ( !this._firstUpdate || lastParam[ k ] != param[ k ] ) ) {
+            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) {//用!=符号， "" == 0为true
                 shouldCall = true;
                 break;
             }

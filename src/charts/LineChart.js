@@ -6,18 +6,19 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         var tmp, series = [], xAxis = [], min = 0, max = 100;
 
         var count =  '1' in this.origin? 2 : '0' in this.origin ? 1 : 0;
+        var pvReal, adPvReal, pvPred, adPvPred;
 
         if( count > 0 ){
             for(var i = 0; i < count; i++){
                 tmp = origin[ i + '' ];
 
-                var pvReal = tmp['pv']['real'],
-                    adPvReal = tmp['adPv']['real'],
-                    pvPred = tmp['pv']['pred'],
-                    adPvPred = tmp['adPv']['pred'];
+                pvReal = tmp['pv']['real'];
+                adPvReal = tmp['adPv']['real'];
+                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred'] ));
+                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']['pred'] ));
 
-                    pvPred.unshift( pvReal[ pvReal.length - 1 ] );
-                    adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
+                pvPred.unshift( pvReal[ pvReal.length - 1 ] );
+                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
 
                 series = series.concat([
                     {
@@ -52,7 +53,7 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
             var length = origin[0]['pv']['real'].length + origin[0]['pv']['pred'].length;
 
             for(var i = 0; i < length; i++){
-                xAxis.push(i+1+'');
+                xAxis.push('第'+(i+1)+'天');
             }
 
             var all = [], tmp;
@@ -72,7 +73,14 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         }
 
         return {
-            xAxisCategories :  xAxis || [],
+            xAxis :  {
+                categories : xAxis || [],
+                step : 100
+            },
+            // yAxis :  {
+            //     categories : yAxis || [],
+            //     step : 10
+            // },
             series : series || [],
             rangeY : [min, max]
         };
@@ -80,9 +88,37 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
 } );
 
 
-var defaultColors = [
-    '#60afe4', '#f39b7d', '#9dd3f7', '#f7c2b0'
-];
+var defaultStyle = {
+    color : [
+        '#60afe4', '#f39b7d', '#9dd3f7', '#f7c2b0'
+    ],
+    line : {
+        width : 2,
+        dash : [ 2 ]
+    },
+    indicatrix : {
+        color : '#BBB',
+        width : 1,
+        dash : [ 4, 2 ],
+    },
+    avgLine : {
+        color : '#DDD',
+        width : 1
+    },
+    coordinate : {
+        components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
+        heading : 50,
+        x : 60,
+        y : 20
+    },
+    circle : {
+        radius : 4,
+        stroke : {
+            width : 2,
+            color : '#FFF'
+        }
+    }
+};
 
 var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
     base: kc.Chart,
@@ -90,19 +126,14 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
     constructor: function ( target, param ) {
         this.callBase( target, param );
 
-        var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate({
-            components : [ 'xAxis', 'yAxis', 'yCat']
-        }) );
+        var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate(defaultStyle.coordinate) );   
 
-        this.yLine = this.addElement( 'avg-y-line', new kc.Line( {
-            color : '#DDD',
-            width : 1
-        } ) );
+        this.yLine = this.addElement( 'avg-y-line', new kc.Line( defaultStyle.avgLine ) );
 
         this.indicatrix =  this.addElement( 'indicatrix', new kc.Line({
-            color : '#BBB',
-            width : 1,
-            dash : [ 4, 2 ],
+            color : defaultStyle.indicatrix.color,
+            width : defaultStyle.indicatrix.width,
+            dash : defaultStyle.indicatrix.dash,
             y1 : 0,
             y2 : oxy.param.height + oxy.param.y,
         }) );
@@ -121,9 +152,10 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         var oxy = this.coordinate = this.drawOxy( param, data );
 
         if( oxy.param.rangeY ){
-            var y1 = oxy.yRuler.measure(oxy.param.rangeY[0]);
-            var y2 = oxy.yRuler.measure(oxy.param.rangeY[1]);
-            var averageY = (y1 + y2)/2;
+            var grid = oxy.yRuler.map_grid;
+            var y1 = grid[0];
+            var y2 = grid[ grid.length-1 ];
+            var averageY = (y1 + y2)/2 + oxy.param.y;
 
             this.yLine.update( {
                     x1: oxy.param.x,
@@ -138,6 +170,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         this.updateIndicatrix(-100, 0);
 
         this.addLegend( data, oxy );
+
     },
 
     updateCircle : function( data ){
@@ -149,16 +182,16 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         }
 
         this.circleArr = [];
-        var i, circle;
+        var i, circle, style = defaultStyle.circle;
         for (var i = 0; i < data.series.length; i++) {
-            circle = new kity.Circle(4, -20, -20);
+            circle = new kity.Circle(style.radius, -20, -20);
             circle.lineData = data.series[i];
             
             var pen = new kity.Pen();
-            pen.setWidth( 2 );
-            pen.setColor( '#FFF' );
+            pen.setWidth( style.stroke.width );
+            pen.setColor( style.stroke.color );
 
-            circle.fill( data.series[i].color || defaultColors[i] );
+            circle.fill( data.series[i].color || defaultStyle.color[i] );
             circle.stroke( pen );
 
             this.circleArr.push( circle );
@@ -186,9 +219,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             dataSet: data,
             width: this.getWidth() - 100,
             height: this.getHeight() - 50,
-            x: 60,
-            y: 20,
-            components: []
             // formatX: appendUnit( data.unit_x ),
             // formatY: appendUnit( data.unit_y )
         }
@@ -289,7 +319,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     pointsArr = array2points( segment.data, offset );
                     linesArr.push({
                             points : pointsArr,
-                            color : segment.color || series[i].color || defaultColors[i],
+                            color : segment.color || series[i].color || defaultStyle.color[i],
                             dash : segment.dash || null,
                             width: 2
                         });
@@ -309,7 +339,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                 pointsArr = array2points( series[i].data );
                 linesArr.push({
                         points : pointsArr,
-                        color : line.color || defaultColors[i],
+                        color : line.color || defaultStyle.color[i],
                         dash : null,
                         width: 2
                     });
@@ -322,8 +352,9 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             var offset = offset || 0;
             var pointsArr = [];
             for (j = 0; j < lineData.length; j++) {
-                yPos = oxy.yRuler.measure( lineData[j] );
-                point = [ xRuler.map_grid[j] + oxy.param.x + offset, yPos];
+                point = oxy.measurePoint( [j, lineData[j]] );
+                point[0] += offset;
+                                
                 pointsArr.push( point );
             }
             return pointsArr;
@@ -360,7 +391,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     position: 'absolute',
                     bottom: '-20px',
                     left : oxy.param.x + 'px',
-                    height : '30px',
+                    height : '20px',
                     width : 'auto',     
                 }).appendTo(container);
             }
@@ -386,7 +417,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     height : '2px',
                     width : '40px',
                     float : 'left',
-                    backgroundColor : (entry.color || entry.segments[0].color || defaultColors[i])
+                    backgroundColor : (entry.color || entry.segments[0].color || defaultStyle.color[i])
                 }).appendTo(this.legend);
             }
 

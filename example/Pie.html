@@ -46,27 +46,8 @@
         </form>
     </body>
     <script>
-        var paper = new kity.Paper(document.body);
-
-        var pie = new kity.Pie().translate(10, 10).fill('red');
+        var paper =  new kity.Paper(document.body);
+        var pie = new kity.Pie().fill('red');
         paper.addShape(pie);
-        paper.setWidth(600).setHeight(400);
-
-        var custom_t = document.getElementById('custom_t');
-        function redraw (e) {
-            var p = document.param;
-            pie.innerRadius = p.innerRadius.value | 0;
-            pie.outerRadius = p.outerRadius.value | 0;
-            pie.startAngle = p.startAngle.value | 0;
-            pie.pieAngle = p.pieAngle.value | 0;
-
-            pie.draw();
-            if(e && e.target.nextElementSibling) {
-                e.target.nextElementSibling.innerText = e.target.value;
-            }
-        }
-        redraw();
-        document.param.onchange = redraw;
-        document.param.oninput = redraw;
     </script>
 </html>
