@@ -135,7 +135,7 @@
             this.updatePosition();
         },
 
-        updatePosition: function() {
+        updatePosition: function () {
             if ( this.param.target ) {
                 this.setPosition( this.param.target.getInterestPoint() );
             }

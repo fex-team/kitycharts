@@ -16,6 +16,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 					brand: d.brand,
 					brandclass: d.brandclass,
 					percent: d.percent,
+					percentall: d.percentall && ( d.percentall * 100 + '%' ),
 					connects: []
 				} );
 			}
@@ -55,6 +56,14 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		this.callBase( target, param );
 		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
+		this.addElement( 'tooltip', new kc.Tooltip( {
+			background: '#f39488',
+			color: 'white',
+			at: 'up',
+			content: '',
+			padding: [ 2, 10, 2, 10 ],
+			anchorSize: 4
+		} ) );
 		this.setData( new kc.ForceData() );
 	},
 	highlightBrand: function ( e ) {
