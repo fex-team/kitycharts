@@ -37,6 +37,22 @@
                 width: 40%;
                 padding: 1%;
             }
+            .tooltip{
+                position: absolute;
+                opacity: 0.7;
+                background-color: white;
+                padding: 5px 10px;
+                border-radius: 5px;
+                box-shadow: 0 0 5px 5px #ccc;
+                width: 200px;
+            }
+            .tooltip>h1{
+                font-size: 20px;
+                font-family: Arial,'MicrosoftYahei';
+            }
+            .tooltip>p{
+                font-size: 12px;
+            }
         </style>
     </head>
     <body>
@@ -76,8 +92,8 @@
         $.ajax({
             url: 'data/ForceChart.json',
             success: function( data ) {
-                d = data; 
-                // d = JSON.parse(data);
+                //d = data; 
+                d = JSON.parse(data);
                 chart.getData().update(d["men"]);
             }
         });
@@ -99,5 +115,6 @@
         document.getElementById("sidebar").addEventListener("click",function(){
             chart.highlightBrand();
         },false);
+        
     </script>
 </html>

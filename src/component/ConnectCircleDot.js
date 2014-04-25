@@ -32,6 +32,24 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         this.on( "click", function ( e ) {
             selfparam.chart.highlightBrand( e );
         } );
+        var me = this;
+        var tooltip = document.createElement( 'div' );
+        tooltip.setAttribute( 'class', 'tooltip' );
+        this.on( "mouseenter", function ( e ) {
+            var container = selfparam.chart.paper.container;
+            container.appendChild( tooltip );
+            console.log( selfparam );
+            tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>' +
+                '<p><b>所属类别:</b>' + selfparam.brandclass + '</p>' +
+                '<p class="percent"><b>占比：</b>类别中：' + selfparam.percent * 100 + '%' + '总体：' + ( selfparam.percentall || '无数据' ) + '</p>';
+            tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
+            tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
+
+        } );
+        this.on( 'mouseout', function ( e ) {
+            var container = selfparam.chart.paper.container;
+            if ( container.hasChildNodes( tooltip ) ) container.removeChild( tooltip );
+        } );
     },
 
     registerUpdateRules: function () {

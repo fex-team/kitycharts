@@ -4,127 +4,148 @@
 		"brand": "AnnaSui",
 		"relatedbrand": "AnnaSui",
 		"relation": "0",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Armani",
 		"relation": "4",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Bulgari",
 		"relation": "44",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "burberry",
 		"relation": "62",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "CD",
 		"relation": "98",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Chanel",
 		"relation": "70",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "CK",
 		"relation": "10",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Davidoff",
 		"relation": "24",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Arden",
 		"relation": "34",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "SF",
 		"relation": "36",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Givenchy",
 		"relation": "14",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Gucci",
 		"relation": "8",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Heermes",
 		"relation": "14",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "HugoBoss",
 		"relation": "6",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Miyak",
 		"relation": "10",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Kenzo",
 		"relation": "20",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "lancome",
 		"relation": "24",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Lanvin",
 		"relation": "14",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "MJ",
 		"relation": "32",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Moschino",
 		"relation": "6",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "AnnaSui",
 		"relatedbrand": "Versace",
 		"relation": "56",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.04"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
@@ -136,553 +157,645 @@
 		"brand": "Armani",
 		"relatedbrand": "Armani",
 		"relation": "0",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Bulgari",
 		"relation": "16",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "burberry",
 		"relation": "68",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "CD",
 		"relation": "48",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Chanel",
 		"relation": "52",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "CK",
 		"relation": "12",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Davidoff",
 		"relation": "12",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Arden",
 		"relation": "2",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "SF",
 		"relation": "12",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Givenchy",
 		"relation": "12",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Gucci",
 		"relation": "28",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Heermes",
 		"relation": "34",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "HugoBoss",
 		"relation": "22",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Miyak",
 		"relation": "10",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Kenzo",
 		"relation": "2",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "lancome",
 		"relation": "18",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Lanvin",
 		"relation": "6",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "MJ",
 		"relation": "6",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Moschino",
 		"relation": "2",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Armani",
 		"relatedbrand": "Versace",
 		"relation": "26",
-		"percent": "0.25"
+		"percent": "0.25",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "AnnaSui",
 		"relation": "44",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Armani",
 		"relation": "16",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Bulgari",
 		"relation": "0",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "burberry",
 		"relation": "166",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "CD",
 		"relation": "92",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Chanel",
 		"relation": "98",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "CK",
 		"relation": "22",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Davidoff",
 		"relation": "22",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Arden",
 		"relation": "32",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "SF",
 		"relation": "66",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Givenchy",
 		"relation": "14",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Gucci",
 		"relation": "28",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Heermes",
 		"relation": "32",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "HugoBoss",
 		"relation": "18",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Miyak",
 		"relation": "10",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Kenzo",
 		"relation": "32",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "lancome",
 		"relation": "34",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Lanvin",
 		"relation": "10",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "MJ",
 		"relation": "32",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Moschino",
 		"relation": "24",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "22",
 		"brand": "Bulgari",
 		"relatedbrand": "Versace",
 		"relation": "66",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.06"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "AnnaSui",
 		"relation": "62",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Armani",
 		"relation": "68",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Bulgari",
 		"relation": "166",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "burberry",
 		"relation": "0",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "CD",
 		"relation": "254",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Chanel",
 		"relation": "212",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "CK",
 		"relation": "52",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Davidoff",
 		"relation": "68",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Arden",
 		"relation": "42",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "SF",
 		"relation": "54",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Givenchy",
 		"relation": "30",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Gucci",
 		"relation": "92",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Heermes",
 		"relation": "66",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "HugoBoss",
 		"relation": "48",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Miyak",
 		"relation": "20",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Kenzo",
 		"relation": "28",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "lancome",
 		"relation": "64",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Lanvin",
 		"relation": "32",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "MJ",
 		"relation": "40",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Moschino",
 		"relation": "12",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "burberry",
 		"relatedbrand": "Versace",
 		"relation": "208",
-		"percent": "0.15"
+		"percent": "0.15",
+		"percentall": "0.11"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "AnnaSui",
 		"relation": "98",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Armani",
 		"relation": "48",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Bulgari",
 		"relation": "92",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "burberry",
 		"relation": "254",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "CD",
 		"relation": "0",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Chanel",
 		"relation": "788",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "CK",
 		"relation": "46",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Davidoff",
 		"relation": "30",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Arden",
 		"relation": "62",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "SF",
 		"relation": "32",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Givenchy",
 		"relation": "36",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Gucci",
 		"relation": "134",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Heermes",
 		"relation": "62",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "HugoBoss",
 		"relation": "18",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Miyak",
 		"relation": "20",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Kenzo",
 		"relation": "28",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "lancome",
 		"relation": "190",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Lanvin",
 		"relation": "28",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "MJ",
 		"relation": "86",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Moschino",
 		"relation": "10",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "CD",
 		"relatedbrand": "Versace",
 		"relation": "106",
-		"percent": "0.35"
+		"percent": "0.35",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "AnnaSui",
 		"relation": "70",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Armani",
 		"relation": "52",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Bulgari",
 		"relation": "98",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "burberry",
 		"relation": "212",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "CD",
 		"relation": "788",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Chanel",
 		"relation": "0",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "CK",
 		"relation": "64",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Davidoff",
 		"relation": "36",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Arden",
 		"relation": "66",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
@@ -694,367 +807,428 @@
 		"brand": "Chanel",
 		"relatedbrand": "Givenchy",
 		"relation": "32",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Gucci",
 		"relation": "104",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Heermes",
 		"relation": "84",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "HugoBoss",
 		"relation": "34",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Miyak",
 		"relation": "30",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Kenzo",
 		"relation": "22",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "lancome",
 		"relation": "196",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Lanvin",
 		"relation": "16",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "MJ",
 		"relation": "72",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Moschino",
 		"relation": "6",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "33",
 		"brand": "Chanel",
 		"relatedbrand": "Versace",
 		"relation": "126",
-		"percent": "0.5"
+		"percent": "0.5",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "AnnaSui",
 		"relation": "10",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.15"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Armani",
 		"relation": "12",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Bulgari",
 		"relation": "22",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "burberry",
 		"relation": "52",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "CD",
 		"relation": "46",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Chanel",
 		"relation": "64",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "CK",
 		"relation": "0",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Davidoff",
 		"relation": "20",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Arden",
 		"relation": "12",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "SF",
 		"relation": "14",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Givenchy",
 		"relation": "2",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Gucci",
 		"relation": "12",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Heermes",
 		"relation": "18",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "HugoBoss",
 		"relation": "10",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Miyak",
 		"relation": "6",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Kenzo",
 		"relation": "16",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "lancome",
 		"relation": "20",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Lanvin",
 		"relation": "4",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "MJ",
 		"relation": "16",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Moschino",
 		"relation": "2",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "CK",
 		"relatedbrand": "Versace",
 		"relation": "28",
-		"percent": "0.6"
+		"percent": "0.6",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "AnnaSui",
 		"relation": "24",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Armani",
 		"relation": "12",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Bulgari",
 		"relation": "22",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "burberry",
 		"relation": "68",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "CD",
 		"relation": "30",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Chanel",
 		"relation": "36",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "CK",
 		"relation": "20",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Davidoff",
 		"relation": "0",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Arden",
 		"relation": "32",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "SF",
 		"relation": "24",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Givenchy",
 		"relation": "4",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Gucci",
 		"relation": "6",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Heermes",
 		"relation": "14",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "HugoBoss",
 		"relation": "6",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Miyak",
 		"relation": "22",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Kenzo",
 		"relation": "32",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "lancome",
 		"relation": "16",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Lanvin",
 		"relation": "14",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "MJ",
 		"relation": "18",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Moschino",
 		"relation": "12",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Davidoff",
 		"relatedbrand": "Versace",
 		"relation": "44",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "AnnaSui",
 		"relation": "34",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "Armani",
 		"relation": "2",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "Bulgari",
 		"relation": "32",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "burberry",
 		"relation": "42",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "CD",
 		"relation": "62",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "Chanel",
 		"relation": "66",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "CK",
 		"relation": "12",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
 		"relatedbrand": "Davidoff",
 		"relation": "32",
-		"percent": "0.2"
+		"percent": "0.2",
+		"percentall": "0.03"
 	}, {
 		"brandclass": "44",
 		"brand": "Arden",
