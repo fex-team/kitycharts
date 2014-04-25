@@ -75,7 +75,7 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         return {
             xAxis :  {
                 categories : xAxis || [],
-                step : 100
+                step : 1
             },
             // yAxis :  {
             //     categories : yAxis || [],
@@ -117,7 +117,8 @@ var defaultStyle = {
             width : 2,
             color : '#FFF'
         }
-    }
+    },
+    enableAnimation : true
 };
 
 var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
@@ -302,7 +303,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
             segments = series[i].segments;
 
-            if( segments ){
+            if( segments.length ){
                 for (var k = 0; k < segments.length; k++) {
                     var offset = 0;
                     if(k > 0){
@@ -321,7 +322,9 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                             points : pointsArr,
                             color : segment.color || series[i].color || defaultStyle.color[i],
                             dash : segment.dash || null,
-                            width: 2
+                            width: defaultStyle.line.width,
+                            defaultPos : oxy.param.height,
+                            factor : +new Date
                         });
 
                     // 将位置合成一条线并记录在serie的positions
@@ -335,16 +338,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     }
 
                 }
-            }else{
-                pointsArr = array2points( series[i].data );
-                linesArr.push({
-                        points : pointsArr,
-                        color : line.color || defaultStyle.color[i],
-                        dash : null,
-                        width: 2
-                    });
-
-                line.values = line.data;
             }
         }
 
@@ -363,7 +356,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         var multilines = this.getElement( 'multilines');
         multilines.update({
             elementClass: kc.Polyline,
-            list: linesArr
+            list: linesArr,
+            fx: defaultStyle.enableAnimation
         });
 
         return data;

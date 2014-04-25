@@ -3,7 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>Line Chart test</title>
-        <script src="../kity/dist/kitygraph.all.min.js"></script>
+
+
+        <script src="../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../kity/src'
+            });
+        </script>
+        <script src="../kity/dev-lib/exports.js"></script>
+        <script src="../kity/dev-lib/dev-start.js"></script>
+        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+
         <script src="../build.js"></script>
         <script src="lib/jquery-2.1.0.min.js"></script>
         <style>
@@ -12,7 +23,7 @@
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 300px;
+                bottom: 30px;
             }
 
             .tip{
@@ -89,7 +100,7 @@
 
         linechart.update();
         $.ajax({
-            url: 'data/liuliang_chart.json',
+            url: 'data/liuliang_chart1.json',
             // url: 'data/lld2.json',
             success: function( data ) {
                 linechart.getData().update(data);

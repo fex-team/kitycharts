@@ -95,9 +95,10 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         };
     },
 
-    updateByRule: function ( method, methodParams, param ) {
+    updateByRule: function ( method, methodParams, param, animatedBeginValueCopy, progress ) {
         var shouldCall, lastParam, i, k;
         lastParam = this.param;
+        
 
         for ( i = 0; i < methodParams.length; i++ ) {
             k = methodParams[ i ];
@@ -109,13 +110,16 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         }
 
         if ( shouldCall ) {
-            this[ method ].apply( this, methodParams.map( function ( name ) {
+            var currentParam = methodParams.map( function ( name ) {
                 return name in param ? param[ name ] : lastParam[ name ];
-            } ) );
+            } );
+
+            currentParam = currentParam.concat( [ animatedBeginValueCopy, progress ] );
+            this[ method ].apply( this, currentParam );
         }
     },
 
-    update: function ( param ) {
+    update: function ( param, animatedBeginValueCopy, progress ) {
 
         var key, rules, method, params, i, shouldCall, updated;
 
@@ -134,7 +138,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         updated = [];
         // 从更新规则中更新
         for ( method in rules ) {
-            this.updateByRule( method, rules[ method ], param );
+            this.updateByRule( method, rules[ method ], param, animatedBeginValueCopy, progress );
             updated = updated.concat( rules[ method ] );
         }
 

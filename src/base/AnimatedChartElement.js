@@ -1,5 +1,11 @@
 ( function ( kc, kity ) {
     var utlis = kity.Utils;
+    utlis.copy = function(obj){
+        if(typeof obj !== 'object') return obj;
+        if(typeof obj === 'function') return null;
+        return JSON.parse(JSON.stringify(obj));
+    };
+
     kc.AnimatedChartElement = kity.createClass( "AnimatedChartElement", {
         base: kc.ChartElement,
 
@@ -19,13 +25,13 @@
         },
 
         animate: function ( afterAnimated, duration, easing, callback ) {
-            //return this.update( afterAnimated );
             if ( !this.fxEnabled() ) {
                 return this.update( afterAnimated );
             }
 
             var canAnimated = this.getAnimatedParam(),
                 beforeAnimated = this.param,
+                beforeAnimatedCopy = utlis.copy( beforeAnimated ),
                 beginParam = {},
                 finishParam = {},
                 staticParam = {},
@@ -47,8 +53,10 @@
             animator = new kity.Animator( {
                 beginValue: beginParam,
                 finishValue: finishParam,
-                setter: function ( target, param ) {
-                    target.update( param );
+                setter: function ( target, param, timeline ) {
+                    var progress = timeline.getValueProportion();
+                    if(progress > 1) progress=1;
+                    target.update( param, beforeAnimatedCopy, progress );
                 }
             } );
 
