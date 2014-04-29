@@ -75,18 +75,9 @@
     </body>
     <script>
         var paper, chart;
-        var colors = {
-            "20":"#305cb0",
-            "21":"#95599e",
-            "22":"#e01e14",
-            "32":"#9cc0ef",
-            "33":"#219bf2",
-            "43":"#f08700",
-            "44":"#75b219"
-        };
-        // [,
-        //               "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
-        //               "#aeb117","#da92c6"]
+        var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219",
+                      "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
+                      "#aeb117","#da92c6"];
         chart = new kc.ForceChart('chart',{colors:colors});
         var d;
         $.ajax({

@@ -5,7 +5,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 		var brandSet = {};
 		var brandList = [];
 		var connectList = [];
-
+		var classList = [];
 		for ( var key in origin ) {
 			var d = origin[ key ];
 			if ( !brandSet[ d.brand ] ) {
@@ -25,6 +25,9 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 				relatedbrand: d.relatedbrand,
 				relation: d.relation
 			} );
+			if ( classList.indexOf( d.brandclass ) === -1 ) {
+				classList.push( d.brandclass );
+			}
 		}
 		for ( var i = 0; i < connectList.length; i++ ) {
 			var brandId = brandSet[ connectList[ i ].brand ].id;
@@ -46,7 +49,8 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 		}
 		return {
 			brandTop: brandTop,
-			brandList: brandList
+			brandList: brandList,
+			classList: classList
 		};
 	}
 } );
@@ -117,7 +121,15 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var connects = this.getElement( "connects" );
 		var data = this.data.format();
 		var param = this.param;
-		var colors = param.colors;
+		var colors = ( function () {
+			var c = {};
+			var cList = data.classList;
+			for ( var i = 0; i < cList.length; i++ ) {
+				var color = param.colors[ i ];
+				c[ cList[ i ] ] = color;
+			}
+			return c;
+		} )();
 		var list = data.brandList;
 		var paperWidth = this.getWidth();
 		var paperHeight = this.getHeight();

@@ -44,7 +44,6 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 '<p class="percent"><b>占比：</b>类别中：' + selfparam.percent * 100 + '%' + '总体：' + ( selfparam.percentall || '无数据' ) + '</p>';
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
-
         } );
         this.on( 'mouseout', function ( e ) {
             var container = selfparam.chart.paper.container;
