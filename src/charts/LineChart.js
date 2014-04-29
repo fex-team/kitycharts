@@ -5,20 +5,21 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
         
         var tmp, series = [], xAxis = [], min = 0, max = 100;
 
-        var count =  '1' in this.origin? 2 : '0' in this.origin ? 1 : 0;
         var pvReal, adPvReal, pvPred, adPvPred;
 
-        if( count > 0 ){
-            for(var i = 0; i < count; i++){
-                tmp = origin[ i + '' ];
+        var yDim = origin.y_dim;
 
-                pvReal = tmp['pv']['real'];
-                adPvReal = tmp['adPv']['real'];
-                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred'] ));
-                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']['pred'] ));
+        if( yDim && yDim.length > 0 ){
+            for(var i = 0; i < yDim.length; i++){
+                tmp = yDim[ i ];
 
-                pvPred.unshift( pvReal[ pvReal.length - 1 ] );
-                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] );
+                pvReal = tmp['pv']&&tmp['pv']['real']||[];
+                adPvReal = tmp['adPv']&&tmp['adPv']['real']||[];
+                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred']||[] ));
+                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']&&tmp['adPv']['pred']||[] ));
+
+                pvPred.unshift( pvReal[ pvReal.length - 1 ] || 0 );
+                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] || 0);
 
                 series = series.concat([
                     {
@@ -50,12 +51,6 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
                 ]);
             }
 
-            var length = origin[0]['pv']['real'].length + origin[0]['pv']['pred'].length;
-
-            for(var i = 0; i < length; i++){
-                xAxis.push('第'+(i+1)+'天');
-            }
-
             var all = [], tmp;
             for(var i in series){
                 tmp = series[ i ]
@@ -74,8 +69,8 @@ var LineData = kc.LineData = kity.createClass( 'LineData', {
 
         return {
             xAxis :  {
-                categories : xAxis || [],
-                step : 1
+                categories : origin.x_dim || [],
+                step : origin.x_dim ? Math.floor( origin.x_dim.length/10 ) : 10
             },
             // yAxis :  {
             //     categories : yAxis || [],
@@ -118,7 +113,7 @@ var defaultStyle = {
             color : '#FFF'
         }
     },
-    enableAnimation : true
+    enableAnimation : false
 };
 
 var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
@@ -238,47 +233,85 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
         this.paper.on( 'mousemove', function (ev) {
             var oxy = self.coordinate;
-                param = oxy.param
-                data = self.formattedData;;
+            if(!oxy) return;
+
+            var param = oxy.param,
+                data = self.formattedData;
             var oev = ev.originEvent;
             var x = oev.offsetX;
             var y = oev.offsetY;
             var i, l = self.circleArr.lenth;
             
             var reuslt = oxy.xRuler.leanTo( x - oxy.param.x, 'map' );
-            if( !reuslt || reuslt.index > data.series[0].positions.length - 1 ) return;
+
+            var maxLength = 0;
+            var lenArr = [], tmpL;
+            for (i = 0; i < data.series.length; i++) {
+                tmpL = data.series[i].positions.length;
+                if( tmpL > maxLength ){
+                    maxLength = tmpL;
+                }
+            }
+
+            if( !reuslt || reuslt.index > maxLength ) return;
 
             var pX = reuslt.value + oxy.param.x;
 
             var pY = 0;
-            var index = reuslt.index;
+            var index = reuslt.index, tmpPos;
 
             for (i = 0; i < self.circleArr.length; i++) {
-                pY = data.series[i].positions[index][1];
-                self.circleArr[i].setCenter(pX, pY);
+                tmpPos = data.series[i].positions[index];
+                if(tmpPos){
+                    pY = tmpPos[1];
+                    self.circleArr[i].setCenter(pX, pY);
+                }else{
+                    self.circleArr[i].setCenter(-100, -100);
+                }
+
             }
 
             self.updateIndicatrix(pX, oxy.param.height + oxy.param.y);
 
             self.currentIndex = index;
-        } );
 
-        this.paper.on('click', function(ev){
-            var oxy = self.coordinate;
-            if( self.param.onCircleClick && ev.targetShape.lineData){
-                var target = ev.targetShape,
-                    index = self.currentIndex;
+            if( self.param.onCircleHover){
                 var info = {
-                    circle : target,
-                    lineData : target.lineData,
-                    position : target.getCenter(),
-                    value : target.lineData.values[ index ],
+                    posX : pX,
                     label : oxy.getXLabels()[ index ],
                     index : index,
                     marginLeft : oxy.param.x,
                     marginTop : oxy.param.y,
                     data : data
                 };
+                self.param.onCircleHover( info );
+            }
+        } );
+
+        this.paper.on('click', function(ev){
+            var oxy = self.coordinate;
+            if(!oxy) return;
+
+            if( self.param.onCircleClick && (ev.targetShape.lineData || Math.abs(self.indicatrix.param.x1 - ev.originEvent.offsetX) < 10) ){
+                var target = ev.targetShape,
+                    index = self.currentIndex,
+                    indicatrixParam = self.indicatrix.param;
+
+                var info = {
+                    circle : target,
+                    lineData : target.lineData,
+                    position : target.getCenter ? target.getCenter() : { x: indicatrixParam.x1, y: oxy.param.height/2 },
+                    label : oxy.getXLabels()[ index ],
+                    index : index,
+                    marginLeft : oxy.param.x,
+                    marginTop : oxy.param.y,
+                    data : self.formattedData
+                };
+
+                if( target.lineData ){
+                    info.value = target.lineData.values[ index ];
+                }
+
                 self.param.onCircleClick( info );
             }
         });
