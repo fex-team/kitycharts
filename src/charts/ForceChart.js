@@ -58,6 +58,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	base: kc.Chart,
 	constructor: function ( target, param ) {
 		this.callBase( target, param );
+		//add chart elements
 		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
 		this.addElement( 'tooltip', new kc.Tooltip( {
@@ -86,14 +87,12 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		var clickedbrand = e.target.param.brand;
 		var clickedbrandConnects = e.target.param.connects;
-		//console.log( clickedbrandConnects );
 		var checkrelate = function ( brand ) {
 			for ( var s = 0; s < clickedbrandConnects.length; s++ ) {
 				if ( brand === clickedbrandConnects[ s ].relatedbrandname ) return true;
 			}
 			return false;
 		};
-		//console.log( clickedbrandConnects );
 		for ( var i = 0; i < elList.length; i++ ) {
 			var b = elList[ i ].param.brand;
 			if ( b === clickedbrand || checkrelate( b ) ) {
@@ -112,8 +111,17 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 
 		}
 	},
-	renderLegend: function ( target ) {
-
+	renderLegend: function () {
+		var data = this.data.format();
+		var target = document.getElementById( this.param.legendTarget );
+		var colors = this.param.colors;
+		var cList = data.classList;
+		var items = [];
+		for ( var i = 0; i < cList.length; i++ ) {
+			var legend = '<li><div class="color-block" style="background:' + colors[ i ] + '"></div><span>' + cList[ i ] + '</span></li>';
+			items.push( legend );
+		}
+		target.innerHTML = items.join( "" );
 	},
 	adjustScatter: function () {
 		var mode = this.param.mode;
@@ -282,5 +290,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			this.param[ key ] = args[ key ];
 		}
 		this.adjustScatter();
+		this.renderLegend();
 	}
 } );

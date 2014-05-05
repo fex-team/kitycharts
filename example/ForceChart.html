@@ -34,16 +34,23 @@
             }
             .select{
                 display: inline-block;
-                width: 40%;
-                padding: 1%;
+                padding: 20px 10px 0 20px;
+                text-align: center;
+            }
+            .select a{
+                display: inline-block;
+                opacity: 0.7;
+            }
+            .select a:hover{
+                opacity: 1
             }
             .tooltip{
                 position: absolute;
-                opacity: 0.7;
+                opacity: 0.9;
                 background-color: white;
                 padding: 5px 10px;
                 border-radius: 5px;
-                box-shadow: 0 0 5px 5px #ccc;
+                box-shadow: 0 0 5px 5px rgba(0,0,0,.3);
                 width: 200px;
             }
             .tooltip>h1{
@@ -53,21 +60,47 @@
             .tooltip>p{
                 font-size: 12px;
             }
+            .color-block{
+                width: 20px;
+                height: 15px;
+                display: inline-block;
+                margin-left: 20px;
+                border-radius: 3px;
+            }
+            .color-block.active{
+                margin-left: 10px;
+            }
+            ul#legend{
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                position: absolute;
+                bottom: 40px;
+            }
+            ul#legend>li{
+                height: 20px;
+                cursor: pointer;
+                opacity: 0.8
+            }
+            ul#legend>li:hover{
+                opacity: 1
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div id="sidebar">
                 <div class="select">
-                    <p>布局</p>
-                    <a href="javascript:void(0)" id="s-force">力导向</a>
-                    <a href="javascript:void(0)" id="s-circle">关联</a>
+                    <a href="javascript:void(0)" id="s-force"><img src="images/icon-force.png"/></a>
+                    <a href="javascript:void(0)" id="s-circle"><img src="images/icon-circle.png"/></a>
                 </div>
                 <div class="select">
-                    <p>性别</p>
-                    <a href="javascript:void(0)" id="s-men">男</a>
-                    <a href="javascript:void(0)" id="s-women">女</a>
+                    <a href="javascript:void(0)" id="s-men"><img src="images/male.png"/></a>
+                    <a href="javascript:void(0)" id="s-women"><img src="images/female.png"/></a>
                 </div>
+                <ul id='legend'>
+                    
+                </ul>
             </div>
             <div id="chart">
             </div>
@@ -78,7 +111,7 @@
         var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219",
                       "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
                       "#aeb117","#da92c6"];
-        chart = new kc.ForceChart('chart',{colors:colors});
+        chart = new kc.ForceChart('chart',{colors:colors,legendTarget:'legend'});
         var d;
         $.ajax({
             url: 'data/ForceChart.json',
@@ -105,6 +138,12 @@
         },false);
         document.getElementById("sidebar").addEventListener("click",function(){
             chart.highlightBrand();
+        },false);
+        
+        var Clegend = document.getElementById('legend');
+        Clegend.addEventListener("click",function(e){
+            var targetTagName = e.target.tagName;
+            
         },false);
         
     </script>
