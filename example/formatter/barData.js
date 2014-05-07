@@ -17,12 +17,23 @@ var BarData = kc.BarData = kity.createClass( 'BarData', {
         var min = Math.min.apply([], all) || 0;
         var max = Math.max.apply([], all) || 100;
 
-        return {
-                yAxis  : {
-                    categories : origin.yAxis && origin.yAxis.categories || []
-                },
-                series : origin.series || [],
-                rangeX : [min, max]
-            };
+        var axisType = 'yAxis', rangeType = 'rangeX';
+        if( origin.chart.type != 'bar' ){
+            axisType = 'xAxis';
+            rangeType = 'rangeY';
+        }
+
+        var result = {
+            chart : origin.chart,
+            series : origin.series || []
+        };
+
+        result[ axisType ] = {
+                    categories : origin.xAxis && origin.xAxis.categories || []
+                };
+
+        result[ rangeType ] = [min, max];
+
+        return result;
     }
 } );

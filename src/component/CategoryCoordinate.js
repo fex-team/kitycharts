@@ -76,8 +76,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 width: 300,
                 height: 300,
                 heading: 20,
-                gapX: 0,
-                gapY: 0,
+                gapX: 0, // X轴第一个刻度距离原点距离
+                gapY: 0, // Y轴第一个刻度距离原点距离
                 unitX: null,
                 unitY: null,
                 meshX: true,

@@ -1,3 +1,6 @@
+(function(){
+
+
 var defaultStyle = {
     color : [
         ['#fb8072', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
@@ -30,7 +33,8 @@ var defaultStyle = {
         heading : 50,
         x : 60,
         y : 20,
-        gapY : 30
+        // gapX : 30,
+        // gapY : 30
     },
     circle : {
         radius : 4,
@@ -47,6 +51,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     base: kc.ChartFrame,
 
     constructor: function ( target, param ) {
+        this.defaultStyle = defaultStyle;
         this.callBase( target, param );
 
         this.setData( new kc.BarData() );
@@ -55,8 +60,21 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     },
 
     update: function () {
+
         this.callBase();
         var data = this.currentData;
+        this.isBar = data.chart.type == 'bar';
+
+        var coordParam = {};
+        if(this.isBar){
+            coordParam['gapY'] = 30;
+        }else{
+            coordParam['gapX'] = 30;
+        }
+        
+
+        this.coordinate.update(coordParam);
+
         this.formattedData = this.drawBars( this.param, data, this.coordinate );
     },
 
@@ -154,6 +172,23 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
     drawBars: function ( param, data, oxy ) {
 
+        var rotateAngle,
+            measureCategoryMethod,
+            measureValueMethod;
+
+        if( this.isBar ){
+            this.defaultStyle.coordinate.gapX = 30;
+            rotateAngle = 90;
+            measureCategoryMethod = 'measurePointY';
+            measureValueMethod    = 'measurePointX';
+        }else{
+            this.defaultStyle.coordinate.gapY = 30;
+            rotateAngle = 0;
+            measureCategoryMethod = 'measurePointX';
+            measureValueMethod    = 'measurePointY';
+        }
+
+
         var xRuler = oxy.xRuler,
             yRuler = oxy.yRuler;
 
@@ -162,24 +197,11 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
             barData,
             bar;
 
-
-
-        var bar = new kc.Bar({
-            height: 300,
-            width: 100,
-            rotate : 45
-        });
-
-        // this.addElement('bar', bar);
-        // bar.setPosition(200, 200);
-        // // bar.setRotate(30);
-        // bar.update();
-
-
-        var tmp, valArr, posArr, barList = [], posY,
+        var tmp, valArr, posArr, barList = [], posY, barParam,
             width = defaultStyle.bar.width, offset = 0,
             distance = width + defaultStyle.bar.margin,
-            m0 = oxy.measurePointX( 0 );
+            m0 = oxy[ measureValueMethod ]( 0 )
+            ;
 
         for (i = 0; i < series.length; i++) {
 
@@ -198,25 +220,32 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
                 valArr = [];
                 posArr = [];
-                posY = oxy.measurePointY( j );
+                posY = oxy[ measureCategoryMethod ]( j );
                 offset = (series.length - 1)*distance/2;
 
                 for (k = 0; k < tmp.length; k++) {
                     valArr[ k ] = sum( tmp.slice(0, k+1) );
-                    posArr[ k ] = oxy.measurePointX( valArr[ k ] ) - m0;
+                    posArr[ k ] = oxy[ measureValueMethod ]( valArr[ k ] ) - m0;
 
 
-
-                    barList.unshift({
+                    barParam = {
                         // dir: -1,
                         // offset: 0,
                         color: defaultStyle.color[i][k],
                         width: width,
-                        height: posArr[ k ],
-                        rotate: 90,
-                        x : oxy.measurePointX( 0 ),
-                        y : posY - offset + distance*i
-                    });
+                        height: posArr[ k ] * (this.isBar ? 1 : -1),
+                        rotate: rotateAngle
+                    };
+
+                    if( this.isBar ){
+                        barParam.x = oxy[ measureValueMethod ]( 0 );
+                        barParam.y = posY - offset + distance*i ;
+                    }else{
+                        barParam.x = posY - offset + distance*i ;
+                        barParam.y = oxy[ measureValueMethod ]( 0 );
+                    }
+
+                    barList.unshift(barParam);
 
                 }
 
@@ -225,7 +254,6 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
                         x : posArr,
                         y : posY
                     } );
-
 
             }
             
@@ -250,3 +278,6 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     }
 
 } );
+
+
+})();

@@ -3,7 +3,8 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
-
+        var defaultStyle = this.defaultStyle;
+        
         var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate(defaultStyle.coordinate) );   
 
         this.yLine = this.addElement( 'avg-y-line', new kc.Line( defaultStyle.avgLine ) );

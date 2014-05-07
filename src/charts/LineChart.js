@@ -1,3 +1,5 @@
+(function(){
+
 var defaultStyle = {
     color : [
         '#60afe4', '#f39b7d', '#9dd3f7', '#f7c2b0'
@@ -35,6 +37,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
     base: kc.ChartFrame,
 
     constructor: function ( target, param ) {
+        this.defaultStyle = defaultStyle;
         this.callBase( target, param );
 
         this.setData( new kc.LineData() );
@@ -248,3 +251,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
     }
 
 } );
+
+
+})();
