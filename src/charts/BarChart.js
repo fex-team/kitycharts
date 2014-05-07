@@ -16,8 +16,8 @@ var defaultStyle = {
         ['#ccebc5']
     ],
     bar : {
-        width : 8,
-        margin: 2
+        width : 4,
+        margin: 1
     },
     indicatrix : {
         color : '#BBB',
@@ -33,8 +33,7 @@ var defaultStyle = {
         heading : 50,
         x : 60,
         y : 20,
-        // gapX : 30,
-        // gapY : 30
+        // minX : -550
     },
     circle : {
         radius : 4,
@@ -71,8 +70,12 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         }else{
             coordParam['gapX'] = 30;
         }
-        
 
+        var minY = data.yAxis && data.yAxis.min;
+        if( kity.Utils.isNumber( minY ) ){
+            coordParam['minY'] = minY;
+        }
+        
         this.coordinate.update(coordParam);
 
         this.formattedData = this.drawBars( this.param, data, this.coordinate );
@@ -199,8 +202,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
         var tmp, valArr, posArr, barList = [], posY, barParam,
             width = defaultStyle.bar.width, offset = 0,
-            distance = width + defaultStyle.bar.margin,
-            m0 = oxy[ measureValueMethod ]( 0 )
+            distance = data.chart.mirror? 0 : width + defaultStyle.bar.margin
             ;
 
         for (i = 0; i < series.length; i++) {
@@ -225,8 +227,8 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
                 for (k = 0; k < tmp.length; k++) {
                     valArr[ k ] = sum( tmp.slice(0, k+1) );
-                    posArr[ k ] = oxy[ measureValueMethod ]( valArr[ k ] ) - m0;
 
+                    posArr[ k ] = oxy.measureValueRange( valArr[ k ], this.isBar? 'x' : 'y' );
 
                     barParam = {
                         // dir: -1,

@@ -43,7 +43,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         "xCat" : function(){
             this.addElement( 'xCat', new kc.Categories( {
                 at: 'bottom',
-                // rotate: -30
+                rotate: -30
             } ) );
         },
         "yCat" : function(){
@@ -85,7 +85,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 formatX: null,
                 formatY: null,
                 rangeX: null,
-                rangeY: null
+                rangeY: null,
+                minX: null,
+                minY: null
             }, param ) );
 
             this._initRulers();
@@ -105,7 +107,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                'updateAll': [ 'dataSet', 'width', 'height', 'heading', 'gapX', 'gapY', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY' ]
+                'updateAll': [ 'dataSet', 'width', 'height', 'heading', 'gapX', 'gapY', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY', 'minX', 'minY' ]
             } );
         },
         getXRuler: function () {
@@ -131,22 +133,27 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return this.yLabels;
         },
 
-        measurePoint : function(point){
+        measurePoint : function( point ){
             var p = this.param;
             var x = this.xRuler.measure(point[0]) + p.x,
                 y = this.yRuler.measure(point[1]) + p.y + p.heading;
             return [ x, y ];
         },
 
-        measurePointX : function(x){
+        measurePointX : function( x ){
             return this.xRuler.measure(x) + this.param.x;
         },
 
-        measurePointY : function(y){
+        measurePointY : function( y ){
             return this.yRuler.measure(y) + this.param.y + this.param.heading;
         },
 
-        updateAll: function ( dataSet, width, height, heading, gapX, gapY, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY, minX, maxX, minY, maxY ) {
+        measureValueRange : function( val, type ){
+            var method = type == 'x'? 'measurePointX' : 'measurePointY';
+            return  this[ method ]( val ) - this[ method ]( 0 );
+        },
+
+        updateAll: function ( dataSet, width, height, heading, gapX, gapY, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY, minX, minY ) {
 
             var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
             var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
@@ -160,13 +167,13 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             if( xCategories ){
                 rangeX = [0, xCategories.length-1];
             }
-            xMin = rangeX[ 0 ];
+            xMin = kity.Utils.isNumber( minX )? minX : rangeX[ 0 ];
             xMax = rangeX[ 1 ];
 
             if( yCategories ){
                 rangeY = [0, yCategories.length-1];
             }
-            yMin = rangeY[ 0 ];
+            yMin = kity.Utils.isNumber( minY )? minY : rangeY[ 0 ];
             yMax = rangeY[ 1 ]; 
 
 
@@ -175,7 +182,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xGrid = xRuler.gridByCategories( xCategories.length, dataSet.xAxis.step );
             }else{
                 xCount = width / 60 | 0;
-                xGrid = xRuler.gridByCount( xCount, null, true );
+                xGrid = xRuler.gridByCount( xCount, null, true, minX );
             }
             
             yRuler.ref( yMin, yMax ).map( height-heading-gapY, 0 );
@@ -183,7 +190,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yGrid = yRuler.gridByCategories( yCategories.length, dataSet.yAxis.step );
             }else{
                 yCount = height / 40 | 0;
-                yGrid = yRuler.gridByCount( yCount, null, true );
+                yGrid = yRuler.gridByCount( yCount, null, true, minY );
             }
             
             for (var i = 0; i < yGrid.map.length; i++) {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bar Chart test</title>
+
+
+        <script src="../../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../../kity/src'
+            });
+        </script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
+        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 300px;
+                /*background: #EEE;*/
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="basic-column" class="container"></div>
+        <div id="column-group" class="container"></div>
+        <div id="column-mirror" class="container"></div>
+        <div id="bar-mirror" class="container"></div>
+
+        <div id="basic-bar" class="container"></div>
+
+        <div id="stacked-column" class="container"></div>
+    </body>
+    <script src="../formatter/barData.js"></script>
+    <script>
+        var basicColumn = new kc.BarChart('basic-column', {});
+        // basicColumn.update();
+        $.ajax({
+            url: '../data/bar-column/basic-column.json',
+            success: function( data ) {
+                basicColumn.getData().update(data);
+            }
+        });
+
+
+        var columnGroup = new kc.BarChart('column-group', {});
+        // columnGroup.update();
+        $.ajax({
+            url: '../data/bar-column/column-group.json',
+            success: function( data ) {
+                columnGroup.getData().update(data);
+            }
+        });
+
+        var columnMirror = new kc.BarChart('column-mirror', {});
+        // columnMirror.update();
+        $.ajax({
+            url: '../data/bar-column/column-mirror.json',
+            success: function( data ) {
+                columnMirror.getData().update(data);
+            }
+        });
+
+        var barMirror = new kc.BarChart('bar-mirror', {});
+        // barMirror.update();
+        $.ajax({
+            url: '../data/bar-column/bar-mirror.json',
+            success: function( data ) {
+                barMirror.getData().update(data);
+            }
+        });
+
+        var basicBar = new kc.BarChart('basic-bar', {});
+        // basicBar.update();
+        $.ajax({
+            url: '../data/bar-column/basic-bar.json',
+            success: function( data ) {
+                basicBar.getData().update(data);
+            }
+        });
+
+        var stackedColumn = new kc.BarChart('stacked-column', {});
+        // stackedColumn.update();
+        $.ajax({
+            url: '../data/bar-column/stacked-column.json',
+            success: function( data ) {
+                stackedColumn.getData().update(data);
+            }
+        });
+    </script>
+</html>
