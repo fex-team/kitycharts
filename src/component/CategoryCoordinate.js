@@ -42,7 +42,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         },
         "xCat" : function(){
             this.addElement( 'xCat', new kc.Categories( {
-                at: 'bottom'
+                at: 'bottom',
+                // rotate: -30
             } ) );
         },
         "yCat" : function(){
@@ -75,6 +76,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 width: 300,
                 height: 300,
                 heading: 20,
+                gapX: 0,
+                gapY: 0,
                 unitX: null,
                 unitY: null,
                 meshX: true,
@@ -97,12 +100,12 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             var func, components;
             components = this.param.components = (this.param.components === undefined)? ["xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis"] : this.param.components;
             
-            this.processComponents( componentsIniter );
+            this._processComponents( componentsIniter );
 
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                'updateAll': [ 'dataSet', 'width', 'height', 'heading', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY' ]
+                'updateAll': [ 'dataSet', 'width', 'height', 'heading', 'gapX', 'gapY', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY' ]
             } );
         },
         getXRuler: function () {
@@ -112,7 +115,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return this.yRuler;
         },
 
-        processComponents : function(composer){
+        _processComponents : function(composer){
             var com;
             for( com in this.param.components ){
                 func = composer[ this.param.components[ com ] ];
@@ -135,7 +138,15 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return [ x, y ];
         },
 
-        updateAll: function ( dataSet, width, height, heading, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY ) {
+        measurePointX : function(x){
+            return this.xRuler.measure(x) + this.param.x;
+        },
+
+        measurePointY : function(y){
+            return this.yRuler.measure(y) + this.param.y + this.param.heading;
+        },
+
+        updateAll: function ( dataSet, width, height, heading, gapX, gapY, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY, minX, maxX, minY, maxY ) {
 
             var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
             var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
@@ -159,7 +170,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             yMax = rangeY[ 1 ]; 
 
 
-            xRuler.ref( xMin, xMax ).map( 0, width-heading );
+            xRuler.ref( xMin, xMax ).map( gapX, width-heading );
             if(xCategories){
                 xGrid = xRuler.gridByCategories( xCategories.length, dataSet.xAxis.step );
             }else{
@@ -167,7 +178,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xGrid = xRuler.gridByCount( xCount, null, true );
             }
             
-            yRuler.ref( yMin, yMax ).map( height-heading, 0 );
+            yRuler.ref( yMin, yMax ).map( height-heading-gapY, 0 );
             if(yCategories){
                 yGrid = yRuler.gridByCategories( yCategories.length, dataSet.yAxis.step );
             }else{
@@ -241,8 +252,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 step: dataSet.yAxis && dataSet.yAxis.step || 1
             } );
 
-            this.xArrow && this.xArrow.setTransform( new kity.Matrix().translate( width, height + 0.5 ) );
-            this.yArrow && this.yArrow.setTransform( new kity.Matrix().rotate( -90 ).translate( 0.5, 0 ) );
+            this.xArrow && this.xArrow.setTranslate( width, height + 0.5 );
+            this.yArrow && this.yArrow.setRotate( -90 ).setTranslate( 0.5, 0 );
         }
     };
 } )() );

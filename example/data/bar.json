@@ -1,0 +1,16 @@
+{
+    "yAxis": {
+        "categories": ["Africa", "America", "Asia", "Europe", "Oceania"]
+    },
+
+    "series": [{
+        "name": "Year 1800",
+        "data": [[100, 100, 100], 100, 635, 203, 20]
+    }, {
+        "name": "Year 1900",
+        "data": [[200, 200, 200], 200, 900, 408, 40]
+    }, {
+        "name": "Year 2008",
+        "data": [[100, 200, 300], 300, 1000, 732, 60]
+    }]
+}

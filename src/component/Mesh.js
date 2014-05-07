@@ -48,6 +48,7 @@ var Mesh = kc.Mesh = kity.createClass( "Mesh", {
 
         var i, rule, list=[], tmp;
 
+        // step == 0 不绘制
         for (var i = 0; i < rules.length; i += step) {
             rule = rules[i];
             if ( type == 'vertical' ) {

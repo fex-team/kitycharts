@@ -1,10 +1,20 @@
 var defaultStyle = {
     color : [
-        '#60afe4', '#f39b7d', '#9dd3f7', '#f7c2b0'
+        ['#fb8072', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
+        ['#80b1d3', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
+        ['#fdb462', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
+        ['#8dd3c7', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
+        ['#ffffb3'],
+        ['#bebada'],
+        ['#b3de69'],
+        ['#fccde5'],
+        ['#d9d9d9'],
+        ['#bc80bd'],
+        ['#ccebc5']
     ],
-    line : {
-        width : 2,
-        dash : [ 2 ]
+    bar : {
+        width : 8,
+        margin: 2
     },
     indicatrix : {
         color : '#BBB',
@@ -19,7 +29,8 @@ var defaultStyle = {
         components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
         heading : 50,
         x : 60,
-        y : 20
+        y : 20,
+        gapY : 30
     },
     circle : {
         radius : 4,
@@ -31,53 +42,25 @@ var defaultStyle = {
     enableAnimation : false
 };
 
-var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
+
+var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     base: kc.ChartFrame,
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
 
-        this.setData( new kc.LineData() );
-        this.addElement( 'multilines', new kc.ElementList() );
-        this.bindAction();
+        this.setData( new kc.BarData() );
+        this.addElement( 'bars', new kc.ElementList() );
+        // this.bindAction();
     },
 
     update: function () {
         this.callBase();
         var data = this.currentData;
-        this.formattedData = this.drawLines( this.param, data, this.coordinate );
-        this.updateCircle( data );
+        this.formattedData = this.drawBars( this.param, data, this.coordinate );
     },
 
-    updateCircle : function( data ){
-        var l = this.circleArr && this.circleArr.length;
-        if( l && l > 0 ){
-            for (var i = 0; i < l; i++) {
-                this.circleArr.pop().remove();
-            }
-        }
 
-        this.circleArr = [];
-        var i, circle, style = defaultStyle.circle;
-        for (var i = 0; i < data.series.length; i++) {
-            circle = new kity.Circle(style.radius, -20, -20);
-            circle.lineData = data.series[i];
-            
-            var pen = new kity.Pen();
-            pen.setWidth( style.stroke.width );
-            pen.setColor( style.stroke.color );
-
-            circle.fill( data.series[i].color || defaultStyle.color[i] );
-            circle.stroke( pen );
-
-            this.circleArr.push( circle );
-        }
-        this.canvas.addShapes( this.circleArr );
-    },
-
-    hideCircle : function(circle){
-        circle.setCenter(-100, -100);
-    },
 
     bindAction : function(){
         var self = this;
@@ -169,79 +152,98 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         });
     },
 
-    drawLines: function ( param, data, oxy ) {
+    drawBars: function ( param, data, oxy ) {
 
         var xRuler = oxy.xRuler,
             yRuler = oxy.yRuler;
 
         var series = data.series,
-            i, j, k, yPos, point, pointsArr = [], linesArr = [],
-            lineData,
-            segments, line;
+            i, j, k, m, yPos, point, pointsArr = [], linesArr = [],
+            barData,
+            bar;
+
+
+
+        var bar = new kc.Bar({
+            height: 300,
+            width: 100,
+            rotate : 45
+        });
+
+        // this.addElement('bar', bar);
+        // bar.setPosition(200, 200);
+        // // bar.setRotate(30);
+        // bar.update();
+
+
+        var tmp, valArr, posArr, barList = [], posY,
+            width = defaultStyle.bar.width, offset = 0,
+            distance = width + defaultStyle.bar.margin,
+            m0 = oxy.measurePointX( 0 );
 
         for (i = 0; i < series.length; i++) {
 
-            line = series[i];
-            line.positions = [];
-            line.values = [];
+            bar = series[ i ];
+            bar.values = [];
+            bar.positions = [];
 
-            segments = series[i].segments;
+            barData = series[i].data;
 
-            if( segments.length ){
-                for (var k = 0; k < segments.length; k++) {
-                    var offset = 0;
-                    if(k > 0){
-                        var index = k, anchor = 0;
-                        while(--index >= 0){
-                            anchor += segments[ index ].data.length;
-                        }
-                        offset = oxy.xRuler.map_grid[ anchor - k ];
-                    }else{
-                        offset = 0;
-                    }
-                    var segment = segments[k];
+            for (j = 0; j < barData.length; j++) {
 
-                    pointsArr = array2points( segment.data, offset );
-                    linesArr.push({
-                            points : pointsArr,
-                            color : segment.color || series[i].color || defaultStyle.color[i],
-                            dash : segment.dash || null,
-                            width: defaultStyle.line.width,
-                            defaultPos : oxy.param.height,
-                            factor : +new Date
-                        });
+                tmp = barData[ j ];
+                if( !kity.Utils.isArray( barData[ j ] ) ){
+                    tmp = [ barData[ j ] ];
+                }
 
-                    // 将位置合成一条线并记录在serie的positions
-                    var l = segment.data.length-1;
-                    if( k == segments.length-1 ){
-                        line.values = line.values.concat( segment.data );
-                        line.positions = line.positions.concat( pointsArr );
-                    }else{
-                        line.values = line.values.concat( segment.data.slice(0, l) );
-                        line.positions = line.positions.concat( pointsArr.slice(0, l) );
-                    }
+                valArr = [];
+                posArr = [];
+                posY = oxy.measurePointY( j );
+                offset = (series.length - 1)*distance/2;
+
+                for (k = 0; k < tmp.length; k++) {
+                    valArr[ k ] = sum( tmp.slice(0, k+1) );
+                    posArr[ k ] = oxy.measurePointX( valArr[ k ] ) - m0;
+
+
+
+                    barList.unshift({
+                        // dir: -1,
+                        // offset: 0,
+                        color: defaultStyle.color[i][k],
+                        width: width,
+                        height: posArr[ k ],
+                        rotate: 90,
+                        x : oxy.measurePointX( 0 ),
+                        y : posY - offset + distance*i
+                    });
 
                 }
+
+                bar.values.push( valArr );
+                bar.positions.push( {
+                        x : posArr,
+                        y : posY
+                    } );
+
+
             }
+            
         }
 
-        function array2points(lineData, offset){
-            var offset = offset || 0;
-            var pointsArr = [];
-            for (j = 0; j < lineData.length; j++) {
-                point = oxy.measurePoint( [j, lineData[j]] );
-                point[0] += offset;
-                                
-                pointsArr.push( point );
+        function sum(arr){
+            var sum = 0;
+            for(var i = 0; i < arr.length; i++){
+                sum += arr[i];
             }
-            return pointsArr;
+            return sum;
         }
 
-        var multilines = this.getElement( 'multilines');
-        multilines.update({
-            elementClass: kc.Polyline,
-            list: linesArr,
-            fx: defaultStyle.enableAnimation
+        var bars = this.getElement( 'bars');
+        bars.update({
+            elementClass: kc.Bar,
+            list: barList,
+            fx: true
         });
 
         return data;

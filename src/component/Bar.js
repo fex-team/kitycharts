@@ -30,9 +30,10 @@
             this.callBase( kity.Utils.extend( {
                 dir: -1,
                 offset: 0,
-                color: 'blue',
+                color: '#000',
                 width: 10,
-                height: 0
+                height: 0,
+                rotate: 0
             }, param ) );
             this.rect = new kity.Path();
             this.canvas.addShape( this.rect );
@@ -40,20 +41,20 @@
 
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                draw: [ 'width', 'height', 'dir' ],
+                draw: [ 'width', 'height', 'dir', 'rotate' ],
                 fill: [ 'color' ]
             } );
         },
 
         getAnimatedParam: function () {
-            return [ 'width', 'height', 'offset', 'color' ];
+            return [ 'width', 'height', 'offset']; //color暂时去掉color
         },
 
         fill: function ( color ) {
             this.rect.fill( color );
         },
 
-        draw: function ( width, height, dir ) {
+        draw: function ( width, height, dir, rotate ) {
 
             var ww = width / 2;
 
@@ -66,7 +67,7 @@
             seq.push( 'L', ww, 0 );
             seq.push( 'Z' );
 
-            this.rect.setPathData( seq );
+            this.rect.setPathData( seq ).setRotate( rotate );
 
             this.interestPoint = {
                 x: 0,

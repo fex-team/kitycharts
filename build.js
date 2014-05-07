@@ -46,7 +46,9 @@ var dependience = [
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
-    'src/charts/LineChart.js'
+    'src/charts/ChartFrame.js',
+    'src/charts/LineChart.js',
+    'src/charts/BarChart.js'
 ];
 
 function nodeBuild() {

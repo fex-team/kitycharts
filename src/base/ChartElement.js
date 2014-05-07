@@ -10,7 +10,6 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     constructor: function ( param ) {
 
         this.canvas = new kity.Group();
-        this.canvas.setAnchor( 0, 0 );
 
         this.visible = true;
 
