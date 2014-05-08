@@ -16,7 +16,7 @@ var defaultStyle = {
         ['#ccebc5']
     ],
     bar : {
-        width : 4,
+        width : 8,
         margin: 1
     },
     indicatrix : {

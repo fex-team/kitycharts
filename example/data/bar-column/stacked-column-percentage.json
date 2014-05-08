@@ -1,6 +1,7 @@
 {
     "chart": {
-        "type": "column"
+        "type": "column",
+        "percentage": true
     },
 
     "xAxis": {

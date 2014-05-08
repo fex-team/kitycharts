@@ -113,23 +113,23 @@
             if ( anchorSize > 0 ) {
                 var side = Vector.fromPoints( d1, d2 ),
                     halfLength = side.length() / 2;
-                var a1 = Vector.add( d1, Vector.normalize( side, halfLength - anchorSize ) ),
-                    dt = Vector.add( Vector.verticalNormalize( side ), Vector.normalize( side ) ),
-                    a2 = Vector.add( a1, Vector.multipy( dt, anchorSize ) ),
-                    a3 = Vector.add( a1, Vector.normalize( side, anchorSize * 2 ) );
+                var a1 = d1.add(side.normalize(halfLength - anchorSize )),
+                    dt = side.rotate(90).add(side.normalize()),
+                    a2 = a1.add(dt.multipy(anchorSize )),
+                    a3 = a1.add(side.normalize(anchorSize * 2 ));
                 drawer.lineTo( a1.x, a1.y );
                 drawer.lineTo( a2.x, a2.y );
                 drawer.lineTo( a3.x, a3.y );
             }
 
             drawer.lineTo( d2.rp[ 0 ].x, d2.rp[ 0 ].y );
-            drawer.carcTo( borderRadius, d2.rp[ 1 ].x, d2.rp[ 1 ].y, 0, 1 );
+            drawer.carcTo( borderRadius, 0, 1, d2.rp[ 1 ].x, d2.rp[ 1 ].y );
             drawer.lineTo( d3.rp[ 0 ].x, d3.rp[ 0 ].y );
-            drawer.carcTo( borderRadius, d3.rp[ 1 ].x, d3.rp[ 1 ].y, 0, 1 );
+            drawer.carcTo( borderRadius, 0, 1, d3.rp[ 1 ].x, d3.rp[ 1 ].y );
             drawer.lineTo( d4.rp[ 0 ].x, d4.rp[ 0 ].y );
-            drawer.carcTo( borderRadius, d4.rp[ 1 ].x, d4.rp[ 1 ].y, 0, 1 );
+            drawer.carcTo( borderRadius, 0, 1, d4.rp[ 1 ].x, d4.rp[ 1 ].y );
             drawer.lineTo( d1.rp[ 0 ].x, d1.rp[ 0 ].y );
-            drawer.carcTo( borderRadius, d1.rp[ 1 ].x, d1.rp[ 1 ].y, 0, 1 );
+            drawer.carcTo( borderRadius, 0, 1, d1.rp[ 1 ].x, d1.rp[ 1 ].y );
             drawer.close();
 
             this.updatePosition();
