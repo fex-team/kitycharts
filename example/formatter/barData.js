@@ -16,7 +16,7 @@ var BarData = kc.BarData = kity.createClass( 'BarData', {
             for (j = 0; j < tmp.data.length; j++) {
                 num = tmp.data[ j ];
                 tmpNumArr = kity.Utils.isArray( num )? num : [ num ];
-                tmpTotal = sum( tmpNumArr );
+                tmpTotal = kc.Tools.arraySum( tmpNumArr );
                 all.push( tmpTotal );
 
                 if( origin.chart.percentage ){
@@ -26,14 +26,6 @@ var BarData = kc.BarData = kity.createClass( 'BarData', {
                 }
 
             }
-        }
-
-        function sum(arr){
-            var sum = 0;
-            for(var i = 0; i < arr.length; i++){
-                sum += arr[i];
-            }
-            return sum;
         }
 
         if( !origin.chart.percentage ){

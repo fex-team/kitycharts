@@ -42,7 +42,7 @@ var defaultStyle = {
             color : '#FFF'
         }
     },
-    enableAnimation : false
+    enableAnimation : true
 };
 
 
@@ -69,11 +69,6 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
             coordParam['gapY'] = 30;
         }else{
             coordParam['gapX'] = 30;
-        }
-
-        var minY = data.yAxis && data.yAxis.min;
-        if( kity.Utils.isNumber( minY ) ){
-            coordParam['minY'] = minY;
         }
         
         this.coordinate.update(coordParam);
@@ -273,7 +268,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         bars.update({
             elementClass: kc.Bar,
             list: barList,
-            fx: true
+            fx: this.defaultStyle.enableAnimation
         });
 
         return data;

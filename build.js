@@ -11,6 +11,7 @@ var dependience = [
     'src/util/Query.js',
     'src/util/Ruler.js',
     'src/util/sharpen.js',
+    'src/util/tools.js',
 
     'src/base/ChartEvent.js',
     'src/base/EventHandler.js',

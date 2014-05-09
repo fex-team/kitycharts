@@ -1,83 +1,77 @@
 var LineData = kc.LineData = kity.createClass( 'LineData', {
     base: kc.Data,
     format: function () {
-        var origin = this.origin;
-        
-        var tmp, series = [], xAxis = [], min = 0, max = 100;
+        var origin = this.origin,
+            queryPath = kity.Utils.queryPath;
 
-        var pvReal, adPvReal, pvPred, adPvPred;
+        var i, j, k, all = [], seg;
 
-        var yDim = origin.y_dim;
+        var min = 0;
+        var max = 100;
 
-        if( yDim && yDim.length > 0 ){
-            for(var i = 0; i < yDim.length; i++){
-                tmp = yDim[ i ];
+        var totalMap = {}, total, str;
 
-                pvReal = tmp['pv']&&tmp['pv']['real']||[];
-                adPvReal = tmp['adPv']&&tmp['adPv']['real']||[];
-                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred']||[] ));
-                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']&&tmp['adPv']['pred']||[] ));
+        if( origin.series ){
+            for(i = 0; i < origin.series.length; i++){
+                seg = origin.series[i].segments;
 
-                pvPred.unshift( pvReal[ pvReal.length - 1 ] || 0 );
-                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] || 0);
+                for (j = 0; j < seg.length; j++) {
+                    seg[ j ].originData = kity.Utils.copy( seg[ j ].data );
+                    all = all.concat( seg[ j ].data );
 
-                series = series.concat([
-                    {
-                        "name": tmp["label"] + "-pv",
-                        "segments" : [
-                            {
-                                "dash" : null,
-                                "data" : pvReal
-                            },
-                            {
-                                "dash" : [2],
-                                "data" : pvPred
+
+
+                    for(k=0; k < seg[ j ].data.length; k++){
+                        total = 0;
+
+                        for(n=0; n < origin.series.length; n++){
+                            str = j + '' + k;
+                            if( str in totalMap ){
+                                break;
+                            }else{
+                                total += origin.series[ n ].segments[ j ].data[ k ];
+                                totalMap[ str ] = total;
                             }
-                        ]
-                    },
-                    {
-                        "name": tmp["label"] + "-adPv",
-                        "segments" : [
-                            {
-                                "dash" : null,
-                                "data" : adPvReal
-                            },
-                            {
-                                "dash" : [2],
-                                "data" : adPvPred
-                            }
-                        ]
-                    }
-                ]);
-            }
+                        }
 
-            var all = [], tmp;
-            for(var i in series){
-                tmp = series[ i ]
-                if( tmp.segments && tmp.segments.length > 0 ){
-                    for (var j = 0; j < tmp.segments.length; j++) {
-                        all = all.concat( tmp.segments[j].data );
+
+                        // seg[ j ].data[ k ] = seg[ j ].data[ k ]/totalMap[ str ] * 100;
+
                     }
-                }else{
-                    all = all.concat( origin.series[ i ].data );
+
+
                 }
             }
 
-            var min = Math.min.apply([], all) || 0;
-            var max = Math.max.apply([], all) || 100;
+
+            if( !queryPath( 'chart.percentage', origin ) ){
+                min = Math.min.apply( [], all );
+                max = Math.max.apply( [], all );
+            }
         }
 
-        return {
-            xAxis :  {
-                categories : origin.x_dim || [],
-                step : origin.x_dim ? Math.floor( origin.x_dim.length/10 ) : 10
-            },
-            // yAxis :  {
-            //     categories : yAxis || [],
-            //     step : 10
-            // },
-            series : series || [],
-            rangeY : [min, max]
-        };
+
+
+        origin.rangeY = [min, max];
+
+        var queryPath = kity.Utils.queryPath;
+
+        var result = {
+                chart : origin.chart,
+                xAxis :  {
+                    categories : queryPath( 'xAxis.categories', origin ) || [],
+                    step : 1
+                },
+
+                yAxis : queryPath( 'yAxis', origin ),
+
+                plotOptions : origin.plotOptions,
+
+                series : origin.series || [],
+                rangeY : [min, max]
+
+            };
+
+        return result;
     }
 } );

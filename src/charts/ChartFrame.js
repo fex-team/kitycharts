@@ -38,6 +38,12 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
                 } );
         }
 
+
+
+        
+        // this.coordinate.update(param);
+
+
         this.updateIndicatrix(-100, 0);
 
         // this.addLegend( data, oxy );
@@ -62,6 +68,11 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
             height: this.getHeight() - 50,
             // formatX: appendUnit( data.unit_x ),
             // formatY: appendUnit( data.unit_y )
+        }
+
+        var minY = kity.Utils.queryPath('yAxis.min', data);
+        if( kity.Utils.isNumber( minY ) ){
+            pass['minY'] = minY;
         }
 
         if( data ){

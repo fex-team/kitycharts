@@ -34,7 +34,7 @@ var Query = kc.Query = kity.createClass( 'Query', ( function () {
                     success.push( data );
                 }
             }
-            return new Query( data );
+            return new Query( success );
         },
 
         count: function ( condition ) {
@@ -102,6 +102,64 @@ var Query = kc.Query = kity.createClass( 'Query', ( function () {
 
         list: function () {
             return this.dataSet;
+        },
+
+        groupBy : function( field ){
+            var data = {}, tmp = {}, i, j, val,
+                dataSet = this.dataSet;
+
+            var mapper = guessMapper( mapper );
+
+            var arr = this.distinct( field ),
+                f;
+
+            for( i in arr ){
+                f = arr[ i ];
+                data[ f ] = [];
+
+                for( j = 0; j < dataSet.length; j++ ){
+                    if( f == dataSet[ j ][ field ] ){
+                        val = mapper.call( dataSet[ j ], dataSet[ j ], field );
+                        data[ f ].push( val );
+                    }
+                }
+
+            }
+
+            return data;
+        },
+
+        distinct : function( field ){
+            var tmp = {}, arr = [];
+            for( i = 0; i < this.dataSet.length; i++ ){
+                tmp[ this.dataSet[ i ][ field ] ] = 1;
+            }
+
+            for( i in tmp ){
+                arr.push( i );
+            }
+
+            return arr;
+        },
+
+        select : function( fields ){
+            fields = typeof fields === 'string'? [ fields ] : fields;
+
+            var arr = [], tmp = {}, i, j, field;
+
+            for( i = 0; i < this.dataSet.length; i++ ){
+                
+                tmp = {};
+                for (j = 0; j < fields.length; j++) {
+                    field = fields[ j ];
+                    tmp[ field ] = this.dataSet[ i ][ field ]
+                }
+                arr.push( tmp );
+            }
+
+            return new Query( arr );
         }
+
     };
+    
 } )() );
