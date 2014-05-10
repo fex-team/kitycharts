@@ -1,56 +1,10 @@
 (function(){
 
-
-var defaultStyle = {
-    color : [
-        ['#fb8072', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
-        ['#80b1d3', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
-        ['#fdb462', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
-        ['#8dd3c7', '#006d2c', '#2ca25f', '#66c2a4', '#99d8c9', '#ccece6', '#edf8fb'],
-        ['#ffffb3'],
-        ['#bebada'],
-        ['#b3de69'],
-        ['#fccde5'],
-        ['#d9d9d9'],
-        ['#bc80bd'],
-        ['#ccebc5']
-    ],
-    bar : {
-        width : 8,
-        margin: 1
-    },
-    indicatrix : {
-        color : '#BBB',
-        width : 1,
-        dash : [ 4, 2 ],
-    },
-    avgLine : {
-        color : '#DDD',
-        width : 1
-    },
-    coordinate : {
-        components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
-        heading : 50,
-        x : 60,
-        y : 20,
-        // minX : -550
-    },
-    circle : {
-        radius : 4,
-        stroke : {
-            width : 2,
-            color : '#FFF'
-        }
-    },
-    enableAnimation : true
-};
-
-
 var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     base: kc.ChartFrame,
 
     constructor: function ( target, param ) {
-        this.defaultStyle = defaultStyle;
+        this.config = kc.BarColumnChartDefaultConfig;
         this.callBase( target, param );
 
         this.setData( new kc.BarData() );
@@ -75,8 +29,6 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
         this.formattedData = this.drawBars( this.param, data, this.coordinate );
     },
-
-
 
     bindAction : function(){
         var self = this;
@@ -169,18 +121,18 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     },
 
     drawBars: function ( param, data, oxy ) {
-
+        var config = this.config,
+            opt = config.plotOptions;
         var rotateAngle,
             measureCategoryMethod,
             measureValueMethod;
 
         if( this.isBar ){
-            this.defaultStyle.coordinate.gapX = 30;
+            config.yAxis.padding.bottom = config.xAxis.padding.left;
             rotateAngle = 90;
             measureCategoryMethod = 'measurePointY';
             measureValueMethod    = 'measurePointX';
         }else{
-            this.defaultStyle.coordinate.gapY = 30;
             rotateAngle = 0;
             measureCategoryMethod = 'measurePointX';
             measureValueMethod    = 'measurePointY';
@@ -196,8 +148,8 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
             bar;
 
         var tmp, valArr, posArr, barList = [], posY, barParam,
-            width = defaultStyle.bar.width, offset = 0,
-            distance = data.chart.mirror? 0 : width + defaultStyle.bar.margin
+            width = opt.bar.width, offset = 0,
+            distance = data.chart.mirror? 0 : width + opt.bar.margin
             ;
 
         for (i = 0; i < series.length; i++) {
@@ -228,7 +180,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
                     barParam = {
                         // dir: -1,
                         // offset: 0,
-                        color: defaultStyle.color[i][k],
+                        color: config.color[i][k],
                         width: width,
                         height: posArr[ k ] * (this.isBar ? 1 : -1),
                         rotate: rotateAngle
@@ -268,7 +220,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         bars.update({
             elementClass: kc.Bar,
             list: barList,
-            fx: this.defaultStyle.enableAnimation
+            fx: this.config.enableAnimation
         });
 
         return data;

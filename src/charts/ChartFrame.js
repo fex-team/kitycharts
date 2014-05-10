@@ -3,19 +3,17 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
-        var defaultStyle = this.defaultStyle;
-        
-        var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate(defaultStyle.coordinate) );   
+        var config = this.config;
+        var coordConf = kc.ChartsConfig.setCoordinateConf( config );
+        var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate( coordConf ) );
 
-        this.yLine = this.addElement( 'avg-y-line', new kc.Line( defaultStyle.avgLine ) );
-
-        this.indicatrix =  this.addElement( 'indicatrix', new kc.Line({
-            color : defaultStyle.indicatrix.color,
-            width : defaultStyle.indicatrix.width,
-            dash : defaultStyle.indicatrix.dash,
-            y1 : 0,
-            y2 : oxy.param.height + oxy.param.y,
-        }) );
+        // this.indicatrix =  this.addElement( 'indicatrix', new kc.Line({
+        //     color : config.indicatrix.color,
+        //     width : config.indicatrix.width,
+        //     dash : config.indicatrix.dash,
+        //     y1 : 0,
+        //     y2 : oxy.param.height + oxy.param.y,
+        // }) );
     },
 
     update: function () {
@@ -23,49 +21,29 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
         var data = this.currentData = this.data.format();
 
         var oxy = this.coordinate = this.drawOxy( param, data );
-
-        if( oxy.param.rangeY ){
-            var grid = oxy.yRuler.map_grid;
-            var y1 = grid[0];
-            var y2 = grid[ grid.length-1 ];
-            var averageY = (y1 + y2)/2 + oxy.param.y;
-
-            this.yLine.update( {
-                    x1: oxy.param.x,
-                    x2: oxy.param.x + oxy.param.width,
-                    y1: averageY,
-                    y2: averageY
-                } );
-        }
-
-
-
         
         // this.coordinate.update(param);
 
-
-        this.updateIndicatrix(-100, 0);
+        // this.updateIndicatrix(-100, 0);
 
         // this.addLegend( data, oxy );
 
     },
 
-    updateIndicatrix : function(pX, pY){
-        this.indicatrix.update({
-            x1 : pX,
-            x2 : pX,
-            y1 : 0,
-            y2 : pY
-        });        
-    },
+    // updateIndicatrix : function(pX, pY){
+    //     this.indicatrix.update({
+    //         x1 : pX,
+    //         x2 : pX,
+    //         y1 : 0,
+    //         y2 : pY
+    //     });        
+    // },
 
     drawOxy: function ( param, data ) {
         var oxy = this.getElement( 'oxy' );
 
         var pass = {
             dataSet: data,
-            width: this.getWidth() - 100,
-            height: this.getHeight() - 50,
             // formatX: appendUnit( data.unit_x ),
             // formatY: appendUnit( data.unit_y )
         }
@@ -132,7 +110,7 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
                     height : '2px',
                     width : '40px',
                     float : 'left',
-                    backgroundColor : (entry.color || entry.segments[0].color || defaultStyle.color[i])
+                    backgroundColor : (entry.color || entry.segments[0].color || config.color[i])
                 }).appendTo(this.legend);
             }
 

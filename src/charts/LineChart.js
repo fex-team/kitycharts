@@ -1,59 +1,10 @@
 (function(){
 
-var defaultStyle = {
-    color : [
-        'rgb(31, 119, 180)',
-        'rgb(174, 199, 232)',
-        'rgb(255, 127, 14)',
-        'rgb(255, 187, 120)'
-    ],
-
-    finalColor: 'rgb(255, 187, 120)',
-
-    line : {
-        width : 2,
-        dash : [ 2 ]
-    },
-    label : {
-        dot : {
-            radius : 3,
-            margin : -15
-        },
-        text : {
-            color : '#333'
-        }
-    },
-    indicatrix : {
-        color : '#BBB',
-        width : 1,
-        dash : [ 4, 2 ],
-    },
-    avgLine : {
-        color : '#DDD',
-        width : 1
-    },
-    coordinate : {
-        components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
-        heading : 50,
-        x : 60,
-        y : 20,
-        gapX : 0
-    },
-    circle : {
-        radius : 4,
-        stroke : {
-            width : 2,
-            color : '#FFF'
-        }
-    },
-    enableAnimation : true
-};
-
 var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
     base: kc.ChartFrame,
 
     constructor: function ( target, param ) {
-        this.defaultStyle = defaultStyle;
+        this.config = kc.LineChartDefaultConfig;
         this.callBase( target, param );
 
         this.setData( new kc.LineData() );
@@ -79,7 +30,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         }
 
         this.circleArr = [];
-        var i, circle, style = defaultStyle.circle;
+        var i, circle, style = this.config.interaction.circle;
         for (var i = 0; i < data.series.length; i++) {
             circle = new kity.Circle(style.radius, -20, -20);
             circle.lineData = data.series[i];
@@ -88,7 +39,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             pen.setWidth( style.stroke.width );
             pen.setColor( style.stroke.color );
 
-            circle.fill( data.series[i].color || defaultStyle.color[i] || defaultStyle.finalColor );
+            circle.fill( data.series[i].color || this.config.color[i] || this.config.finalColor );
             circle.stroke( pen );
 
             this.circleArr.push( circle );
@@ -115,7 +66,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             var y = oev.offsetY;
             var i, l = self.circleArr.length;
             
-            var reuslt = oxy.xRuler.leanTo( x - oxy.param.x, 'map' );
+            var reuslt = oxy.xRuler.leanTo( x - oxy.param.margin.left, 'map' );
 
             var maxLength = 0;
             var lenArr = [], tmpL;
@@ -128,7 +79,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
             if( !reuslt || reuslt.index > maxLength ) return;
 
-            var pX = reuslt.value + oxy.param.x;
+            var pX = reuslt.value + oxy.param.margin.left;
 
             var pY = 0;
             var index = reuslt.index, tmpPos;
@@ -144,7 +95,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
             }
 
-            self.updateIndicatrix(pX, oxy.param.height + oxy.param.y);
+            // self.updateIndicatrix(pX, oxy.param.height + oxy.param.margin.top);
 
             self.currentIndex = index;
 
@@ -153,8 +104,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     posX : pX,
                     label : oxy.getXLabels()[ index ],
                     index : index,
-                    marginLeft : oxy.param.x,
-                    marginTop : oxy.param.y,
+                    marginLeft : oxy.param.margin.left,
+                    marginTop : oxy.param.margin.top,
                     data : data
                 };
                 self.param.onCircleHover( info );
@@ -176,8 +127,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     position : target.getCenter ? target.getCenter() : { x: indicatrixParam.x1, y: oxy.param.height/2 },
                     label : oxy.getXLabels()[ index ],
                     index : index,
-                    marginLeft : oxy.param.x,
-                    marginTop : oxy.param.y,
+                    marginLeft : oxy.param.margin.left,
+                    marginTop : oxy.param.margin.top,
                     data : self.formattedData
                 };
 
@@ -196,6 +147,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             yRuler = oxy.yRuler;
 
         var series = data.series,
+            opt = this.config.plotOptions,
             i, j, k, m, yPos, point, pointsArr = [], linesArr = [], dotArr = [],
             lineData, lineColor,
             segments, line;
@@ -224,7 +176,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     var segment = segments[k];
 
                     pointsArr = array2points( segment.data, offset );
-                    lineColor = segment.color || line.color || defaultStyle.color[i] || defaultStyle.finalColor;
+                    lineColor = segment.color || line.color || this.config.color[i] || this.config.finalColor;
 
                     if( queryPath( 'chart.type', data ) == 'area' ){
                         var areaPointArr = kity.Utils.copy( pointsArr );
@@ -254,7 +206,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                             points : pointsArr,
                             color : lineColor,
                             dash : segment.dash || null,
-                            width: defaultStyle.line.width,
+                            width: opt.line.width,
                             defaultPos : oxy.param.height,
                             factor : +new Date
                         });
@@ -276,16 +228,16 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     line.values = line.values.concat( tmpSegmentData );
                     line.positions = line.positions.concat( tmpPointsArr );
 
-
-                    if( getLabelAttr( 'enable' ) ){
+                    
+                    if( opt.label.enabled || opt.line.dot.enabled ){
 
                         var tmpPos, dotParam, radius = 0;
 
                         for (m = 0; m < line.positions.length; m++) {
                             tmpPos = line.positions[ m ];
 
-                            if( getLabelAttr( 'dot' ) ){
-                                radius = defaultStyle.label.dot.radius;
+                            if( opt.line.dot.enabled ){
+                                radius = this.config.plotOptions.line.dot.radius;
                             }
 
                             dotParam = {
@@ -295,11 +247,11 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                                 y: tmpPos[1]
                             };
 
-                            if( getLabelAttr( 'text' ) ){
+                            if( opt.label.enabled ){
 
                                 dotParam.label = {
-                                        margin: defaultStyle.label.dot.margin,
-                                        color:  defaultStyle.label.text.color,
+                                        margin: this.config.plotOptions.label.text.margin,
+                                        color:  this.config.plotOptions.label.text.color,
                                         text: line.values[ m ],
                                     };
                             }
@@ -311,10 +263,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
                 }
             }
-        }
-
-        function getLabelAttr(attr){
-            return kity.Utils.queryPath( 'plotOptions.label.' + attr, data );
         }
 
         function array2points(lineData, offset){
@@ -334,17 +282,17 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             multilines.update({
                 elementClass: kc.Polyline,
                 list: linesArr,
-                fx: defaultStyle.enableAnimation
+                fx: this.config.enableAnimation
             });
         }
 
 
-        if( getLabelAttr( 'enable' ) ){
+        if( opt.label.enabled || opt.line.dot.enabled ){
             var lineDots = this.getElement( 'lineDots' );
             lineDots.update({
                 elementClass: kc.CircleDot,
                 list: dotArr,
-                fx: defaultStyle.enableAnimation
+                fx: this.config.enableAnimation
             });
         }
 

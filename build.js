@@ -45,6 +45,10 @@ var dependience = [
     'src/component/Categories.js',
     'src/component/Marquee.js',
 
+    'src/config/BarColumnChartDefaultConfig.js',
+    'src/config/LineChartDefaultConfig.js',
+    'src/config/ChartsConfig.js',
+
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/ChartFrame.js',
