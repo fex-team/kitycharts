@@ -49,11 +49,15 @@ var dependience = [
     'src/config/LineChartDefaultConfig.js',
     'src/config/ChartsConfig.js',
 
+    'src/formatter/lineData.js',
+    'src/formatter/barData.js',
+
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/ChartFrame.js',
     'src/charts/LineChart.js',
-    'src/charts/BarChart.js'
+    'src/charts/BarChart.js',
+    'src/charts/KityCharts.js'
 ];
 
 function nodeBuild() {

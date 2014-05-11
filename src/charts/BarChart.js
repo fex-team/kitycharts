@@ -18,14 +18,13 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         var data = this.currentData;
         this.isBar = data.chart.type == 'bar';
 
-        var coordParam = {};
+        var coordParam = {}, config = this.config;
         if(this.isBar){
-            coordParam['gapY'] = 30;
-        }else{
-            coordParam['gapX'] = 30;
+            var p  = coordParam.padding = kity.Utils.copy( this.coordinate.param.padding );
+            p.bottom = config.xAxis.padding.left;
         }
         
-        this.coordinate.update(coordParam);
+        this.coordinate.update( coordParam );
 
         this.formattedData = this.drawBars( this.param, data, this.coordinate );
     },
