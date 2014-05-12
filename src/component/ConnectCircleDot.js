@@ -141,16 +141,12 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
                     var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 5;
-                    // label.canvas.setTransform(
-                    //     new kity.Matrix()
-                    //     .rotate( 180 * targetparam.sDelta / targetparam.total )
-                    //     .translate( transR * cosDelta - curRx, transR * sinDelta - curRy )
-                    // );
-                    //label.canvas.
+                    label.canvas.setRotate( 180 * targetparam.sDelta / targetparam.total );
+                    label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
                 } else {
                     label.canvas.clearTransform();
+                    label.canvas.setTranslate( -label.canvas.getWidth() / 2, 0 );
                 }
-                //}
             }
         } );
 
