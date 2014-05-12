@@ -1,15 +1,15 @@
 (function(){
 
-var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
-    base: kc.Chart,
+var BarPlots = kc.BarPlots = kity.createClass( 'BarPlots', {
+    base: kc.ChartElement,
 
-    constructor: function ( coordinate, param ) {
+    constructor: function ( coordinate, config ) {
         
-        this.callBase( target, param );
+        this.callBase();
+        this.coordinate = coordinate;
+        this.config = config;
 
-        
 
-        this.setData( new kc.BarData() );
         this.addElement( 'bars', new kc.ElementList() );
         // this.bindAction();
     },
@@ -18,17 +18,9 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
         this.callBase();
         var data = this.currentData;
-        this.isBar = data.chart.type == 'bar';
+        this.isBar = this.config.chart.type == 'bar';
 
-        var coordParam = {}, config = this.config;
-        if(this.isBar){
-            var p  = coordParam.padding = kity.Utils.copy( this.coordinate.param.padding );
-            p.bottom = config.xAxis.padding.left;
-        }
-        
-        this.coordinate.update( coordParam );
-
-        this.formattedData = this.drawBars( this.param, data, this.coordinate );
+        this.formattedData = this.drawBars( this.config, this.coordinate );
     },
 
     bindAction : function(){
@@ -49,9 +41,9 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
             var reuslt = oxy.xRuler.leanTo( x - oxy.param.x, 'map' );
 
             var maxLength = 0;
-            var lenArr = [], tmpL;
-            for (i = 0; i < data.series.length; i++) {
-                tmpL = data.series[i].positions.length;
+            var lenArr = [], tmpL, series = data.series.bar;
+            for (i = 0; i < series.length; i++) {
+                tmpL = series[i].positions.length;
                 if( tmpL > maxLength ){
                     maxLength = tmpL;
                 }
@@ -65,7 +57,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
             var index = reuslt.index, tmpPos;
 
             for (i = 0; i < self.circleArr.length; i++) {
-                tmpPos = data.series[i].positions[index];
+                tmpPos = series[i].positions[index];
                 if(tmpPos){
                     pY = tmpPos[1];
                     self.circleArr[i].setCenter(pX, pY);
@@ -121,7 +113,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         });
     },
 
-    drawBars: function ( param, data, oxy ) {
+    drawBars: function ( data, oxy ) {
         var config = this.config,
             opt = config.plotOptions;
         var rotateAngle,
@@ -143,7 +135,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
         var xRuler = oxy.xRuler,
             yRuler = oxy.yRuler;
 
-        var series = data.series,
+        var series = data.series.bar,
             i, j, k, m, yPos, point, pointsArr = [], linesArr = [],
             barData,
             bar;

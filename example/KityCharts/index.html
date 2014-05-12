@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Line Chart test</title>
+        <title>KityCharts API</title>
 
 
         <script src="../../kity/dev-lib/dev-define.js"></script>
@@ -35,25 +35,11 @@
     <script>
 
         $.ajax({
-            url: '../data/line/basic-line.json', 
+            url: '../data/mix/bar-line-mix.json', 
             // url: '../data/bar-column/basic-bar.json',
             success: function( data ) {
                 var standard = data;
                 var kitycharts = new KityCharts( 'kitycharts', standard );
-
-                //------
-                setTimeout( function(){
-
-                    $.ajax({
-                        url: '../data/bar-column/basic-bar.json',
-                        success: function( data ) {
-                            kitycharts.update( data );
-                        }
-                    });    
-
-                }, 1000 );
-                //------
-
             }
         });
 

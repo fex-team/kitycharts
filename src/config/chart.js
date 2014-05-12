@@ -1,4 +1,7 @@
-var LineChartDefaultConfig = kc.LineChartDefaultConfig = {
+kc.Config = {};
+
+kc.Config.chart = {
+
     color : [
         'rgb(31, 119, 180)',
         'rgb(174, 199, 232)',
@@ -71,19 +74,8 @@ var LineChartDefaultConfig = kc.LineChartDefaultConfig = {
 
     plotOptions : {
 
-        line : {
-            width : 2,
-            dash : [ 2 ],
-
-	        dot : {
-	        	enabled : true,
-	            radius : 3
-	        }
-
-        },
-
         label : {
-        	enabled : false,
+            enabled : false,
             text : {
                 color : '#333',
                 margin : -15

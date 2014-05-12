@@ -42,7 +42,7 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 	},
 
 	updateCategories: function ( rules, labels, at, margin, rotate, step ) {
-		var i, rule, x, y, list=[];
+		var i, rule, x, y, list = [];
 
 		// step == 0 不绘制
 		for (i = 0; i < rules.length; i += step) {
@@ -53,6 +53,9 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 			} else if ( at == 'bottom' ) {
 				x = rule;
 				y = margin;
+			} else if ( at == 'right' ) {
+				x = margin;
+				y = rule;
 			} 
 
 			list.push({

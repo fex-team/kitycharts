@@ -4,19 +4,42 @@ var ChartFrame = kc.ChartFrame = kity.createClass( 'ChartFrame', {
     constructor: function ( target, config ) {
         this.config = config;
 
-        var param = undefined;
         this.callBase( target, param );//这里的param指的是图表外观的配置，目前没有用到，暂时默认为undefined，对外不暴露，全部采用默认样式
 
         var coordConf = kc.ChartsConfig.setCoordinateConf( config );
         var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate( coordConf ) );
 
+        // this.indicatrix =  this.addElement( 'indicatrix', new kc.Line({
+        //     color : config.indicatrix.color,
+        //     width : config.indicatrix.width,
+        //     dash : config.indicatrix.dash,
+        //     y1 : 0,
+        //     y2 : oxy.param.height + oxy.param.y,
+        // }) );
     },
 
     update: function () {
+        var param = this.param;
         var data = this.currentData = this.data.format();
-        this.coordinate = this.drawOxy( this.param, data );
+
+        var oxy = this.coordinate = this.drawOxy( param, data );
+        
+        // this.coordinate.update(param);
+
+        // this.updateIndicatrix(-100, 0);
+
+        // this.addLegend( data, oxy );
+
     },
 
+    // updateIndicatrix : function(pX, pY){
+    //     this.indicatrix.update({
+    //         x1 : pX,
+    //         x2 : pX,
+    //         y1 : 0,
+    //         y2 : pY
+    //     });        
+    // },
 
     drawOxy: function ( param, data ) {
         var oxy = this.getElement( 'oxy' );

@@ -95,7 +95,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 rangeX: null,
                 rangeY: null,
                 minX: null,
-                minY: null
+                minY: null,
+                xLabelsAt: null,
+                yLabelsAt: null
 
             }, param );
 
@@ -121,7 +123,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                'updateAll': [ 'dataSet', 'margin', 'padding', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY', 'minX', 'minY' ]
+                'updateAll': [ 'dataSet', 'margin', 'padding', 'unitX', 'unitY', 'meshX', 'meshY', 'formatX', 'formatY', 'rangeX', 'rangeY', 'minX', 'minY', 'xLabelsAt', 'yLabelsAt' ]
             } );
         },
         getXRuler: function () {
@@ -167,7 +169,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return  this[ method ]( val ) - this[ method ]( 0 );
         },
 
-        updateAll: function ( dataSet, margin, padding, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY, minX, minY ) {
+        updateAll: function ( dataSet, margin, padding, unitX, unitY, meshX, meshY, formatX, formatY, rangeX, rangeY, minX, minY, xLabelAt, yLabelAt ) {
 
             var width = this.container.getWidth() - margin.left - margin.right,
                 height = this.container.getHeight() - margin.top - margin.bottom;
@@ -241,7 +243,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     rules: xGrid.map,
                     labels: xLabels,
                     y: height,
-                    step: dataSet.xAxis && dataSet.xAxis.step || 1
+                    step: dataSet.xAxis && dataSet.xAxis.step || 1,
+                    at : 'bottom'
                 } );
             }
             if(xCategories){
@@ -254,7 +257,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     rules: yGrid.map,
                     labels: yLabels,
                     x: 0,
-                    step: dataSet.yAxis && dataSet.yAxis.step || 1
+                    step: dataSet.yAxis && dataSet.yAxis.step || 1,
+                    at : 'right'
                 } );
             }
             if(yCategories){
