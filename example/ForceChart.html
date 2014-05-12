@@ -11,10 +11,17 @@
                 margin: 0;
                 padding: 0;
                 background: #718993;
+                font-family: 'Helvetica','Arial';
+            }
+            h5{
+                margin-top: 0;
+                margin-bottom: 15px;
+                color: #bbb;
+                font-size: 14px;
             }
             .container{
                 width: 1020px;
-                height: 651px;
+                height: 660px;
                 margin: 10px auto;
                 background: white;
                 position: relative;
@@ -22,15 +29,16 @@
             #sidebar{
                 width: 250px;
                 float: left;
-                height: 651px;
+                height: 660px;
             }
             #chart {
                 position: absolute;
                 left: 250px;
                 right: 0;
                 margin: 5px 20px 45px 20px;
-                height: 601px;
+                height: 570px;
                 width: 700px;
+                top: 15px;
             }
             .select{
                 display: inline-block;
@@ -50,7 +58,7 @@
                 background-color: white;
                 padding: 5px 10px;
                 border-radius: 5px;
-                box-shadow: 0 0 5px 5px rgba(0,0,0,.3);
+                box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
                 width: 200px;
             }
             .tooltip>h1{
@@ -61,21 +69,29 @@
                 font-size: 12px;
             }
             .color-block{
-                width: 20px;
-                height: 15px;
+                width: 17px;
+                height: 8px;
                 display: inline-block;
-                margin-left: 20px;
-                border-radius: 3px;
+                margin-left: 5px;
             }
             .color-block.active{
                 margin-left: 10px;
+            }
+            .c-name{
+                font-size: 12px;
+                display: inline-block;
+                margin-left: 5px;
+                vertical-align: bottom;
+            }
+            #legend-container{
+                position: absolute;
+                bottom: 75px;
+                left: 20px;
             }
             ul#legend{
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                position: absolute;
-                bottom: 40px;
             }
             ul#legend>li{
                 height: 20px;
@@ -84,6 +100,10 @@
             }
             ul#legend>li:hover{
                 opacity: 1
+            }
+            ul#legend>li:hover .color-block{
+                width: 20px;
+                margin-left: 0
             }
         </style>
     </head>
@@ -98,9 +118,12 @@
                     <a href="javascript:void(0)" id="s-men"><img src="images/male.png"/></a>
                     <a href="javascript:void(0)" id="s-women"><img src="images/female.png"/></a>
                 </div>
-                <ul id='legend'>
-                    
-                </ul>
+                <div id='legend-container'>
+                    <h5>Categories</h5>
+                    <ul id='legend'>
+                        
+                    </ul>
+                </div>
             </div>
             <div id="chart">
             </div>
@@ -143,8 +166,6 @@
         var Clegend = document.getElementById('legend');
         Clegend.addEventListener("click",function(e){
             var targetTagName = e.target.tagName;
-            
         },false);
-        
     </script>
 </html>

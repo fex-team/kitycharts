@@ -10,7 +10,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     constructor: function ( param ) {
 
         this.canvas = new kity.Group();
-        this.canvas.setAnchor( 0, 0 );
+        //this.canvas.setAnchor( 0, 0 );
 
         this.visible = true;
 
@@ -98,12 +98,12 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     updateByRule: function ( method, methodParams, param, animatedBeginValueCopy, progress ) {
         var shouldCall, lastParam, i, k;
         lastParam = this.param;
-        
+
 
         for ( i = 0; i < methodParams.length; i++ ) {
             k = methodParams[ i ];
             // 值没有改变的话，不更新
-            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) {//用!=符号， "" == 0为true
+            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) { //用!=符号， "" == 0为true
                 shouldCall = true;
                 break;
             }

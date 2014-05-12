@@ -118,7 +118,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var cList = data.classList;
 		var items = [];
 		for ( var i = 0; i < cList.length; i++ ) {
-			var legend = '<li><div class="color-block" style="background:' + colors[ i ] + '"></div><span>' + cList[ i ] + '</span></li>';
+			var legend = '<li><div class="color-block" style="background:' + colors[ i ] + '"></div><span class="c-name">' + cList[ i ] + '</span></li>';
 			items.push( legend );
 		}
 		target.innerHTML = items.join( "" );
