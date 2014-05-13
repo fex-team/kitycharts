@@ -77,11 +77,14 @@
             .color-block.active{
                 margin-left: 10px;
             }
-            .c-name{
+            .c-name,.c-name-highlight{
                 font-size: 12px;
                 display: inline-block;
                 margin-left: 5px;
                 vertical-align: bottom;
+            }
+            .c-name-highlight{
+                display: none;
             }
             #legend-container{
                 position: absolute;
@@ -102,8 +105,14 @@
                 opacity: 1
             }
             ul#legend>li:hover .color-block{
-                width: 20px;
+                width: 22px;
                 margin-left: 0
+            }
+            ul#legend>li:hover .c-name{
+                display: none;
+            }
+            ul#legend>li:hover .c-name-highlight{
+                display: inline-block;
             }
         </style>
     </head>
@@ -159,13 +168,21 @@
         document.getElementById("s-women").addEventListener("click",function(){
             chart.getData().update(d["women"]);
         },false);
-        document.getElementById("sidebar").addEventListener("click",function(){
-            chart.highlightBrand();
-        },false);
         
         var Clegend = document.getElementById('legend');
         Clegend.addEventListener("click",function(e){
-            var targetTagName = e.target.tagName;
+            var ele = (function(){
+                if(e.target.tagName==='LI'){
+                    return e.target;
+                } else if (e.target.className==='color-block'||e.target.className==='c-name-highlight'){
+                    return e.target.parentElement;
+                } else {
+                    return false;
+                }
+            })();
+            if(ele){
+                chart.highlightBrand(ele.value);
+            }
         },false);
     </script>
 </html>
