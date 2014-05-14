@@ -6,7 +6,8 @@ kc.Config.chart = {
         'rgb(31, 119, 180)',
         'rgb(174, 199, 232)',
         'rgb(255, 127, 14)',
-        'rgb(255, 187, 120)'
+        'rgb(255, 187, 120)',
+        'green'
     ],
 
     finalColor: 'rgb(255, 187, 120)',
@@ -23,7 +24,8 @@ kc.Config.chart = {
         },
 
         axis : {
-            enabled : true
+            enabled : true,
+            arrow : true
         },
 
         label : {
@@ -53,7 +55,8 @@ kc.Config.chart = {
         },
 
         axis : {
-            enabled : true
+            enabled : true,
+            arrow : true
         },
 
         label : {

@@ -1,0 +1,79 @@
+{
+
+    "chart": {
+        "type": "column"
+    },
+
+    "xAxis": {
+        "categories": [ "收入", "房租", "吃饭", "游戏", "逛街" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 30,
+            "left" : 50
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 40,
+            "right" : 30
+        },
+        "min" : 0
+    },
+
+    "yAxis": [
+        {
+            "min" : 0,
+            "ticks" : {
+                "enabled" : false
+            },
+            "label" : {
+                "at" : "left",
+                "margin" : 0
+            },
+            "axis" : {
+                "enabled" : false
+            },
+            "padding" : {
+                "top" : 10,
+                "bottom" : 0
+            },
+            "stacked" : true
+        }
+    ],
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 30
+        }
+
+    },
+
+    "series": [
+
+        {
+            "column" : [
+                {
+                    "name": "out",
+                    "color" : "rgba(0,0,0,0)",
+                    "data": [0, 7000, 3000, 2000, 0]
+                },
+                {
+                    "name": "in",
+                    "data": [10000, 3000, 4000, 1000, 2000]
+                }
+            ]
+
+        }
+
+
+    ]
+
+}
+
+
+

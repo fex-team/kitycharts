@@ -41,7 +41,7 @@
 
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
-                draw: [ 'width', 'height', 'dir', 'rotate' ],
+                draw: [ 'width', 'height', 'dir', 'offset', 'rotate' ],
                 fill: [ 'color' ]
             } );
         },
@@ -54,17 +54,17 @@
             this.rect.fill( color );
         },
 
-        draw: function ( width, height, dir, rotate ) {
+        draw: function ( width, height, dir, offset, rotate ) {
 
             var ww = width / 2;
 
             var seq = [];
 
-            seq.push( 'M', -ww, 0 );
-            seq.push( 'L', -ww, dir * height );
-            seq.push( 'L', ww, dir * height );
-            seq.push( 'L', ww, 0 );
-            seq.push( 'L', ww, 0 );
+            seq.push( 'M', -ww, -offset );
+            seq.push( 'L', -ww, -offset + dir * height );
+            seq.push( 'L',  ww, -offset + dir * height );
+            seq.push( 'L',  ww, -offset );
+            seq.push( 'L',  ww, -offset );
             seq.push( 'Z' );
 
             this.rect.setPathData( seq ).setRotate( rotate );

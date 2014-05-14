@@ -3,6 +3,7 @@ var ChartsConfig = kc.ChartsConfig = {
     defaultConfigs : {
 
         chart  : kc.Config.chart,
+        area   : kc.Config.area,
         line   : kc.Config.line,
         bar    : kc.Config.bar,
         column : kc.Config.column
@@ -20,7 +21,7 @@ var ChartsConfig = kc.ChartsConfig = {
         return kity.Utils.copy( chart );
     },
 
-    setCoordinateConf : function( conf ) {
+    setCoordinateConf : function( conf, index ) {
         var reuslt = {
                 dataSet: conf,
             },
@@ -60,17 +61,26 @@ var ChartsConfig = kc.ChartsConfig = {
         };
 
         // 指定刻度最小值
+        var minX = kity.Utils.queryPath('xAxis.min', conf);
+        if( kity.Utils.isNumber( minX ) ){
+            reuslt['minX'] = minX;
+        }
         var minY = kity.Utils.queryPath('yAxis.min', conf);
         if( kity.Utils.isNumber( minY ) ){
-            pass['minY'] = minY;
+            reuslt['minY'] = minY;
         }
 
         // 指定范围
         conf.rangeX && (reuslt.rangeX = conf.rangeX);
         conf.rangeY && (reuslt.rangeY = conf.rangeY);
-            
+
+        // label位置
+        reuslt.yLabelsAt = yAxis.label.at || ( index > 0 ? "right" : "left" );
+        reuslt.labelMargin = yAxis.label.margin || 10;
+
         // categories 判断
-        if( conf.chart.type == 'bar' ){
+        if( yAxis.inverted ){
+            conf.yAxis.categories = conf.xAxis.categories;
             delete( conf.xAxis.categories );
         }else{
             delete( conf.yAxis.categories );

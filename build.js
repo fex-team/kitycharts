@@ -49,20 +49,16 @@ var dependience = [
     'src/config/bar.js',
     'src/config/column.js',
     'src/config/line.js',
+    'src/config/area.js',
     'src/config/ChartsConfig.js',
 
-    'src/formatter/lineData.js',
-    'src/formatter/barData.js',
     'src/formatter/chartData.js',
 
     'src/plots/LinePlots.js',
-    'src/plots/BarPlots.js',
+    'src/plots/StickPlots.js',
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
-    // 'src/charts/ChartFrame.js',
-    // 'src/charts/LineChart.js',
-    // 'src/charts/BarChart.js',
     'src/charts/KityCharts.js'
 ];
 

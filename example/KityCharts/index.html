@@ -35,15 +35,36 @@
     <script>
 
         $.ajax({
-            url: '../data/mix/bar-line-mix.json', 
-            // url: '../data/bar-column/basic-bar.json',
+            url: '../data/mix/bar-line-mix.json',
             success: function( data ) {
-                var standard = data;
-                var kitycharts = new KityCharts( 'kitycharts', standard );
+                var kitycharts = new KityCharts( 'kitycharts', data );
+
+
+                setTimeout(function(){
+
+                    $.ajax({
+                        url: '../data/mix/bar-line-mix1.json', 
+                        success: function( data ) {
+                            kitycharts.update( data );
+                        }
+                    });
+
+                }, 1000);
+
+
             }
         });
 
 
+            // setTimeout(function(){
 
+            //     $.ajax({
+            //         url: '../data/mix/bar-line-mix1.json', 
+            //         success: function( data ) {
+            //            var kitycharts = new KityCharts( 'kitycharts', data );
+            //         }
+            //     });
+
+            // }, 1000);
     </script>
 </html>

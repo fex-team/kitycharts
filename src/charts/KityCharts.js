@@ -38,11 +38,7 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
             tmpConf = kity.Utils.copy( tmpConf );
             tmpConf.yAxis = kity.Utils.deepExtend( yAxisTmpl, yAxis[ i ] );
             
-
-            coordConf = kc.ChartsConfig.setCoordinateConf( tmpConf );
-            coordConf.margin.left = 100 * i + 50;
-            
-
+            coordConf = kc.ChartsConfig.setCoordinateConf( tmpConf, i );
             oxy = this.addElement( 'oxy_' + i, new kc.CategoryCoordinate( coordConf ) );
             oxy.update();
 
@@ -51,23 +47,22 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
                 tmpConf.series = series[ i ];
                 switch( type ) {
                     case 'line':
-                        this.addElement( 'LinePlots_' + i, new kc.LinePlots( oxy, tmpConf ) ).update();
+                    case 'area':
+                        this.addElement( 'LinePlots_' + i, new kc.LinePlots( oxy, tmpConf, type ) ).update();
                         break;
                     case 'bar':
                     case 'column':
-                        this.addElement( 'BarPlots_' + i, new kc.BarPlots( oxy, tmpConf ) ).update();
+                        this.addElement( 'BarPlots_' + i, new kc.StickPlots( oxy, tmpConf, type ) ).update();
                         break;
                     default:
+                        break;
                 }
             }
-
-
 
         }
 
 
-    },
-
+    }
 
 
 } );

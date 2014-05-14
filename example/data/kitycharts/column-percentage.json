@@ -1,7 +1,7 @@
 {
 
     "chart": {
-        "type": "line"
+        "type": "column"
     },
 
     "xAxis": {
@@ -18,7 +18,8 @@
             "arrow" : false
         },
         "padding" : {
-            "left" : 20
+            "left" : 40,
+            "right" : 30
         },
         "min" : 0
     },
@@ -40,43 +41,16 @@
                 "top" : 10,
                 "bottom" : 0
             },
-            "percentage" : false,
-            "stacked" : false
+            "percentage" : true,
+            "stacked" : true
         }
     ],
 
     "plotOptions" : {
 
-        "bar" : {
-            "stacked" : true,
-            "width" : 5,
-            "margin": 1
-        },
-
         "column" : {
-            "stacked" : true,
-            "width" : 5,
+            "width" : 25,
             "margin": 1
-        },
-
-        "line" : {
-            "stacked" : true
-        },
-
-        "area" : {
-
-            "dot" : {
-                "enabled" : false
-            },
-
-            "stroke" : {
-                "width" : 0
-            },
-
-            "fill" : {
-                "opacity" : 0.5,
-                "grandientStopOpacity" : 0.5
-            }
         }
 
     },
@@ -84,7 +58,7 @@
     "series": [
 
         {
-            "line" : [
+            "column" : [
                 {
                     "name": "John",
                     "data": [5, 3, 4, 7, 2]
