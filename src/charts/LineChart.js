@@ -1,172 +1,23 @@
-var LineData = kc.LineData = kity.createClass( 'LineData', {
-    base: kc.Data,
-    format: function () {
-        var origin = this.origin;
-        
-        var tmp, series = [], xAxis = [], min = 0, max = 100;
-
-        var pvReal, adPvReal, pvPred, adPvPred;
-
-        var yDim = origin.y_dim;
-
-        if( yDim && yDim.length > 0 ){
-            for(var i = 0; i < yDim.length; i++){
-                tmp = yDim[ i ];
-
-                pvReal = tmp['pv']&&tmp['pv']['real']||[];
-                adPvReal = tmp['adPv']&&tmp['adPv']['real']||[];
-                pvPred = JSON.parse( JSON.stringify( tmp['pv']['pred']||[] ));
-                adPvPred = JSON.parse( JSON.stringify( tmp['adPv']&&tmp['adPv']['pred']||[] ));
-
-                pvPred.unshift( pvReal[ pvReal.length - 1 ] || 0 );
-                adPvPred.unshift( adPvReal[ adPvReal.length - 1 ] || 0);
-
-                series = series.concat([
-                    {
-                        "name": tmp["label"] + "-pv",
-                        "segments" : [
-                            {
-                                "dash" : null,
-                                "data" : pvReal
-                            },
-                            {
-                                "dash" : [2],
-                                "data" : pvPred
-                            }
-                        ]
-                    },
-                    {
-                        "name": tmp["label"] + "-adPv",
-                        "segments" : [
-                            {
-                                "dash" : null,
-                                "data" : adPvReal
-                            },
-                            {
-                                "dash" : [2],
-                                "data" : adPvPred
-                            }
-                        ]
-                    }
-                ]);
-            }
-
-            var all = [], tmp;
-            for(var i in series){
-                tmp = series[ i ]
-                if( tmp.segments && tmp.segments.length > 0 ){
-                    for (var j = 0; j < tmp.segments.length; j++) {
-                        all = all.concat( tmp.segments[j].data );
-                    }
-                }else{
-                    all = all.concat( origin.series[ i ].data );
-                }
-            }
-
-            var min = Math.min.apply([], all) || 0;
-            var max = Math.max.apply([], all) || 100;
-        }
-
-        return {
-            xAxis :  {
-                categories : origin.x_dim || [],
-                step : origin.x_dim ? Math.floor( origin.x_dim.length/10 ) : 10
-            },
-            // yAxis :  {
-            //     categories : yAxis || [],
-            //     step : 10
-            // },
-            series : series || [],
-            rangeY : [min, max]
-        };
-    }
-} );
-
-
-var defaultStyle = {
-    color : [
-        '#60afe4', '#f39b7d', '#9dd3f7', '#f7c2b0'
-    ],
-    line : {
-        width : 2,
-        dash : [ 2 ]
-    },
-    indicatrix : {
-        color : '#BBB',
-        width : 1,
-        dash : [ 4, 2 ],
-    },
-    avgLine : {
-        color : '#DDD',
-        width : 1
-    },
-    coordinate : {
-        components : [ 'xAxis', 'yAxis', 'xCat', 'yCat'],
-        heading : 50,
-        x : 60,
-        y : 20
-    },
-    circle : {
-        radius : 4,
-        stroke : {
-            width : 2,
-            color : '#FFF'
-        }
-    },
-    enableAnimation : false
-};
+(function(){
 
 var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
-    base: kc.Chart,
+    base: kc.ChartElement,
 
-    constructor: function ( target, param ) {
-        this.callBase( target, param );
-
-        var oxy = this.addElement( 'oxy', new kc.CategoryCoordinate(defaultStyle.coordinate) );   
-
-        this.yLine = this.addElement( 'avg-y-line', new kc.Line( defaultStyle.avgLine ) );
-
-        this.indicatrix =  this.addElement( 'indicatrix', new kc.Line({
-            color : defaultStyle.indicatrix.color,
-            width : defaultStyle.indicatrix.width,
-            dash : defaultStyle.indicatrix.dash,
-            y1 : 0,
-            y2 : oxy.param.height + oxy.param.y,
-        }) );
-
+    constructor: function ( coordinate, config ) {
+        this.callBase();
+        this.coordinate = coordinate;
+        this.config = config;
+        
         this.addElement( 'multilines', new kc.ElementList() );
+        this.addElement( 'lineDots', new kc.ElementList() );
 
-        this.setData( new kc.LineData() );
-
-        this.bindAction();
+        // this.bindAction();
     },
 
-    update: function () {
-        var param = this.param;
-        var data = this.data.format();
-
-        var oxy = this.coordinate = this.drawOxy( param, data );
-
-        if( oxy.param.rangeY ){
-            var grid = oxy.yRuler.map_grid;
-            var y1 = grid[0];
-            var y2 = grid[ grid.length-1 ];
-            var averageY = (y1 + y2)/2 + oxy.param.y;
-
-            this.yLine.update( {
-                    x1: oxy.param.x,
-                    x2: oxy.param.x + oxy.param.width,
-                    y1: averageY,
-                    y2: averageY
-                } );
-        }
-
-        this.formattedData = this.drawLines( param, data, oxy );
-        this.updateCircle( data );
-        this.updateIndicatrix(-100, 0);
-
-        this.addLegend( data, oxy );
-
+    update: function ( config ) {
+        var config = config || this.config;
+        this.formattedData = this.drawLines( config );
+        this.updateCircle( config );
     },
 
     updateCircle : function( data ){
@@ -178,7 +29,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         }
 
         this.circleArr = [];
-        var i, circle, style = defaultStyle.circle;
+        var i, circle, style = this.config.interaction.circle;
         for (var i = 0; i < data.series.length; i++) {
             circle = new kity.Circle(style.radius, -20, -20);
             circle.lineData = data.series[i];
@@ -187,7 +38,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             pen.setWidth( style.stroke.width );
             pen.setColor( style.stroke.color );
 
-            circle.fill( data.series[i].color || defaultStyle.color[i] );
+            circle.fill( data.series[i].color || this.config.color[i] || this.config.finalColor );
             circle.stroke( pen );
 
             this.circleArr.push( circle );
@@ -197,34 +48,6 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
     hideCircle : function(circle){
         circle.setCenter(-100, -100);
-    },
-
-    updateIndicatrix : function(pX, pY){
-        this.indicatrix.update({
-            x1 : pX,
-            x2 : pX,
-            y1 : 0,
-            y2 : pY
-        });        
-    },
-
-    drawOxy: function ( param, data ) {
-        var oxy = this.getElement( 'oxy' );
-
-        var pass = {
-            dataSet: data,
-            width: this.getWidth() - 100,
-            height: this.getHeight() - 50,
-            // formatX: appendUnit( data.unit_x ),
-            // formatY: appendUnit( data.unit_y )
-        }
-
-        if( data )
-            pass.rangeY = data.rangeY;
-
-        oxy.update( pass );
-
-        return oxy;
     },
 
     bindAction : function(){
@@ -240,9 +63,9 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             var oev = ev.originEvent;
             var x = oev.offsetX;
             var y = oev.offsetY;
-            var i, l = self.circleArr.lenth;
+            var i, l = self.circleArr.length;
             
-            var reuslt = oxy.xRuler.leanTo( x - oxy.param.x, 'map' );
+            var reuslt = oxy.xRuler.leanTo( x - oxy.param.margin.left, 'map' );
 
             var maxLength = 0;
             var lenArr = [], tmpL;
@@ -255,7 +78,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
             if( !reuslt || reuslt.index > maxLength ) return;
 
-            var pX = reuslt.value + oxy.param.x;
+            var pX = reuslt.value + oxy.param.margin.left;
 
             var pY = 0;
             var index = reuslt.index, tmpPos;
@@ -271,7 +94,7 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
 
             }
 
-            self.updateIndicatrix(pX, oxy.param.height + oxy.param.y);
+            // self.updateIndicatrix(pX, oxy.param.height + oxy.param.margin.top);
 
             self.currentIndex = index;
 
@@ -280,8 +103,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     posX : pX,
                     label : oxy.getXLabels()[ index ],
                     index : index,
-                    marginLeft : oxy.param.x,
-                    marginTop : oxy.param.y,
+                    marginLeft : oxy.param.margin.left,
+                    marginTop : oxy.param.margin.top,
                     data : data
                 };
                 self.param.onCircleHover( info );
@@ -303,8 +126,8 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     position : target.getCenter ? target.getCenter() : { x: indicatrixParam.x1, y: oxy.param.height/2 },
                     label : oxy.getXLabels()[ index ],
                     index : index,
-                    marginLeft : oxy.param.x,
-                    marginTop : oxy.param.y,
+                    marginLeft : oxy.param.margin.left,
+                    marginTop : oxy.param.margin.top,
                     data : self.formattedData
                 };
 
@@ -317,17 +140,18 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
         });
     },
 
-    drawLines: function ( param, data, oxy ) {
-
+    drawLines: function ( data ) {
+        var oxy = this.coordinate;
         var xRuler = oxy.xRuler,
             yRuler = oxy.yRuler;
 
         var series = data.series,
-            i, j, k, yPos, point, pointsArr = [], linesArr = [],
-            lineData,
-            xFrom = xRuler.map().from,
+            opt = this.config.plotOptions,
+            i, j, k, m, yPos, point, pointsArr = [], linesArr = [], dotArr = [],
+            lineData, lineColor,
             segments, line;
 
+        var queryPath = kity.Utils.queryPath;
         for (i = 0; i < series.length; i++) {
 
             line = series[i];
@@ -351,23 +175,89 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
                     var segment = segments[k];
 
                     pointsArr = array2points( segment.data, offset );
+                    lineColor = segment.color || line.color || this.config.color[i] || this.config.finalColor;
+
+                    if( queryPath( 'chart.type', data ) == 'area' ){
+                        var areaPointArr = kity.Utils.copy( pointsArr );
+                        var x0 = oxy.measurePointX(0),
+                            y0 = oxy.measurePointY( oxy.yRuler._ref.from );
+
+                        areaPointArr = areaPointArr.concat([
+                            [ pointsArr[ pointsArr.length-1 ][ 0 ], y0],
+                            [ x0, y0 ],
+                        ]);
+
+                        var area = new kity.Polygon(areaPointArr),
+                            paper = this.paper;
+
+                        area.fill(new kity.LinearGradientBrush().pipe( function() {
+                            this.addStop(0, lineColor);
+                            this.addStop(1, lineColor, queryPath('plotOptions.style.stopOpacity', data));
+                            this.setStartPosition(0, 0);
+                            this.setEndPosition(0, 1);
+                            paper.addResource(this);
+                        }));
+
+                        this.canvas.addShape(area);
+                    }
+                    
                     linesArr.push({
                             points : pointsArr,
-                            color : segment.color || series[i].color || defaultStyle.color[i],
+                            color : lineColor,
                             dash : segment.dash || null,
-                            width: defaultStyle.line.width,
+                            width: opt.line.width,
                             defaultPos : oxy.param.height,
                             factor : +new Date
                         });
 
                     // 将位置合成一条线并记录在serie的positions
-                    var l = segment.data.length-1;
+                    var l = segment.data.length-1,
+                        tmpSegmentData, tmpPointsArr
+                        ;
+
+
                     if( k == segments.length-1 ){
-                        line.values = line.values.concat( segment.data );
-                        line.positions = line.positions.concat( pointsArr );
+                        tmpSegmentData = segment.data;
+                        tmpPointsArr = pointsArr;
                     }else{
-                        line.values = line.values.concat( segment.data.slice(0, l) );
-                        line.positions = line.positions.concat( pointsArr.slice(0, l) );
+                        tmpSegmentData = segment.data.slice(0, l);
+                        tmpPointsArr = pointsArr.slice(0, l);
+                    }
+
+                    line.values = line.values.concat( tmpSegmentData );
+                    line.positions = line.positions.concat( tmpPointsArr );
+
+                    
+                    if( opt.label.enabled || opt.line.dot.enabled ){
+
+                        var tmpPos, dotParam, radius = 0;
+
+                        for (m = 0; m < line.positions.length; m++) {
+                            tmpPos = line.positions[ m ];
+
+                            if( opt.line.dot.enabled ){
+                                radius = this.config.plotOptions.line.dot.radius;
+                            }
+
+                            dotParam = {
+                                color: lineColor,
+                                radius: radius,
+                                x: tmpPos[0],
+                                y: tmpPos[1]
+                            };
+
+                            if( opt.label.enabled ){
+
+                                dotParam.label = {
+                                        margin: this.config.plotOptions.label.text.margin,
+                                        color:  this.config.plotOptions.label.text.color,
+                                        text: line.values[ m ],
+                                    };
+                            }
+
+                            dotArr.push(dotParam);
+                        }
+                        line.dots = dotArr;
                     }
 
                 }
@@ -386,69 +276,29 @@ var LineChart = kc.LineChart = kity.createClass( 'LineChart', {
             return pointsArr;
         }
 
-        var multilines = this.getElement( 'multilines');
-        multilines.update({
-            elementClass: kc.Polyline,
-            list: linesArr,
-            fx: defaultStyle.enableAnimation
-        });
+        if( !kity.Utils.queryPath('plotOptions.style.stopOpacity', data) ){
+            var multilines = this.getElement( 'multilines' );
+            multilines.update({
+                elementClass: kc.Polyline,
+                list: linesArr,
+                fx: this.config.enableAnimation
+            });
+        }
+
+
+        if( opt.label.enabled || opt.line.dot.enabled ){
+            var lineDots = this.getElement( 'lineDots' );
+            lineDots.update({
+                elementClass: kc.CircleDot,
+                list: dotArr,
+                fx: this.config.enableAnimation
+            });
+        }
 
         return data;
-    },
-
-    addLegend : function( data, oxy ){
-        if( data.series && data.series.length > 0 ){
-            var i,
-            name,
-            ele,
-            param = oxy.param,
-            container = this.paper.container,
-            legendLines,
-            entry,
-            list = [],
-            top = 0,
-            left = 0,
-            tmpL, tmpT,
-            line;
-
-            if(this.legend){
-                this.legend.html('');
-            }else{
-                this.legend = $('<div></div>').css({
-                    position: 'absolute',
-                    bottom: '-20px',
-                    left : oxy.param.x + 'px',
-                    height : '20px',
-                    width : 'auto',     
-                }).appendTo(container);
-            }
-
-            for (var i = 0; i < data.series.length; i++) {
-                entry = data.series[i];
-
-                top = oxy.param.height + (i*20) + 50;
-                left = oxy.param.x + 10;
-
-                ele = $('<div>' + entry.name + '</div>').css({
-                    marginRight : '5px',
-                    fontSize : '12px',
-                    float : 'left'
-                }).appendTo(this.legend);
-
-                tmpL = left + $(ele).width() + 10;
-                tmpT = top + 6;
-
-                line = $('<div></div>').css({
-                    marginRight : '20px',
-                    marginTop : '5px',
-                    height : '2px',
-                    width : '40px',
-                    float : 'left',
-                    backgroundColor : (entry.color || entry.segments[0].color || defaultStyle.color[i])
-                }).appendTo(this.legend);
-            }
-
-        }
     }
 
 } );
+
+
+})();

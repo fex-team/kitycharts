@@ -11,6 +11,7 @@ var dependience = [
     'src/util/Query.js',
     'src/util/Ruler.js',
     'src/util/sharpen.js',
+    'src/util/tools.js',
 
     'src/base/ChartEvent.js',
     'src/base/EventHandler.js',
@@ -44,9 +45,21 @@ var dependience = [
     'src/component/Categories.js',
     'src/component/Marquee.js',
 
+    'src/config/chart.js',
+    'src/config/bar.js',
+    'src/config/column.js',
+    'src/config/line.js',
+    'src/config/area.js',
+    'src/config/ChartsConfig.js',
+
+    'src/formatter/chartData.js',
+
+    'src/plots/LinePlots.js',
+    'src/plots/StickPlots.js',
+
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
-    'src/charts/LineChart.js'
+    'src/charts/KityCharts.js'
 ];
 
 function nodeBuild() {

@@ -141,9 +141,10 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var j = 0; j < clickedbrandConnects.length; j++ ) {
 			var curLine = clickedbrandConnects[ j ].line;
 			curLine.canvas.setOpacity( 1 );
-			curLine.update( {
-				width: curLine.param.highlightwidth
-			} );
+			if ( typeof e !== 'number' )
+				curLine.update( {
+					width: curLine.param.highlightwidth
+				} );
 		}
 	},
 	renderLegend: function () {

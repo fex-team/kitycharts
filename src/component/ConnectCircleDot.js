@@ -45,6 +45,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>';
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
+
         } );
         this.on( 'mouseout', function ( e ) {
             me.hightlight( false );
@@ -165,13 +166,14 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
                 } else {
                     label.canvas.clearTransform();
-                    label.canvas.setTranslate( -label.canvas.getWidth() / 2, 0 );
+                    label.canvas.setTranslate( 0, 0 );
                     if ( afterAnimated.radius < 15 ) {
                         label.canvas.setOpacity( 0 );
                     } else {
                         label.canvas.setOpacity( 1 );
                     }
                 }
+                //}
             }
         } );
         if ( this.timeline ) this.timeline.stop();

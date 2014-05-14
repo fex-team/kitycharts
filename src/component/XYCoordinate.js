@@ -169,8 +169,8 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
                 y2: height
             } );
 
-            this.xArrow.setTransform( new kity.Matrix().translate( width, height + 0.5 ) );
-            this.yArrow.setTransform( new kity.Matrix().rotate( -90 ).translate( 0.5, 0 ) );
+            this.xArrow.setTranslate( width, height + 0.5 );
+            this.yArrow.setRotate( -90 ).setTranslate( 0.5, 0 );
 
             xCat.update( {
                 rules: xGrid.map,

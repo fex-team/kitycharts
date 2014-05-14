@@ -105,10 +105,10 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             value - left < right - value ? left : right ) );
     },
 
-    gridByCount: function ( count, mod, alignRef ) {
+    gridByCount: function ( count, mod, alignRef, start) {
         mod = mod || this.fagm( count );
         var ref = this._ref;
-        var start = this.align( ref.from, mod, 'left' );
+        start = kity.Utils.isNumber( start )? start : this.align( ref.from, mod, 'left' );
         var size = mod;
         while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size, alignRef );

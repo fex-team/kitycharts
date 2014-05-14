@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>All Charts</title>
+
+
+        <script src="../../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../../kity/src'
+            });
+        </script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
+        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 300px;
+                /*background: #EEE;*/
+                display: inline-block;
+                position: relative;
+            }
+
+            .container .title{
+                position: absolute;
+                bottom: -40px;
+                font-size: 16px;
+                left: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- column chart -->
+        <h1>柱状图</h1>
+        <div id="column-basic"         class="container"><div class="title">Basic Column</div></div>
+        <div id="column-group"         class="container"><div class="title">Column Group</div></div>
+        <div id="column-stacked"       class="container"><div class="title">Column Stacked</div></div>
+        <div id="column-stacked-group" class="container"><div class="title">Column Stacked Group</div></div>
+        <div id="column-percentage"    class="container"><div class="title">Column Percentage</div></div>
+        <div id="column-waterfall"     class="container"><div class="title">Waterfall</div></div>
+        <!-- <div id="column-waterfall"     class="container"><div class="title">Waterfall</div></div> 直方图 -->
+        <br><br><br><br><br><br>
+
+        <!-- bar chart -->
+        <h1>条形图</h1>
+        <div id="bar-basic"            class="container"><div class="title">Basic Bar</div></div>
+        <div id="bar-stacked-group"    class="container"><div class="title">Bar Stacked Group</div></div>
+        <div id="bar-mirror"           class="container"><div class="title">Bar Mirror</div></div>
+        <br><br><br><br><br><br>
+
+        <!-- line chart -->
+        <h1>折线图</h1>
+        <div id="line-basic"           class="container"><div class="title">Basic Line</div></div>
+        <div id="line-multi"           class="container"><div class="title">Multi Line</div></div>
+        <br><br><br><br><br><br>
+
+        <!-- area chart -->
+        <h1>面积图</h1>
+        <div id="area-basic"              class="container"><div class="title">Area</div></div>
+        <div id="area-multi"              class="container"><div class="title">Multi Area</div></div>
+        <div id="area-stacked"            class="container"><div class="title">Multi Area Stacked</div></div>
+        <div id="area-stacked-percentage" class="container"><div class="title">Multi Area Percentage</div></div>
+        <br><br><br><br><br><br>
+
+        <!-- extra chart -->
+        <h1>混合图表</h1>
+        <div id="extra-combination"       class="container"><div class="title">Combination</div></div><br><br><br><br>
+        <h1>多坐标轴</h1>
+        <div id="extra-multi-axis"        class="container"><div class="title">Multi Axis</div></div>
+    </body>
+    <script>
+        function chart( type ){
+            $.ajax({
+                url: '../data/kitycharts/' + type + '.json', 
+                success: function( data ) {
+                    new KityCharts( type, data );
+                }
+            });
+        }
+        // column chart
+        chart( 'column-basic' );
+        chart( 'column-group' );
+        chart( 'column-stacked' );
+        chart( 'column-stacked-group' );
+        chart( 'column-percentage' );
+        chart( 'column-waterfall' );
+
+
+        // bar chart
+        chart( 'bar-basic' );
+        chart( 'bar-stacked-group' );
+        chart( 'bar-mirror' );
+
+
+        // line chart
+        chart( 'line-basic' );
+        chart( 'line-multi' );
+
+
+        // area chart
+        chart( 'area-basic' );
+        chart( 'area-multi' );
+        chart( 'area-stacked' );
+        chart( 'area-stacked-percentage' );
+
+
+        // extra chart
+        chart( 'extra-combination' );
+        chart( 'extra-multi-axis' );
+    </script>
+</html>
