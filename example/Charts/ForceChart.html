@@ -26,6 +26,9 @@
                 background: white;
                 position: relative;
             }
+            .logo{
+                padding: 15px 0 0 20px ;
+            }
             #sidebar{
                 width: 250px;
                 float: left;
@@ -122,6 +125,7 @@
     <body>
         <div class="container">
             <div id="sidebar">
+                <div class='logo'><img src="../images/logo.png" /></div>
                 <div class="select">
                     <a href="javascript:void(0)" id="s-force"><img src="../images/icon-force.png"/></a>
                     <a href="javascript:void(0)" id="s-circle"><img src="../images/icon-circle.png"/></a>
@@ -151,24 +155,29 @@
         $.ajax({
             url: '../data/force/ForceChart.json',
             success: function( data ) {
-                //d = data; 
-                d = JSON.parse(data);
+                d = data; 
+                //d = JSON.parse(data);
                 chart.getData().update(d["men"]);
             }
         });
         var curmode = 'force';
+        var curgender = 'man';
         document.getElementById("s-force").addEventListener("click",function(){
+            if(curmode==='force'){return false;}
             curmode='force';
             chart.update({mode:curmode});
         },false);
         document.getElementById("s-circle").addEventListener("click",function(){
+            if(curmode==='circle'){return false;}
             curmode = 'circle';
             chart.update({mode:curmode});
         },false);
         document.getElementById("s-men").addEventListener("click",function(){
+            if(curgender==='men'){return false;}
             chart.getData().update(d["men"]);
         },false);
         document.getElementById("s-women").addEventListener("click",function(){
+            if(curgender==='women'){return false;}
             chart.getData().update(d["women"]);
         },false);
         

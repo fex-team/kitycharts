@@ -151,7 +151,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
                 label.text.setStyle( {
-                    'font-size': targetparam.percent * 30
+                    'font-size': targetparam.percent * 25
                 } );
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
@@ -163,7 +163,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
-                    var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 5;
+                    var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 20;
                     label.canvas.setRotate( 180 * targetparam.sDelta / targetparam.total );
                     label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
                 } else {
