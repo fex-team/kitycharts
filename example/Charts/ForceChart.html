@@ -46,11 +46,50 @@
             .select{
                 display: inline-block;
                 padding: 20px 10px 0 20px;
-                text-align: center;
+            }
+            .select>p{
+                font-family: fantasy,Arial;
+                color:#ccc;
+                margin: 5px 0;
             }
             .select a{
                 display: inline-block;
-                opacity: 0.7;
+                opacity: 0.5;
+                height: 58px;
+                background-image: url(../images/icons.png);
+                margin-right: 10px;
+            }
+            .select a#s-force{
+                background-position: -73px 0;
+                width: 31px;
+            }
+            .select a#s-force.active{
+                background-position: -73px -58px;
+                width: 31px;
+            }
+            .select a#s-circle{
+                background-position: -104px 0;
+                width: 32px;
+            }
+            .select a#s-circle.active{
+                background-position: -104px -58px;
+                width: 32px;
+            }
+            .select a#s-men{
+                background-position: -31px 0;
+                width: 42px;
+            }
+            .select a#s-men.active{
+                background-position: -31px -58px;
+                width: 42px;
+            }
+            .select a#s-women{
+                background-position: 0 0;
+                width: 31px;
+            }
+            .select a#s-women.active{
+                background-position: 0 -58px;
+                width: 31px;
             }
             .select a:hover{
                 opacity: 1
@@ -127,12 +166,14 @@
             <div id="sidebar">
                 <div class='logo'><img src="../images/logo.png" /></div>
                 <div class="select">
-                    <a href="javascript:void(0)" id="s-force"><img src="../images/icon-force.png"/></a>
-                    <a href="javascript:void(0)" id="s-circle"><img src="../images/icon-circle.png"/></a>
+                    <p>layout</p>
+                    <a href="javascript:void(0)" id="s-force" class='active'></a>
+                    <a href="javascript:void(0)" id="s-circle"></a>
                 </div>
                 <div class="select">
-                    <a href="javascript:void(0)" id="s-men"><img src="../images/male.png"/></a>
-                    <a href="javascript:void(0)" id="s-women"><img src="../images/female.png"/></a>
+                    <p>gender</p>
+                    <a href="javascript:void(0)" id="s-women" class="active"></a>
+                    <a href="javascript:void(0)" id="s-men"></a>
                 </div>
                 <div id='legend-container'>
                     <h5>Categories</h5>
@@ -155,29 +196,39 @@
         $.ajax({
             url: '../data/force/ForceChart.json',
             success: function( data ) {
-                d = data; 
-                //d = JSON.parse(data);
-                chart.getData().update(d["men"]);
+                //d = data; 
+                d = JSON.parse(data);
+                chart.getData().update(d["women"]);
             }
         });
         var curmode = 'force';
-        var curgender = 'man';
-        document.getElementById("s-force").addEventListener("click",function(){
+        var curgender = 'women';
+        document.getElementById("s-force").addEventListener("click",function(e){
             if(curmode==='force'){return false;}
+            document.getElementById("s-circle").className='';
+            e.target.className='active';
             curmode='force';
             chart.update({mode:curmode});
         },false);
-        document.getElementById("s-circle").addEventListener("click",function(){
+        document.getElementById("s-circle").addEventListener("click",function(e){
             if(curmode==='circle'){return false;}
+            document.getElementById("s-force").className='';
+            e.target.className='active';
             curmode = 'circle';
             chart.update({mode:curmode});
         },false);
-        document.getElementById("s-men").addEventListener("click",function(){
+        document.getElementById("s-men").addEventListener("click",function(e){
             if(curgender==='men'){return false;}
+            curgender='men';
+            document.getElementById("s-women").className='';
+            e.target.className='active';
             chart.getData().update(d["men"]);
         },false);
-        document.getElementById("s-women").addEventListener("click",function(){
+        document.getElementById("s-women").addEventListener("click",function(e){
             if(curgender==='women'){return false;}
+            curgender='women';
+            document.getElementById("s-men").className='';
+            e.target.className='active';
             chart.getData().update(d["women"]);
         },false);
         
