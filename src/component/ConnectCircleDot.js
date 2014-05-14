@@ -120,7 +120,6 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             beginValue: beginParam,
             finishValue: finishParam,
             setter: function ( target, param ) {
-                //console.log( target.getElement( 'label' ) );
                 target.update( param );
                 var finish = true;
                 for ( var k in param ) {
@@ -151,6 +150,9 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
+                label.text.setStyle( {
+                    'font-size': targetparam.percent * 30
+                } );
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
                         'color': targetparam.color,

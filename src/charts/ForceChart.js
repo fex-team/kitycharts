@@ -197,6 +197,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].Oy = Oy;
 			list[ i ].R = R;
 			list[ i ].chart = this;
+			list[ i ].fontSize = 20;
 		}
 		connects.removeElement();
 		for ( var n = 0; n < list.length; n++ ) {
