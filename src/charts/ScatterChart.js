@@ -4,14 +4,14 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
         var origin = this.origin;
         var isEmpty = !( 'data_record' in origin );
         var data_record = origin.data_record && origin.data_record.map( function ( r ) {
-                return {
-                    x: +r.x * 100,
-                    y: +r.y * 100,
-                    label: r.label,
-                    value: r.value,
-                    percent: +r.percent * 100
-                };
-            } ) || [];
+            return {
+                x: +r.x * 100,
+                y: +r.y * 100,
+                label: r.label,
+                value: r.value,
+                percent: +r.percent * 100
+            };
+        } ) || [];
 
         var query = new kc.Query( data_record );
 
@@ -25,7 +25,7 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
         var yMin, yMax, yDur;
         yMin = query.count() && query.min( 'y' ).y || 0;
-        yMax = query.count() && query.max( 'y' ).y || 0;     
+        yMax = query.count() && query.max( 'y' ).y || 0;
         yDur = yMax - yMin;
         yDur = yDur || 40;
         yMin -= yDur / 4;
@@ -38,8 +38,8 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
             unit_x: origin.unit_x,
             unit_y: origin.unit_y,
             data_record: data_record,
-            rangeX : [xMin, xMax],
-            rangeY : [yMin, yMax]
+            rangeX: [ xMin, xMax ],
+            rangeY: [ yMin, yMax ]
         };
     }
 } );
@@ -190,8 +190,8 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             y: 20,
             formatX: appendUnit( data.unit_x ),
             formatY: appendUnit( data.unit_y ),
-            rangeX : data.rangeX,
-            rangeY : data.rangeY
+            rangeX: data.rangeX,
+            rangeY: data.rangeY
         } );
 
         return oxy;
