@@ -196,9 +196,9 @@
         var d;
         $.ajax({
             url: '../data/force/ForceChart.json',
+            dataType: 'json',
             success: function( data ) {
-                //d = data; 
-                d = JSON.parse(data);
+                d = data;
                 chart.getData().update(d["women"]);
             }
         });
