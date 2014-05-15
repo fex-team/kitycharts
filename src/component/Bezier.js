@@ -2,38 +2,35 @@ var Bezier = kc.Bezier = kity.createClass( "Bezier", {
     base: kc.ChartElement,
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
-            cx1: 0,
-            cy1: 0,
-            cx2: 100,
-            cy2: 0,
-            vx1: 0,
-            vy1: 0,
-            vy2: 0,
-            vx2: 0,
+            x1: 0,
+            x2: 0,
+            y1: 0,
+            y2: 0,
+            cx: 0,
+            cy: 0,
             width: 1,
             color: 'black',
         }, param ) );
-        this.line = new kity.Bezier();
+        var p = this.param;
+        this.line = new kity.Path();
         this.canvas.addShape( this.line );
     },
 
     getAnimatedParam: function () {
-        return [ 'cx1', 'cy1', 'cx2', 'cy2', 'vx1', 'vy1', 'vx2', 'vy2', 'width' ];
+        return [ 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'width' ];
     },
 
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
-            draw: [ 'cx1', 'cy1', 'cx2', 'cy2', 'vx1', 'vy1', 'vx2', 'vy2' ],
+            draw: [ 'x1', 'y1', 'x2', 'y2', 'cx', 'cy' ],
             stroke: [ 'color', 'width', 'dash' ]
         } );
     },
 
-    draw: function ( cx1, cy1, cx2, cy2, vx1, vy1, vx2, vy2 ) {
-        var sPos = new kity.BezierPoint( cx1, cy1 );
-        var endPos = new kity.BezierPoint( cx2, cy2 );
-        sPos.setVertex( vx1, vy1 );
-        endPos.setVertex( vx2, vy2 );
-        this.line.setPoints( [ sPos, endPos ] );
+    draw: function ( x1, y1, x2, y2, cx, cy ) {
+        if ( x1 && y1 && x2 && y2 && cx && cy ) {
+            this.line.getDrawer().clear().moveTo( x1, y1 ).bezierTo( cx, cy, cx, cy, x2, y2 );
+        }
     },
 
     stroke: function ( color, width, dash ) {
