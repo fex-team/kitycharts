@@ -50,9 +50,7 @@ function convert2Standard( origin ) {
 
         series.push({
             name : groupByBrandId[ i ][ 0 ].brand_name,
-            segments : [{
-                data : tmpData
-            }]
+            data : tmpData
         });
     }
 
@@ -62,23 +60,47 @@ function convert2Standard( origin ) {
     var standard = {
 
         xAxis : {
-            categories : categories
-        },
-
-        yAxis : {
-            plot : {
-                
+            categories : categories,
+            step : 5,
+            padding : {
+                right : 0,
+                left : 0
+            },
+            margin : {
+                left : 60,
+                right : 60
             }
         },
 
-        series : series
+        yAxis : [{
+            axis : {
+                enabled : false
+            },
+            margin : {
+                bottom : 60
+            },
+            label : {
+                at : 'right'
+            }
+        }],
+
+        plotOptions : {
+            line : {
+                dot : {
+                    enabled : false
+                }
+            }
+        },
+
+        series : [{
+            line : series.slice( 0, 3 )
+        }]
     };
 
     //**
-    standard.series = series.slice( 0, 3 );
-    standard.series[0].color = '#8dc960';
-    standard.series[1].color = '#fa8f94';
-    standard.series[2].color = '#92bdf4';
+    series[0].color = '#8dc960';
+    series[1].color = '#fa8f94';
+    series[2].color = '#92bdf4';
     //**
 
     return standard;
