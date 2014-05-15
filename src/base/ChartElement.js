@@ -10,7 +10,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     constructor: function ( param ) {
 
         this.canvas = new kity.Group();
-        this.canvas.setAnchor( 0, 0 );
+        // this.canvas.setAnchor( 0, 0 );
 
         this.visible = true;
 
@@ -24,7 +24,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     addElement: function ( key, chartElement ) {
         this.elements[ key ] = chartElement;
         this.canvas.addShape( chartElement.canvas );
-        chartElement.chart = this;
+        chartElement.container = this;
         return chartElement;
     },
 
@@ -35,13 +35,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     removeElement: function ( key ) {
         var chartElement = this.elements[ key ];
         if ( chartElement ) {
-            delete chartElement.chart;
+            delete chartElement.container;
             this.canvas.removeShape( chartElement.canvas );
             delete this.elements[ key ];
         } else if ( key === undefined ) {
             for ( var k in this.elements ) {
                 chartElement = this.elements[ k ];
-                delete chartElement.chart;
+                delete chartElement.container;
                 this.canvas.removeShape( chartElement.canvas );
                 delete this.elements[ k ];
             }

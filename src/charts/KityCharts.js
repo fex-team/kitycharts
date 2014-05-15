@@ -8,10 +8,10 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
 
         this.setData( new kc.ChartData( config ) );
 
-        this.update( config );
+        this._update( config );
     },
 
-    update : function( config ){
+    _update : function( config ){
 
         // config 融合 处理
         var base = kc.ChartsConfig.init();
