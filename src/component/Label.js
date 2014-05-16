@@ -25,11 +25,15 @@ var Label = kc.Label = kity.createClass( "Label", {
             text: '',
             at: 'center',
             margin: 0,
-            style: {},
-            color: 'black'
+            style: {
+                family: 'Arial'
+            },
+            color: 'black',
+            rotate: 0
         } );
         this.text = new kity.Text().setStyle( {
-            'font-size': 12
+            'font-size': 12,
+            'family': 'Arial'
         } );
         this.canvas.addShape( this.text );
     },
@@ -37,7 +41,7 @@ var Label = kc.Label = kity.createClass( "Label", {
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
             'updateText': [ 'text' ],
-            'updateAnchor': [ 'at', 'margin' ],
+            'updateAnchor': [ 'at', 'margin', 'rotate' ],
             'updateColor': [ 'color' ],
             'updateStyle': [ 'style' ]
         } );
@@ -52,7 +56,7 @@ var Label = kc.Label = kity.createClass( "Label", {
         this.updateSize();
 
         // 文本更新需要更新位置
-        this.updateAnchor( this.param.at, this.param.margin );
+        this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
     },
 
     updateSize: function () {
@@ -68,10 +72,10 @@ var Label = kc.Label = kity.createClass( "Label", {
     updateStyle: function ( style ) {
         this.text.setStyle( style );
         this.updateSize();
-        this.updateAnchor( this.param.at, this.param.margin );
+        this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
     },
 
-    updateAnchor: function ( at, margin ) {
+    updateAnchor: function ( at, margin, rotate ) {
         var hh = this.size.height / 2;
         switch ( at ) {
         case 'left':
@@ -82,15 +86,19 @@ var Label = kc.Label = kity.createClass( "Label", {
             break;
         case 'up':
         case 'top':
-            this.text.setTextAnchor( 'center' ).setPosition( 0, hh - margin );
+            this.text.setTextAnchor( 'middle' ).setPosition( 0, hh - margin );
             break;
         case 'down':
         case 'bottom':
-            this.text.setTextAnchor( 'center' ).setPosition( 0, hh + margin );
+            var anchor = 'middle';
+            if ( rotate != 0 ) anchor = 'end';
+            this.text.setTextAnchor( anchor ).setPosition( 0, hh + margin );
             break;
         default:
-            this.text.setTextAnchor( 'center' ).setPosition( 0, hh * 0.75 );
+            this.text.setTextAnchor( 'middle' ).setPosition( 0, hh * 0.75 );
         }
+
+        if ( rotate != 0 ) this.text.setRotate( rotate );
     },
 
     updateColor: function ( color ) {

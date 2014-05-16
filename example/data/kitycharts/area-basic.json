@@ -1,0 +1,83 @@
+{
+
+    "chart": {
+        "type": "area"
+    },
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 30,
+            "left" : 70
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 30,
+            "right" : 30
+        }
+    },
+
+    "yAxis": [
+        {
+            "ticks" : {
+                "enabled" : false
+            },
+            "label" : {
+                "at" : "left",
+                "margin" : 0
+            },
+            "axis" : {
+                "enabled" : false
+            },
+            "padding" : {
+                "top" : 40,
+                "bottom" : 0
+            },
+            "stacked" : false,
+            "min" : 0
+        }
+    ],
+
+    "plotOptions" : {
+
+        "area" : {
+            "dot" : {
+                "enabled" : false
+            },
+
+            "stroke" : {
+                "width" : 3
+            },
+
+            "fill" : {
+                "grandientStopOpacity" : 0.1
+            }
+        }
+
+    },
+
+    "series": [
+
+        {
+            "area" : [
+                {
+                    "name": "John",
+                    "data": [5, 3, 4, 7, 2]
+                }
+            ]
+
+        }
+
+
+    ]
+
+}
+
+
+

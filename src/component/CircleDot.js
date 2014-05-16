@@ -22,7 +22,8 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
             },
             color: '#62a9dd',
             radius: 0,
-            fxEasing: 'easeOutElastic'
+            fxEasing: 'easeOutElastic',
+            y : 0
         }, param ) );
 
         this.circle = new kity.Circle();
@@ -38,9 +39,9 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
             'updateText': [ 'labelText' ]
         } );
     },
-    updateText: function ( text ) {
+    updateText: function ( labelText ) {
         this.getElement( 'label' ).update( {
-            text: text
+            text: labelText
         } );
     },
 
@@ -53,6 +54,6 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
     },
 
     getAnimatedParam: function () {
-        return [ 'radius' ];
+        return [ 'radius', 'y' ];
     }
 } );

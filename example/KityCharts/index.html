@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KityCharts API</title>
+
+
+        <script src="../../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../../kity/src'
+            });
+        </script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 300px;
+                /*background: #EEE;*/
+                display: inline-block;
+                border: #999 1px solid;
+            }
+        </style>
+    </head>
+    <body>
+
+
+        <div id="kitycharts" class="container"></div>
+        
+    </body>
+    <script>
+
+        $.ajax({
+            url: '../data/mix/bar-line-mix.json',
+            success: function( data ) {
+                var kitycharts = new KityCharts( 'kitycharts', data );
+
+
+                setTimeout(function(){
+
+                    $.ajax({
+                        url: '../data/mix/bar-line-mix1.json', 
+                        success: function( data ) {
+                            kitycharts._update( data );
+                        }
+                    });
+
+                }, 1000);
+
+
+            }
+        });
+
+
+            // setTimeout(function(){
+
+            //     $.ajax({
+            //         url: '../data/mix/bar-line-mix1.json', 
+            //         success: function( data ) {
+            //            var kitycharts = new KityCharts( 'kitycharts', data );
+            //         }
+            //     });
+
+            // }, 1000);
+    </script>
+</html>

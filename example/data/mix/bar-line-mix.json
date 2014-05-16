@@ -1,0 +1,114 @@
+{
+
+    "chart": {
+        "type": "line"
+    },
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 30,
+            "left" : 50
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 20
+        },
+        "min" : 0
+    },
+
+    "yAxis": [
+        {
+            "min" : 0,
+            "ticks" : {
+                "enabled" : false
+            },
+            "label" : {
+                "at" : "left",
+                "margin" : 0
+            },
+            "axis" : {
+                "enabled" : false
+            },
+            "padding" : {
+                "top" : 10,
+                "bottom" : 0
+            },
+            "percentage" : false,
+            "stacked" : false
+        }
+    ],
+
+    "plotOptions" : {
+
+        "bar" : {
+            "stacked" : true,
+            "width" : 5,
+            "margin": 1
+        },
+
+        "column" : {
+            "stacked" : true,
+            "width" : 5,
+            "margin": 1
+        },
+
+        "line" : {
+            "stacked" : true
+        },
+
+        "area" : {
+
+            "dot" : {
+                "enabled" : false
+            },
+
+            "stroke" : {
+                "width" : 0
+            },
+
+            "fill" : {
+                "opacity" : 0.5,
+                "grandientStopOpacity" : 0.5
+            }
+        }
+
+    },
+
+    "series": [
+
+        {
+            "line" : [
+                {
+                    "name": "John",
+                    "data": [5, 3, 4, 7, 2]
+                }, {
+                    "name": "Joe",
+                    "data": [3, 4, 4, 2, 5]
+                }, {
+                    "name": "Jane",
+                    "data": [2, 5, 6, 2, 1]
+                }, {
+                    "name": "Janet",
+                    "data": [3, 0, 4, 4, 3]
+                }, {
+                    "name": "Marry",
+                    "data": [4, 1, 2, 3, 5]
+                }
+            ]
+
+        }
+
+
+    ]
+
+}
+
+
+

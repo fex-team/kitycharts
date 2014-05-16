@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Line Chart test</title>
+
+
+        <script src="../../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../../kity/src'
+            });
+        </script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 300px;
+                /*background: #EEE;*/
+                display: inline-block;
+                border: #999 1px solid;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- <div id="spline" class="container"></div> -->
+
+        <div id="kitycharts" class="container"></div>
+
+        <div id="area-percentage" class="container"></div>
+        <div id="area-opacity" class="container"></div>
+        <div id="area" class="container"></div>
+        <div id="basic-line" class="container"></div>
+        <div id="basic-line-dot" class="container"></div>
+        
+    </body>
+    <script>
+
+        $.ajax({
+            url: '../data/line/basic-line.json',
+            success: function( data ) {
+                var standard = data;
+                var kitycharts = new KityCharts( 'kitycharts', standard );
+            }
+        });
+
+
+
+        var basicLine = new kc.LineChart('basic-line', {});
+        // basicLine.update();
+        $.ajax({
+            url: '../data/line/basic-line.json',
+            success: function( data ) {
+                basicLine.getData().update(data);
+            }
+        });
+
+        var basicLineDot = new kc.LineChart('basic-line-dot', {});
+        // basicLineDot.update();
+        $.ajax({
+            url: '../data/line/basic-line-dot.json',
+            success: function( data ) {
+                basicLineDot.getData().update(data);
+            }
+        });
+
+        var area = new kc.LineChart('area', {});
+        // area.update();
+        $.ajax({
+            url: '../data/line/area.json',
+            success: function( data ) {
+                area.getData().update(data);
+            }
+        });
+
+        var areaOpacity = new kc.LineChart('area-opacity', {});
+        // areaOpacity.update();
+        $.ajax({
+            url: '../data/line/area-opacity.json',
+            success: function( data ) {
+                areaOpacity.getData().update(data);
+            }
+        });
+
+        var areaPercentage = new kc.LineChart('area-percentage', {});
+        // areaPercentage.update();
+        $.ajax({
+            url: '../data/line/area-percentage.json',
+            success: function( data ) {
+                areaPercentage.getData().update(data);
+            }
+        });
+    </script>
+</html>
