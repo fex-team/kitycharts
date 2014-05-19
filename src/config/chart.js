@@ -29,7 +29,8 @@ kc.Config.chart = {
         },
 
         label : {
-            enabled : true
+            enabled : true,
+            rotate : 0
         },
 
         padding : {
@@ -60,7 +61,8 @@ kc.Config.chart = {
         },
 
         label : {
-            enabled : true
+            enabled : true,
+            rotate : 0
         },
 
         padding : {
@@ -90,18 +92,23 @@ kc.Config.chart = {
     interaction : {
 
         indicatrix : {
+            enabled : false,
             color : '#BBB',
             width : 1,
             dash : [ 4, 2 ],
         },
 
-        circle : {
-            radius : 4,
-            stroke : {
-                width : 2,
-                color : '#FFF'
+        hover : {
+            enabled : false,
+            circle : {
+                radius : 4,
+                stroke : {
+                    width : 2,
+                    color : '#FFF'
+                }
             }
         }
+
     },
 
     enableAnimation : true

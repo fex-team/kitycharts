@@ -92,12 +92,27 @@ function convert2Standard( origin ) {
             }
         },
 
+        interaction : {
+            hover : {
+                enabled : true
+            }
+
+        },
+
+        // onCircleHover : function( info ){
+        //     console.log( info ); 
+        // },
+
+        onCircleClick : function( info ){
+            console.log( info.label, info.values, info.position ); 
+        },
+
         series : [{
-            line : series.slice( 0, 3 )
+            line : series //series是处理后的数据序列，key指定类型，目前仅支持line
         }]
     };
 
-    //**
+    //可在此重新重新指定折线颜色，这里做个例子
     series[0].color = '#8dc960';
     series[1].color = '#fa8f94';
     series[2].color = '#92bdf4';

@@ -10,10 +10,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     constructor: function ( param ) {
 
         this.canvas = new kity.Group();
+        this.canvas.host = this;
 
         this.visible = true;
 
         this.param = param || {};
+        //挂载数据在图形上，交互的时候通过container获取
+        this._bindData();
 
         this.elements = {};
 
@@ -122,6 +125,9 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
 
         var key, rules, method, params, i, shouldCall, updated;
 
+        // 挂载数据在图形上
+        this._bindData();
+
         // 没有被更新过，需要把所有参数都更新一遍，达到初始效果
         if ( !this._updateRules ) {
             this._updateRules = this.registerUpdateRules();
@@ -186,5 +192,12 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
 
     setParam: function ( k, v ) {
         this.param[ k ] = v;
+    },
+
+    _bindData: function(){
+        if( this.param.bind ){
+            this.canvas.bind = this.param.bind;
+        }
     }
+
 } );

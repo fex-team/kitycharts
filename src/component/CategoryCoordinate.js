@@ -43,12 +43,13 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         "xCat" : function(){
             this.addElement( 'xCat', new kc.Categories( {
                 at: 'bottom',
-                rotate: -30
+                rotate: this.param.xLabelRotate
             } ) );
         },
         "yCat" : function(){
             this.addElement( 'yCat', new kc.Categories( {
-                at: 'left'
+                at: 'left',
+                rotate: this.param.yLabelRotate
             } ) );
         },
         "xAxis" : function(){
@@ -103,8 +104,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yLabelsAt: null,
                 labelMargin: 10,
                 xAxisArrow: null,
-                yAxisArrow: null
-
+                yAxisArrow: null,
+                xLabelRotate: 0,
+                yLabelRotate: 0
             }, param );
 
             mix.x = mix.margin.left;
@@ -147,7 +149,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     'yLabelsAt',
                     'labelMargin',
                     'xAxisArrow',
-                    'yAxisArrow'
+                    'yAxisArrow',
+                    'xLabelRotate',
+                    'yLabelRotate'
                 ]
             } );
         },
@@ -212,7 +216,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yLabelsAt,
                 labelMargin,
                 xAxisArrow,
-                yAxisArrow
+                yAxisArrow,
+                xLabelRotate,
+                yLabelRotate
             ) {
 
             var width = this.container.getWidth() - margin.left - margin.right,

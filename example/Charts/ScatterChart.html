@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title>Scatter Chart test</title>
-        <script src="../kity/dist/kitygraph.all.min.js"></script>
-        <script src="../build.js"></script>
-        <script src="lib/jquery-2.1.0.min.js"></script>
+        <script src="../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
         <style>
             #chart {
                 position: absolute;
@@ -40,7 +40,7 @@
         });
         chart.update();
         $.ajax({
-            url: 'data/scatter/ScatterChart.json',
+            url: '../data/scatter/ScatterChart.json',
             success: function( data ) {
                 // 模拟网络延迟而已
                 setTimeout(function() {
