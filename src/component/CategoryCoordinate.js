@@ -248,7 +248,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             xRuler.ref( xMin, xMax ).map( padding.left, width - padding.right );
             if(xCategories){
-                xGrid = xRuler.gridByCategories( xCategories.length, dataSet.xAxis.step );
+                xGrid = xRuler.gridByCategories( xCategories.length );
             }else{
                 xCount = width / 60 | 0;
                 xGrid = xRuler.gridByCount( xCount, null, true, minX );
@@ -256,7 +256,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             
             yRuler.ref( yMin, yMax ).map( height - padding.top - padding.bottom, 0 );
             if(yCategories){
-                yGrid = yRuler.gridByCategories( yCategories.length, dataSet.yAxis.step );
+                yGrid = yRuler.gridByCategories( yCategories.length );
             }else{
                 yCount = height / 40 | 0;
                 yGrid = yRuler.gridByCount( yCount, null, true, minY );

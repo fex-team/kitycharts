@@ -39,6 +39,7 @@ var dependience = [
     'src/component/Legend.js',
     'src/component/Tooltip.js',
     'src/component/PieDot.js',
+    'src/component/Pie.js',
     'src/component/CircleDot.js',
     'src/component/ConnectCircleDot.js',
     'src/component/Mesh.js',
@@ -53,12 +54,18 @@ var dependience = [
     'src/config/ChartsConfig.js',
 
     'src/formatter/chartData.js',
+    'src/formatter/pieData.js',
 
+    'src/plots/LinearPlots.js',
     'src/plots/LinePlots.js',
+    'src/plots/AreaPlots.js',
+    'src/plots/PiePlots.js',
     'src/plots/StickPlots.js',
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
+    'src/charts/BaseCharts.js',
+    'src/charts/PieCharts.js',
     'src/charts/KityCharts.js'
 ];
 

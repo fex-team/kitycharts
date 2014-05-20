@@ -1,6 +1,6 @@
 (function(exports){
 
-var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCharts', {
+var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCharts', {
     base : kc.Chart,
 
     constructor: function ( target, config ) {
@@ -57,14 +57,18 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
             oxy = this.coordinate = this.addElement( 'oxy_' + i, new kc.CategoryCoordinate( coordConf ) );
             oxy.update();
 
+
             // 处理图表类型 series
             for( type in series[ i ] ){
                 tmpConf.series = series[ i ];
                 switch( type ) {
-                    case 'line':
                     case 'area':
-                        var lineData = this.addElement( 'LinePlots_' + i, new kc.LinearPlots( oxy, tmpConf, type ) ).update();
-                        // lineData.series.line && lineData.series.line.length > 1 && (this.linesArrayData = this.linesArrayData.concat( lineData.series.line ) );
+                        var a = this.addElement( 'AreaPlots_' + i, new kc.AreaPlots( oxy, tmpConf ) );
+                        a.update();
+                        break;
+                    case 'line':
+                        var l = this.addElement( 'LinePlots_' + i, new kc.LinePlots( oxy, tmpConf ) );
+                        l.update();
                         break;
                     case 'bar':
                     case 'column':
@@ -250,6 +254,5 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
 
 } );
 
-KityCharts = kity.Utils.extend( KityCharts, kc );
 
 })( window );
