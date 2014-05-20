@@ -10,10 +10,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     constructor: function ( param ) {
 
         this.canvas = new kity.Group();
+        this.canvas.host = this;
 
         this.visible = true;
 
         this.param = param || {};
+        //挂载数据在图形上，交互的时候通过container获取
+        this._bindData();
 
         this.elements = {};
 
@@ -98,12 +101,12 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     updateByRule: function ( method, methodParams, param, animatedBeginValueCopy, progress ) {
         var shouldCall, lastParam, i, k;
         lastParam = this.param;
-        
+
 
         for ( i = 0; i < methodParams.length; i++ ) {
             k = methodParams[ i ];
             // 值没有改变的话，不更新
-            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) {//用!=符号， "" == 0为true
+            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) { //用!=符号， "" == 0为true
                 shouldCall = true;
                 break;
             }
@@ -122,6 +125,9 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     update: function ( param, animatedBeginValueCopy, progress ) {
 
         var key, rules, method, params, i, shouldCall, updated;
+
+        // 挂载数据在图形上
+        this._bindData();
 
         // 没有被更新过，需要把所有参数都更新一遍，达到初始效果
         if ( !this._updateRules ) {
@@ -189,7 +195,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         this.param[ k ] = v;
     },
 
-    setOpacity: function( opacity ) {
+    setOpacity: function ( opacity ) {
         this.canvas.setOpacity( opacity );
+    },
+
+    _bindData: function () {
+        if ( this.param.bind ) {
+            this.canvas.bind = this.param.bind;
+        }
     }
 } );

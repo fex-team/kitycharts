@@ -95,10 +95,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
     initMarqueeZoom: function () {
         var me = this;
-        var zoomStack = [ {
-            rangeX: null,
-            rangeY: null
-        } ];
+        var zoomStack = [];
 
         function inRange( x, a, b ) {
             return ( a <= x && x <= b ) || ( a >= x && x >= b );
@@ -143,12 +140,15 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
             if ( getPointInRange( data, rulerX, rulerY, left, right, top, bottom ) < 2 ) return;
 
+            zoomStack.push( {
+                rangeX: oxy.param.rangeX,
+                rangeY: oxy.param.rangeY
+            } );
+
             var range = {
                 rangeX: [ rulerX.measure( left ), rulerX.measure( right ) ],
                 rangeY: [ rulerY.measure( bottom ), rulerY.measure( top ) ]
             };
-
-            zoomStack.push( range );
 
             updateRange( oxy, range, param, data );
         } );
@@ -157,11 +157,11 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             var oxy = me.getElement( 'oxy' ),
                 param = me.param,
                 data = me.data.format(),
-                range = zoomStack[ zoomStack.length - 2 ];
+                range = zoomStack[ zoomStack.length - 1 ];
             if ( range ) {
                 updateRange( oxy, range, param, data );
             }
-            if ( zoomStack.length > 1 ) zoomStack.pop();
+            if ( zoomStack.length ) zoomStack.pop();
         } );
     },
 
@@ -216,7 +216,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 .animate( {
                     x1: ax,
                     x2: ax,
-                    y1: oxy.param.y + oxy.param.heading,
+                    y1: oxy.param.y + oxy.param.labelMargin,
                     y2: oxy.param.y + oxy.param.height
                 } );
 
@@ -229,7 +229,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 } )
                 .animate( {
                     x: ax,
-                    y: oxy.param.y + oxy.param.heading
+                    y: oxy.param.y + oxy.param.labelMargin
                 } );
 
         } else {
@@ -244,7 +244,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             yLine.setVisible( true )
                 .animate( {
                     x1: oxy.param.x,
-                    x2: oxy.param.x + oxy.param.width - oxy.param.heading,
+                    x2: oxy.param.x + oxy.param.width - oxy.param.labelMargin,
                     y1: ay,
                     y2: ay
                 } );
@@ -259,7 +259,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                     }
                 } )
                 .animate( {
-                    x: oxy.param.x + oxy.param.width - oxy.param.heading,
+                    x: oxy.param.x + oxy.param.width - oxy.param.labelMargin * 3,
                     y: ay
                 } );
 

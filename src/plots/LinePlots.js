@@ -16,7 +16,7 @@ var LinePlots = kc.LinePlots = kity.createClass( 'LinePlots', {
 
     update: function ( config ) {
         var config = config || this.config;
-        this.formattedData = this.drawLines( config );
+        return this.drawLines( config );
     },
 
     drawLines: function ( data ) {

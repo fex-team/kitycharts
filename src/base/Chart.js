@@ -8,8 +8,12 @@ var Chart = kc.Chart = kity.createClass( 'Chart', {
             target = document.getElementById( target );
         }
         target.setAttribute( 'onselectstart', 'return false' );
+        
         this.paper = new kity.Paper( target );
         this.paper.addShape( this.canvas );
+        
+        this.container = target;
+        target.paper = this.paper;
     },
     getWidth: function () {
         return this.paper.getContainer().clientWidth;
