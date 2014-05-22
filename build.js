@@ -76,7 +76,7 @@ function nodeBuild() {
 
     var fs = require( 'fs' );
 
-    var buildPath = '../static/kitychart.all.js';
+    var buildPath = [ 'dist/kitychart.all.js' ];
 
     var contents = [],
         content, fileName;
@@ -93,7 +93,9 @@ function nodeBuild() {
 
     content = '(function(kity, window) {\n\n' + content + '\n\n})(kity, window);';
 
-    fs.writeFileSync( buildPath, content );
+    buildPath.forEach( function ( path ) {
+        fs.writeFileSync( path, content );
+    } );
 
     console.log( ' > KityCharts build success!' );
 }
@@ -114,7 +116,7 @@ function devWrite() {
     }
 }
 
-var env = window != this ? 'node' : 'script';
+var env = !( 'window' in this ) ? 'node' : 'script';
 
 var task = {
     'node': nodeBuild,

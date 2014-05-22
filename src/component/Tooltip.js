@@ -110,13 +110,13 @@
 
             drawer.moveTo( d1.rp[ 1 ].x, d1.rp[ 1 ].y );
 
-            if ( anchorSize > 0 ) {
+            if ( anchorSize > 0 && true ) {
                 var side = Vector.fromPoints( d1, d2 ),
                     halfLength = side.length() / 2;
-                var a1 = d1.add(side.normalize(halfLength - anchorSize )),
-                    dt = side.rotate(90).add(side.normalize()),
-                    a2 = a1.add(dt.multipy(anchorSize )),
-                    a3 = a1.add(side.normalize(anchorSize * 2 ));
+                var a1 = d1.add( side.normalize( halfLength - anchorSize ) ),
+                    dt = side.rotate( -90 ).normalize().add( side.normalize() ),
+                    a2 = a1.add( dt.multipy( anchorSize ) ),
+                    a3 = a1.add( side.normalize( anchorSize * 2 ) );
                 drawer.lineTo( a1.x, a1.y );
                 drawer.lineTo( a2.x, a2.y );
                 drawer.lineTo( a3.x, a3.y );

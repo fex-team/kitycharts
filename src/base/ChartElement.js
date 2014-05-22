@@ -93,6 +93,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     registerUpdateRules: function () {
         return {
             'setPosition': [ 'x', 'y' ],
+            'setOpacity': [ 'opacity' ],
             'setVisible': [ 'visible' ]
         };
     },
@@ -100,12 +101,12 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     updateByRule: function ( method, methodParams, param, animatedBeginValueCopy, progress ) {
         var shouldCall, lastParam, i, k;
         lastParam = this.param;
-        
+
 
         for ( i = 0; i < methodParams.length; i++ ) {
             k = methodParams[ i ];
             // 值没有改变的话，不更新
-            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) {//用!=符号， "" == 0为true
+            if ( k in param && ( !this._firstUpdate || lastParam[ k ] !== param[ k ] ) ) { //用!=符号， "" == 0为true
                 shouldCall = true;
                 break;
             }
@@ -194,10 +195,13 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         this.param[ k ] = v;
     },
 
-    _bindData: function(){
-        if( this.param.bind ){
+    setOpacity: function ( opacity ) {
+        this.canvas.setOpacity( opacity );
+    },
+
+    _bindData: function () {
+        if ( this.param.bind ) {
             this.canvas.bind = this.param.bind;
         }
     }
-
 } );

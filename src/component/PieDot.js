@@ -99,26 +99,26 @@ var PieDot = kc.PieDot = kity.createClass( "PieDot", {
 	},
 
 	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, showPercent, collapsed ) {
-		if ( collapsed === 0 ) {
-			this.getElement( 'label' ).setVisible( true );
+		if ( collapsed < 1 ) {
 			this.getElement( 'label' ).update( {
+				visible: true,
+				opacity: 1 - collapsed,
 				text: labelText,
 				color: labelColor,
 				at: showPercent ? 'bottom' : labelPosition,
 				margin: outerRadius + 10
 			} );
-		} else {
-			this.getElement( 'label' ).setVisible( false );
 		}
 	},
 
 	updatePercentLabel: function ( labelColor, innerRadius, outerRadius, percent, showPercent, collapsed ) {
 		var plabel = this.getElement( 'plabel' );
-		plabel.setVisible( showPercent && collapsed === 0 );
 
-		if ( showPercent && collapsed === 0 ) {
+		if ( showPercent && collapsed < 1) {
 			var labelWidth = plabel.getSize().width;
 			plabel.update( {
+				visible: true,
+				opacity: 1 - collapsed,
 				at: labelWidth < innerRadius * 1.8 ? 'center' : 'top',
 				color: labelColor,
 				margin: outerRadius + 10,
