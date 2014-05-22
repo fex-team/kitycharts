@@ -45,6 +45,7 @@ var dependience = [
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
+    'src/component/Rectage.js',
 
     'src/config/chart.js',
     'src/config/bar.js',
@@ -55,6 +56,7 @@ var dependience = [
 
     'src/formatter/chartData.js',
     'src/formatter/pieData.js',
+    'src/formatter/TreemapData.js',
 
     'src/plots/LinearPlots.js',
     'src/plots/LinePlots.js',
@@ -66,6 +68,7 @@ var dependience = [
     'src/charts/ForceChart.js',
     'src/charts/BaseCharts.js',
     'src/charts/PieCharts.js',
+    'src/charts/Treemap.js',
     'src/charts/KityCharts.js'
 ];
 
