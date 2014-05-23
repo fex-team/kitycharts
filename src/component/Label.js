@@ -31,6 +31,7 @@ var Label = kc.Label = kity.createClass( "Label", {
             color: 'black',
             rotate: 0
         } );
+
         this.text = new kity.Text().setStyle( {
             'font-size': 12,
             'family': 'Arial'
@@ -104,4 +105,5 @@ var Label = kc.Label = kity.createClass( "Label", {
     updateColor: function ( color ) {
         this.text.fill( color );
     }
+
 } );

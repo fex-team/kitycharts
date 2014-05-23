@@ -29,14 +29,20 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
         this.callBase( target, param );
         this.setData( new kc.TreemapData( param ) );
         this.rects = this.addElement( 'rects', new kc.ElementList() );
+
         this.tip = this.addElement( 'tip', new kc.Tooltip( {
-            background: '#f39488',
-            color: 'white',
+            background: '#FFF',
             at: 'up',
-            content: '',
-            padding: [ 2, 10, 2, 10 ],
+            padding: [ 10, 20, 10, 20 ],
+            borderRadius : 3,
             anchorSize: 4
         } ) );
+
+        var filter = new kity.ProjectionFilter( 2, 1, 1 );
+        filter.setColor( "rgba( 0, 0, 0, 0.3 )" );
+        this.paper.addResource( filter );
+        this.tip.canvas.applyFilter( filter );
+
         this._bindAction();
     },
 
@@ -55,16 +61,24 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
                     str.push( n.name );
                 } )
                 str = str.reverse().join(' > ');
+
+                var color = new kity.Color(255,204,191);
+                color.set('h', node.parent.weightStart * 200);
+                color.set('s', 80);
+                color.set('l', 75);
+
                 list.push({
                     x : node.x,
                     y : node.y,
                     width : node.dx,
                     height : node.dy,
-                    color : '#9CCDEE',
+                    color : color,
                     labelText : node.name,
-                    labelColor : '#888',
+                    labelColor : '#000',
                     strokeWidth : 1,
                     strokeColor : '#FFF',
+                    labelX : node.dx/2,
+                    labelY : node.dy/2,
                     bind : str
                 });
             });
@@ -81,26 +95,79 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
 
     _bindAction : function(){
         var self = this;
-        this.paper.on( 'mousemove', function(ev){
-            var data = ev.targetShape.container.bind;
-            if( data ){
-                console.log(data);
+        var prev, rect, timer;
+        this.on( 'mousemove', function(ev){
+
+            clearTimeout( timer );
+
+            timer = setTimeout(function(){
+                var rect = ev.getTargetChartElement();
+                rect = rect.text ? rect.container : rect;
+                var data = rect.getBindData();
+                if( data ){
+
+                    if( prev == rect ){
+                        return;
+                    }
+
+                    prev = rect;
+
+                    var fontSize = rect.label.direction == 'horizon' ?  rect.label.text.getHeight() : rect.label.text.getWidth();
+
+                    self.tip
+                        .setVisible( true )
+                        .update( {
+                            content: {
+                                text: data,
+                                color: '#555'
+                            }
+                        } );
 
 
-                self.tip.setVisible( true )
-                    .update( {
-                        content: {
-                            text: 'dsdsd',
-                            color: 'white'
-                        }
-                    } )
-                    .animate( {
-                        x: 250,
-                        y: 300
-                    } );
+                    var rectPos = rect.getPosition();
+                    var rectSize = rect.getSize();
+                    var rectCenter = {
+                        x : rectPos.x + rectSize.width / 2,
+                        y : rectPos.y + rectSize.height / 2
+                    };
 
+                    var paperWidth = self.paper.getWidth();
+                    var tipPos = self.tip.getPosition();
+                    var tipSize = self.tip.getSize();
 
-            }
+                    var at = 'up';
+                    var posX = 0, posY = 0;
+                    var gap = fontSize;
+
+                    posY = rectCenter.y - tipSize.height / 2 - gap;
+
+                    if( rectCenter.x + tipSize.width / 2 > paperWidth ){
+                        at = 'left';
+                        posX = rectCenter.x - tipSize.width / 2 - gap;
+                        posY = rectCenter.y;
+                    }else if( rectCenter.x - tipSize.width / 2 < 0 ){
+                        at = 'right';
+                        posX = rectCenter.x + tipSize.width / 2 + gap;
+                        posY = rectCenter.y;
+                    }else{
+                        posX = rectCenter.x;
+                    }
+
+                    if( rectCenter.y - tipSize.height - gap < 0 ){
+                        at = 'down';
+                        posY = rectCenter.y + tipSize.height / 2 + gap;
+                    }
+
+                    self.tip
+                        .update({
+                            at : at
+                        }).animate({
+                            x: posX,
+                            y: posY
+                        }, 200);
+                }
+            }, 100);
+
             
         });
     }

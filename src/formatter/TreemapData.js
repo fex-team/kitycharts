@@ -4,14 +4,24 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
     var mode = "squarify";
 
     function setAttr( node ){
-        if( !node.parent ) node.depth = 0;
+        if( !node.parent ){
+            node.depth = 0;
+            node.index = 0;
+            node.weightStart = 0;
+            node.weight = 1;
+        }
 
-        var sum = 0, func = arguments.callee;
+        var sum = 0, func = arguments.callee, childWeight = 0;
         if( node.children && node.children.length > 0 ){
+
+            childWeight = node.weight / node.children.length;
+
             node.children.forEach(function( n, i ){
                 n.parent = node;
                 n.depth = node.depth + 1;
-
+                n.index = i;
+                n.weightStart = n.parent.weightStart + i * childWeight;
+                n.weight = childWeight;
                 sum += func( n );
             });
         }else{
@@ -154,7 +164,7 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
 
         format: function ( width, height, mode ) {
             setMode( mode );
-            
+
             var root = this.origin;
             
             if( !(( 'name' in root ) && ( 'value' in root || 'children' in root )) ) return null;

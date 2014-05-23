@@ -40,7 +40,7 @@
             this.callBase( kity.Utils.extend( {
                 target: null,
                 content: {
-                    color: 'white'
+                    color: '#888'
                 },
                 contentClass: kc.Label,
 

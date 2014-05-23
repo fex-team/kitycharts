@@ -54,7 +54,7 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
         return kity.Utils.extend( this.callBase(), {
             drawRect: [ 'width', 'height', 'color' ],
             stroke: [ 'strokeWidth', 'strokeColor' ],
-            drawText: [ 'labelText', 'labelColor', 'labelX', 'labelY' ]
+            drawText: [ 'labelText', 'labelColor', 'labelX', 'labelY', 'width', 'height' ]
         } );
     },
 
@@ -75,17 +75,35 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
         this.rect.stroke( pen );
     },
 
-    drawText: function ( labelText, labelColor, labelX, labelY ) {
+    drawText: function ( labelText, labelColor, labelX, labelY, width, height ) {
 
         this.label.setVisible( true );
-        this.label.update( {
+        this.label.update({
             text: labelText,
             color: labelColor,
-            at: 'right',
+            at: 'bottom',
             x : labelX,
             y : labelY
-        } );
+        });
 
+        if( width > 0 ){
+            var textWidth = this.label.getSize().width;
+            var con = textWidth > width;
+
+            this.label.text.setRotate( con ? -90 : 0 );
+            this.label.direction = con ? 'vertical' : 'horizon';
+
+            // this.textFilter = new kity.ProjectionFilter( 0, 1, 1 );
+            // this.textFilter.setColor( "rgba( 255, 0, 0, 1 )" );
+            // var paper = this.getPaper();
+            // paper.addResource( this.textFilter );
+            // this.label.text.applyFilter( this.textFilter );
+
+            if( textWidth > width && textWidth > height ){
+                this.label.setVisible( false );
+            }
+
+        }
     },
 
 

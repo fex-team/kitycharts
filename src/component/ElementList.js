@@ -77,6 +77,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         var element;
         while ( size-- ) {
             element = new this.elementClass();
+            element.container = this;
             this.canvas.addShape( element.canvas );
             this.elementList.push( element );
             element.update( this.param.common );
