@@ -1,15 +1,156 @@
-var ChinaMap = kc.ChinaMap = kity.createClass( 'ChinaMap', {
+/**
+ * @class MapBlock
+ * 
+ * 表示一个地图的区域
+ *
+ * @param {String} path 改区域的路径数据
+ * @param {Number} scale 绘制的缩放比例
+ * @param {kity.Color} color 区域填充的颜色
+ */
+var MapBlock = kity.createClass('MapBlock', {
+
+    base: kc.AnimatedChartElement,
+
+    constructor: function(param) {
+        this.callBase(kity.Utils.extend({
+            scale: 1,
+            color: new kity.Color('#EEE'),
+            path: null
+        }), param);
+
+        this._shape = new kity.Path();
+        this.canvas.addShape(this._shape);
+    },
+
+    getAnimatedParams: function() {
+        return ['scale', 'color'];
+    },
+
+    registerUpdateRules: function() {
+        return kity.Utils.extend(this.callBase(), {
+            draw: ['path', 'scale'],
+            fill: ['color']
+        });
+    },
+
+    draw: function(path, scale) {
+        var scaledPath = new kity.Matrix().scale(scale).transformPath(path);
+        this._shape.setPathData(scaledPath);
+    },
+
+    fill: function(color) {
+        this._shape.fill(color);
+    }
+});
+
+/**
+ * @class Map
+ * 
+ * 表示一个地图的组件
+ *
+ * @param {Number} width 地图的宽度
+ * @param {Number} height 地图的高度
+ * @param {Number} data 地图的数据
+ *
+ *
+ * @method findBlockById(id)
+ *     通过地图块的 id 来获取一个地图块
+ *
+ * @method findBlockByEvent(e)
+ *     通过一个事件来获取跟事件相关的地图块
+ * 
+ */
+var Map = kc.Map = kity.createClass( 'Map', {
     base: kc.ChartElement,
 
-    constructor: function ( param ) {
-        this.callBase( kity.Utils.extend( {}, param ) );
+    constructor: function ( param, data ) {
+        this.callBase( kity.Utils.extend( {
+            width: data.width,
+            height: data.height
+        }, param ) );
+
+        this._data = data || Map.CHINA_MAP;
+
+        this._blocks = new kc.ElementList({
+            elementClass: MapBlock
+        });
+
+        this.addElement('blocks', this._blocks);
+
+        var me = this;
+    },
+
+    registerUpdateRules: function() {
+        return kity.Utils.extend(this.callBase(), {
+            resize: ['width', 'height']
+        });
+    },
+
+    resize: function(width, height) {
+        var renderRatio = width / height,
+            dataRatio = this._data.width / this._data.height,
+            scale;
+
+        if (renderRatio > dataRatio) {
+            height = width / dataRatio;
+            scale = height / this._data.height;
+        }
+        else {
+            width = height * dataRatio;
+            scale = width / this._data.width;
+        }
+
+        var list = [];
+
+        for (var id in this._data.blocks) {
+            if (this._data.blocks.hasOwnProperty(id)) {
+                list.push({
+                    id: id,
+                    path: this._data.blocks[id],
+                    scale: scale
+                });
+            }
+        }
+
+        this._blocks.update({
+            list: list
+        });
+
+        this._lngRuler = kc.Ruler.ref(this._data.lng[0], this._data.lng[1]).map(0, width);
+        this._latRuler = kc.Ruler.ref(this._data.lat[0], this._data.lat[1]).map(0, height);
+        this._xRuler = this._lngRuler.reverse();
+        this._yRuler = this._latRuler.reverse();
+    },
+
+    findBlockById: function(id) {
+        return this._blocks.find(id);
+    },
+
+    findBlockByEvent: function(e) {
+        var shape = e.targetShape;
+        while (shape && !shape.host) {
+            if (shape.host instanceof MapBlock) return shape.host;
+            shape = shape.container;
+        }
+        return null;
+    },
+
+    geoToPoint: function(lng, lat) {
+        return new kity.Point(this._lngRuler.measure(lng), this._lngRuler.measure(lat));
+    },
+
+    pointToGeo: function(x, y) {
+        return [this._xRuler.measure(x), this._yRuler.measure(y)];
     }
+
 } );
 
-ChinaMap.DATA = {
+Map.CHINA_MAP = {
     width: 565,
     height: 475,
-    provinces: {
+    lng: [73.66, 135.05],
+    lat: [3.86, 53.55],
+    blocks: {
         heilongjiang: 'M464.838,96.639l6.787-1.19l2.854,5.241l4.285,3.095l2.856-1.188h2.386l4.285-2.501l3.094,3.094l2.024,0.357l5.357-2.023l3.813,2.023l1.666,4.288h2.857l1.43,1.904l3.689,4.049l1.426-0.833l-0.594-5.12l2.026-1.432l2.854,5.716l2.621,1.074l2.858,3.212l2.021-0.357l0.836-1.427l4.523-5.12l2.022,1.428l1.43-2.022l1.431,2.619l4.283,1.429h2.86l2.07,0.088l-1.238-2.113l-0.598-6.906l-5.115-7.978l2.855-2.857l2.616-4.883h9.646l1.785-1.665l-0.597-3.69l2.025-3.691l-0.596-2.024l0.832-3.451l-0.236-17.742l2.855-5.715l-3.214-3.692l0.595-2.261l-1.427-2.024l-3.69,1.429l-4.289,4.884l-4.283,2.023l-4.289,5.951l-10.598,3.692l-4.879-3.692l0.594-2.262l-2.5-3.689l-1.191-3.811l-4.047-0.239l-7.145-3.69l-2.859,1.071l-3.33-1.667l-4.887,0.834l-4.283-1.429l-2.621-3.69l-2.498-2.857l-0.951-2.857l-3.334-3.452l-2.026-3.099l-4.644-6.31l-1.428-3.69l-5.119-6.548l-1.432-3.454l-6.549-3.216l-4.287,1.429l-3.689-0.833l-8.336-1.668l-11.07,3.932l-2.024,1.786l2.262,3.096l-2.856,7.499l0.834,0.835l4.881,3.096l2.621-4.286l4.524,2.856l-0.235,2.022l1.664,5.119l2.854,3.218l5.717,0.833l1.668-1.787l3.451-0.477l6.547-5.476l8.576,6.31l-2.858,11.669l0.594,8.333v5.119l-2.26,1.191l-0.238,13.335l-0.597-0.476l-2.26-2.858h-1.192l-0.595,1.073c0,0-8.797,13.044-7.146,10.596c1.652-2.448-3.451,4.523-3.451,4.523l0.357,1.428l7.145,4.886l3.926-1.071l0.599,1.071l-0.834,1.189l-3.689,1.667l-0.359,3.214L464.838,96.639z',
         jilin: 'M544.896,113.042l-2.07-0.088h-2.858l-4.285-1.431l-1.43-2.619l-1.431,2.024l-2.022-1.428l-4.523,5.12l-0.834,1.427l-2.022,0.357l-2.859-3.214l-2.621-1.072l-2.854-5.715l-2.027,1.431l0.594,5.12l-1.426,0.833l-3.689-4.05l-1.432-1.903h-2.854l-1.666-4.288l-3.813-2.023l-5.354,2.023l-2.025-0.357l-3.098-3.094l-4.285,2.5h-2.383l-2.857,1.191l-4.285-3.096l-2.854-5.24l-6.787,1.189l-2.621,3.099l-0.238,3.45l-7.502-2.023l-1.074,2.381l0.601,1.667l3.928,2.859v4.046l0.594,3.929l2.265,3.456l0.356,3.095l1.666,1.191l5.717-5.479l5.953,7.502v4.288l3.213,1.667l0.238-1.431l4.885,1.431l3.451,4.046l1.666-1.784l0.357-1.074l8.217,11.075l0.594,4.286l4.527,5.239l0.592,4.761l4.051-2.499l3.689-10.598l1.67-0.595l4.047,2.263l6.549-0.834l2.26-2.024l-3.092-4.763l0.832-1.191c0,0,7.84-2.611,6.072-2.022c-1.766,0.588,2.5-4.883,2.5-4.883l3.215-1.428l0.238-4.766l0.832-3.212l1.785-0.596l1.668,1.789l1.668,1.426l4.287-5.715l1.188-4.288L544.896,113.042z',
         liaoning: 'M491.15,173.2l6.783-10.002l4.287-4.881l-0.595-4.763l-4.524-5.239l-0.594-4.286l-8.216-11.075l-0.358,1.074l-1.666,1.786l-3.453-4.05l-4.883-1.429l-0.236,1.429v2.264l-2.022,2.022l-4.047,4.05H467.1l-1.666,2.856h-1.789l-3.094,3.096h-1.787l-3.691,3.691l-2.262,0.596l-4.881,7.5l-3.096-4.644l-3.453-2.262l-1.666,1.667l1.903,10.002l-1.666,3.453l-1.668,5.12l4.763,3.215l2.621,0.238l3.45,4.881l2.5-1.429c0,0,2.857-2.881,4.05-4.882c1.192-2.002,4.049-6.788,4.049-6.788l6.787-1.429l4.287,4.286l-3.099,6.787l-4.049,6.311l3.688,2.62l-0.233,3.098l-2.857,2.855l0.597,1.19l4.881-2.619l7.143-9.407l10.836-6.072L491.15,173.2z',

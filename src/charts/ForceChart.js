@@ -276,7 +276,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			//调整力导向的位置
 			var setPos = function () {
 				var K = 5;
-				for ( var t = 0; t < 2; t++ ) {
+				for ( var t = 0; t < 10; t++ ) {
 					for ( var k = 0; k < list.length; k++ ) {
 						var source = list[ k ];
 						if ( source === brandTop ) continue; //固定中心

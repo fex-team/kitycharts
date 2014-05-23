@@ -83,10 +83,17 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
         }
     },
+    
     shrink: function ( size ) {
         var removed = this.elementList.splice( -size );
         while ( removed.length ) {
             this.canvas.removeShape( removed.pop().canvas );
+        }
+    },
+
+    find: function( id ) {
+        for (var i = 0, ii = this.elementList.length; i < ii; i++) {
+            if (this.elementList[i].param.id == id) return this.elementList[i];
         }
     }
 } );
