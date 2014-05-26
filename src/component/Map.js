@@ -15,6 +15,7 @@ var MapBlock = kity.createClass('MapBlock', {
         this.callBase(kity.Utils.extend({
             scale: 1,
             color: new kity.Color('#EEE'),
+            stroke: 'white',
             path: null
         }), param);
 
@@ -22,24 +23,25 @@ var MapBlock = kity.createClass('MapBlock', {
         this.canvas.addShape(this._shape);
     },
 
-    getAnimatedParams: function() {
+    getAnimatedParam: function() {
         return ['scale', 'color'];
     },
 
     registerUpdateRules: function() {
         return kity.Utils.extend(this.callBase(), {
             draw: ['path', 'scale'],
-            fill: ['color']
+            fill: ['color', 'stroke']
         });
     },
 
     draw: function(path, scale) {
+        if (!path) return;
         var scaledPath = new kity.Matrix().scale(scale).transformPath(path);
         this._shape.setPathData(scaledPath);
     },
 
-    fill: function(color) {
-        this._shape.fill(color);
+    fill: function(color, stroke) {
+        this._shape.fill(color).stroke(stroke, 1.5);
     }
 });
 
@@ -113,13 +115,15 @@ var Map = kc.Map = kity.createClass( 'Map', {
         }
 
         this._blocks.update({
-            list: list
+            list: list,
+            fx: false
         });
-
-        this._lngRuler = kc.Ruler.ref(this._data.lng[0], this._data.lng[1]).map(0, width);
-        this._latRuler = kc.Ruler.ref(this._data.lat[0], this._data.lat[1]).map(0, height);
+        this._lngRuler = new kc.Ruler().ref(this._data.lng[0], this._data.lng[1]).map(0, width);
+        this._latRuler = new kc.Ruler().ref(this._data.lat[1], this._data.lat[0]).map(0, height);
         this._xRuler = this._lngRuler.reverse();
         this._yRuler = this._latRuler.reverse();
+        this.renderWidth = width;
+        this.renderHeight = height;
     },
 
     findBlockById: function(id) {
@@ -133,19 +137,11 @@ var Map = kc.Map = kity.createClass( 'Map', {
             shape = shape.container;
         }
         return null;
-    },
-
-    geoToPoint: function(lng, lat) {
-        return new kity.Point(this._lngRuler.measure(lng), this._lngRuler.measure(lat));
-    },
-
-    pointToGeo: function(x, y) {
-        return [this._xRuler.measure(x), this._yRuler.measure(y)];
     }
 
 } );
 
-Map.CHINA_MAP = {
+Map.CHINA = {
     width: 565,
     height: 475,
     lng: [73.66, 135.05],

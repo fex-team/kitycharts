@@ -21,7 +21,7 @@ var Label = kc.Label = kity.createClass( "Label", {
     base: kc.AnimatedChartElement,
 
     constructor: function ( param ) {
-        this.callBase( {
+        this.callBase( kity.Utils.extend({
             text: '',
             at: 'center',
             margin: 0,
@@ -30,7 +30,7 @@ var Label = kc.Label = kity.createClass( "Label", {
             },
             color: 'black',
             rotate: 0
-        } );
+        }, param) );
         this.text = new kity.Text().setStyle( {
             'font-size': 12,
             'family': 'Arial'

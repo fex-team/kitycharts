@@ -4,6 +4,8 @@ function getCamelName( name ) {
     } );
 }
 
+var elementUUID = 0;
+
 var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     mixins: [ kc.EventHandler ],
 
@@ -24,6 +26,11 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     },
 
     addElement: function ( key, chartElement ) {
+        if (arguments.length === 1) {
+            chartElement = key;
+            key = 'ChartElement_' + elementUUID++;
+        }
+
         this.elements[ key ] = chartElement;
         this.canvas.addShape( chartElement.canvas );
         chartElement.container = this;

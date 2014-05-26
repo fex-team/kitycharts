@@ -80,7 +80,11 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             this.canvas.addShape( element.canvas );
             this.elementList.push( element );
             element.update( this.param.common );
-            element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+            if (this.param.fx) {
+                element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+            } else {
+                element.canvas.setOpacity(1);
+            }
         }
     },
     

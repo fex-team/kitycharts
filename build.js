@@ -44,6 +44,7 @@ var dependience = [
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
+    'src/component/Map.js',
 
     'src/config/chart.js',
     'src/config/bar.js',
@@ -59,7 +60,8 @@ var dependience = [
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
-    'src/charts/KityCharts.js'
+    'src/charts/KityCharts.js',
+    'src/charts/ChinaMapChart.js'
 ];
 
 function nodeBuild() {
@@ -102,7 +104,7 @@ function devWrite() {
     }
     var basePath = getBasePath();
     while ( dependience.length ) {
-        document.write( '<script src="' + basePath + dependience.shift() + '"></script>' );
+        document.write( '<script src="' + basePath + dependience.shift() + '?_=' + +new Date() + '"></script>' );
     }
 }
 
