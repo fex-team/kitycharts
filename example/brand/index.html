@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KityCharts API</title>
+
+        <script src="../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 80%;
+                height: 400px;
+                /*background: #EEE;*/
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+
+
+        <div id="kitycharts" class="container"></div>
+        
+    </body>
+    <script src="../convertor/brand/convertor.js"></script>
+    <script>
+
+        $.ajax({
+            url: '../data/brand/mock.json',
+            success: function( data ) {
+                data = convert2Standard( data );
+                new kc.LineChart( 'kitycharts', data );
+            }
+        });
+
+        // setTimeout(function(){
+
+        //     $.ajax({
+        //         url: '../data/mix/bar-line-mix1.json', 
+        //         success: function( data ) {
+        //             var kitycharts = new KityCharts( 'kitycharts', data );
+        //         }
+        //     });
+
+        // }, 2000);
+
+    </script>
+</html>

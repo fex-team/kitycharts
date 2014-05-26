@@ -1,0 +1,43 @@
+{
+    "name": "flare",
+    "children": [
+        {
+            "name": "Oppo-6",
+            "children": [
+                {
+                    "name": "Oppo-6",
+                    "value": 6
+                },
+                {
+                    "name": "ZTE-6",
+                    "children": [
+                        {
+                            "name": "Oppo-6",
+                            "value": 3
+                        },
+                        {
+                            "name": "ZTE-6",
+                            "value": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ZTE-6",
+            "value": 9
+        },
+        {
+            "name": "Vivo-4",
+            "value": 4
+        },
+        {
+            "name": "Meizu-2",
+            "value": 2
+        },
+        {
+            "name": "Coolpad-1",
+            "value": 1
+        }
+    ]
+}

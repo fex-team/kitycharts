@@ -210,5 +210,24 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         if ( this.param.bind ) {
             this.canvas.bind = this.param.bind;
         }
+    },
+
+    setBindData: function ( val ) {
+        this.canvas.bind = val;
+    },
+
+    getBindData: function () {
+        return this.canvas.bind;
+    },
+
+    getPaper: function(){
+        var tmp = this.canvas;
+        while( tmp && tmp.container ){
+            tmp = tmp.container;
+            if( tmp instanceof kity.Paper ){
+                break;
+            }
+        }
+        return tmp;
     }
 } );

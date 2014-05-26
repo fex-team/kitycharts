@@ -2,7 +2,6 @@ kc.ChartData = kity.createClass( 'ChartData', {
     base: kc.Data,
     
     format: function ( index ) {
-        var queryPath = kity.Utils.queryPath;
         var origin = this.origin,
             queryPath = kity.Utils.queryPath;
 
