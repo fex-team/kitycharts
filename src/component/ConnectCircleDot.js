@@ -85,7 +85,8 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
     },
 
     updateColor: function ( color ) {
-        this.circle.fill( color );
+        //this.circle.fill( color );
+        this.circle.fill( new kity.Color( color ).inc( 'l', 3 ).inc( 's', 10 ) );
     },
     getAnimatedParam: function () {
         return [ 'radius' ];
@@ -150,9 +151,9 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
-                label.text.setStyle( {
-                    'font-size': targetparam.percent * 25
-                } );
+                // label.text.setStyle( {
+                //     'font-size': targetparam.percent * 25
+                // } );
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
                         'color': targetparam.color,

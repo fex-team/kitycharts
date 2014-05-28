@@ -75,10 +75,16 @@ var ConnectLine = kc.ConnectLine = kity.createClass( "ConnectLine", {
         }
 
         if ( x1 == x2 ) {
-            return [ [ x1, b.y1 ], [ x2, b.y2 ] ];
+            return [
+                [ x1, b.y1 ],
+                [ x2, b.y2 ]
+            ];
         }
         if ( y1 == y2 ) {
-            return [ [ b.x1, y1 ], [ b.x2, y2 ] ];
+            return [
+                [ b.x1, y1 ],
+                [ b.x2, y2 ]
+            ];
         }
 
         k = ( x1 - x2 ) / ( y1 - y2 );

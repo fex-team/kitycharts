@@ -38,8 +38,10 @@ var Data = kc.Data = kity.createClass( 'Data', {
     clear: function () {
         this.origin = {};
         this.trigger( 'update' );
+    },
+    reset: function ( data ) {
+        this.origin = data;
     }
-
     // getStandard: function () {
     //     return this.format( this.origin );
     // }

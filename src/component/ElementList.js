@@ -28,6 +28,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
     },
 
     updateList: function ( list ) {
+        var me = this;
         var elementList = this.elementList,
             growth = list.length - elementList.length,
             fx = kc.fx && this.param.fx,
@@ -44,7 +45,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
 
             if ( fx && ( 'animate' in element ) ) {
                 fxTimers.push( setTimeout( function () {
-                    element.animate( list[ index ] );
+                    element.animate( list[ index ], me.param.animateDuration || 300 );
                 }, delay ) );
 
                 delay += 10 + Math.random() * 20;
