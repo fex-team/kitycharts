@@ -11,7 +11,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			var d = origin[ key ];
 			//如果集合中还不存在品牌则将品牌加到集合中
 			if ( d.brand === d.relatedbrand ) {
-				//找到和自身class相同的项并插入到该位置
+				//找到和自身class相同的项并按尺寸插入到合适的位置（降序排列）
 				for ( var index = 0; index < brandList.length; index++ ) {
 					if ( brandList[ index ].brandclass === d.brandclass ) break;
 				}
@@ -150,17 +150,73 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	// 	}
 	// },
 	highlightBrand: function ( e ) {
-		var scatter = this.getElement( "scatter" );
-		var connects = this.getElement( "connects" );
-		var highlightList = [];
+		var scatterList = this.getElement( "scatter" ).elementList;
+		var cntList = this.getElement( "connects" ).elements;
+		var highlightCircleList = [];
+		var highlightConnectList = [];
+		var setAll = function ( opaC, opaL ) {
+			for ( var c = 0; c < scatterList.length; c++ ) {
+				scatterList[ c ].canvas.setOpacity( opaC || 0 );
+				scatterList[ c ].update( {
+					stroke: 0
+				} );
+			}
+			for ( var k in cntList ) {
+				cntList[ k ].canvas.setOpacity( opaL || 0 );
+				var oWidth = cntList[ k ].param.originwidth;
+				cntList[ k ].update( {
+					width: oWidth
+				} );
+			}
+		};
+		var findAllRelatedCircles = function ( scatter ) {
+			var relatedSet = [];
+			var connects = scatter.param.connects;
+			for ( var i = 0; i < connects.length; i++ ) {
+				var curConnectB = connects[ i ].relatedbrand.brand;
+				for ( j = 0; j < scatterList.length; j++ ) {
+					var curScatter = scatterList[ j ];
+					if ( curConnectB === curScatter.param.brand ) {
+						relatedSet.push( curScatter );
+					}
+				}
+			}
+			return relatedSet;
+		};
+		//点中空白区域时直接高亮全部，返回
+		if ( e === undefined ) {
+			setAll( 1 );
+			return false;
+		}
+		//点中单个节点
 		if ( e instanceof ChartEvent ) {
 			//点击单个节点
 			var circle = e.target;
-			console.log( circle );
-		} else {
-			//点击图例
+			highlightCircleList.push( circle );
+			var connects = circle.param.connects;
+			//判断节点是否在关联的节点集合中
+			highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
+			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
+			setAll( 0.1 );
+		} else { //点击图例
+			for ( var i1 = 0; i1 < scatterList.length; i1++ ) {
+				var curScatter = scatterList[ i1 ];
+				//所属class
+				if ( curScatter.param.brandclass === e ) {
+					highlightCircleList.push( curScatter );
+					highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
+					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
+				}
+			}
+			setAll( 0 );
 		}
-
+		//统一处理节点和连线的高亮和非高亮
+		for ( var n = 0; n < highlightCircleList.length; n++ ) {
+			highlightCircleList[ n ].canvas.setOpacity( 1 );
+		}
+		for ( var m = 0; m < highlightConnectList.length; m++ ) {
+			highlightConnectList[ m ].line.canvas.setOpacity( 1 );
+		}
 	},
 	renderLegend: function () {
 		var data = this.data.format();
