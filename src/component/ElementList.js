@@ -82,14 +82,14 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             this.canvas.addShape( element.canvas );
             this.elementList.push( element );
             element.update( this.param.common );
-            if (this.param.fx) {
+            if ( this.param.fx ) {
                 element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
             } else {
-                element.canvas.setOpacity(1);
+                element.canvas.setOpacity( 1 );
             }
         }
     },
-    
+
     shrink: function ( size ) {
         var removed = this.elementList.splice( -size );
         while ( removed.length ) {
@@ -97,9 +97,9 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         }
     },
 
-    find: function( id ) {
-        for (var i = 0, ii = this.elementList.length; i < ii; i++) {
-            if (this.elementList[i].param.id == id) return this.elementList[i];
+    find: function ( id ) {
+        for ( var i = 0, ii = this.elementList.length; i < ii; i++ ) {
+            if ( this.elementList[ i ].param.id == id ) return this.elementList[ i ];
         }
     }
 } );

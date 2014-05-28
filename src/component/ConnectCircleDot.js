@@ -41,8 +41,10 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             container.appendChild( tooltip );
             if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
             tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>' +
-                '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>' +
-                '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>';
+                '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>';
+            // +
+            // '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>' +
+            // '<p></p>';
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
 
@@ -75,7 +77,8 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         } );
     },
     updateText: function ( text, position ) {
-        this.getElement( 'label' ).update( {
+        var label = this.getElement( 'label' );
+        label.update( {
             text: text
         } );
     },
@@ -86,7 +89,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
 
     updateColor: function ( color ) {
         //this.circle.fill( color );
-        this.circle.fill( new kity.Color( color ).inc( 'l', 3 ).inc( 's', 10 ) );
+        this.circle.fill( new kity.Color( color ) );
     },
     getAnimatedParam: function () {
         return [ 'radius' ];
@@ -151,9 +154,9 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
-                // label.text.setStyle( {
-                //     'font-size': targetparam.percent * 25
-                // } );
+                label.text.setStyle( {
+                    'font-size': Math.log( targetparam.size ) * 2
+                } );
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
                         'color': targetparam.color,
@@ -164,10 +167,13 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
-                    var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 20;
-                    label.canvas.setRotate( 180 * targetparam.sDelta / targetparam.total );
+                    var rotate = 180 * targetparam.sDelta / targetparam.total;
+                    label.text.setTextAnchor( 'left' );
+                    var transR = targetparam.R + 20;
+                    label.canvas.setRotate( rotate );
                     label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
                 } else {
+                    label.text.setTextAnchor( 'middle' );
                     label.canvas.setTranslate( 0, 0 );
                     label.canvas.setRotate( 0 );
                     if ( afterAnimated.radius < 15 ) {
