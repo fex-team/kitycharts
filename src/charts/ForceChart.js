@@ -179,7 +179,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		//计算全图半径
 		var R = ( Ox < Oy ? Ox : Oy ) - 10;
 		if ( mode === 'circle' ) {
-			R -= 50;
+			R -= 70;
 		}
 		//初始化圆的尺寸,初始化list数据
 		for ( var i = 0; i < list.length; i++ ) {
@@ -197,7 +197,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].Oy = Oy;
 			list[ i ].R = R;
 			list[ i ].chart = this;
-			list[ i ].fontSize = 20;
 		}
 		//更新连线
 		connects.removeElement();
@@ -219,6 +218,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					color: source.color,
 					originwidth: sourceConnects[ n1 ].relation / 300,
 					width: sourceConnects[ n1 ].relation / 300,
+					//width:1,
 					highlightwidth: ( sourceConnects[ n1 ].relation / 150 < 0.5 ? 0.5 : sourceConnects[ n1 ].relation / 150 )
 				} );
 				connects.addElement(
@@ -237,11 +237,16 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		if ( mode === 'circle' ) {
 			var total = 0;
 			for ( var j = 0; j < list.length; j++ ) {
-				total += list[ j ].radius;
+				var add = list[ j ].radius;
+				if ( add < 10 ) add = 10;
+				total += add;
 			}
 			var sDelta = 0;
 			for ( var j1 = 0; j1 < list.length; j1++ ) {
-				sDelta += list[ j1 ].radius;
+				if ( list[ j1 ].radius > 10 )
+					sDelta += list[ j1 ].radius;
+				else
+					sDelta += 10;
 				list[ j1 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
 				list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
 				list[ j1 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
@@ -249,7 +254,10 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				list[ j1 ].sDelta = sDelta;
 				list[ j1 ].total = total;
 				list[ j1 ].mode = 'circle';
-				sDelta += list[ j1 ].radius;
+				if ( list[ j1 ].radius > 10 )
+					sDelta += list[ j1 ].radius;
+				else
+					sDelta += 10;
 				list[ j1 ].radius = list[ j1 ].radius / 3;
 			}
 		} else {
