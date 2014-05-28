@@ -310,7 +310,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
 			list: list,
-			animateDuration: 1500,
+			animateDuration: 2000,
 		} );
 	},
 	update: function ( args ) {
