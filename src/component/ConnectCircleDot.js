@@ -29,7 +29,6 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         this.canvas.addShapes( [ this.circle ] );
         this.addElement( 'label', new kc.Label() );
         var label = this.getElement( 'label' );
-
         this.on( "click", function ( e ) {
             selfparam.chart.highlightBrand( e );
         } );
@@ -168,11 +167,13 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var curR = Math.sqrt( ( curRx * curRx ) + ( curRy * curRy ) );
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
-                    var transR = targetparam.R + targetparam.radius + label.canvas.getWidth() / 2 + 20;
                     var rotate = 180 * targetparam.sDelta / targetparam.total;
+                    label.text.setTextAnchor( 'left' );
+                    var transR = targetparam.R + 20;
                     label.canvas.setRotate( rotate );
                     label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
                 } else {
+                    label.text.setTextAnchor( 'middle' );
                     label.canvas.setTranslate( 0, 0 );
                     label.canvas.setRotate( 0 );
                     if ( afterAnimated.radius < 15 ) {
