@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>All Charts</title>
+
+
+        <script src="../../kity/dev-lib/dev-define.js"></script>
+        <script>
+            inc.config({
+                base: '../../kity/src'
+            });
+        </script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
+        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 300px;
+                /*background: #EEE;*/
+                display: inline-block;
+                position: relative;
+            }
+
+            .container .title{
+                position: absolute;
+                bottom: -40px;
+                font-size: 16px;
+                left: 100px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- line chart -->
+        <h1>折线图</h1>
+        <div id="line-basic"           class="container"><div class="title">Basic Line</div></div>
+        <!-- <div id="line-multi"           class="container"><div class="title">Multi Line</div></div> -->
+        <!-- <br><br><br><br><br><br> -->
+
+        <!-- area chart -->
+        <!-- <h1>面积图</h1> -->
+        <div id="area-basic"              class="container"><div class="title">Area</div></div>
+        <div id="area-multi"              class="container"><div class="title">Multi Area</div></div>
+        <div id="area-stacked"            class="container"><div class="title">Multi Area Stacked</div></div>
+        <div id="area-stacked-percentage" class="container"><div class="title">Multi Area Percentage</div></div>
+        <br><br><br><br><br><br>
+
+    </body>
+    <script>
+        function chart( type ){
+            $.ajax({
+                url: '../data/kitycharts/' + type + '.json', 
+                success: function( data ) {
+                    new BaseCharts( type, data );
+                }
+            });
+        }
+
+
+        // line chart
+        // chart( 'line-basic' );
+        // chart( 'line-multi' );
+
+
+        // // area chart
+        chart( 'area-basic' );
+        // chart( 'area-multi' );
+        // chart( 'area-stacked' );
+        // chart( 'area-stacked-percentage' );
+
+    </script>
+</html>

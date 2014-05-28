@@ -20,6 +20,8 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
                 color: 'black',
                 text: null,
             },
+            strokeColor : '#FFF',
+            strokeWidth : 0,
             color: '#62a9dd',
             radius: 0,
             fxEasing: 'easeOutElastic',
@@ -35,7 +37,7 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
             'updateRadius': [ 'radius' ],
-            'updateColor': [ 'color' ],
+            'updateStyle': [ 'color', 'strokeColor', 'strokeWidth' ],
             'updateText': [ 'labelText' ]
         } );
     },
@@ -49,7 +51,13 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
         this.circle.setRadius( radius );
     },
 
-    updateColor: function ( color ) {
+    updateStyle: function ( color, strokeColor, strokeWidth ) {
+        var pen = new kity.Pen();
+
+        pen.setWidth( strokeWidth );
+        pen.setColor( strokeColor );
+
+        this.circle.stroke( pen );
         this.circle.fill( color );
     },
 

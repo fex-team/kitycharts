@@ -39,11 +39,14 @@ var dependience = [
     'src/component/Legend.js',
     'src/component/Tooltip.js',
     'src/component/PieDot.js',
+    'src/component/Pie.js',
     'src/component/CircleDot.js',
     'src/component/ConnectCircleDot.js',
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
+    'src/component/Map.js',
+    'src/component/Rectage.js',
 
     'src/config/chart.js',
     'src/config/bar.js',
@@ -53,12 +56,22 @@ var dependience = [
     'src/config/ChartsConfig.js',
 
     'src/formatter/chartData.js',
+    'src/formatter/pieData.js',
+    'src/formatter/TreemapData.js',
 
+    'src/plots/LinearPlots.js',
     'src/plots/LinePlots.js',
+    'src/plots/AreaPlots.js',
+    'src/plots/PiePlots.js',
     'src/plots/StickPlots.js',
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
+    'src/charts/KityCharts.js',
+    'src/charts/ChinaMapChart.js',
+    'src/charts/BaseCharts.js',
+    'src/charts/PieCharts.js',
+    'src/charts/Treemap.js',
     'src/charts/KityCharts.js'
 ];
 
@@ -66,7 +79,7 @@ function nodeBuild() {
 
     var fs = require( 'fs' );
 
-    var buildPath = '../static/kitychart.all.js';
+    var buildPath = [ 'dist/kitychart.all.js' ];
 
     var contents = [],
         content, fileName;
@@ -83,7 +96,9 @@ function nodeBuild() {
 
     content = '(function(kity, window) {\n\n' + content + '\n\n})(kity, window);';
 
-    fs.writeFileSync( buildPath, content );
+    buildPath.forEach( function ( path ) {
+        fs.writeFileSync( path, content );
+    } );
 
     console.log( ' > KityCharts build success!' );
 }
@@ -100,11 +115,11 @@ function devWrite() {
     }
     var basePath = getBasePath();
     while ( dependience.length ) {
-        document.write( '<script src="' + basePath + dependience.shift() + '"></script>' );
+        document.write( '<script src="' + basePath + dependience.shift() + '?_=' + +new Date() + '"></script>' );
     }
 }
 
-var env = window != this ? 'node' : 'script';
+var env = !( 'window' in this ) ? 'node' : 'script';
 
 var task = {
     'node': nodeBuild,

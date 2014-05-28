@@ -21,7 +21,7 @@ var Label = kc.Label = kity.createClass( "Label", {
     base: kc.AnimatedChartElement,
 
     constructor: function ( param ) {
-        this.callBase( {
+        this.callBase( kity.Utils.extend({
             text: '',
             at: 'center',
             margin: 0,
@@ -30,7 +30,7 @@ var Label = kc.Label = kity.createClass( "Label", {
             },
             color: 'black',
             rotate: 0
-        } );
+        }, param) );
         this.text = new kity.Text().setStyle( {
             'font-size': 12,
             'family': 'Arial'
@@ -91,17 +91,18 @@ var Label = kc.Label = kity.createClass( "Label", {
         case 'down':
         case 'bottom':
             var anchor = 'middle';
-            if ( rotate != 0 ) anchor = 'end';
+            if ( rotate !== 0 ) anchor = 'end';
             this.text.setTextAnchor( anchor ).setPosition( 0, hh + margin );
             break;
         default:
             this.text.setTextAnchor( 'middle' ).setPosition( 0, hh * 0.75 );
         }
 
-        if ( rotate != 0 ) this.text.setRotate( rotate );
+        if ( rotate !== 0 ) this.text.setRotate( rotate );
     },
 
     updateColor: function ( color ) {
         this.text.fill( color );
     }
+
 } );

@@ -33,6 +33,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             growth = list.length - elementList.length,
             fx = kc.fx && this.param.fx,
             delay = 0,
+            delayBase = 300 / list.length,
             fxTimers = this.fxTimers;
 
         this.adjust( growth );
@@ -48,7 +49,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
                     element.animate( list[ index ], me.param.animateDuration || 300 );
                 }, delay ) );
 
-                delay += 10 + Math.random() * 20;
+                delay += Math.random() * delayBase;
 
             } else {
 
@@ -77,16 +78,28 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         var element;
         while ( size-- ) {
             element = new this.elementClass();
+            element.container = this;
             this.canvas.addShape( element.canvas );
             this.elementList.push( element );
             element.update( this.param.common );
-            element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+            if (this.param.fx) {
+                element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+            } else {
+                element.canvas.setOpacity(1);
+            }
         }
     },
+    
     shrink: function ( size ) {
         var removed = this.elementList.splice( -size );
         while ( removed.length ) {
             this.canvas.removeShape( removed.pop().canvas );
+        }
+    },
+
+    find: function( id ) {
+        for (var i = 0, ii = this.elementList.length; i < ii; i++) {
+            if (this.elementList[i].param.id == id) return this.elementList[i];
         }
     }
 } );

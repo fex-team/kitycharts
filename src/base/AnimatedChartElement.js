@@ -60,6 +60,8 @@
                 }
             } );
 
+            if (this.timeline) this.timeline.stop();
+
             this.timeline = animator.start( this,
                 duration || this.param.fxTiming || this.fxTiming || 500,
                 easing || this.param.fxEasing || this.fxEasing || 'ease',

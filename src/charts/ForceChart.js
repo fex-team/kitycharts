@@ -372,7 +372,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			// var Vector = kity.Vector;
 			// var setPos = function () {
 			// 	for ( var i = 0; i < list.length; i++ ) {
-
 			// 	}
 			// };
 			// setPos();

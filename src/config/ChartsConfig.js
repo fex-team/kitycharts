@@ -86,6 +86,10 @@ var ChartsConfig = kc.ChartsConfig = {
             delete( conf.yAxis.categories );
         }
 
+
+        reuslt.xLabelRotate = xAxis.label.rotate;
+        reuslt.yLabelRotate = yAxis.label.rotate;
+
         return reuslt;
     }
     

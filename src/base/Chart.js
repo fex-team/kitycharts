@@ -8,8 +8,12 @@ var Chart = kc.Chart = kity.createClass( 'Chart', {
             target = document.getElementById( target );
         }
         target.setAttribute( 'onselectstart', 'return false' );
+        
         this.paper = new kity.Paper( target );
         this.paper.addShape( this.canvas );
+        
+        this.container = target;
+        target.paper = this.paper;
     },
     getWidth: function () {
         return this.paper.getContainer().clientWidth;
@@ -32,5 +36,8 @@ var Chart = kc.Chart = kity.createClass( 'Chart', {
     update: function ( param ) {
         var data = this.data.format();
         this.callBase( param, data );
+        if (this.updateChart) {
+            this.updateChart(this.param, data);
+        }
     }
 } );
