@@ -41,8 +41,10 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             container.appendChild( tooltip );
             if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
             tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>' +
-                '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>' +
-                '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>';
+                '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>'; 
+            // +
+            // '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>' +
+            // '<p></p>';
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
 

@@ -6,6 +6,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 		var brandList = [];
 		var connectList = [];
 		var classList = [];
+		var otherList = [];
 		//生成List
 		for ( var key in origin ) {
 			var d = origin[ key ];
@@ -70,90 +71,12 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			}
 		} );
 	},
-	// highlightBrand: function ( e ) {
-	// 	var scatter = this.getElement( "scatter" );
-	// 	var connects = this.getElement( "connects" );
-	// 	var elList = scatter.elementList;
-	// 	var cntList = connects.elements;
-	// 	var clickedbrands = [],
-	// 		clickedbrandConnects = [];
-	// 	if ( e === undefined ) {
-	// 		for ( var c = 0; c < elList.length; c++ ) {
-	// 			elList[ c ].canvas.setOpacity( 1 );
-	// 			elList[ c ].update( {
-	// 				stroke: 0
-	// 			} );
-	// 		}
-	// 		for ( var k in cntList ) {
-	// 			cntList[ k ].canvas.setOpacity( 1 );
-	// 			var oWidth = cntList[ k ].param.originwidth;
-	// 			cntList[ k ].update( {
-	// 				width: oWidth
-	// 			} );
-	// 		}
-	// 		return false;
-	// 	} else if ( typeof e === "number" || typeof e === "string" ) {
-	// 		for ( var n = 0; n < elList.length; n++ ) {
-	// 			if ( elList[ n ].param.brandclass === e || parseInt( elList[ n ].param.brandclass ) === e ) {
-	// 				clickedbrands.push( elList[ n ].param );
-	// 				clickedbrandConnects = clickedbrandConnects.concat( elList[ n ].param.connectLines );
-	// 			}
-	// 		}
-	// 	} else {
-	// 		clickedbrands = [ e.target.param ];
-	// 		clickedbrandConnects = e.target.param.connectLines;
-	// 	}
-	// 	var checkrelate = function ( brand ) {
-	// 		for ( var s = 0; s < clickedbrands.length; s++ ) {
-	// 			var cnts = clickedbrands[ s ].connects;
-	// 			for ( var s1 = 0; s1 < cnts.length; s1++ ) {
-	// 				if ( brand === cnts[ s1 ].relatedbrand.brand ) return true;
-	// 			}
-	// 		}
-	// 		return false;
-	// 	};
-	// 	var checkclicked = function ( brand ) {
-	// 		for ( var s = 0; s < clickedbrands.length; s++ ) {
-	// 			if ( brand === clickedbrands[ s ].brand ) return true;
-	// 		}
-	// 		return false;
-	// 	};
-	// 	for ( var i = 0; i < elList.length; i++ ) {
-	// 		var b = elList[ i ].param.brand;
-	// 		if ( checkclicked( b ) ) {
-	// 			elList[ i ].canvas.setOpacity( 1 );
-	// 		} else if ( checkrelate( b ) ) {
-	// 			if ( typeof e === 'number' ) {
-	// 				elList[ i ].canvas.setOpacity( 0.3 );
-	// 			} else {
-	// 				elList[ i ].canvas.setOpacity( 1 );
-	// 			}
-	// 		} else {
-	// 			if ( typeof e === 'number' ) {
-	// 				elList[ i ].canvas.setOpacity( 0 );
-	// 			} else {
-	// 				elList[ i ].canvas.setOpacity( 0 );
-	// 			}
-	// 		}
-	// 	}
-	// 	//设置连线的透明度
-	// 	for ( var key in cntList ) {
-	// 		cntList[ key ].canvas.setOpacity( 0 );
-	// 	}
-	// 	for ( var j = 0; j < clickedbrandConnects.length; j++ ) {
-	// 		var curLine = clickedbrandConnects[ j ].line;
-	// 		curLine.canvas.setOpacity( 1 );
-	// 		if ( typeof e !== 'number' )
-	// 			curLine.update( {
-	// 				width: curLine.param.highlightwidth
-	// 			} );
-	// 	}
-	// },
 	highlightBrand: function ( e ) {
 		var scatterList = this.getElement( "scatter" ).elementList;
 		var cntList = this.getElement( "connects" ).elements;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
+		//设置全部节点和连线的透明度
 		var setAll = function ( opaC, opaL ) {
 			for ( var c = 0; c < scatterList.length; c++ ) {
 				scatterList[ c ].canvas.setOpacity( opaC || 0 );
@@ -169,6 +92,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				} );
 			}
 		};
+		//寻找一个节点的全部相关节点
 		var findAllRelatedCircles = function ( scatter ) {
 			var relatedSet = [];
 			var connects = scatter.param.connects;
@@ -185,7 +109,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		};
 		//点中空白区域时直接高亮全部，返回
 		if ( e === undefined ) {
-			setAll( 1 );
+			setAll( 1, 1 );
 			return false;
 		}
 		//点中单个节点
@@ -284,7 +208,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
 				var targetInfo = sourceConnects[ n1 ];
 				var target = targetInfo.relatedbrand;
-				//if ( parseFloat( sourceConnects[ n1 ].relation ) > 0 ) {
 				var cnt;
 				cnt = new kc.Bezier( {
 					x1: source.x,
@@ -309,7 +232,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					position: 'end',
 					line: cnt
 				} );
-				//}
 			}
 		}
 		if ( mode === 'circle' ) {
@@ -380,7 +302,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
 			list: list,
-			animateDuration: 2000,
+			animateDuration: 1500,
 		} );
 	},
 	update: function ( args ) {
