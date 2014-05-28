@@ -168,10 +168,17 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
                     var rotate = 180 * targetparam.sDelta / targetparam.total;
-                    label.text.setTextAnchor( 'left' );
-                    var transR = targetparam.R + 20;
-                    label.canvas.setRotate( rotate );
-                    label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
+                    // var transR = targetparam.R + 20;
+                    // label.canvas.setTranslate( transR * cosDelta - curRx, transR * sinDelta - curRy );
+                    if ( rotate > 90 && rotate < 270 ) {
+                        label.canvas.setRotate( rotate + 180 );
+                        label.text.setTextAnchor( 'end' );
+                        //label.canvas.setTranslate( ( targetparam.R + 20 ) * cosDelta - curRx, ( targetparam.R + 20 ) * sinDelta - curRy );
+                    } else {
+                        label.canvas.setRotate( rotate );
+                        label.text.setTextAnchor( 'left' );
+                    }
+                    label.canvas.setTranslate( ( targetparam.R + 20 ) * cosDelta - curRx, ( targetparam.R + 20 ) * sinDelta - curRy );
                 } else {
                     label.text.setTextAnchor( 'middle' );
                     label.canvas.setTranslate( 0, 0 );
