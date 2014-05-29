@@ -40,8 +40,10 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 				classList.push( d.brandclass );
 			}
 		}
+		var count = 0;
 		for ( var i = 0; i < connectList.length; i++ ) {
 			if ( connectList[ i ].brand === connectList[ i ].relatedbrand || parseInt( connectList[ i ].relation ) === 0 ) continue;
+			count++;
 			var source = brandSet[ connectList[ i ].brand ];
 			var target = brandSet[ connectList[ i ].relatedbrand ];
 			var connects = source.connects;
@@ -50,11 +52,12 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 				relation: connectList[ i ].relation
 			} );
 		}
+		console.log( count );
 		return {
 			brandSet: brandSet,
 			brandList: brandList,
 			classList: classList,
-			connectList: connectList
+			connectCount: count
 		};
 	}
 } );
@@ -202,6 +205,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		//更新连线
 		connects.removeElement();
+		var cList = data.classList;
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
 			var sourceConnects = source.connects;
@@ -212,7 +216,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				var cnt;
 				var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
 				//console.log( data.connectList.length, list.length );
-				//if ( data.connectList.length < 5000 || cntwidth > 0.07 ) {
+				//if ( data.connectList.length < 1000 || cntwidth > 0.07 ) {
 				cnt = new kc.Bezier( {
 					x1: source.x,
 					y1: source.y,
@@ -225,17 +229,21 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					width: cntwidth,
 					highlightwidth: ( cntwidth < 1 ? 1 : cntwidth )
 				} );
-				connects.addElement(
-					'cnt' + n + n1, cnt
-				);
-				source.connectLines.push( {
-					position: 'start',
-					line: cnt
-				} );
-				target.connectLines.push( {
-					position: 'end',
-					line: cnt
-				} );
+				//只往画布上添加一部分的连线
+				if ( data.connectCount < 300 || cntwidth > 0.07 ) {
+					connects.addElement(
+						'cnt' + n + n1, cnt
+					);
+					source.connectLines.push( {
+						position: 'start',
+						line: cnt
+					} );
+					target.connectLines.push( {
+						position: 'end',
+						line: cnt
+					} );
+				}
+
 				//}
 			}
 		}
@@ -315,7 +323,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
 			list: list,
-			animateDuration: 3000,
+			animateDuration: 1000,
 		} );
 	},
 	update: function ( args ) {
