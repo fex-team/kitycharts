@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Force Chart test</title>
+        <script src="../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                background: #718993;
+                font-family: 'Helvetica','Arial';
+            }
+            h5{
+                margin-top: 0;
+                margin-bottom: 15px;
+                color: #bbb;
+                font-size: 14px;
+            }
+            .container{
+                width: 1020px;
+                height: 660px;
+                margin: 10px auto;
+                background: white;
+                position: relative;
+            }
+            .logo{
+                padding: 15px 0 0 20px;
+                margin-bottom: 25px;
+            }
+            #sidebar{
+                width: 300px;
+                float: left;
+                height: 660px;
+            }
+            #chart {
+                position: absolute;
+                left: 300px;
+                right: 0;
+                margin: 5px 20px 45px 0px;
+                height: 570px;
+                width: 720px;
+                top: 15px;
+            }
+            .select{
+                display: inline-block;
+                padding: 20px 10px 0 20px;
+            }
+            .select>p{
+                font-family: fantasy,Arial;
+                color:#ccc;
+                margin: 5px 0;
+            }
+            .select a{
+                display: inline-block;
+                opacity: 0.5;
+                height: 58px;
+                background-image: url(../images/icons.png);
+                margin-right: 10px;
+            }
+            .select a#s-force{
+                background-position: -73px 0;
+                width: 31px;
+            }
+            .select a#s-force.active{
+                background-position: -73px -58px;
+                width: 31px;
+            }
+            .select a#s-circle{
+                background-position: -104px 0;
+                width: 32px;
+            }
+            .select a#s-circle.active{
+                background-position: -104px -58px;
+                width: 32px;
+            }
+            .select a#s-men{
+                background-position: -31px 0;
+                width: 42px;
+            }
+            .select a#s-men.active{
+                background-position: -31px -58px;
+                width: 42px;
+            }
+            .select a#s-women{
+                background-position: 0 0;
+                width: 31px;
+            }
+            .select a#s-women.active{
+                background-position: 0 -58px;
+                width: 31px;
+            }
+            .select a:hover{
+                opacity: 1
+            }
+            .tooltip{
+                position: absolute;
+                opacity: 0.8;
+                background-color: white;
+                padding: 13px 22px 0 17px;
+                border-radius: 5px;
+                box-shadow: -3px 3px 10px 0 rgba(0, 0, 0, 0.5);
+                width: 200px;
+            }
+            .tooltip>h1{
+                font-size: 20px;
+                font-family: Arial,'MicrosoftYahei';
+                padding: 0;
+                margin: 0;
+                margin-bottom: 20px;
+            }
+            .tooltip>p{
+                font-size: 12px;
+            }
+            .color-block{
+                width: 17px;
+                height: 8px;
+                display: inline-block;
+                margin-left: 5px;
+            }
+            .color-block.active{
+                margin-left: 10px;
+            }
+            .c-name,.c-name-highlight{
+                font-size: 12px;
+                display: inline-block;
+                margin-left: 5px;
+                vertical-align: bottom;
+            }
+            .c-name-highlight{
+                display: none;
+            }
+            #legend-container{
+                position: absolute;
+                bottom: 75px;
+                left: 20px;
+            }
+            ul#legend{
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            ul#legend>li{
+                height: 20px;
+                cursor: pointer;
+                opacity: 0.8
+            }
+            ul#legend>li:hover{
+                opacity: 1
+            }
+            ul#legend>li:hover .color-block{
+                width: 22px;
+                margin-left: 0
+            }
+            ul#legend>li:hover .c-name{
+                display: none;
+            }
+            ul#legend>li:hover .c-name-highlight{
+                display: inline-block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="sidebar">
+                <div class='logo'><img src="../images/logo.png" /></div>
+                <div class="select">
+                    <h3>layout</h3>
+                    <a href="javascript:void(0)" id="s-force" class='active'></a>
+                    <a href="javascript:void(0)" id="s-circle"></a>
+                </div>
+                <div class="select">
+                    <h3>gender</h3>
+                    <a href="javascript:void(0)" id="s-women" class="active"></a>
+                    <a href="javascript:void(0)" id="s-men"></a>
+                </div>
+                <div>
+                    <h3></h3>
+                </div>
+                <div id='legend-container'>
+                    <h5>Categories</h5>
+                    <ul id='legend'>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div id="chart">
+            </div>
+        </div>
+    </body>
+    <script>
+    var simpleData = {
+            "men": [ {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "A",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "B",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "C",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }
+            ],
+            "women": [ {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "A",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "D",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "B",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "D",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "C",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "D",
+                "relation": "2",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "D",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            ]
+        };
+        var paper, chart;
+        var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
+                      "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
+                      "#aeb117","#da92c6",'gray','red','blue'];
+        chart = new kc.ForceChart('chart',{colors:colors,legendTarget:'legend'});
+        var d;
+        $.ajax({
+            url: '../data/force/ForceChartFootBall.json',
+            dataType: 'json',
+            success: function( data ) {
+                //d = simpleData;
+                d = data;
+                chart.getData().update(d["women"]);
+            }
+        });
+        var curmode = 'force';
+        var curgender = 'women';
+        document.getElementById("s-force").addEventListener("click",function(e){
+            if(curmode==='force'){return false;}
+            document.getElementById("s-circle").className='';
+            e.target.className='active';
+            curmode = 'force';
+            chart.update({mode:curmode});
+        },false);
+        document.getElementById("s-circle").addEventListener("click",function(e){
+            if(curmode==='circle'){return false;}
+            document.getElementById("s-force").className='';
+            e.target.className='active';
+            curmode = 'circle';
+            chart.update({mode:curmode});
+        },false);
+        document.getElementById("s-men").addEventListener("click",function(e){
+            if(curgender==='men'){return false;}
+            curgender='men';
+            document.getElementById("s-women").className='';
+            e.target.className='active';
+            chart.getData().reset(d["men"]);
+            chart.update({mode:curmode});
+        },false);
+        document.getElementById("s-women").addEventListener("click",function(e){
+            if(curgender==='women'){return false;}
+            curgender='women';
+            document.getElementById("s-men").className='';
+            e.target.className='active';
+            chart.getData().reset(d["women"]);
+            chart.update({mode:curmode});
+        },false);
+        
+        var Clegend = document.getElementById('legend');
+        Clegend.addEventListener("click",function(e){
+            var ele = (function(){
+                if(e.target.tagName==='LI'){
+                    return e.target;
+                } else if (e.target.className==='color-block'||e.target.className==='c-name-highlight'){
+                    return e.target.parentElement;
+                } else {
+                    return false;
+                }
+            })();
+            if(ele){
+                chart.highlightBrand(ele.getAttribute('value'));
+            }
+        },false);
+    </script>
+</html>
