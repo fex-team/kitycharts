@@ -25,6 +25,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 					percent: d.percent,
 					percentall: d.percentall,
 					size: d.relation,
+					describe: d.describe,
 					connects: [] //初始化记录联系的数组
 				} );
 				brandSet[ d.brand ] = brandList[ index ];
@@ -52,7 +53,8 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 		return {
 			brandSet: brandSet,
 			brandList: brandList,
-			classList: classList
+			classList: classList,
+			connectList: connectList
 		};
 	}
 } );
@@ -132,7 +134,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
 				}
 			}
-			setAll( 0 );
+			setAll( 0.1 );
 		}
 		//统一处理节点和连线的高亮和非高亮
 		for ( var n = 0; n < highlightCircleList.length; n++ ) {
@@ -185,7 +187,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 0.27 );
+			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 23 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -208,6 +210,9 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				var targetInfo = sourceConnects[ n1 ];
 				var target = targetInfo.relatedbrand;
 				var cnt;
+				var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
+				//console.log( data.connectList.length, list.length );
+				//if ( data.connectList.length < 5000 || cntwidth > 0.07 ) {
 				cnt = new kc.Bezier( {
 					x1: source.x,
 					y1: source.y,
@@ -216,10 +221,9 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					cx: target.cx,
 					cy: target.cy,
 					color: source.color,
-					originwidth: sourceConnects[ n1 ].relation / 300,
-					width: sourceConnects[ n1 ].relation / 300,
-					//width:1,
-					highlightwidth: ( sourceConnects[ n1 ].relation / 150 < 0.5 ? 0.5 : sourceConnects[ n1 ].relation / 150 )
+					originwidth: cntwidth,
+					width: cntwidth,
+					highlightwidth: ( cntwidth < 1 ? 1 : cntwidth )
 				} );
 				connects.addElement(
 					'cnt' + n + n1, cnt
@@ -232,6 +236,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					position: 'end',
 					line: cnt
 				} );
+				//}
 			}
 		}
 		if ( mode === 'circle' ) {
@@ -310,7 +315,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
 			list: list,
-			animateDuration: 2000,
+			animateDuration: 3000,
 		} );
 	},
 	update: function ( args ) {
