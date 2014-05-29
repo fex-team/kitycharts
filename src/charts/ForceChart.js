@@ -226,7 +226,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					color: source.color,
 					originwidth: cntwidth,
 					width: cntwidth,
-					highlightwidth: ( cntwidth < 1 ? 1 : cntwidth )
+					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
 				} );
 				//只往画布上添加一部分的连线
 				if ( data.connectCount < 300 || cntwidth > 0.06 ) {
