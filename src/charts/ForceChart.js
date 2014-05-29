@@ -196,6 +196,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				color: 'black'
 			};
 			list[ i ].connectLines = [];
+			list[ i ].disvisConnectLines = []; //记录不可见的连线
 			list[ i ].fxEasing = null;
 			list[ i ].mode = mode;
 			list[ i ].Ox = Ox;
@@ -227,7 +228,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					color: source.color,
 					originwidth: cntwidth,
 					width: cntwidth,
-					highlightwidth: ( cntwidth < 1 ? 1 : cntwidth )
+					highlightwidth: ( cntwidth < 0.7 ? 0.7 : cntwidth )
 				} );
 				//只往画布上添加一部分的连线
 				if ( data.connectCount < 300 || cntwidth > 0.06 ) {
@@ -242,9 +243,16 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 						position: 'end',
 						line: cnt
 					} );
+				} else {
+					source.disvisConnectLines.push( {
+						otherside: target,
+						line: target
+					} );
+					target.disvisConnectLines.push( {
+						otherside: source,
+						line: target
+					} );
 				}
-
-				//}
 			}
 		}
 		if ( mode === 'circle' ) {
