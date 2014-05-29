@@ -74,14 +74,18 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				me.highlightBrand();
 			}
 		} );
+		this._uvCnt = []; //用于记录暂时不显示的连线
 	},
 	highlightBrand: function ( e ) {
+		var uvCnt = this._uvCnt;
 		var scatterList = this.getElement( "scatter" ).elementList;
+		var cntListContainer = this.getElement( "connects" );
 		var cntList = this.getElement( "connects" ).elements;
 		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
 		//设置全部节点和连线的透明度
+		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
 			for ( var c = 0; c < scatterList.length; c++ ) {
 				scatterList[ c ].canvas.setOpacity( opaC || 0 );
@@ -126,6 +130,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			//判断节点是否在关联的节点集合中
 			if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
 			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
+			uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
 			setAll( 0.1 );
 		} else { //点击图例
 			for ( var i1 = 0; i1 < scatterList.length; i1++ ) {
@@ -135,6 +140,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightCircleList.push( curScatter );
 					if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
 					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
+					uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
 				}
 			}
 			setAll( 0.1 );
@@ -151,6 +157,25 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				l.line.update( {
 					width: l.line.param.highlightwidth
 				} )
+			}
+		}
+		for ( var x = 0; x < uvCnt.length; x++ ) {
+			if ( uvCnt[ x ].position === 'start' ) {
+				var cl = uvCnt[ x ].line;
+				var source = uvCnt[ x ].source;
+				var target = uvCnt[ x ].target;
+				var param = cl.param;
+				cntListContainer.addElement( 'Vcnt' + x, uvCnt[ x ].line );
+				cl.update( {
+					x1: source.x,
+					y1: source.y,
+					x2: target.x,
+					y2: target.y,
+					cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
+					cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
+					width: param.highlightwidth,
+					color: param.color
+				} );
 			}
 		}
 	},
@@ -170,7 +195,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var scatter = this.getElement( 'scatter' );
 		var connects = this.getElement( 'connects' );
-		var uvCnt = [];
 		var data = this.data.format();
 		var param = this.param;
 		var colors = ( function () {
@@ -253,12 +277,14 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					} );
 				} else {
 					source.disvisConnectLines.push( {
-						otherside: target,
+						source: source,
+						target: target,
 						line: cnt,
 						position: 'start'
 					} );
 					target.disvisConnectLines.push( {
-						otherside: source,
+						source: source,
+						target: target,
 						line: cnt,
 						position: 'end'
 					} );
