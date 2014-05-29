@@ -241,6 +241,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 						position: 'end',
 						line: cnt
 					} );
+				} else {
+
 				}
 
 				//}
