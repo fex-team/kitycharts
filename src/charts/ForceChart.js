@@ -52,7 +52,6 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 				relation: connectList[ i ].relation
 			} );
 		}
-		console.log( count );
 		return {
 			brandSet: brandSet,
 			brandList: brandList,

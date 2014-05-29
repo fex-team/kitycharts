@@ -158,7 +158,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
                 label.text.setStyle( {
-                    'font-size': Math.log( targetparam.size ) * 2
+                    'font-size': Math.log( targetparam.size ) * 1.5
                 } );
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
