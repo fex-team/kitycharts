@@ -78,6 +78,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	highlightBrand: function ( e ) {
 		var scatterList = this.getElement( "scatter" ).elementList;
 		var cntList = this.getElement( "connects" ).elements;
+		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
 		//设置全部节点和连线的透明度
@@ -123,7 +124,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			highlightCircleList.push( circle );
 			var connects = circle.param.connects;
 			//判断节点是否在关联的节点集合中
-			highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
+			if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
 			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
 			setAll( 0.1 );
 		} else { //点击图例
@@ -132,18 +133,25 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				//所属class
 				if ( curScatter.param.brandclass === e ) {
 					highlightCircleList.push( curScatter );
-					highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
+					if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
 					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
 				}
 			}
 			setAll( 0.1 );
 		}
 		//统一处理节点和连线的高亮和非高亮
+		//disvisConnectLines
 		for ( var n = 0; n < highlightCircleList.length; n++ ) {
 			highlightCircleList[ n ].canvas.setOpacity( 1 );
 		}
 		for ( var m = 0; m < highlightConnectList.length; m++ ) {
-			highlightConnectList[ m ].line.canvas.setOpacity( 1 );
+			var l = highlightConnectList[ m ];
+			if ( l.position === 'start' ) {
+				l.line.canvas.setOpacity( 1 );
+				l.line.update( {
+					width: l.line.param.highlightwidth
+				} )
+			}
 		}
 	},
 	renderLegend: function () {
@@ -162,6 +170,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var scatter = this.getElement( 'scatter' );
 		var connects = this.getElement( 'connects' );
+		var uvCnt = [];
 		var data = this.data.format();
 		var param = this.param;
 		var colors = ( function () {
@@ -232,7 +241,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				//只往画布上添加一部分的连线
 				if ( data.connectCount < 300 || cntwidth > 0.06 ) {
 					connects.addElement(
-						'cnt' + n + n1, cnt
+						'Vcnt' + n + n1, cnt
 					);
 					source.connectLines.push( {
 						position: 'start',
@@ -245,11 +254,13 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				} else {
 					source.disvisConnectLines.push( {
 						otherside: target,
-						line: target
+						line: cnt,
+						position: 'start'
 					} );
 					target.disvisConnectLines.push( {
 						otherside: source,
-						line: target
+						line: cnt,
+						position: 'end'
 					} );
 				}
 			}
@@ -330,7 +341,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
 			list: list,
-			animateDuration: 1000,
+			animateDuration: 1000
 		} );
 	},
 	update: function ( args ) {
