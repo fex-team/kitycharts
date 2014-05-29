@@ -9,7 +9,7 @@ var PieCharts = exports.PieCharts = kc.PieCharts = kity.createClass( 'PieCharts'
         this.setData( new kc.PieData( config ) );
 
         this._update( config );
-        this._bindAction();
+        // this._bindAction();
         this._addLegend();
     },
 
@@ -63,38 +63,35 @@ var PieCharts = exports.PieCharts = kc.PieCharts = kity.createClass( 'PieCharts'
             lineHeight : '26px'
         }).appendTo( this.container );
 
-        for ( i = 0; i < series.length; i++ ) {
+        for ( i = 0; i < 1; i++ ) {
             
-            for( type in series[ i ] ){
-                entries = series[ i ][ type ];
-                
-                for ( j = 0; j < entries.length; j++ ) {
-                    entry = entries[ j ];
+            entries = series[ i ];
+            
+            for ( j = 0; j < entries.data.length; j++ ) {
+                entry = entries.data[ j ];
 
-                    label = entry.name;
-                    color = entry.color || this.config.color[ j ] || this.config.finalColor;
+                label = entry.name;
+                color = entry.color || this.config.color[ j ] || this.config.finalColor;
 
-                    tmp = $('<div></div>').css({
-                        marginRight : '20px',
-                        display : 'inline-block'
-                    }).appendTo( legend );
+                tmp = $('<div></div>').css({
+                    marginRight : '20px',
+                    display : 'inline-block'
+                }).appendTo( legend );
 
-                    $('<div class="kitycharts-legend-color"></div>').css({
-                        width : '12px',
-                        height : '12px',
-                        backgroundColor : color,
-                        display : 'inline-block',
-                        marginRight : '5px',
-                        position: 'relative',
-                        top: '1px'
-                    }).appendTo( tmp );
+                $('<div class="kitycharts-legend-color"></div>').css({
+                    width : '12px',
+                    height : '12px',
+                    backgroundColor : color,
+                    display : 'inline-block',
+                    marginRight : '5px',
+                    position: 'relative',
+                    top: '1px'
+                }).appendTo( tmp );
 
-                    $('<div class="kitycharts-legend-label">' + label + '</div>').css({
-                        fontSize : '10px',
-                        display : 'inline-block'
-                    }).appendTo( tmp );
-
-                }
+                $('<div class="kitycharts-legend-label">' + label + '</div>').css({
+                    fontSize : '10px',
+                    display : 'inline-block'
+                }).appendTo( tmp );
 
             }
 

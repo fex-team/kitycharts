@@ -1,151 +1,77 @@
 (function(){
 
 var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
-    base: kc.ChartElement,
+    base: kc.BasePlots,
 
     constructor: function ( coordinate, config ) {
-        this.callBase();
-        this.param.coordinate = this.coordinate = coordinate;
-        this.param.config = this.config = config;
-    },
+        this.callBase( coordinate, config );
 
-    // update: function ( config ) {
-    //     var config = config || this.config;
-    //     return this.drawPlots( config );
-    // },
-
-    registerUpdateRules: function () {
-        return kity.Utils.extend( this.callBase(), {
-            drawPlots: [ 'coordinate', 'config' ]
-        } );
+        this.lineDots = this.addElement( 'lineDots', new kc.ElementList() );
     },
 
     drawPlots: function ( coordinate, config ) {
-        var oxy = this.coordinate;
-        var xRuler = oxy.xRuler,
-            yRuler = oxy.yRuler;
 
-        var config = this.config,
-            series = config.series[ this.chartType ],
-            opt = this.config.plotOptions,
-            i, j, k, m, yPos, point, pointsArr = [], linesArr = [], dotArr = [],
-            lineData,
+        var series = config.series,
+            opt = config.plotOptions,
+            i, pointsArr = [], linesArr = [],
             line;
 
-        var queryPath = kity.Utils.queryPath;
+        var queryPath = kity.Utils.queryPath,
+            offset = 0,
+            lineColor,
+            lineData
+            ;
+        this.dotArr = [];
+
         for (i = 0; i < series.length; i++) {
 
-            line = series[i];
-            line.values = [];
+            line = series[ i ];
             line.positions = [];
 
-
-            var offset = 0;
-            var lineColor = this._getEntryColor( line, i );
-
-            if( this.chartType == 'area' ){
-                
-                if( config.yAxis.stacked ){
-                    var p = config.yAxis.percentage;
-                    var offsetType = p ? 'percentageOffset' : 'offset';
-                    var allOffsetType = p ? 'allPercentageOffset' : 'allOffset';
-
-                    var arr1 = this._array2points( line[ offsetType ], offset );
-                    var arr2 = this._array2points( kity.Utils.copy( line[ allOffsetType ][ line.indexInGroup + 1 ] ), offset ).reverse();
-
-                    pointsArr = arr1.concat( arr2 );
-
-                }else{
-                    pointsArr = this._array2points( line.data, offset );
-                    var areaPointArr = kity.Utils.copy( pointsArr );
-                    var x0 = oxy.measurePointX( 0 ),
-                        y0 = oxy.measurePointY( oxy.yRuler._ref.from );
-
-                    areaPointArr = areaPointArr.concat([
-                        [ pointsArr[ pointsArr.length-1 ][ 0 ], y0],
-                        [ x0, y0 ],
-                    ]);
-                    pointsArr = areaPointArr;
-                }   
-
-                this._drawPolygon.bind(this)( pointsArr, line, i );
-                
-            }
+            this.renderLineByData( line );
             
-            pointsArr = this._array2points( line.data, offset );
-            
-            var lineWidth = this.chartType == 'area'? opt.area.stroke.width : opt.line.width;
+            pointsArr = this.array2points( line.data, offset );
 
+            lineData = {
+                line : line,
+                currentData : line.data[ i ],
+                currentLabel : config.xAxis.categories[ i ]
+            };
+            
             linesArr.push({
-                    points : pointsArr,
-                    color : lineColor,
-                    dash : line.dash || null,
-                    width: lineWidth,
-                    defaultPos : oxy.param.height,
-                    factor : +new Date
+                    points     : pointsArr,
+                    color      : this.getEntryColor( line ),
+                    dash       : line.dash || null,
+                    width      : this.getLineWidth(),
+                    defaultPos : coordinate.param.height,
+                    factor     : +new Date,
+                    bind       : lineData
                 });
 
-            line.values = line.data;
             line.positions = pointsArr;
 
-            
-            if( opt.label.enabled || opt[ this.chartType ].dot.enabled ){
-
-                var tmpPos, dotParam, radius = 0;
-
-                for (m = 0; m < line.positions.length; m++) {
-                    tmpPos = line.positions[ m ];
-
-                    if( opt[ this.chartType ].dot.enabled ){
-                        radius = opt[ this.chartType ].dot.radius;
-                    }
-
-                    dotParam = {
-                        color: lineColor,
-                        radius: radius,
-                        x: tmpPos[0],
-                        y: tmpPos[1]
-                    };
-
-                    if( opt.label.enabled ){
-
-                        dotParam.label = {
-                                margin: opt.label.text.margin,
-                                color:  opt.label.text.color,
-                                text: line.values[ m ],
-                            };
-                    }
-
-                    dotArr.push(dotParam);
-                }
-                line.dots = dotArr;
-            }
+            this.addLabels( line );
 
         }
 
-        this.getElement( 'multilines' ).update({
+        this.getPlotsElements().update({
             elementClass: kc.Polyline,
             list: linesArr,
             fx: config.enableAnimation
         });
         
-        if( opt.label.enabled || opt[ this.chartType ].dot.enabled ){
-            var lineDots = this.getElement( 'lineDots' );
-            lineDots.update({
-                elementClass: kc.CircleDot,
-                list: dotArr,
-                fx: config.enableAnimation
-            });
-        }
-
-        return config;
+        this.addDots();
     },
 
-    _array2points : function( lineData, offset ){
+    renderLineByData : function( line ){
+        // to be implemented
+    },
+
+    array2points : function( arr, offset ){
         var offset = offset || 0;
-        var pointsArr = [];
-        for (j = 0; j < lineData.length; j++) {
-            point = this.coordinate.measurePoint( [j, lineData[j]] );
+        var pointsArr = [], point;
+        for (var j = 0; j < arr.length; j++) {
+            point = this.coordinate.measurePoint( [j, arr[j]] );
             point[0] += offset;
                             
             pointsArr.push( point );
@@ -153,8 +79,57 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
         return pointsArr;
     },
 
-    _getEntryColor : function( entry, i ){
-         return entry.color || this.config.color[ i ] || this.config.finalColor;
+    getEntryColor : function( entry ){
+         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
+    },
+
+    addLabels : function( line ){
+        var opt = this.config.plotOptions;
+
+        if( opt.label.enabled || opt[ this.chartType ].dot.enabled ){
+
+            var tmpPos, dotParam, radius = 0, m;
+
+            for (m = 0; m < line.positions.length; m++) {
+                tmpPos = line.positions[ m ];
+
+                if( opt[ this.chartType ].dot.enabled ){
+                    radius = opt[ this.chartType ].dot.radius;
+                }
+
+                dotParam = {
+                    color: this.getEntryColor( line ),
+                    radius: radius,
+                    x: tmpPos[0],
+                    y: tmpPos[1]
+                };
+
+                if( opt.label.enabled ){
+
+                    dotParam.label = {
+                            margin: opt.label.text.margin,
+                            color:  opt.label.text.color,
+                            text: line.values[ m ],
+                        };
+                }
+
+                this.dotArr.push(dotParam);
+            }
+            line.dots = this.dotArr;
+        }
+
+    },
+
+    addDots : function(){
+        var opt = this.config.plotOptions;
+        if( opt.label.enabled || opt[ this.chartType ].dot.enabled ){
+            var lineDots = this.getElement( 'lineDots' );
+            lineDots.update({
+                elementClass: kc.CircleDot,
+                list: this.dotArr,
+                fx: this.config.enableAnimation
+            });
+        }
     }
 
 } );

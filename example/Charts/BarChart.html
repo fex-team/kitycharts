@@ -2,28 +2,28 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Bar Chart test</title>
+        <title>Bar Chart</title>
 
 
-        <script src="../kity/dev-lib/dev-define.js"></script>
+        <script src="../../kity/dev-lib/dev-define.js"></script>
         <script>
             inc.config({
-                base: '../kity/src'
+                base: '../../kity/src'
             });
         </script>
-        <script src="../kity/dev-lib/exports.js"></script>
-        <script src="../kity/dev-lib/dev-start.js"></script>
+        <script src="../../kity/dev-lib/exports.js"></script>
+        <script src="../../kity/dev-lib/dev-start.js"></script>
         <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
 
-        <script src="../build.js"></script>
-        <script src="lib/jquery-2.1.0.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
         <style>
             #container {
                 position: absolute;
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                bottom: 30px;
+                height: 200px;
                 /*background: #EEE;*/
             }
         </style>
@@ -33,22 +33,45 @@
             
         </div>
     </body>
-    <script src="formatter/barData.js"></script>
     <script>
-        var barchart = new kc.BarChart('container', {});
+        var bar = new kc.BarChart( 'container' );
 
-        // barchart.update();
+        bar.update();
 
         $.ajax({
-            url: 'data/bar.json',
+            url: '../data/bar-column/basic-bar.json',
             success: function( data ) {
-                barchart.getData().update(data);
+                bar.update( data );
+
+                setTimeout(function(){
+                    bar.setOption( 'series' , [
+                        {
+                            "name": "John",
+                            "data": [5, 23, 4, 7, 2],
+                            "group": "male"
+                        }, {
+                            "name": "Joe",
+                            "data": [3, 24, 4, 2, 5],
+                            "group": "male"
+                        }, {
+                            "name": "Jane",
+                            "data": [2, 25, 6, 2, 1],
+                            "group": "female"
+                        }, {
+                            "name": "Janet",
+                            "data": [3, 20, 4, 4, 3],
+                            "group": "female"
+                        }, {
+                            "name": "Marry",
+                            "data": [4, 21, 2, 3, 5],
+                            "group": "female"
+                        }
+                    ] );
+                    bar.update();
+                }, 1000);
             }
         });
 
-        window.onresize = function () {
-            barchart.update();
-        };
 
     </script>
 </html>

@@ -19,6 +19,7 @@ var dependience = [
     'src/base/ChartElement.js',
     'src/base/AnimatedChartElement.js',
     'src/base/Chart.js',
+    'src/base/ConfigHandler.js',
 
     'src/shapex/Arrow.js',
     'src/shapex/Pie.js',
@@ -47,7 +48,7 @@ var dependience = [
     'src/component/Marquee.js',
     'src/component/Rectage.js',
 
-    'src/config/chart.js',
+    'src/config/base.js',
     'src/config/bar.js',
     'src/config/column.js',
     'src/config/line.js',
@@ -58,17 +59,33 @@ var dependience = [
     'src/formatter/pieData.js',
     'src/formatter/TreemapData.js',
 
-    'src/plots/LinearPlots.js',
-    'src/plots/LinePlots.js',
-    'src/plots/AreaPlots.js',
+    
+    
     'src/plots/PiePlots.js',
-    'src/plots/StickPlots.js',
 
-    'src/charts/ScatterChart.js',
-    'src/charts/ForceChart.js',
-    'src/charts/BaseCharts.js',
+    'src/plots/BasePlots.js', //base
+
+    'src/plots/StickPlots.js', //base stick
+    'src/plots/ColumnPlots.js', //base stick column
+    'src/plots/BarPlots.js', //base stick bar
+
+    'src/plots/LinearPlots.js', //base linear
+    'src/plots/LinePlots.js', //base line
+    'src/plots/AreaPlots.js', //base area
+
+
+    'src/charts/BaseCharts.js', //base
+
+    'src/charts/ColumnChart.js', //base - column
+    'src/charts/BarChart.js', //base - bar
+
+    'src/charts/LineChart.js', //base - line
+    'src/charts/AreaChart.js', //base - area
+
     'src/charts/PieCharts.js',
     'src/charts/Treemap.js',
+    'src/charts/ScatterChart.js',
+    'src/charts/ForceChart.js',
     'src/charts/KityCharts.js'
 ];
 

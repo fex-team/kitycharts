@@ -1,111 +1,78 @@
-(function(exports){
+(function(){
 
-var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCharts', {
-    base : kc.Chart,
+var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
-    constructor: function ( target, config ) {
-        this.callBase( target );
+    mixins : [ kc.ConfigHandler ],
 
-        var papers = this.container.children;
-        if( papers.length > 0 ){
-            var tmp = papers[ papers.length - 1 ];
-            this.container.innerHTML = '';
-            this.container.appendChild( tmp );
-        }
+    base: kc.Chart,
 
-        var p = $( this.container ).css('position');
-        if( !~(['absolute', 'relative'].indexOf( p )) ){
-            $( this.container ).css('position', 'relative');
-        }
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        this.config = this.param;
+        this.setData( new kc.ChartData( param ) );
+
+        this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
+
+        this.callMixin();
+
+        this.bindAction();
+    },
+
+    update : function( param ){
+
+        var config = param || this.config,
+            base = kc.ChartsConfig.init(),
+            config = kity.Utils.deepExtend( base, config ),
+            data, coordConf;
 
         this.setData( new kc.ChartData( config ) );
-        this._update( config );
-        this._bindAction();
-        this._addLegend();
+
+        data = this.data.format();
+        this.config = kity.Utils.deepExtend( base, data );
+        
+        coordConf = kc.ChartsConfig.setCoordinateConf( this.config );
+
+        this.coordinate.update( coordConf );
+        this.getPlots().update( this.coordinate, this.config );
+
     },
 
-    _update : function( config ){
-
-        // config 融合 处理
-
-        var base = kc.ChartsConfig.init();
-        var yAxisTmpl = base.yAxis;
-        this.config = kity.Utils.deepExtend( base, config );
-
-
-        // 读取yAxis配置
-        var i, 
-            yAxis =  config.yAxis,
-            base, current, coordConf, tmpConf,
-            oxy,
-            yAxis = kity.Utils.isObject( yAxis ) ? [ yAxis ] : yAxis,
-            series = config.series,
-            type;
-
-        // 遍历生成多个坐标轴
-        this.linesArrayData = [];
-        for( i = 0; i < this.config.yAxis.length; i++ ){
-
-            current = this.data.format( i );
-            tmpConf = kity.Utils.deepExtend( base, current );
-
-
-            tmpConf = kity.Utils.copy( tmpConf );
-            tmpConf.yAxis = kity.Utils.deepExtend( yAxisTmpl, yAxis[ i ] );
-            
-            coordConf = kc.ChartsConfig.setCoordinateConf( tmpConf, i );
-            oxy = this.coordinate = this.addElement( 'oxy_' + i, new kc.CategoryCoordinate( coordConf ) );
-            oxy.update();
-
-
-            // 处理图表类型 series
-            for( type in series[ i ] ){
-                tmpConf.series = series[ i ];
-                switch( type ) {
-                    case 'area':
-                        var a = this.addElement( 'AreaPlots_' + i, new kc.AreaPlots( oxy, tmpConf ) );
-                        a.update();
-                        break;
-                    case 'line':
-                        var l = this.addElement( 'LinePlots_' + i, new kc.LinePlots( oxy, tmpConf ) );
-                        l.update();
-                        break;
-                    case 'bar':
-                    case 'column':
-                        this.addElement( 'BarPlots_' + i, new kc.StickPlots( oxy, tmpConf, type ) ).update();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        }
-
-        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
+    getPlots : function(){
+        return this.plots;
     },
 
-    _bindAction : function(){
+    setPlots : function( plots ){
+        this.plots = plots;
+    },
+
+    bindAction : function(){
         var self = this;
         this.currentIndex = 0;
         this.circleArr = [];
+        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
 
         this.paper.on( 'mousemove', function (ev) {
+
             if( !self.config.interaction.hover.enabled ) return;
 
             var oxy = self.coordinate;
             if(!oxy) return;
 
-            var param = oxy.param,
-                data = self.formattedData;
+            var param = oxy.param;
             var oev = ev.originEvent;
             var x = oev.offsetX;
             var y = oev.offsetY;
             var i;
             
-            var reuslt = oxy.xRuler.leanTo( x - oxy.param.margin.left, 'map' );
+            var ox = oxy.param.padding.left + oxy.param.margin.left;
+            
+            if( x - ox < oxy.param.padding.left || x - ox + oxy.param.padding.left > oxy.xRuler.map_grid[ oxy.xRuler.map_grid.length-1 ] ) return;
+
+            var reuslt = oxy.xRuler.leanTo( x - ox , 'map' );
+            reuslt.value += oxy.param.padding.left;
 
             var maxLength = 0;
-            var lenArr = [], tmpL, lines = self.linesArrayData;
+            var lenArr = [], tmpL, lines = self.config.series;
             for (i = 0; i < lines.length; i++) {
                 tmpL = lines[i].positions.length;
                 if( tmpL > maxLength ){
@@ -131,8 +98,8 @@ var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCha
 
                 self.circleArr.push({
                     color: '#FFF',
-                    radius: 2,
-                    strokeWidth : 2,
+                    radius: 5,
+                    strokeWidth : 3,
                     strokeColor : lines[i].color || self.config.color[ i ] || self.config.finalColor,
                     bind : lines[ i ].data[ index ],
                     index : index,
@@ -148,6 +115,8 @@ var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCha
                 fx : false
             });
 
+            self.hoverDots.canvas.bringTop();
+
             self.currentIndex = index;
 
             if( self.config.onCircleHover){
@@ -156,29 +125,33 @@ var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCha
                     label : oxy.getXLabels()[ index ],
                     index : index,
                     marginLeft : oxy.param.margin.left,
-                    marginTop : oxy.param.margin.top,
-                    data : data
+                    marginTop : oxy.param.margin.top
                 };
                 self.config.onCircleHover( info );
             }
+            
         } );
+
+
 
         this.paper.on('click', function(ev){
             var oxy = self.coordinate;
             if(!oxy) return;
 
+            var config = self.config;
+
             if( self.config.onCircleClick && (ev.targetShape.lineData || Math.abs(self.currentPX - ev.originEvent.offsetX) < 10) ){
                 var target = ev.targetShape,
                     index = self.currentIndex;
 
-                var values = [], tmp;
-                for( var i = 0; i < self.linesArrayData.length; i++ ){
-                    tmp = self.linesArrayData[ i ];
-                    values[ i ] = {
-                        name : tmp.name,
-                        value : tmp.data[ index ]
-                    };
-                }
+                // var values = [], tmp;
+                // for( var i = 0; i < config.series.length; i++ ){
+                //     tmp = config.series[ i ];
+                //     values[ i ] = {
+                //         name : tmp.name,
+                //         value : tmp.data[ index ]
+                //     };
+                // }
 
                 var info = {
                     circle : target,
@@ -187,72 +160,16 @@ var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCha
                     index : index,
                     marginLeft : oxy.param.margin.left,
                     marginTop : oxy.param.margin.top,
-                    values : values,
+                    // values : values,
                     value : ev.targetShape.container.bind
                 };
-
-                if( target.lineData ){
-                    info.value = target.lineData.values[ index ];
-                }
 
                 self.config.onCircleClick( info );
             }
         });
     },
 
-    _addLegend : function(){
-        var series = this.config.series,
-            i, j, type, entries, entry, label, color, tmp;
-
-        var legend = $('<div></div>').css({
-            position : 'absolute',
-            bottom : '0',
-            left : this.config.xAxis.margin.left + 'px',
-            height : '26px',
-            lineHeight : '26px'
-        }).appendTo( this.container );
-
-        for ( i = 0; i < series.length; i++ ) {
-            
-            for( type in series[ i ] ){
-                entries = series[ i ][ type ];
-                
-                for ( j = 0; j < entries.length; j++ ) {
-                    entry = entries[ j ];
-
-                    label = entry.name;
-                    color = entry.color || this.config.color[ j ] || this.config.finalColor;
-
-                    tmp = $('<div></div>').css({
-                        marginRight : '20px',
-                        display : 'inline-block'
-                    }).appendTo( legend );
-
-                    $('<div class="kitycharts-legend-color"></div>').css({
-                        width : '12px',
-                        height : '12px',
-                        backgroundColor : color,
-                        display : 'inline-block',
-                        marginRight : '5px',
-                        position: 'relative',
-                        top: '1px'
-                    }).appendTo( tmp );
-
-                    $('<div class="kitycharts-legend-label">' + label + '</div>').css({
-                        fontSize : '10px',
-                        display : 'inline-block'
-                    }).appendTo( tmp );
-
-                }
-
-            }
-
-        }
-
-
-    }
-
 } );
 
 
-})( window );
+})();

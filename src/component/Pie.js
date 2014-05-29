@@ -86,6 +86,7 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 	},
 
 	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, startAngle, pieAngle ) {
+		if( labelPosition == 'none' ) return;
 
 		var r = labelPosition == 'inside' ? outerRadius - 30 : outerRadius + 50;
 		var a = (startAngle + pieAngle / 2) / 180 * Math.PI;

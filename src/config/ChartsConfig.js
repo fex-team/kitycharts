@@ -2,7 +2,7 @@ var ChartsConfig = kc.ChartsConfig = {
 
     defaultConfigs : {
 
-        chart  : kc.Config.chart,
+        base  : kc.Config.base,
         area   : kc.Config.area,
         line   : kc.Config.line,
         bar    : kc.Config.bar,
@@ -11,14 +11,14 @@ var ChartsConfig = kc.ChartsConfig = {
     },
 
     init : function(){
-        var chart = this.defaultConfigs.chart;
+        var base = this.defaultConfigs.base, mix;
         for( var i in this.defaultConfigs ){
             if( i !== 'chart' ){
-                chart = kity.Utils.deepExtend( chart, this.defaultConfigs[ i ] );
+                mix = kity.Utils.deepExtend( base, this.defaultConfigs[ i ] );
             }
         }
 
-        return kity.Utils.copy( chart );
+        return kity.Utils.copy( mix );
     },
 
     setCoordinateConf : function( conf, index ) {
@@ -89,6 +89,9 @@ var ChartsConfig = kc.ChartsConfig = {
 
         reuslt.xLabelRotate = xAxis.label.rotate;
         reuslt.yLabelRotate = yAxis.label.rotate;
+
+        reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
+        reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
 
         return reuslt;
     }

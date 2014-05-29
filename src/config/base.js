@@ -1,6 +1,6 @@
 kc.Config = {};
 
-kc.Config.chart = {
+kc.Config.base = {
 
     color : [
         'rgb(31, 119, 180)',
@@ -39,7 +39,7 @@ kc.Config.chart = {
         },
 
         margin : {
-            left : 40,
+            left : 200,
             right : 10
         }
     },

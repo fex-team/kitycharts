@@ -23,25 +23,23 @@
         }
     },
 
-    "yAxis": [
-        {
-            "ticks" : {
-                "enabled" : false
-            },
-            "label" : {
-                "at" : "left",
-                "margin" : 0
-            },
-            "axis" : {
-                "enabled" : false
-            },
-            "padding" : {
-                "top" : 40,
-                "bottom" : 30
-            },
-            "stacked" : false
-        }
-    ],
+    "yAxis": {
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 40,
+            "bottom" : 0
+        },
+        "stacked" : false
+    },
 
     "plotOptions" : {
 
@@ -54,19 +52,17 @@
 
     },
 
-    "series": [
-
-        {
-            "line" : [
-                {
-                    "name": "John",
-                    "data": [5, 3, 4, 7, 2]
-                }
-            ]
-
+    "interaction" : {
+        "hover" : {
+            "enabled" : true
         }
+    },
 
-
+    "series": [
+        {
+            "name": "John",
+            "data": [5, 3, 4, 7, 2]
+        }
     ]
 
 }

@@ -96,8 +96,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 meshY: true,
                 formatX: null,
                 formatY: null,
-                rangeX: null,
-                rangeY: null,
+                rangeX: [ 0, 100 ],
+                rangeY: [ 0, 100 ],
                 minX: null,
                 minY: null,
                 xLabelsAt: null,
@@ -109,10 +109,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yLabelRotate: 0
             }, param );
 
-            mix.x = mix.margin.left;
-            mix.y = mix.margin.top;
-
-            this.callBase(  mix );
+            this.callBase( mix );
 
             this._initRulers();
             this._initElements();
@@ -123,11 +120,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             this.yRuler = new kc.Ruler();
         },
         _initElements: function () {
-            var func, components;
-            components = this.param.components = (this.param.components === undefined)? ["xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis"] : this.param.components;
-            
+            this.param.components = (this.param.components === undefined)? ["xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis"] : this.param.components;
             this._processComponents( componentsIniter );
-
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
@@ -327,7 +321,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             yMesh && yMesh.update( {
                 rules: yGrid.map,
-                length: xGrid.map[ xGrid.map.length - 1 ],
+                length: width, //xGrid.map[ xGrid.map.length - 1 ],
                 x: 0,
                 y: 0,
                 step: dataSet.yAxis && dataSet.yAxis.step || 1

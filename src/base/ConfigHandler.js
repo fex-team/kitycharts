@@ -1,7 +1,7 @@
-var Config = kc.Config = kity.createClass( 'Config', {
+var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
 
     constructor: function ( config ) {
-        this.config = config || {};
+        // this.config = config || {};
     },
 
     getConfig: function () {
