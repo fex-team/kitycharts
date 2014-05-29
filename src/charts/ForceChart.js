@@ -140,7 +140,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightCircleList.push( curScatter );
 					if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
 					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
-					uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
+					uvCnt = uvCnt.concat( curScatter.param.disvisConnectLines );
 				}
 			}
 			setAll( 0.1 );
