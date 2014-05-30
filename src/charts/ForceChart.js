@@ -131,7 +131,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			highlightCircleList.push( circle );
 			var connects = circle.param.connects;
 			//判断节点是否在关联的节点集合中
-			if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
+			highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
 			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
 			uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
 			setAll( 0.1 );
