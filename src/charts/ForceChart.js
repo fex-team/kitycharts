@@ -100,6 +100,9 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					width: oWidth
 				} );
 			}
+			for ( var s = 0; s < uvCnt.length; s++ ) {
+				uvCnt[ s ].line.canvas.removeShape();
+			}
 		};
 		//寻找一个节点的全部相关节点
 		var findAllRelatedCircles = function ( scatter ) {
@@ -165,7 +168,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				var source = uvCnt[ x ].source;
 				var target = uvCnt[ x ].target;
 				var param = cl.param;
-				cntListContainer.addElement( 'Vcnt' + x, uvCnt[ x ].line );
+				cntListContainer.addElement( 'uVcnt' + x, uvCnt[ x ].line );
 				cl.update( {
 					x1: source.x,
 					y1: source.y,
