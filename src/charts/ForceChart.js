@@ -85,10 +85,11 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var highlightCircleList = [];
 		var highlightConnectList = [];
 		//清空非可见连线
-		for ( var s = 0; s < uvCnt.length; s++ ) {
-			uvCnt[ s ].line.canvas.removeShape();
-		}
-		uvCnt = [];
+		// for ( var s = 0; s < uvCnt.length; s++ ) {
+		// 	uvCnt[ s ].line.canvas.removeShape();
+		// 	console.log( uvCnt[ s ].line.canvas.getPaper() );
+		// }
+		uvCnt = this._uvCnt = [];
 		//设置全部节点和连线的透明度
 		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
@@ -135,7 +136,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			//判断节点是否在关联的节点集合中
 			highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
 			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
-			uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
+			uvCnt = this._uvCnt = uvCnt.concat( circle.param.disvisConnectLines );
 			setAll( 0.1 );
 		} else { //点击图例
 			for ( var i1 = 0; i1 < scatterList.length; i1++ ) {
@@ -145,7 +146,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightCircleList.push( curScatter );
 					if ( mode !== 'circle' ) highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
 					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
-					uvCnt = uvCnt.concat( curScatter.param.disvisConnectLines );
+					uvCnt = this._uvCnt = uvCnt.concat( curScatter.param.disvisConnectLines );
 				}
 			}
 			setAll( 0.1 );
@@ -166,11 +167,11 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		for ( var x = 0; x < uvCnt.length; x++ ) {
 			if ( uvCnt[ x ].position === 'start' ) {
-				var cl = uvCnt[ x ].line;
+				var param = uvCnt[ x ].line.param;
+				var cl = uvCnt[ x ].line = new kc.Bezier( param );
 				var source = uvCnt[ x ].source;
 				var target = uvCnt[ x ].target;
-				var param = cl.param;
-				cntListContainer.addElement( 'uVcnt' + x, uvCnt[ x ].line );
+				cntListContainer.addElement( 'uVcnt' + x, cl );
 				cl.update( {
 					x1: source.x,
 					y1: source.y,
@@ -268,7 +269,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
 				} );
 				//只往画布上添加一部分的连线
-				if ( data.connectCount < 300 || cntwidth > 0.06 ) {
+				if ( data.connectCount < 300 || cntwidth > 0.07 ) {
 					connects.addElement(
 						'Vcnt' + n + n1, cnt
 					);
