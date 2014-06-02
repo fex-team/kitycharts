@@ -84,6 +84,11 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
+		//清空非可见连线
+		for ( var s = 0; s < uvCnt.length; s++ ) {
+			uvCnt[ s ].line.canvas.removeShape();
+		}
+		uvCnt = [];
 		//设置全部节点和连线的透明度
 		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
@@ -99,9 +104,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				cntList[ k ].update( {
 					width: oWidth
 				} );
-			}
-			for ( var s = 0; s < uvCnt.length; s++ ) {
-				uvCnt[ s ].line.canvas.removeShape();
 			}
 		};
 		//寻找一个节点的全部相关节点
@@ -225,7 +227,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 23 / list.length );
+			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -342,6 +344,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					if ( P > ( R - list[ j4 ].radius ) ) P = R - list[ j4 ].radius - Math.random() * R * 0.4;
 					list[ j4 ].x = P * Math.cos( sDelta * Math.PI / total ) + Ox;
 					list[ j4 ].y = P * Math.sin( sDelta * Math.PI / total ) + Oy;
+					// list[ j4 ].x = Math.random() * paperWidth;
+					// list[ j4 ].y = Math.random() * paperHeight;
 					var noIntersect = true;
 					for ( var n = 0; n < j4; n++ ) {
 						var dx = list[ n ].x - list[ j4 ].x;
@@ -358,13 +362,72 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				list[ j4 ].total = total;
 				sDelta += list[ j4 ].radius;
 			}
-			//调整力导向的位置
-			// var Vector = kity.Vector;
-			// var setPos = function () {
-			// 	for ( var i = 0; i < list.length; i++ ) {
-			// 	}
-			// };
-			// setPos();
+			//用力导向算法调整布局
+			var setPos = function () {
+				var dt = 1; //为最小单位
+				var k = 1000;
+				for ( var i = 1; i < list.length; i++ ) { //计算下一步的x和y
+					var F = new kity.Vector( 0, 0 ); //记录当前受到的合力
+					var source = list[ i ];
+					var connects = list[ i ].connects;
+					for ( var j = 0; j < connects.length; j++ ) {
+						var c = connects[ j ];
+						var target = c.relatedbrand;
+						var l = source.radius + target.radius + Math.log( c.relation );
+						var dx = target.x - source.x,
+							dy = target.y - source.y;
+						var d = Math.sqrt( dx * dx + dy * dy );
+						var fV = k * ( d - l ); //分力的值
+						var f = new kity.Vector( dx, dy ).normalize( fV );
+						F = F.add( f );
+					}
+					//var k = F.normalize(k);
+					L = F.multipy( 1 / k );
+					var targetX = source.x + L.x / 100,
+						targetY = source.y + L.y / 100;
+					//防止重叠
+					var noIntersect = true;
+					for ( var n = 0; n < list.length; n++ ) {
+						if ( list[ n ] === source ) continue;
+						var dx = list[ n ].x - targetX;
+						var dy = list[ n ].y - targetY;
+						var d = Math.sqrt( dx * dx + dy * dy );
+						if ( d < ( list[ n ].radius + source.radius ) ) {
+							noIntersect = false;
+							break;
+						}
+					}
+					if ( noIntersect ) {
+						source.x = targetX;
+						source.y = targetY;
+					}
+					//防止溢出边界
+					if ( source.x < source.radius ) {
+						source.x = source.radius;
+					}
+					if ( source.x > ( paperWidth - source.radius ) ) {
+						source.x = paperWidth - source.radius;
+					}
+					if ( source.y < source.radius ) {
+						source.y = source.radius;
+					}
+					if ( source.y > ( paperHeight - source.radius ) ) {
+						source.y = paperHeight - source.radius;
+					}
+				}
+			}
+			for ( var t = 0; t < 10; t++ ) {
+				setPos();
+			}
+			// setInterval( function () {
+			// 	setPos();
+			// 	var List = [].concat( list );
+			// 	scatter.update( {
+			// 		elementClass: kc.ConnectCircleDot,
+			// 		list: List,
+			// 		fx: false
+			// 	} );
+			// } );
 		}
 		this.param.list = list;
 		scatter.update( {
