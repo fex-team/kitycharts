@@ -25,7 +25,7 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 					percent: d.percent,
 					percentall: d.percentall,
 					size: d.relation,
-					describe: d.describe,
+					tags: d.tags,
 					connects: [] //初始化记录联系的数组
 				} );
 				brandSet[ d.brand ] = brandList[ index ];
@@ -46,6 +46,10 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			count++;
 			var source = brandSet[ connectList[ i ].brand ];
 			var target = brandSet[ connectList[ i ].relatedbrand ];
+			if ( !target ) {
+				console.log( connectList[ i ].relatedbrand );
+				continue;
+			}
 			var connects = source.connects;
 			connects.push( {
 				relatedbrand: target,
@@ -222,7 +226,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		//计算全图半径
 		var R = ( Ox < Oy ? Ox : Oy ) - 10;
 		if ( mode === 'circle' ) {
-			R -= 70;
+			R -= 100;
 		}
 		//初始化圆的尺寸,初始化list数据
 		for ( var i = 0; i < list.length; i++ ) {
