@@ -47,6 +47,7 @@ var dependience = [
     'src/component/Marquee.js',
     'src/component/Map.js',
     'src/component/Rectage.js',
+    'src/component/CoffeeCup.js',
 
     'src/config/chart.js',
     'src/config/bar.js',
@@ -67,6 +68,7 @@ var dependience = [
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
+    'src/charts/CoffeeChart.js',
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
     'src/charts/BaseCharts.js',

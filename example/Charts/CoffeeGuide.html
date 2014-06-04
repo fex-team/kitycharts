@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Your Coffee</title>
+	<script src="../../kity/dist/kitygraph.all.min.js"></script>
+    <script src="../../build.js"></script>
+    <script src="../lib/jquery-2.1.0.min.js"></script>
+	<style>
+		body{
+			background: #f6f2ef;
+			font-family: Arial;
+			padding: 0;
+			margin: 20px;
+		}
+		body h1.main-title{
+			color: #2d2115;
+			border-bottom: 1px solid #342a20;
+		}
+	</style>
+</head>
+<body>
+	<h1 class='main-title'>COFFEE GUIDE</h1>
+	<div id='chart'></div>
+</body>
+<script>
+    var data = [
+    	//一杯咖啡
+    	{
+    		name:'ESPRESSO',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.25}
+    		]
+    	},
+    	{
+    		name:'MACCHIATO',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.25},
+    			{name:'MILK FOAM',percent:0.2}
+    		]
+    	},
+    	{
+    		name:'LATTE',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.25},
+    			{name:'STEAMED MILK',percent:0.55},
+    			{name:'MILK FOAM',percent:0.2}
+    		]
+    	},
+    	{
+    		name:'FLAT WHITE',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.25},
+    			{name:'STEAMED MILK',percent:0.55}
+    		]
+    	},
+    	{
+    		name:'DOPPIO',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.25},
+    			{name:'ESPRESSO',percent:0.25}
+    		]
+    	},
+    	{ 
+    		name:'CAPPUCINO',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.3},
+    			{name:'STEAMED MILK',percent:0.35},
+    			{name:'MILK FOAM',percent:0.35},
+    		]
+    	},
+    	{
+    		name:'MOCHA',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.3},
+    			{name:'HOT CHOCOLATE',percent:0.25},
+    			{name:'STEAMED MILK',percent:0.45},
+    		]
+    	},
+    	{
+    		name:'LONG BLACK',
+    		constituent:[
+    			{name:'ESPRESSO',percent:0.3},
+    			{name:'WATER',percent:0.7},
+    		]
+    	}    
+    ];
+    var colors = {
+    	'ESPRESSO':'#574539',
+    	'MILK FOAM':'#f4efeb',
+    	'STEAMED MILK':'#a69581',
+    	'HOT CHOCOLATE':'#3e2b1c',
+    	'WATER':'#e4edf4'
+    };
+	(function(){
+		var chart = new kc.CoffeeChart('chart',{colors:colors});
+		chart.getData().update(data);
+	})();
+</script>
+</html>
