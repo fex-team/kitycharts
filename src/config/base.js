@@ -72,7 +72,7 @@ kc.Config.base = {
 
         margin : {
             top : 20,
-            bottom : 40
+            bottom : 60
         }
 
     },

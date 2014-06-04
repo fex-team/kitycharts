@@ -46,6 +46,7 @@ var dependience = [
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
+    'src/component/Map.js',
     'src/component/Rectage.js',
 
     'src/config/base.js',
@@ -79,8 +80,15 @@ var dependience = [
     'src/charts/ColumnChart.js', //base - column
     'src/charts/BarChart.js', //base - bar
 
+    'src/charts/LinearChart.js', //base - linear
     'src/charts/LineChart.js', //base - line
     'src/charts/AreaChart.js', //base - area
+
+    'src/charts/ScatterChart.js',
+    'src/charts/ForceChart.js',
+    'src/charts/KityCharts.js',
+    'src/charts/ChinaMapChart.js',
+    'src/charts/BaseCharts.js',
 
     'src/charts/PieCharts.js',
     'src/charts/Treemap.js',

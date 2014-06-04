@@ -4,16 +4,7 @@
         <meta charset="utf-8">
         <title>Area Chart</title>
 
-
-        <script src="../../kity/dev-lib/dev-define.js"></script>
-        <script>
-            inc.config({
-                base: '../../kity/src'
-            });
-        </script>
-        <script src="../../kity/dev-lib/exports.js"></script>
-        <script src="../../kity/dev-lib/dev-start.js"></script>
-        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+        <script src="../../kity/dist/kity.min.js"></script>
 
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
@@ -57,7 +48,7 @@
                         }
                     ] );
 
-                    area.setOption('color', ['red'])
+                    area.setOption('color', ['red']);
                     area.update();
                 }, 1000);
             }

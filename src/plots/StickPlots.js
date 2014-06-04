@@ -34,7 +34,7 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
             stickData,
             stick;
 
-        var tmp, stickList = [], posCategory, posValues,
+        var tmp, stickList = [], posCategory, posValues, posValue,
             width = opt[ this.chartType ].width, left = 0, bottom = 0,
             distance = config.chart.mirror? 0 : width + opt[ this.chartType ].margin,
             offset;
@@ -44,30 +44,37 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
         for (i = 0; i < series.length; i++) {
 
             stick = series[ i ];
-            stick.positions = [];
+            // stick.positions = [];
 
             stickData = isPercentage ? series[i].percentage : series[i].data;
 
+            // posValues = [];
             for (j = 0; j < stickData.length; j++) {
 
                 tmp = stickData[ j ];
 
-                posValues = [];
+                
                 posCategory = oxy[ measureCategoryMethod ]( j );
 
                 left = (config.yAxis.groupCount - 1) * distance / 2;
 
-                posValues[ j ] = oxy.measureValueRange( tmp, this.valueAxis );
+                // posValues[ j ] = oxy.measureValueRange( tmp, this.valueAxis );
+                posValue = oxy.measureValueRange( tmp, this.valueAxis );
                 offset = isPercentage ? stick.percentageOffset : stick.offset;
                 bottom = offset ? offset[ j ] : 0;
 
                 stickParam = {
                     // dir: -1,
                     offset : oxy.measureValueRange( bottom, this.valueAxis ) * dir,
-                    color  : stick.color || config.color[ i ],
+                    color  : this.getEntryColor( stick ),
                     width  : width,
-                    height : posValues[ j ] * dir,
-                    rotate : rotateAngle
+                    height : posValue * dir,
+                    rotate : rotateAngle,
+                    bind : {
+                        data : tmp,
+                        indexInSeries : i,
+                        indexInCategories : j
+                    }
                 };
 
                 stickParam[ this.valueAxis ] = oxy[ measureValueMethod ]( 0 );
@@ -75,10 +82,10 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
 
                 stickList.unshift(stickParam);
 
-                stick.positions.push( {
-                        x : posValues,
-                        y : posCategory
-                    } );
+                // stick.positions.push( {
+                //         x : posCategory,
+                //         y : posValues
+                //     } );
 
             }
             

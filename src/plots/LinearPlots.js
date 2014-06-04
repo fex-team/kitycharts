@@ -79,10 +79,6 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
         return pointsArr;
     },
 
-    getEntryColor : function( entry ){
-         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
-    },
-
     addLabels : function( line ){
         var opt = this.config.plotOptions;
 

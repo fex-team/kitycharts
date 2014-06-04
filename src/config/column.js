@@ -1,5 +1,5 @@
 kc.Config.column = {
-
+	
     plotOptions : {
 
         column : {

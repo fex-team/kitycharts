@@ -4,16 +4,7 @@
         <meta charset="utf-8">
         <title>Column Chart</title>
 
-
-        <script src="../../kity/dev-lib/dev-define.js"></script>
-        <script>
-            inc.config({
-                base: '../../kity/src'
-            });
-        </script>
-        <script src="../../kity/dev-lib/exports.js"></script>
-        <script src="../../kity/dev-lib/dev-start.js"></script>
-        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+        <script src="../../kity/dist/kity.min.js"></script>
 
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
@@ -34,41 +25,44 @@
         </div>
     </body>
     <script>
-        var column = new kc.ColumnChart( 'container' );
+        var column = new kc.ColumnChart( 'container', {
+            color : [ '#356893','#3f7bad','#4c92cc','#58a3e2','#63b4f8','#98d1ff' ]//设定基本颜色
+        } );
 
-        column.update();
+        column.update();//这一行可要可不要
+   
+        var tootip = $('<div style="background-color:#FFF;position:absolute;left:-1000px;font-size:10px;"></div>').appendTo($('#container')[0]);
 
         $.ajax({
             url: '../data/bar-column/basic-column.json',
             success: function( data ) {
+
+                data.interaction = {
+                    onStickHover : function( info, stick ){
+
+                        var x = stick.param.x,
+                            y = stick.param.y + stick.param.offset * stick.param.dir - stick.param.height;
+
+                        var str = '';
+                        str += 'category : ' + this.config.xAxis.categories[ info.indexInCategories ] + '<br>';
+                        str += 'name : ' + this.config.series[ info.indexInSeries ].name + '<br>';
+                        str += 'data : ' + info.data + '<br>';
+                        str += 'x:' + stick.param.x + ' y:' + stick.param.y;
+
+                        var max = this.config.series[ info.indexInSeries ].sum[ info.indexInCategories ];
+
+                        tootip.css({
+                            left : x,
+                            top : y
+                        }).html( str );
+
+                        console.log( info, stick );
+
+                    }
+                };
+
                 column.update( data );
 
-                setTimeout(function(){
-                    column.setOption( 'series' , [
-                        {
-                            "name": "John",
-                            "data": [5, 23, 4, 7, 2],
-                            "group": "male"
-                        }, {
-                            "name": "Joe",
-                            "data": [3, 24, 4, 2, 5],
-                            "group": "male"
-                        }, {
-                            "name": "Jane",
-                            "data": [2, 25, 6, 2, 1],
-                            "group": "female"
-                        }, {
-                            "name": "Janet",
-                            "data": [3, 20, 4, 4, 3],
-                            "group": "female"
-                        }, {
-                            "name": "Marry",
-                            "data": [4, 21, 2, 3, 5],
-                            "group": "female"
-                        }
-                    ] );
-                    column.update();
-                }, 1000);
             }
         });
 

@@ -17,6 +17,10 @@ var BasePlots = kc.BasePlots = kity.createClass( 'BasePlots', {
         return this.plotsElements;
     },
 
+    getEntryColor : function( entry ){
+         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
+    },
+
     update: function ( coordinate, config ) {
         this.coordinate = coordinate || this.coordinate;
         this.config = config || this.config;

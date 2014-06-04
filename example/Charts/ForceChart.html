@@ -28,7 +28,7 @@
             }
             .logo{
                 padding: 15px 0 0 20px;
-                margin-bottom: 55px;
+                margin-bottom: 25px;
             }
             #sidebar{
                 width: 300px;
@@ -167,14 +167,17 @@
             <div id="sidebar">
                 <div class='logo'><img src="../images/logo.png" /></div>
                 <div class="select">
-                    <p>layout</p>
+                    <h3>layout</h3>
                     <a href="javascript:void(0)" id="s-force" class='active'></a>
                     <a href="javascript:void(0)" id="s-circle"></a>
                 </div>
                 <div class="select">
-                    <p>gender</p>
+                    <h3>gender</h3>
                     <a href="javascript:void(0)" id="s-women" class="active"></a>
                     <a href="javascript:void(0)" id="s-men"></a>
+                </div>
+                <div>
+                    <h3></h3>
                 </div>
                 <div id='legend-container'>
                     <h5>Categories</h5>
@@ -188,16 +191,207 @@
         </div>
     </body>
     <script>
+    var simpleData = {
+            "men": [ {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "A",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "B",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "C",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }
+            ],
+            "women": [ {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "A",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "A",
+                "relatedbrand": "D",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "B",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "B",
+                "relatedbrand": "D",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "C",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "C",
+                "relatedbrand": "D",
+                "relation": "2",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "D",
+                "relation": "0",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "A",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            }, {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "B",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            {
+                "brandclass": "22",
+                "brand": "D",
+                "relatedbrand": "C",
+                "relation": "5",
+                "percent": "0.25",
+                "percentall": "0.04"
+            },
+            ]
+        };
         var paper, chart;
-        var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219",
+        var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
                       "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
-                      "#aeb117","#da92c6"];
+                      "#aeb117","#da92c6",'black','red','blue'];
         chart = new kc.ForceChart('chart',{colors:colors,legendTarget:'legend'});
         var d;
         $.ajax({
             url: '../data/force/ForceChart.json',
             dataType: 'json',
             success: function( data ) {
+                //d = simpleData;
                 d = data;
                 chart.getData().update(d["women"]);
             }
@@ -208,7 +402,7 @@
             if(curmode==='force'){return false;}
             document.getElementById("s-circle").className='';
             e.target.className='active';
-            curmode='force';
+            curmode = 'force';
             chart.update({mode:curmode});
         },false);
         document.getElementById("s-circle").addEventListener("click",function(e){
@@ -223,14 +417,16 @@
             curgender='men';
             document.getElementById("s-women").className='';
             e.target.className='active';
-            chart.getData().update(d["men"]);
+            chart.getData().reset(d["men"]);
+            chart.update({mode:curmode});
         },false);
         document.getElementById("s-women").addEventListener("click",function(e){
             if(curgender==='women'){return false;}
             curgender='women';
             document.getElementById("s-men").className='';
             e.target.className='active';
-            chart.getData().update(d["women"]);
+            chart.getData().reset(d["women"]);
+            chart.update({mode:curmode});
         },false);
         
         var Clegend = document.getElementById('legend');
@@ -245,7 +441,7 @@
                 }
             })();
             if(ele){
-                chart.highlightBrand(ele.value);
+                chart.highlightBrand(ele.getAttribute('value'));
             }
         },false);
     </script>

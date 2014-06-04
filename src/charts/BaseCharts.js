@@ -16,16 +16,18 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
         this.callMixin();
 
         this.bindAction();
+        this.initTooltip();
+
     },
 
     update : function( param ){
 
-        var config = param || this.config,
+        var config = kity.Utils.deepExtend( this.config, param ),
             base = kc.ChartsConfig.init(),
-            config = kity.Utils.deepExtend( base, config ),
             data, coordConf;
 
-        this.setData( new kc.ChartData( config ) );
+        this.config = kity.Utils.deepExtend( base, config ),
+        this.setData( new kc.ChartData( this.config ) );
 
         data = this.data.format();
         this.config = kity.Utils.deepExtend( base, data );
@@ -35,6 +37,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
         this.coordinate.update( coordConf );
         this.getPlots().update( this.coordinate, this.config );
 
+        this.addLegend();
     },
 
     getPlots : function(){
@@ -45,129 +48,149 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
         this.plots = plots;
     },
 
+    getXOffset : function(){
+        var oxy = this.coordinate,
+            ox = oxy.param.padding.left + oxy.param.margin.left;
+        return ox;
+    },
+
+    isOutOfXRange : function( x ){
+        var ox = this.getXOffset( x ),
+            oxy = this.coordinate;
+        return x - ox < oxy.param.padding.left || x - ox + oxy.param.padding.left > oxy.xRuler.map_grid[ oxy.xRuler.map_grid.length-1 ];
+    },
+
+    getChartElementByShape : function( shape ){
+        return shape.container.host;
+    },
+
+    getXInfoByPosX : function( x ){
+        var ox = this.getXOffset(), oxy = this.coordinate;
+
+        if( oxy.xRuler.map_grid.length == 0 ){
+            return {
+                index : 0,
+                posX : 0
+            };      
+        }
+
+        var result = oxy.xRuler.leanTo( x - ox , 'map' );
+        result.value += oxy.param.padding.left;
+
+        return {
+            index : result.index,
+            posX : result.value
+        };
+    },
+
     bindAction : function(){
         var self = this;
-        this.currentIndex = 0;
-        this.circleArr = [];
+        this.currentIndex = -1;
         this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
 
-        this.paper.on( 'mousemove', function (ev) {
+        this.paper.on( 'mousemove', function( ev ) {
 
-            if( !self.config.interaction.hover.enabled ) return;
+            self.onmousemove && self.onmousemove( ev );
 
-            var oxy = self.coordinate;
-            if(!oxy) return;
-
-            var param = oxy.param;
-            var oev = ev.originEvent;
-            var x = oev.offsetX;
-            var y = oev.offsetY;
-            var i;
-            
-            var ox = oxy.param.padding.left + oxy.param.margin.left;
-            
-            if( x - ox < oxy.param.padding.left || x - ox + oxy.param.padding.left > oxy.xRuler.map_grid[ oxy.xRuler.map_grid.length-1 ] ) return;
-
-            var reuslt = oxy.xRuler.leanTo( x - ox , 'map' );
-            reuslt.value += oxy.param.padding.left;
-
-            var maxLength = 0;
-            var lenArr = [], tmpL, lines = self.config.series;
-            for (i = 0; i < lines.length; i++) {
-                tmpL = lines[i].positions.length;
-                if( tmpL > maxLength ){
-                    maxLength = tmpL;
-                }
-            }
-
-            if( !reuslt || reuslt.index > maxLength ) return;
-
-            var pX = reuslt.value + oxy.param.margin.left;
-
-            var pY = 0;
-            var index = reuslt.index, tmpPos;
-
-            self.circleArr = [];
-            for (i = 0; i < lines.length; i++) {
-                tmpPos = lines[i].positions[index];
-                if(tmpPos){
-                    pY = tmpPos[1];
-                }else{
-                    pX = pY = -100;
-                }
-
-                self.circleArr.push({
-                    color: '#FFF',
-                    radius: 5,
-                    strokeWidth : 3,
-                    strokeColor : lines[i].color || self.config.color[ i ] || self.config.finalColor,
-                    bind : lines[ i ].data[ index ],
-                    index : index,
-                    x : pX,
-                    y : pY
-                });
-            }
-            self.currentPX = pX;
-
-            self.hoverDots.update({
-                elementClass : kc.CircleDot,
-                list : self.circleArr,
-                fx : false
-            });
-
-            self.hoverDots.canvas.bringTop();
-
-            self.currentIndex = index;
-
-            if( self.config.onCircleHover){
-                var info = {
-                    posX : pX,
-                    label : oxy.getXLabels()[ index ],
-                    index : index,
-                    marginLeft : oxy.param.margin.left,
-                    marginTop : oxy.param.margin.top
-                };
-                self.config.onCircleHover( info );
-            }
-            
         } );
-
-
 
         this.paper.on('click', function(ev){
             var oxy = self.coordinate;
             if(!oxy) return;
 
-            var config = self.config;
+            self.onclick && self.onclick( ev );
 
-            if( self.config.onCircleClick && (ev.targetShape.lineData || Math.abs(self.currentPX - ev.originEvent.offsetX) < 10) ){
-                var target = ev.targetShape,
-                    index = self.currentIndex;
-
-                // var values = [], tmp;
-                // for( var i = 0; i < config.series.length; i++ ){
-                //     tmp = config.series[ i ];
-                //     values[ i ] = {
-                //         name : tmp.name,
-                //         value : tmp.data[ index ]
-                //     };
-                // }
-
-                var info = {
-                    circle : target,
-                    position : target.container.host.getPosition(),
-                    label : oxy.getXLabels()[ index ],
-                    index : index,
-                    marginLeft : oxy.param.margin.left,
-                    marginTop : oxy.param.margin.top,
-                    // values : values,
-                    value : ev.targetShape.container.bind
-                };
-
-                self.config.onCircleClick( info );
-            }
         });
     },
+
+    getEntryColor : function( entry ){
+         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
+    },
+
+    initTooltip : function(){
+        var container = $(this.container);
+        if( !~(['absolute', 'relative']).indexOf( container.css('position') ) ){
+            container.css('position', 'relative');
+        }
+
+        this.tooltip = $('<div></div>').appendTo( container ).css({
+            position : 'absolute',
+            // border : '#888 1px solid',
+            boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
+            borderRadius : '4px',
+            backgroundColor : '#FFF',
+            color : '#888',
+            padding : '6px 10px',
+            left : '-1000px',
+            marginLeft : '10px',
+            fontSize : '10px',
+            lineHeight : '16px'
+        });
+
+    },
+
+    updateTooltip : function( text, x, y ){
+        this.tooltip.html( text );
+        var tw = this.tooltip[0].clientWidth;
+        if( x + tw > $( this.container ).width() ){
+            x -= tw + 15;
+        }
+
+        this.tooltip.animate({
+            left : x,
+            top : y
+        }, 200);
+
+    },
+
+    getTooltip : function(){
+        return this.tooltip;
+    },
+
+    addLegend : function(){
+        var series = this.config.series,
+            i, j, entry, label, color, tmp;
+
+        this.legend && this.legend.remove();
+        this.legend = $('<div></div>').css({
+            position : 'absolute',
+            bottom : '0',
+            left : this.config.xAxis.margin.left + 'px',
+            height : '26px',
+            lineHeight : '26px'
+        }).appendTo( this.container );
+
+
+        for ( i = 0; i < series.length; i++ ) {
+            
+            entry = series[ i ];
+            
+            label = entry.name;
+            color = this.getEntryColor( entry );
+
+            tmp = $('<div></div>').css({
+                marginRight : '20px',
+                display : 'inline-block'
+            }).appendTo( this.legend );
+
+            $('<div class="kitycharts-legend-color"></div>').css({
+                width : '12px',
+                height : '12px',
+                backgroundColor : color,
+                display : 'inline-block',
+                marginRight : '5px',
+                position: 'relative',
+                top: '1px'
+            }).appendTo( tmp );
+
+            $('<div class="kitycharts-legend-label">' + label + '</div>').css({
+                fontSize : '10px',
+                display : 'inline-block'
+            }).appendTo( tmp );
+
+        }
+
+    }
 
 } );
 

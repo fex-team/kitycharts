@@ -13,7 +13,7 @@ kc.ChartData = kity.createClass( 'ChartData', {
         var totalMap = {}, total, tmp;
         var series = origin.series;
         var _time = '_' + (+new Date);
-        var categoriesLength = queryPath('xAxis.categories.length', origin);
+        var categoriesLength = queryPath('xAxis.categories.length', origin) || queryPath('yAxis.categories.length', origin);
         var isPercentage = queryPath( 'yAxis.percentage', origin ),
             isStacked = queryPath( 'yAxis.stacked', origin );
         var obj = {}, group, groupName, seriesGroup = {};
@@ -45,11 +45,13 @@ kc.ChartData = kity.createClass( 'ChartData', {
 
                 for( j = 0; j < tmpGroup.length; j++ ){
                     entry = tmpGroup[ j ];
+                    
                     entry.indexInGroup = j;
+                    entry.groupIndex = groupIndex;
+
                     entry.offset = tmpLevel[ j ];
                     entry.allOffset = tmpLevel;
                     entry.sum = tmpLevel[ obj[ groupName ].length ];
-                    entry.groupIndex = groupIndex;
                     entry.percentage = sumObj.percentage[ j ];
                     entry.percentageOffset = sumObj.percentageOffsetLevel[ j ];
                     entry.allPercentageOffset = sumObj.percentageOffsetLevel;

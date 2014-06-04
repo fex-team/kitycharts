@@ -4,16 +4,7 @@
         <meta charset="utf-8">
         <title>Line Chart</title>
 
-
-        <script src="../../kity/dev-lib/dev-define.js"></script>
-        <script>
-            inc.config({
-                base: '../../kity/src'
-            });
-        </script>
-        <script src="../../kity/dev-lib/exports.js"></script>
-        <script src="../../kity/dev-lib/dev-start.js"></script>
-        <!--script src="../kity/dist/kitygraph.all.min.js"></script-->
+        <script src="../../kity/dist/kity.min.js"></script>
 
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
@@ -23,7 +14,8 @@
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 200px;
+                bottom: 10px;
+                /*height: 200px;*/
                 /*background: #EEE;*/
             }
         </style>
@@ -36,23 +28,43 @@
     <script>
         var line = new kc.LineChart( 'container' );
 
-        line.update();
+        // line.update();
 
         $.ajax({
             url: '../data/kitycharts/line-basic.json',
             success: function( data ) {
-                line.update( data );
+                // line.update( data );
 
-                setTimeout(function(){
-                    line.setOption( 'series' , [
-                        {
-                            "name": "John",
-                            "data": [23, 23, 23, 22, 21],
-                            "group": "male"
+                // setTimeout(function(){
+                    // line.setOption( 'series' , [
+                    //     {
+                    //         "name": "John",
+                    //         "data": [23, 23, 23, 22, 21],
+                    //     },
+                    //     {
+                    //         "name": "John",
+                    //         "data": [21, 23, 23, 23, 22]
+                    //     }
+                    // ] );
+
+                    // line.setOption('interaction', {
+                    //     onCircleClick : function( info, circle ){
+                    //         console.log( info.indexInCategories, info.data );
+                    //     }
+                    // });
+
+                    // line.setOption('interaction.onCircleHover', null);
+
+                    data.interaction = {
+                        onCircleClick : function( info, circle ){
+                            console.log( info, circle );
                         }
-                    ] );
-                    line.update();
-                }, 1000);
+                    };
+
+                    data.interaction.onCircleHover = null;
+
+                    line.update( data );
+                // }, 1000);
             }
         });
 

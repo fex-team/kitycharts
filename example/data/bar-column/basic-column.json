@@ -46,7 +46,7 @@
     "plotOptions" : {
 
         "column" : {
-            "width" : 10,
+            "width" : 20,
             "margin": 1
         }
 
@@ -55,24 +55,19 @@
     "series": [
         {
             "name": "John",
-            "data": [5, 3, 4, 7, 2],
-            "group": "male"
+            "data": [5, 3, 4, 7, 2]
         }, {
             "name": "Joe",
-            "data": [3, 4, 4, 2, 5],
-            "group": "male"
+            "data": [3, 4, 4, 2, 5]
         }, {
             "name": "Jane",
-            "data": [2, 5, 6, 2, 1],
-            "group": "female"
+            "data": [2, 5, 6, 2, 1]
         }, {
             "name": "Janet",
-            "data": [3, 0, 4, 4, 3],
-            "group": "female"
+            "data": [3, 0, 4, 4, 3]
         }, {
             "name": "Marry",
-            "data": [4, 1, 2, 3, 5],
-            "group": "female"
+            "data": [4, 1, 2, 3, 5]
         }
     ]
 

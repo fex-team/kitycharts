@@ -6,20 +6,30 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 		var brandList = [];
 		var connectList = [];
 		var classList = [];
+		var otherList = [];
+		//生成List
 		for ( var key in origin ) {
 			var d = origin[ key ];
-			if ( !brandSet[ d.brand ] ) {
-				brandSet[ d.brand ] = {
-					id: brandList.length
-				};
-				brandList.push( {
+			//如果集合中还不存在品牌则将品牌加到集合中
+			if ( d.brand === d.relatedbrand ) {
+				//找到和自身class相同的项并按尺寸插入到合适的位置（降序排列）
+				for ( var index = 0; index < brandList.length; index++ ) {
+					if ( brandList[ index ].brandclass === d.brandclass ) break;
+				}
+				while ( brandList[ index ] && ( brandList[ index ].brandclass === d.brandclass ) && ( parseInt( brandList[ index ].size ) > parseInt( d.relation ) ) ) {
+					index++;
+				}
+				brandList.splice( index, 0, {
 					brand: d.brand,
 					brandclass: d.brandclass,
 					percent: d.percent,
-					percentall: d.percentall && ( d.percentall * 100 + '%' ),
-					connects: []
+					percentall: d.percentall,
+					size: d.relation,
+					connects: [] //初始化记录联系的数组
 				} );
+				brandSet[ d.brand ] = brandList[ index ];
 			}
+			//记录数据中的相互关联项
 			connectList.push( {
 				brand: d.brand,
 				relatedbrand: d.relatedbrand,
@@ -30,25 +40,17 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			}
 		}
 		for ( var i = 0; i < connectList.length; i++ ) {
-			var brandId = brandSet[ connectList[ i ].brand ].id;
-			var relatedbrandId = brandSet[ connectList[ i ].relatedbrand ] && brandSet[ connectList[ i ].relatedbrand ].id;
-			if ( !relatedbrandId ) continue;
-			var connects = brandList[ brandId ].connects;
+			if ( connectList[ i ].brand === connectList[ i ].relatedbrand || parseInt( connectList[ i ].relation ) === 0 ) continue;
+			var source = brandSet[ connectList[ i ].brand ];
+			var target = brandSet[ connectList[ i ].relatedbrand ];
+			var connects = source.connects;
 			connects.push( {
-				brand: brandId,
-				relatedbrand: relatedbrandId,
-				relatedbrandname: connectList[ i ].relatedbrand,
+				relatedbrand: target,
 				relation: connectList[ i ].relation
 			} );
 		}
-		var brandTop = brandList[ 0 ];
-		for ( var x = 0; x < brandList.length; x++ ) {
-			if ( brandList[ x ].percent > brandTop.percent ) {
-				brandTop = brandList[ x ];
-			}
-		}
 		return {
-			brandTop: brandTop,
+			brandSet: brandSet,
 			brandList: brandList,
 			classList: classList
 		};
@@ -63,7 +65,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		this.addElement( "connects", new kc.ElementList() );
 		this.addElement( "scatter", new kc.ElementList() );
 		this.setData( new kc.ForceData() );
-		console.log( this.canvas );
 		this.canvas.container.on( "click", function ( e ) {
 			if ( e.targetShape === me.canvas.container ) {
 				me.highlightBrand();
@@ -71,80 +72,74 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		} );
 	},
 	highlightBrand: function ( e ) {
-		var scatter = this.getElement( "scatter" );
-		var connects = this.getElement( "connects" );
-		var elList = scatter.elementList;
-		var cntList = connects.elements;
-		var clickedbrands = [],
-			clickedbrandConnects = [];
-		if ( e === undefined ) {
-			for ( var c = 0; c < elList.length; c++ ) {
-				elList[ c ].canvas.setOpacity( 1 );
-				elList[ c ].update( {
+		var scatterList = this.getElement( "scatter" ).elementList;
+		var cntList = this.getElement( "connects" ).elements;
+		var highlightCircleList = [];
+		var highlightConnectList = [];
+		//设置全部节点和连线的透明度
+		var setAll = function ( opaC, opaL ) {
+			for ( var c = 0; c < scatterList.length; c++ ) {
+				scatterList[ c ].canvas.setOpacity( opaC || 0 );
+				scatterList[ c ].update( {
 					stroke: 0
 				} );
 			}
 			for ( var k in cntList ) {
-				cntList[ k ].canvas.setOpacity( 1 );
+				cntList[ k ].canvas.setOpacity( opaL || 0 );
 				var oWidth = cntList[ k ].param.originwidth;
 				cntList[ k ].update( {
 					width: oWidth
 				} );
 			}
-			return false;
-		} else if ( typeof e === "number" ) {
-			for ( var n = 0; n < elList.length; n++ ) {
-				if ( parseInt( elList[ n ].param.brandclass ) === e ) {
-					clickedbrands.push( elList[ n ].param );
-					clickedbrandConnects = clickedbrandConnects.concat( elList[ n ].param.connectLines );
+		};
+		//寻找一个节点的全部相关节点
+		var findAllRelatedCircles = function ( scatter ) {
+			var relatedSet = [];
+			var connects = scatter.param.connects;
+			for ( var i = 0; i < connects.length; i++ ) {
+				var curConnectB = connects[ i ].relatedbrand.brand;
+				for ( j = 0; j < scatterList.length; j++ ) {
+					var curScatter = scatterList[ j ];
+					if ( curConnectB === curScatter.param.brand ) {
+						relatedSet.push( curScatter );
+					}
 				}
 			}
-		} else {
-			clickedbrands = [ e.target.param ];
-			clickedbrandConnects = e.target.param.connectLines;
+			return relatedSet;
+		};
+		//点中空白区域时直接高亮全部，返回
+		if ( e === undefined ) {
+			setAll( 1, 1 );
+			return false;
 		}
-		var checkrelate = function ( brand ) {
-			for ( var s = 0; s < clickedbrands.length; s++ ) {
-				var cnts = clickedbrands[ s ].connects;
-				for ( var s1 = 0; s1 < cnts.length; s1++ ) {
-					if ( brand === cnts[ s1 ].relatedbrandname ) return true;
+		//点中单个节点
+		if ( e instanceof ChartEvent ) {
+			//点击单个节点
+			var circle = e.target;
+			highlightCircleList.push( circle );
+			var connects = circle.param.connects;
+			//判断节点是否在关联的节点集合中
+			highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( circle ) );
+			highlightConnectList = highlightConnectList.concat( circle.param.connectLines );
+			setAll( 0.1 );
+		} else { //点击图例
+			for ( var i1 = 0; i1 < scatterList.length; i1++ ) {
+				var curScatter = scatterList[ i1 ];
+				//所属class
+				if ( curScatter.param.brandclass === e ) {
+					highlightCircleList.push( curScatter );
+					highlightCircleList = highlightCircleList.concat( findAllRelatedCircles( curScatter ) );
+					highlightConnectList = highlightConnectList.concat( curScatter.param.connectLines );
 				}
 			}
-			return false;
-		};
-		var checkclicked = function ( brand ) {
-			for ( var s = 0; s < clickedbrands.length; s++ ) {
-				if ( brand === clickedbrands[ s ].brand ) return true;
-			}
-			return false;
-		};
-		for ( var i = 0; i < elList.length; i++ ) {
-			var b = elList[ i ].param.brand;
-			if ( checkclicked( b ) ) {
-				elList[ i ].canvas.setOpacity( 1 );
-			} else if ( checkrelate( b ) ) {
-				if ( typeof e === 'number' )
-					elList[ i ].canvas.setOpacity( 0.3 );
-				else
-					elList[ i ].canvas.setOpacity( 1 );
-			} else {
-				if ( typeof e === 'number' )
-					elList[ i ].canvas.setOpacity( 0 );
-				else
-					elList[ i ].canvas.setOpacity( 0.3 );
-			}
+			setAll( 0 );
 		}
-		//设置连线的透明度
-		for ( var key in cntList ) {
-			cntList[ key ].canvas.setOpacity( 0 );
+		//统一处理节点和连线的高亮和非高亮
+		for ( var n = 0; n < highlightCircleList.length; n++ ) {
+			highlightCircleList[ n ].canvas.setOpacity( 1 );
 		}
-		for ( var j = 0; j < clickedbrandConnects.length; j++ ) {
-			var curLine = clickedbrandConnects[ j ].line;
-			curLine.canvas.setOpacity( 1 );
-			if ( typeof e !== 'number' )
-				curLine.update( {
-					width: curLine.param.highlightwidth
-				} );
+		for ( var m = 0; m < highlightConnectList.length; m++ ) {
+			highlightConnectList[ m ].line.canvas.setOpacity( 1 );
 		}
 	},
 	renderLegend: function () {
@@ -174,6 +169,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			}
 			return c;
 		} )();
+		var brandSet = data.brandSet;
 		var list = data.brandList;
 		var paperWidth = this.getWidth();
 		var paperHeight = this.getHeight();
@@ -181,11 +177,15 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var Oy = paperHeight / 2;
 		var brandTop = data.brandTop;
 		//计算全图半径
-		var R = ( Ox < Oy ? Ox : Oy ) - 50;
-		//初始化圆的尺寸
+		var R = ( Ox < Oy ? Ox : Oy ) - 10;
+		if ( mode === 'circle' ) {
+			R -= 70;
+		}
+		//初始化圆的尺寸,初始化list数据
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
-			list[ i ].radius = list[ i ].percent * 40;
+			var circleSize = list[ i ].size;
+			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 0.27 );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -197,50 +197,56 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].Oy = Oy;
 			list[ i ].R = R;
 			list[ i ].chart = this;
-			list[ i ].fontSize = 20;
 		}
+		//更新连线
 		connects.removeElement();
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
 			var sourceConnects = source.connects;
+			//更新所有的连线
 			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
-				var rbrand = sourceConnects[ n1 ].relatedbrand;
-				if ( sourceConnects[ n1 ].relation > 0 && rbrand > n ) {
-					var cnt;
-					cnt = new kc.Bezier( {
-						x1: source.x,
-						y1: source.y,
-						x2: list[ rbrand ].x,
-						y2: list[ rbrand ].y,
-						cx: list[ rbrand ].cx,
-						cy: list[ rbrand ].cy,
-						color: source.color,
-						originwidth: sourceConnects[ n1 ].relation / 300,
-						width: sourceConnects[ n1 ].relation / 300,
-						highlightwidth: ( sourceConnects[ n1 ].relation / 150 < 0.5 ? 0.5 : sourceConnects[ n1 ].relation / 150 )
-					} );
-					connects.addElement(
-						'cnt' + n + n1, cnt
-					);
-					source.connectLines.push( {
-						position: 'start',
-						line: cnt
-					} );
-					list[ rbrand ].connectLines.push( {
-						position: 'end',
-						line: cnt
-					} );
-				}
+				var targetInfo = sourceConnects[ n1 ];
+				var target = targetInfo.relatedbrand;
+				var cnt;
+				cnt = new kc.Bezier( {
+					x1: source.x,
+					y1: source.y,
+					x2: target.x,
+					y2: target.y,
+					cx: target.cx,
+					cy: target.cy,
+					color: source.color,
+					originwidth: sourceConnects[ n1 ].relation / 300,
+					width: sourceConnects[ n1 ].relation / 300,
+					//width:1,
+					highlightwidth: ( sourceConnects[ n1 ].relation / 150 < 0.5 ? 0.5 : sourceConnects[ n1 ].relation / 150 )
+				} );
+				connects.addElement(
+					'cnt' + n + n1, cnt
+				);
+				source.connectLines.push( {
+					position: 'start',
+					line: cnt
+				} );
+				target.connectLines.push( {
+					position: 'end',
+					line: cnt
+				} );
 			}
 		}
 		if ( mode === 'circle' ) {
 			var total = 0;
 			for ( var j = 0; j < list.length; j++ ) {
-				total += list[ j ].radius;
+				var add = list[ j ].radius;
+				if ( add < 10 ) add = 10;
+				total += add;
 			}
 			var sDelta = 0;
 			for ( var j1 = 0; j1 < list.length; j1++ ) {
-				sDelta += list[ j1 ].radius;
+				if ( list[ j1 ].radius > 10 )
+					sDelta += list[ j1 ].radius;
+				else
+					sDelta += 10;
 				list[ j1 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
 				list[ j1 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
 				list[ j1 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
@@ -248,92 +254,63 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				list[ j1 ].sDelta = sDelta;
 				list[ j1 ].total = total;
 				list[ j1 ].mode = 'circle';
-				sDelta += list[ j1 ].radius;
+				if ( list[ j1 ].radius > 10 )
+					sDelta += list[ j1 ].radius;
+				else
+					sDelta += 10;
+				list[ j1 ].radius = list[ j1 ].radius / 3;
 			}
 		} else {
-			brandTop.x = Ox;
-			brandTop.y = Oy;
 			var total = 0;
 			for ( var j3 = 0; j3 < list.length; j3++ ) {
-				if ( list[ j3 ] !== brandTop ) total += list[ j3 ].radius;
+				total += list[ j3 ].radius;
 			}
-			var sDelta = 0;
+			var sDelta = total;
+			//将所有的点随机分布在一个圆里
 			for ( var j4 = 0; j4 < list.length; j4++ ) {
-				if ( list[ j4 ] === brandTop ) continue;
 				sDelta += list[ j4 ].radius;
-				list[ j4 ].x = R * Math.cos( sDelta * Math.PI / total ) + Ox;
-				list[ j4 ].y = R * Math.sin( sDelta * Math.PI / total ) + Oy;
 				list[ j4 ].cx = R * 0.2 * Math.cos( sDelta * Math.PI / total ) + Ox;
 				list[ j4 ].cy = R * 0.2 * Math.sin( sDelta * Math.PI / total ) + Oy;
+				// var P = list[ j4 ].radius * 9;
+				// if ( P > ( R - list[ j4 ].radius ) ) P = R - list[ j4 ].radius;
+				// list[ j4 ].x = P * Math.cos( sDelta * Math.PI / total ) + Ox;
+				// list[ j4 ].y = P * Math.sin( sDelta * Math.PI / total ) + Oy;
+				//循环产生随机数直到没有重叠为止
+				while ( true ) {
+					var P = Math.random() + list[ j4 ].radius / 70;
+					P = P * R;
+					if ( P > ( R - list[ j4 ].radius ) ) P = R - list[ j4 ].radius - Math.random() * R * 0.4;
+					list[ j4 ].x = P * Math.cos( sDelta * Math.PI / total ) + Ox;
+					list[ j4 ].y = P * Math.sin( sDelta * Math.PI / total ) + Oy;
+					var noIntersect = true;
+					for ( var n = 0; n < j4; n++ ) {
+						var dx = list[ n ].x - list[ j4 ].x;
+						var dy = list[ n ].y - list[ j4 ].y;
+						var d = Math.sqrt( dx * dx + dy * dy );
+						if ( d < ( list[ n ].radius + list[ j4 ].radius ) ) {
+							noIntersect = false;
+							break;
+						}
+					}
+					if ( noIntersect ) break;
+				}
 				list[ j4 ].sDelta = sDelta;
 				list[ j4 ].total = total;
 				sDelta += list[ j4 ].radius;
 			}
-			//取向量的模
-			var mod = function ( x, y ) {
-				return Math.sqrt( x * x + y * y );
-			};
 			//调整力导向的位置
-			var setPos = function () {
-				var K = 5;
-				for ( var t = 0; t < 2; t++ ) {
-					for ( var k = 0; k < list.length; k++ ) {
-						var source = list[ k ];
-						if ( source === brandTop ) continue; //固定中心
-						var connects = source.connects;
-						var Fx = 0,
-							Fy = 0;
-						for ( var k1 = 0; k1 < connects.length; k1++ ) {
-							var connect = connects[ k1 ];
-							var target = list[ connect.relatedbrand ];
-							var fx = target.x - source.x;
-							var fy = target.y - source.y;
-							var m = mod( fx, fy );
-							if ( m === 0 ) continue;
-							fx = fx * connect.relation / m;
-							fy = fy * connect.relation / m;
-							Fx += fx;
-							Fy += fy;
-						}
-						var historyX = source.x;
-						var historyY = source.y;
-
-						source.x += Fx / K;
-						source.y += Fy / K;
-						//防止溢出边界
-						if ( source.x < source.radius ) {
-							source.x = source.radius;
-						}
-						if ( source.x > ( paperWidth - source.radius ) ) {
-							source.x = paperWidth - source.radius;
-						}
-						if ( source.y < source.radius ) {
-							source.y = source.radius;
-						}
-						if ( source.y > ( paperHeight - source.radius ) ) {
-							source.y = paperHeight - source.radius;
-						}
-						//防止重叠
-						for ( var c = 0; c < list.length; c++ ) {
-							if ( c !== k ) {
-								var dx = list[ c ].x - source.x;
-								var dy = list[ c ].y - source.y;
-								var d = Math.sqrt( dx * dx + dy * dy );
-								if ( d < list[ c ].radius + source.radius ) {
-									source.x = historyX;
-									source.y = historyY;
-									break;
-								}
-							}
-						}
-					}
-				}
-			};
-			setPos();
+			// var Vector = kity.Vector;
+			// var setPos = function () {
+			// 	for ( var i = 0; i < list.length; i++ ) {
+			// 	}
+			// };
+			// setPos();
 		}
+		this.param.list = list;
 		scatter.update( {
 			elementClass: kc.ConnectCircleDot,
-			list: list
+			list: list,
+			animateDuration: 2000,
 		} );
 	},
 	update: function ( args ) {

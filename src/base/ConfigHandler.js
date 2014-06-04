@@ -13,9 +13,7 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
     },
 
     setOption: function ( path, value ) {
-        if( kity.Utils.queryPath( path, this.config ) !== undefined ){
-            eval( 'this.config.' + path + ' = value' );
-        }
+        eval( 'this.config.' + path + ' = value' );
     }
 
 } );

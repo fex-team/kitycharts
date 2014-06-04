@@ -36,5 +36,8 @@ var Chart = kc.Chart = kity.createClass( 'Chart', {
     update: function ( param ) {
         var data = this.data.format();
         this.callBase( param, data );
+        if (this.updateChart) {
+            this.updateChart(this.param, data);
+        }
     }
 } );

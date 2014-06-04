@@ -40,7 +40,7 @@
             "top" : 10,
             "bottom" : 0
         },
-        "stacked" : true,
+        "stacked" : 0,
         "inverted" : true
     },
 
@@ -56,24 +56,13 @@
     "series": [
         {
             "name": "John",
-            "data": [15, 23, 4, 7, 2],
-            "group": "male"
+            "data": [15, 23, 4, 7, 2]
         }, {
             "name": "Joe",
-            "data": [13, 24, 4, 2, 5],
-            "group": "male"
+            "data": [13, 24, 4, 2, 5]
         }, {
             "name": "Jane",
-            "data": [12, 25, 6, 2, 1],
-            "group": "female"
-        }, {
-            "name": "Janet",
-            "data": [13, 20, 4, 4, 3],
-            "group": "female"
-        }, {
-            "name": "Marry",
-            "data": [14, 21, 2, 3, 5],
-            "group": "female"
+            "data": [12, 25, 6, 2, 1]
         }
     ]
 
