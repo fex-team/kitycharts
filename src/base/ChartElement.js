@@ -26,7 +26,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     },
 
     addElement: function ( key, chartElement ) {
-        if (arguments.length === 1) {
+        if ( arguments.length === 1 ) {
             chartElement = key;
             key = 'ChartElement_' + elementUUID++;
         }
@@ -220,11 +220,11 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         return this.canvas.bind;
     },
 
-    getPaper: function(){
+    getPaper: function () {
         var tmp = this.canvas;
-        while( tmp && tmp.container ){
+        while ( tmp && tmp.container ) {
             tmp = tmp.container;
-            if( tmp instanceof kity.Paper ){
+            if ( tmp instanceof kity.Paper ) {
                 break;
             }
         }

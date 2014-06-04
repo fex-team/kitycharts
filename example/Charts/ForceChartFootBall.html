@@ -384,11 +384,11 @@
         var paper, chart;
         var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
                       "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
-                      "#aeb117","#da92c6",'black','red','blue'];
+                      "#aeb117","#da92c6",'gray','red','blue'];
         chart = new kc.ForceChart('chart',{colors:colors,legendTarget:'legend'});
         var d;
         $.ajax({
-            url: '../data/force/ForceChart.json',
+            url: '../data/force/ForceChartFootball.json',
             dataType: 'json',
             success: function( data ) {
                 //d = simpleData;
