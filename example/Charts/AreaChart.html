@@ -2,8 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Bar Chart</title>
-
+        <title>Area Chart</title>
 
         <script src="../../kity/dist/kity.min.js"></script>
 
@@ -26,40 +25,31 @@
         </div>
     </body>
     <script>
-        var bar = new kc.BarChart( 'container' );
+        var area = new kc.AreaChart( 'container' );
 
-        bar.update();
+        area.update();
 
         $.ajax({
-            url: '../data/bar-column/basic-bar.json',
+            url: '../data/kitycharts/area-basic.json',
             success: function( data ) {
-                bar.update( data );
+                area.update( data );
 
                 setTimeout(function(){
-                    bar.setOption( 'series' , [
+                    area.setOption( 'series' , [
                         {
                             "name": "John",
-                            "data": [15, 23, 4, 7, 2],
+                            "data": [5, 23, 4, 7, 2],
                             "group": "male"
-                        }, {
-                            "name": "Joe",
-                            "data": [3, 24, 4, 2, 5],
+                        },
+                        {
+                            "name": "John",
+                            "data": [1, 5, 23, 4, 7],
                             "group": "male"
-                        }, {
-                            "name": "Jane",
-                            "data": [2, 25, 6, 2, 1],
-                            "group": "female"
-                        }, {
-                            "name": "Janet",
-                            "data": [3, 20, 4, 4, 3],
-                            "group": "female"
-                        }, {
-                            "name": "Marry",
-                            "data": [4, 21, 2, 3, 5],
-                            "group": "female"
                         }
                     ] );
-                    bar.update();
+
+                    area.setOption('color', ['red']);
+                    area.update();
                 }, 1000);
             }
         });

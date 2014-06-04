@@ -28,44 +28,46 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         t: 0
     };
 
+    var allComponents = [ "xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis" ];
+
     var componentsIniter = {
         "xMesh" : function(){
-            this.addElement( 'xMesh', new kc.Mesh( {
+            !this.getElement( 'xMesh') && this.addElement( 'xMesh', new kc.Mesh( {
                 type: 'vertical'
             } ) );
         },
         "yMesh" : function(){
-            this.addElement( 'yMesh', new kc.Mesh( {
+            !this.getElement( 'yMesh') && this.addElement( 'yMesh', new kc.Mesh( {
                 type: 'horizon',
                 dir: 1
             } ) );
         },
         "xCat" : function(){
-            this.addElement( 'xCat', new kc.Categories( {
+            !this.getElement( 'xCat') && this.addElement( 'xCat', new kc.Categories( {
                 at: 'bottom',
                 rotate: this.param.xLabelRotate
             } ) );
         },
         "yCat" : function(){
-            this.addElement( 'yCat', new kc.Categories( {
+            !this.getElement( 'yCat') && this.addElement( 'yCat', new kc.Categories( {
                 at: 'left',
                 rotate: this.param.yLabelRotate
             } ) );
         },
         "xAxis" : function(){
-            this.addElement( 'xAxis', new kc.Line( {
+            !this.getElement( 'xAxis') && this.addElement( 'xAxis', new kc.Line( {
                 color: '#999'
             } ) );
             
-            if( this.param.xAxisArrow )
+            if( this.param.xAxisArrow && !this.xArrow )
                 this.canvas.addShape( this.xArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
         },
         "yAxis" : function(){
-            this.addElement( 'yAxis', new kc.Line( {
+            !this.getElement( 'yAxis') && this.addElement( 'yAxis', new kc.Line( {
                 color: '#999'
             } ) );
 
-            if( this.param.yAxisArrow )
+            if( this.param.yAxisArrow && !this.yArrow )
                 this.canvas.addShape( this.yArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
         }
     };
@@ -75,7 +77,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         constructor: function ( param ) {
 
             var mix = kity.Utils.extend({
-
+                components : null,
                 dataSet: [],
                 margin: {
                     top: 20,
@@ -96,8 +98,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 meshY: true,
                 formatX: null,
                 formatY: null,
-                rangeX: null,
-                rangeY: null,
+                rangeX: [ 0, 100 ],
+                rangeY: [ 0, 100 ],
                 minX: null,
                 minY: null,
                 xLabelsAt: null,
@@ -109,29 +111,24 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 yLabelRotate: 0
             }, param );
 
-            mix.x = mix.margin.left;
-            mix.y = mix.margin.top;
-
-            this.callBase(  mix );
+            this.callBase( mix );
 
             this._initRulers();
-            this._initElements();
+            // this._initElements();
 
         },
         _initRulers: function () {
             this.xRuler = new kc.Ruler();
             this.yRuler = new kc.Ruler();
         },
-        _initElements: function () {
-            var func, components;
-            components = this.param.components = (this.param.components === undefined)? ["xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis"] : this.param.components;
-            
-            this._processComponents( componentsIniter );
-
+        _initElements: function (components) {
+            components = ( !components )? allComponents : components;
+            this._processComponents( components );
         },
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
                 'updateAll': [ 
+                    'components',
                     'dataSet',
                     'margin',
                     'padding',
@@ -162,11 +159,16 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             return this.yRuler;
         },
 
-        _processComponents : function( composer ){
-            var com;
-            for( com in this.param.components ){
-                func = composer[ this.param.components[ com ] ];
-                func && func.bind(this)();
+        _processComponents : function(components){
+            var i, key;
+            for( i in allComponents ){
+                key = allComponents[ i ];
+                if( ~components.indexOf( key ) ){
+                    func = componentsIniter[ key ];
+                    func && func.bind(this)();
+                }else{
+                    this.removeElement( key );
+                }
             }
         },
 
@@ -199,6 +201,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         },
 
         updateAll: function (
+                components,
                 dataSet,
                 margin,
                 padding,
@@ -220,6 +223,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xLabelRotate,
                 yLabelRotate
             ) {
+
+            this._initElements( components );
 
             var width = this.container.getWidth() - margin.left - margin.right,
                 height = this.container.getHeight() - margin.top - margin.bottom;
@@ -327,7 +332,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             yMesh && yMesh.update( {
                 rules: yGrid.map,
-                length: xGrid.map[ xGrid.map.length - 1 ],
+                length: width, //xGrid.map[ xGrid.map.length - 1 ],
                 x: 0,
                 y: 0,
                 step: dataSet.yAxis && dataSet.yAxis.step || 1

@@ -30,7 +30,7 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
 
                     labelText: entry.angle > 10 ? entry.name : null,
                     labelColor: i == 0 ? '#FFF' : '#888',
-                    labelPosition: i == 0 ? 'inside' : 'outside',
+                    labelPosition: i == 0 ? 'inside' : 'none',
 
                     connectLineWidth: 1,
                     connectLineColor: entry.color,
@@ -43,7 +43,7 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
                     color: entry.color,
 
                     x : 250,
-                    y : 260
+                    y : 250
 
                 });
 

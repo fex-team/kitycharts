@@ -207,7 +207,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     },
 
     _bindData: function () {
-        if ( this.param.bind ) {
+        if ( this.param.bind !== undefined ) {
             this.canvas.bind = this.param.bind;
         }
     },

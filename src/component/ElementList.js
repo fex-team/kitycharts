@@ -13,6 +13,10 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         this.fxTimers = [];
     },
 
+    getElementList : function(){
+        return this.elementList;
+    },
+
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
             updateClass: [ 'elementClass' ],

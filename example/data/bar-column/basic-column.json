@@ -1,22 +1,77 @@
 {
+
     "chart": {
-        "type": "column",
-        "mirror": true
+        "type": "column"
     },
 
     "xAxis": {
-        "categories": ["0-4", "5-9", "10-14", "15-19",
-            "20-24", "25-29", "30-34", "35-39", "40-44",
-            "45-49", "50-54", "55-59", "60-64", "65-69",
-            "70-74", "75-79", "80-84", "85-89", "90-94",
-            "95-99", "100 +"],
-        "step" : 2
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 200,
+            "left" : 200
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 100,
+            "right" : 50
+        },
+        "min" : 0
     },
 
-    "series": [{
-                "name": "Female",
-                "data": [1656154, 1787564, 1981671, 2108575, 2403438, 2366003, 2301402, 2519874,
-                    3360596, 3493473, 3050775, 2759560, 2304444, 2426504, 2568938, 1785638,
-                    1447162, 1005011, 330870, 130632, 21208]
-            }]
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 10,
+            "bottom" : 0
+        },
+        "stacked" : true
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 20,
+            "margin": 1
+        }
+
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [5, 3, 4, 7, 2]
+        }, {
+            "name": "Joe",
+            "data": [3, 4, 4, 2, 5]
+        }, {
+            "name": "Jane",
+            "data": [2, 5, 6, 2, 1]
+        }, {
+            "name": "Janet",
+            "data": [3, 0, 4, 4, 3]
+        }, {
+            "name": "Marry",
+            "data": [4, 1, 2, 3, 5]
+        }
+    ]
+
 }
+
+
+

@@ -1,210 +1,158 @@
-(function(exports){
+(function(){
 
-var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCharts', {
-    base : kc.Chart,
+var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
-    constructor: function ( target, config ) {
-        this.callBase( target );
+    mixins : [ kc.ConfigHandler ],
 
-        var papers = this.container.children;
-        if( papers.length > 0 ){
-            var tmp = papers[ papers.length - 1 ];
-            this.container.innerHTML = '';
-            this.container.appendChild( tmp );
-        }
+    base: kc.Chart,
 
-        var p = $( this.container ).css('position');
-        if( !~(['absolute', 'relative'].indexOf( p )) ){
-            $( this.container ).css('position', 'relative');
-        }
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        this.config = this.param;
+        this.setData( new kc.ChartData( param ) );
 
-        this.setData( new kc.ChartData( config ) );
-        this._update( config );
-        this._bindAction();
-        this._addLegend();
+        this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
+
+        this.callMixin();
+
+        this.bindAction();
+        this.initTooltip();
+
     },
 
-    _update : function( config ){
+    update : function( param ){
 
-        // config 融合 处理
+        var config = kity.Utils.deepExtend( this.config, param ),
+            base = kc.ChartsConfig.init(),
+            data, coordConf;
 
-        var base = kc.ChartsConfig.init();
-        var yAxisTmpl = base.yAxis;
-        this.config = kity.Utils.deepExtend( base, config );
+        this.config = kity.Utils.deepExtend( base, config ),
+        this.setData( new kc.ChartData( this.config ) );
 
+        data = this.data.format();
+        this.config = kity.Utils.deepExtend( base, data );
+        
+        coordConf = kc.ChartsConfig.setCoordinateConf( this.config );
 
-        // 读取yAxis配置
-        var i, 
-            yAxis =  config.yAxis,
-            base, current, coordConf, tmpConf,
-            oxy,
-            yAxis = kity.Utils.isObject( yAxis ) ? [ yAxis ] : yAxis,
-            series = config.series,
-            type;
+        this.coordinate.update( coordConf );
+        this.getPlots().update( this.coordinate, this.config );
 
-        // 遍历生成多个坐标轴
-        this.linesArrayData = [];
-        for( i = 0; i < this.config.yAxis.length; i++ ){
-
-            current = this.data.format( i );
-            tmpConf = kity.Utils.deepExtend( base, current );
-
-
-            tmpConf = kity.Utils.copy( tmpConf );
-            tmpConf.yAxis = kity.Utils.deepExtend( yAxisTmpl, yAxis[ i ] );
-            
-            coordConf = kc.ChartsConfig.setCoordinateConf( tmpConf, i );
-            oxy = this.coordinate = this.addElement( 'oxy_' + i, new kc.CategoryCoordinate( coordConf ) );
-            oxy.update();
-
-
-            // 处理图表类型 series
-            for( type in series[ i ] ){
-                tmpConf.series = series[ i ];
-                switch( type ) {
-                    case 'area':
-                        var a = this.addElement( 'AreaPlots_' + i, new kc.AreaPlots( oxy, tmpConf ) );
-                        a.update();
-                        break;
-                    case 'line':
-                        var l = this.addElement( 'LinePlots_' + i, new kc.LinePlots( oxy, tmpConf ) );
-                        l.update();
-                        break;
-                    case 'bar':
-                    case 'column':
-                        this.addElement( 'BarPlots_' + i, new kc.StickPlots( oxy, tmpConf, type ) ).update();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        }
-
-        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
+        this.addLegend();
     },
 
-    _bindAction : function(){
+    getPlots : function(){
+        return this.plots;
+    },
+
+    setPlots : function( plots ){
+        this.plots = plots;
+    },
+
+    getXOffset : function(){
+        var oxy = this.coordinate,
+            ox = oxy.param.padding.left + oxy.param.margin.left;
+        return ox;
+    },
+
+    isOutOfXRange : function( x ){
+        var ox = this.getXOffset( x ),
+            oxy = this.coordinate;
+        return x - ox < oxy.param.padding.left || x - ox + oxy.param.padding.left > oxy.xRuler.map_grid[ oxy.xRuler.map_grid.length-1 ];
+    },
+
+    getChartElementByShape : function( shape ){
+        return shape.container.host;
+    },
+
+    getXInfoByPosX : function( x ){
+        var ox = this.getXOffset(), oxy = this.coordinate;
+
+        if( oxy.xRuler.map_grid.length == 0 ){
+            return {
+                index : 0,
+                posX : 0
+            };      
+        }
+
+        var result = oxy.xRuler.leanTo( x - ox , 'map' );
+        result.value += oxy.param.padding.left;
+
+        return {
+            index : result.index,
+            posX : result.value
+        };
+    },
+
+    bindAction : function(){
         var self = this;
-        this.currentIndex = 0;
-        this.circleArr = [];
+        this.currentIndex = -1;
+        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
 
-        this.paper.on( 'mousemove', function (ev) {
-            if( !self.config.interaction.hover.enabled ) return;
+        this.paper.on( 'mousemove', function( ev ) {
 
-            var oxy = self.coordinate;
-            if(!oxy) return;
+            self.onmousemove && self.onmousemove( ev );
 
-            var param = oxy.param,
-                data = self.formattedData;
-            var oev = ev.originEvent;
-            var x = oev.offsetX;
-            var y = oev.offsetY;
-            var i;
-            
-            var reuslt = oxy.xRuler.leanTo( x - oxy.param.margin.left, 'map' );
-
-            var maxLength = 0;
-            var lenArr = [], tmpL, lines = self.linesArrayData;
-            for (i = 0; i < lines.length; i++) {
-                tmpL = lines[i].positions.length;
-                if( tmpL > maxLength ){
-                    maxLength = tmpL;
-                }
-            }
-
-            if( !reuslt || reuslt.index > maxLength ) return;
-
-            var pX = reuslt.value + oxy.param.margin.left;
-
-            var pY = 0;
-            var index = reuslt.index, tmpPos;
-
-            self.circleArr = [];
-            for (i = 0; i < lines.length; i++) {
-                tmpPos = lines[i].positions[index];
-                if(tmpPos){
-                    pY = tmpPos[1];
-                }else{
-                    pX = pY = -100;
-                }
-
-                self.circleArr.push({
-                    color: '#FFF',
-                    radius: 2,
-                    strokeWidth : 2,
-                    strokeColor : lines[i].color || self.config.color[ i ] || self.config.finalColor,
-                    bind : lines[ i ].data[ index ],
-                    index : index,
-                    x : pX,
-                    y : pY
-                });
-            }
-            self.currentPX = pX;
-
-            self.hoverDots.update({
-                elementClass : kc.CircleDot,
-                list : self.circleArr,
-                fx : false
-            });
-
-            self.currentIndex = index;
-
-            if( self.config.onCircleHover){
-                var info = {
-                    posX : pX,
-                    label : oxy.getXLabels()[ index ],
-                    index : index,
-                    marginLeft : oxy.param.margin.left,
-                    marginTop : oxy.param.margin.top,
-                    data : data
-                };
-                self.config.onCircleHover( info );
-            }
         } );
 
         this.paper.on('click', function(ev){
             var oxy = self.coordinate;
             if(!oxy) return;
 
-            if( self.config.onCircleClick && (ev.targetShape.lineData || Math.abs(self.currentPX - ev.originEvent.offsetX) < 10) ){
-                var target = ev.targetShape,
-                    index = self.currentIndex;
+            self.onclick && self.onclick( ev );
 
-                var values = [], tmp;
-                for( var i = 0; i < self.linesArrayData.length; i++ ){
-                    tmp = self.linesArrayData[ i ];
-                    values[ i ] = {
-                        name : tmp.name,
-                        value : tmp.data[ index ]
-                    };
-                }
-
-                var info = {
-                    circle : target,
-                    position : target.container.host.getPosition(),
-                    label : oxy.getXLabels()[ index ],
-                    index : index,
-                    marginLeft : oxy.param.margin.left,
-                    marginTop : oxy.param.margin.top,
-                    values : values,
-                    value : ev.targetShape.container.bind
-                };
-
-                if( target.lineData ){
-                    info.value = target.lineData.values[ index ];
-                }
-
-                self.config.onCircleClick( info );
-            }
         });
     },
 
-    _addLegend : function(){
-        var series = this.config.series,
-            i, j, type, entries, entry, label, color, tmp;
+    getEntryColor : function( entry ){
+         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
+    },
 
-        var legend = $('<div></div>').css({
+    initTooltip : function(){
+        var container = $(this.container);
+        if( !~(['absolute', 'relative']).indexOf( container.css('position') ) ){
+            container.css('position', 'relative');
+        }
+
+        this.tooltip = $('<div></div>').appendTo( container ).css({
+            position : 'absolute',
+            // border : '#888 1px solid',
+            boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
+            borderRadius : '4px',
+            backgroundColor : '#FFF',
+            color : '#888',
+            padding : '6px 10px',
+            left : '-1000px',
+            marginLeft : '10px',
+            fontSize : '10px',
+            lineHeight : '16px'
+        });
+
+    },
+
+    updateTooltip : function( text, x, y ){
+        this.tooltip.html( text );
+        var tw = this.tooltip[0].clientWidth;
+        if( x + tw > $( this.container ).width() ){
+            x -= tw + 15;
+        }
+
+        this.tooltip.animate({
+            left : x,
+            top : y
+        }, 200);
+
+    },
+
+    getTooltip : function(){
+        return this.tooltip;
+    },
+
+    addLegend : function(){
+        var series = this.config.series,
+            i, j, entry, label, color, tmp;
+
+        this.legend && this.legend.remove();
+        this.legend = $('<div></div>').css({
             position : 'absolute',
             bottom : '0',
             left : this.config.xAxis.margin.left + 'px',
@@ -212,47 +160,39 @@ var BaseCharts = exports.BaseCharts = kc.BaseCharts = kity.createClass( 'BaseCha
             lineHeight : '26px'
         }).appendTo( this.container );
 
+
         for ( i = 0; i < series.length; i++ ) {
             
-            for( type in series[ i ] ){
-                entries = series[ i ][ type ];
-                
-                for ( j = 0; j < entries.length; j++ ) {
-                    entry = entries[ j ];
+            entry = series[ i ];
+            
+            label = entry.name;
+            color = this.getEntryColor( entry );
 
-                    label = entry.name;
-                    color = entry.color || this.config.color[ j ] || this.config.finalColor;
+            tmp = $('<div></div>').css({
+                marginRight : '20px',
+                display : 'inline-block'
+            }).appendTo( this.legend );
 
-                    tmp = $('<div></div>').css({
-                        marginRight : '20px',
-                        display : 'inline-block'
-                    }).appendTo( legend );
+            $('<div class="kitycharts-legend-color"></div>').css({
+                width : '12px',
+                height : '12px',
+                backgroundColor : color,
+                display : 'inline-block',
+                marginRight : '5px',
+                position: 'relative',
+                top: '1px'
+            }).appendTo( tmp );
 
-                    $('<div class="kitycharts-legend-color"></div>').css({
-                        width : '12px',
-                        height : '12px',
-                        backgroundColor : color,
-                        display : 'inline-block',
-                        marginRight : '5px',
-                        position: 'relative',
-                        top: '1px'
-                    }).appendTo( tmp );
-
-                    $('<div class="kitycharts-legend-label">' + label + '</div>').css({
-                        fontSize : '10px',
-                        display : 'inline-block'
-                    }).appendTo( tmp );
-
-                }
-
-            }
+            $('<div class="kitycharts-legend-label">' + label + '</div>').css({
+                fontSize : '10px',
+                display : 'inline-block'
+            }).appendTo( tmp );
 
         }
-
 
     }
 
 } );
 
 
-})( window );
+})();
