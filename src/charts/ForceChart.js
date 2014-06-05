@@ -232,7 +232,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
+			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -247,61 +247,61 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			list[ i ].chart = this;
 		}
 		//更新连线
-		connects.removeElement();
-		var cList = data.classList;
-		for ( var n = 0; n < list.length; n++ ) {
-			var source = list[ n ];
-			var sourceConnects = source.connects;
-			//更新所有的连线
-			for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
-				var targetInfo = sourceConnects[ n1 ];
-				var target = targetInfo.relatedbrand;
-				var cnt;
-				var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
-				//console.log( data.connectList.length, list.length );
-				//if ( data.connectList.length < 1000 || cntwidth > 0.07 ) {
-				cnt = new kc.Bezier( {
-					x1: source.x,
-					y1: source.y,
-					x2: target.x,
-					y2: target.y,
-					cx: target.cx,
-					cy: target.cy,
-					color: target.color,
-					originwidth: cntwidth,
-					width: cntwidth,
-					//width: 0.2,
-					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
-				} );
-				//只往画布上添加一部分的连线
-				if ( data.connectCount < 300 || cntwidth > 0.07 ) {
-					connects.addElement(
-						'Vcnt' + n + n1, cnt
-					);
-					source.connectLines.push( {
-						position: 'start',
-						line: cnt
-					} );
-					target.connectLines.push( {
-						position: 'end',
-						line: cnt
-					} );
-				} else {
-					source.disvisConnectLines.push( {
-						source: source,
-						target: target,
-						line: cnt,
-						position: 'start'
-					} );
-					target.disvisConnectLines.push( {
-						source: source,
-						target: target,
-						line: cnt,
-						position: 'end'
-					} );
-				}
-			}
-		}
+		// connects.removeElement();
+		// var cList = data.classList;
+		// for ( var n = 0; n < list.length; n++ ) {
+		// 	var source = list[ n ];
+		// 	var sourceConnects = source.connects;
+		// 	//更新所有的连线
+		// 	for ( var n1 = 0; n1 < sourceConnects.length; n1++ ) {
+		// 		var targetInfo = sourceConnects[ n1 ];
+		// 		var target = targetInfo.relatedbrand;
+		// 		var cnt;
+		// 		var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
+		// 		//console.log( data.connectList.length, list.length );
+		// 		//if ( data.connectList.length < 1000 || cntwidth > 0.07 ) {
+		// 		cnt = new kc.Bezier( {
+		// 			x1: source.x,
+		// 			y1: source.y,
+		// 			x2: target.x,
+		// 			y2: target.y,
+		// 			cx: target.cx,
+		// 			cy: target.cy,
+		// 			color: target.color,
+		// 			originwidth: cntwidth,
+		// 			width: cntwidth,
+		// 			//width: 0.2,
+		// 			highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
+		// 		} );
+		// 		//只往画布上添加一部分的连线
+		// 		if ( data.connectCount < 300 || cntwidth > 0.08 ) {
+		// 			connects.addElement(
+		// 				'Vcnt' + n + n1, cnt
+		// 			);
+		// 			source.connectLines.push( {
+		// 				position: 'start',
+		// 				line: cnt
+		// 			} );
+		// 			target.connectLines.push( {
+		// 				position: 'end',
+		// 				line: cnt
+		// 			} );
+		// 		} else {
+		// 			source.disvisConnectLines.push( {
+		// 				source: source,
+		// 				target: target,
+		// 				line: cnt,
+		// 				position: 'start'
+		// 			} );
+		// 			target.disvisConnectLines.push( {
+		// 				source: source,
+		// 				target: target,
+		// 				line: cnt,
+		// 				position: 'end'
+		// 			} );
+		// 		}
+		// 	}
+		// }
 		if ( mode === 'circle' ) {
 			var total = 0;
 			for ( var j = 0; j < list.length; j++ ) {

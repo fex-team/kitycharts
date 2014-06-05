@@ -42,6 +42,25 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 		var innerPath = new kity.Path().translate( 2, 0 ).setPathData( clipPath );
 		this.inner = new kity.Clip();
 		this.inner.addShape( innerPath );
+		this.ripple = new kity.Path();
+		this.on( 'mouseover', function ( e ) {
+			console.log( e );
+			this.canvas.addShape( this.ripple );
+			var d = this.ripple.getDrawer();
+			var stacktop = this.stacktop;
+			var fill = stacktop.getAttr( 'fill' );
+			this.ripple.fill( fill );
+			//console.log( 111 );
+			// var animate = function () {       
+			// 	requestAnimationFrame( animate );
+			// };
+			// animate();
+			//d.clear().moveTo( 54, 0 ).bezierTo( 79, 79, 79, 79, 148 + 54, 0 );
+		} );
+		this.on( 'mouseout', function ( e ) {
+			console.log( '22222' );
+			//this.ripple.remove();
+		} );
 	},
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
@@ -76,6 +95,9 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 			var transY = deep - height - count;
 			var s = new kity.Rect().setWidth( width ).setHeight( height ).translate( 0, transY ).fill( color );
 			stack.addShape( s );
+			if ( i === 0 ) {
+				this.stacktop = s; //记录最顶端的那个
+			}
 			if ( t ) {
 				stack.addShape( t );
 				t.translate( 74, transY + height / 2 + t.getHeight() / 2 )

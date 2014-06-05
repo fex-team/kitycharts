@@ -158,7 +158,8 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
-                var fontSize = Math.log( targetparam.size ) * 2;
+                var fontSize = targetparam.originradius * 0.8;
+                //console.log( beforeAnimated.radius );
                 //label.text.setScale( 0.9, 0.8 );
                 if ( fontSize < 2 ) {
                     fontSize = 2;
