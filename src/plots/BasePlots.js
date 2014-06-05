@@ -6,7 +6,7 @@ var BasePlots = kc.BasePlots = kity.createClass( 'BasePlots', {
     constructor: function ( coordinate, config ) {
         this.callBase( coordinate, config );
         this.coordinate = coordinate;
-        this.config = config;
+        this.config = config || {};
 
         this.plotsElements = this.addElement( 'plotsElements', new kc.ElementList() );
 
@@ -23,7 +23,7 @@ var BasePlots = kc.BasePlots = kity.createClass( 'BasePlots', {
 
     update: function ( coordinate, config ) {
         this.coordinate = coordinate || this.coordinate;
-        this.config = config || this.config;
+        this.config = kity.Utils.extend( this.config, config );
 
         this.drawPlots( this.coordinate, this.config );
     },

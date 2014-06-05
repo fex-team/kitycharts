@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Scatter Chart</title>
+
+        <script src="../../kity/dist/kity.min.js"></script>
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            #container {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                right: 10px;
+                height: 200px;
+                /*background: #EEE;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            
+        </div>
+    </body>
+    <script>
+        var scatter = new kc.BaseScatterChart( 'container', {
+            color : [ '#356893','#3f7bad','#4c92cc','#58a3e2','#63b4f8','#98d1ff' ]//设定基本颜色
+        } );
+
+        scatter.update();//这一行可要可不要 
+   
+        $.ajax({
+            url: '../data/base/scatter.json',
+            success: function( data ) {
+
+                data.interaction = {
+                    onCircleHover : function( info, circle ){
+
+                        console.log( info, circle );
+
+                    }
+                };
+
+                scatter.update( data );
+
+                setTimeout(function(){
+                    data.series = [
+                        {
+                            "name": "JohnZZ",
+                            "data": [[0, 0], [10, 10]]
+                        }, {
+                            "name": "JoeZZ",
+                            "data": [[12, 12], [14, 14]]
+                        }, {
+                            "name": "JaneZZ",
+                            "data": [[16, 16], [18, 18]]
+                        }
+                    ];
+
+                    scatter.update( data );
+                }, 1000);
+
+            }
+        });
+
+
+    </script>
+</html>

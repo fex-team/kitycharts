@@ -54,9 +54,11 @@ var dependience = [
     'src/config/column.js',
     'src/config/line.js',
     'src/config/area.js',
+    'src/config/scatter.js',
     'src/config/ChartsConfig.js',
 
     'src/formatter/chartData.js',
+    'src/formatter/scatterData.js',
     'src/formatter/pieData.js',
     'src/formatter/TreemapData.js',
 
@@ -74,6 +76,7 @@ var dependience = [
     'src/plots/LinePlots.js', //base line
     'src/plots/AreaPlots.js', //base area
 
+    'src/plots/ScatterPlots.js',
 
     'src/charts/BaseCharts.js', //base
 
@@ -84,11 +87,12 @@ var dependience = [
     'src/charts/LineChart.js', //base - line
     'src/charts/AreaChart.js', //base - area
 
+    'src/charts/BaseScatterChart.js',
+
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
-    'src/charts/BaseCharts.js',
 
     'src/charts/PieCharts.js',
     'src/charts/Treemap.js',

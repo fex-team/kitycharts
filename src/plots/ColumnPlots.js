@@ -4,9 +4,7 @@ var ColumnPlots = kc.ColumnPlots = kity.createClass( 'ColumnPlots', {
     base: kc.StickPlots,
 
     constructor: function ( coordinate, config ) {
-        
-        this.callBase();
-
+        this.callBase( coordinate, config );
     },
 
     plotsAttrsInit : function(){
