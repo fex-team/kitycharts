@@ -1,6 +1,6 @@
 (function(){
 
-var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
+var BaseScatterChart = kc.BaseScatterChart = kity.createClass( 'BaseScatterChart', {
 
     mixins : [ kc.ConfigHandler ],
 
@@ -21,14 +21,13 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     },
 
     update : function( param ){
-        var DataFormatter = arguments[ 1 ] || kc.ChartData;
 
         var config = kity.Utils.deepExtend( this.config, param ),
             base = kc.ChartsConfig.init(),
             data, coordConf;
 
         this.config = kity.Utils.deepExtend( base, config ),
-        this.setData( new DataFormatter( this.config ) );
+        this.setData( new kc.ChartData( this.config ) );
 
         data = this.data.format();
         this.config = kity.Utils.deepExtend( base, data );
@@ -137,10 +136,10 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             x -= tw + 15;
         }
 
-        this.tooltip.clearQueue().animate({
+        this.tooltip.animate({
             left : x,
             top : y
-        }, 100);
+        }, 200);
 
     },
 
@@ -149,7 +148,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     },
 
     addLegend : function(){
-        var series = this.config.series || [],
+        var series = this.config.series,
             i, j, entry, label, color, tmp;
 
         this.legend && this.legend.remove();

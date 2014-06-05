@@ -2,12 +2,12 @@ var ChartsConfig = kc.ChartsConfig = {
 
     defaultConfigs : {
 
-        base  : kc.Config.base,
-        area   : kc.Config.area,
-        line   : kc.Config.line,
-        bar    : kc.Config.bar,
-        column : kc.Config.column
-
+        base    : kc.Config.base,
+        area    : kc.Config.area,
+        line    : kc.Config.line,
+        bar     : kc.Config.bar,
+        column  : kc.Config.column,
+        scatter : kc.Config.scatter
     },
 
     init : function(){

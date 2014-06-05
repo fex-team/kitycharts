@@ -13,7 +13,6 @@ kc.Config.base = {
     finalColor: 'rgb(255, 187, 120)',
 
     xAxis : {
-        categories : [],
 
         ticks: {
             enabled : true,
@@ -109,6 +108,10 @@ kc.Config.base = {
             }
         }
 
+    },
+
+    legend : {
+        enabled : true
     },
 
     enableAnimation : true
