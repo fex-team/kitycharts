@@ -78,6 +78,11 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				me.highlightBrand();
 			}
 		} );
+		var scatters = this.getElement( "scatter" );
+		console.log( scatters );
+		scatters.on( 'listupdatefinish', function () {
+			//alert( 'finish' );
+		} );
 		this._uvCnt = []; //用于记录暂时不显示的连线
 	},
 	highlightBrand: function ( e ) {

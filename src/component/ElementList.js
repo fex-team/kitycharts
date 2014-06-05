@@ -13,7 +13,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         this.fxTimers = [];
     },
 
-    getElementList : function(){
+    getElementList: function () {
         return this.elementList;
     },
 
@@ -46,19 +46,32 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             clearTimeout( this.fxTimers.pop() );
         }
 
+        var count = elementList.length,
+            fill = 0,
+            me = this;
+
+        function checkFinish() {
+            if ( fill == count ) {
+                me.trigger( 'listupdatefinish' );
+            }
+        }
         elementList.forEach( function ( element, index ) {
 
             if ( fx && ( 'animate' in element ) ) {
                 fxTimers.push( setTimeout( function () {
-                    element.animate( list[ index ], me.param.animateDuration || 300 );
+                    element.animate( list[ index ], me.param.animateDuration || 300 ).timeline.on( 'finish', function () {
+                        fill++;
+                        checkFinish();
+                    } );
                 }, delay ) );
 
                 delay += Math.random() * delayBase;
 
             } else {
 
+                fill++;
+                checkFinish();
                 element.update( list[ index ] );
-
             }
 
         } );
