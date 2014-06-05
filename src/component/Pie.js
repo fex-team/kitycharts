@@ -78,9 +78,9 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 		this.pie.pieAngle = pieAngle;
 		this.pie.draw();
 
-        var pen = new kity.Pen();
-        pen.setWidth( strokeWidth );
-        pen.setColor( strokeColor );
+		var pen = new kity.Pen();
+		pen.setWidth( strokeWidth );
+		pen.setColor( strokeColor );
 		this.pie.stroke( pen );
 
 	},
@@ -89,7 +89,7 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 		if( labelPosition == 'none' ) return;
 
 		var r = labelPosition == 'inside' ? outerRadius - 30 : outerRadius + 50;
-		var a = (startAngle + pieAngle / 2) / 180 * Math.PI;
+		var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
 
 		this.label.setVisible( true );
 		this.label.update( {
@@ -97,26 +97,26 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 			color: labelColor,
 			at: 'bottom',
 			margin: 0,
-			x : r * Math.cos( a ),
-			y : r * Math.sin( a )
+			x: r * Math.cos( a ),
+			y: r * Math.sin( a )
 		} );
 
 	},
 
-	updateConnectLine: function( labelText, connectLineWidth, connectLineColor, labelPosition, innerRadius, outerRadius, startAngle, pieAngle ){
-		if( labelPosition != 'outside' || !labelText ) return;
+	updateConnectLine: function ( labelText, connectLineWidth, connectLineColor, labelPosition, innerRadius, outerRadius, startAngle, pieAngle ) {
+		if ( labelPosition != 'outside' || !labelText ) return;
 
 		var r = outerRadius + 30;
-		var a = (startAngle + pieAngle / 2) / 180 * Math.PI;
+		var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
 
-		this.connectLine.update({
-            x1: (innerRadius + 2) * Math.cos( a ),
-            y1: (innerRadius + 2) * Math.sin( a ),
-            x2: r * Math.cos( a ),
-            y2: r * Math.sin( a ),
-            width: connectLineWidth,
-            color: connectLineColor
-		});
+		this.connectLine.update( {
+			x1: ( innerRadius + 2 ) * Math.cos( a ),
+			y1: ( innerRadius + 2 ) * Math.sin( a ),
+			x2: r * Math.cos( a ),
+			y2: r * Math.sin( a ),
+			width: connectLineWidth,
+			color: connectLineColor
+		} );
 
 	}
 

@@ -40,14 +40,15 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             var container = selfparam.chart.paper.container;
             container.appendChild( tooltip );
             if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
-            tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>' +
-                '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>';
-            if ( selfparam.describe ) {
-                tooltip.innerHTML += '<p><b style="color:#006dbe">解读：</b>' + selfparam.describe + '</p>'
+            tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>';
+            if ( selfparam.tags && selfparam.tags.length !== 0 ) {
+                var tags = selfparam.tags;
+                for ( var i = 0; i < tags.length; i++ ) {
+                    tooltip.innerHTML += '<p><b style="color:#006dbe">' + tags[ i ].name + ':&nbsp;</b>' + tags[ i ].value + '</p>'
+                }
+            } else {
+                tooltip.innerHTML += '<p><b style="color:#006dbe">所属类别：</b>' + selfparam.brandclass + '</p>';
             }
-            // +
-            // '<p class="percent"><b style="color:#006dbe">占比：</b> 类别中：' + selfparam.percent * 100 + '%；' + '总体：' + ( selfparam.percentall || '0' ) + '</p>' +
-            // '<p></p>';
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
 
@@ -76,7 +77,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         return kity.Utils.extend( this.callBase(), {
             'updateRadius': [ 'radius' ],
             'updateColor': [ 'color' ],
-            'updateText': [ 'labelText' ]
+            'updateText': [ 'text' ]
         } );
     },
     updateText: function ( text, position ) {
@@ -157,9 +158,13 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
-                label.text.setStyle( {
-                    'font-size': Math.log( targetparam.size ) * 1.5
-                } );
+                var fontSize = Math.log( targetparam.size ) * 2;
+                //label.text.setScale( 0.9, 0.8 );
+                if ( fontSize < 2 ) {
+                    fontSize = 2;
+                };
+                label.text.setFontSize( fontSize );
+
                 if ( targetparam.mode === 'circle' ) {
                     label.update( {
                         'color': targetparam.color,
@@ -171,7 +176,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     var cosDelta = curRx / curR;
                     var sinDelta = curRy / curR;
                     var rotate = 180 * targetparam.sDelta / targetparam.total;
-                    if ( rotate > 90 && rotate < 270 ) {
+                    if ( rotate >= 90 && rotate <= 270 ) {
                         label.canvas.setRotate( rotate + 180 );
                         label.text.setTextAnchor( 'end' );
                     } else {

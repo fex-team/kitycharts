@@ -20,12 +20,12 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
                 color: 'black',
                 text: null,
             },
-            strokeColor : '#FFF',
-            strokeWidth : 0,
+            strokeColor: '#FFF',
+            strokeWidth: 0,
             color: '#62a9dd',
             radius: 0,
             fxEasing: 'easeOutElastic',
-            y : 0
+            y: 0
         }, param ) );
 
         this.circle = new kity.Circle();
@@ -60,7 +60,6 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
         this.circle.stroke( pen );
         this.circle.fill( color );
     },
-
     getAnimatedParam: function () {
         return [ 'radius', 'y' ];
     }
