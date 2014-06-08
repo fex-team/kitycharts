@@ -36,10 +36,9 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         var tooltip = document.createElement( 'div' );
         tooltip.setAttribute( 'class', 'tooltip' );
         this.on( "mouseover", function ( e ) {
-            me.highlight();
+            me.hover();
             var container = selfparam.chart.paper.container;
             container.appendChild( tooltip );
-            // if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
             tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>';
             if ( selfparam.tags && selfparam.tags.length !== 0 ) {
                 var tags = selfparam.tags;
@@ -54,7 +53,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
 
         } );
         this.on( 'mouseout', function ( e ) {
-            me.highlight( false );
+            me.hover( false );
             var container = selfparam.chart.paper.container;
             try {
                 container.removeChild( tooltip );
@@ -63,13 +62,29 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             }
         } );
     },
+    hover: function ( ishover ) {
+        if ( this.param.ishighlight ) return false;
+        var selfparam = this.param;
+        var label = this.getElement( 'label' );
+        if ( ishover === undefined || ishover ) {
+            this.circle.stroke( new kity.Pen( new kity.Color( this.param.color ).dec( 'l', 10 ), 2 ) );
+            label.canvas.setOpacity( 1 );
+        } else {
+            this.circle.stroke( 0 );
+            if ( selfparam.radius < 10 && selfparam.mode !== 'circle' ) {
+                label.canvas.setOpacity( 0 );
+            }
+        }
+    },
     highlight: function ( ishighlight ) {
         var label = this.getElement( 'label' );
         var selfparam = this.param;
         if ( ishighlight === undefined || ishighlight ) {
+            selfparam.ishighlight = true;
             this.circle.stroke( new kity.Pen( new kity.Color( this.param.color ).dec( 'l', 10 ), 2 ) );
             label.canvas.setOpacity( 1 );
         } else {
+            selfparam.ishighlight = false;
             this.circle.stroke( 0 );
             if ( selfparam.radius < 10 && selfparam.mode !== 'circle' ) {
                 label.canvas.setOpacity( 0 );
