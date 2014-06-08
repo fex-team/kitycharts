@@ -120,13 +120,10 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var highlightConnectList = [];
 		uvCnt = this._uvCnt = [];
 		//设置全部节点和连线的透明度
-		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
 			for ( var c = 0; c < scatterList.length; c++ ) {
+				scatterList[ c ].highlight( false );
 				scatterList[ c ].canvas.setOpacity( opaC || 0 );
-				scatterList[ c ].update( {
-					stroke: 0
-				} );
 			}
 			for ( var k in cntList ) {
 				cntList[ k ].canvas.setOpacity( opaL || 0 );
@@ -184,6 +181,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		//disvisConnectLines
 		for ( var n = 0; n < highlightCircleList.length; n++ ) {
 			highlightCircleList[ n ].canvas.setOpacity( 1 );
+			highlightCircleList[ n ].highlight( true );
 		}
 		for ( var m = 0; m < highlightConnectList.length; m++ ) {
 			var l = highlightConnectList[ m ];

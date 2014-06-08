@@ -36,10 +36,10 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         var tooltip = document.createElement( 'div' );
         tooltip.setAttribute( 'class', 'tooltip' );
         this.on( "mouseover", function ( e ) {
-            me.hightlight();
+            me.highlight();
             var container = selfparam.chart.paper.container;
             container.appendChild( tooltip );
-            if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
+            // if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
             tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>';
             if ( selfparam.tags && selfparam.tags.length !== 0 ) {
                 var tags = selfparam.tags;
@@ -54,10 +54,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
 
         } );
         this.on( 'mouseout', function ( e ) {
-            me.hightlight( false );
-            if ( selfparam.radius < 20 && selfparam.mode !== 'circle' ) {
-                label.canvas.setOpacity( 0 );
-            }
+            me.highlight( false );
             var container = selfparam.chart.paper.container;
             try {
                 container.removeChild( tooltip );
@@ -66,11 +63,17 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             }
         } );
     },
-    hightlight: function ( ishighlight ) {
+    highlight: function ( ishighlight ) {
+        var label = this.getElement( 'label' );
+        var selfparam = this.param;
         if ( ishighlight === undefined || ishighlight ) {
             this.circle.stroke( new kity.Pen( new kity.Color( this.param.color ).dec( 'l', 10 ), 2 ) );
+            label.canvas.setOpacity( 1 );
         } else {
             this.circle.stroke( 0 );
+            if ( selfparam.radius < 10 && selfparam.mode !== 'circle' ) {
+                label.canvas.setOpacity( 0 );
+            }
         }
     },
     registerUpdateRules: function () {
