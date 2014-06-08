@@ -189,7 +189,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     label.text.setTextAnchor( 'middle' );
                     label.canvas.setTranslate( 0, 0 );
                     label.canvas.setRotate( 0 );
-                    if ( afterAnimated.radius < 15 ) {
+                    if ( afterAnimated.radius < 10 ) {
                         label.canvas.setOpacity( 0 );
                     } else {
                         label.canvas.setOpacity( 1 );
