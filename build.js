@@ -50,6 +50,7 @@ var dependience = [
     'src/component/Map.js',
     'src/component/Rectage.js',
     'src/component/CoffeeCup.js',
+    'src/component/HumanBody.js',
 
     'src/config/base.js',
     'src/config/bar.js',
@@ -94,6 +95,7 @@ var dependience = [
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/CoffeeChart.js',
+    'src/charts/HumanChart.js',
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
 

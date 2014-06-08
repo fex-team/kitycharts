@@ -46,10 +46,10 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			count++;
 			var source = brandSet[ connectList[ i ].brand ];
 			var target = brandSet[ connectList[ i ].relatedbrand ];
-			if ( !target ) {
-				console.log( connectList[ i ].relatedbrand );
-				continue;
-			}
+			// if ( !target ) {
+			// 	console.log( connectList[ i ].relatedbrand );
+			// 	continue;
+			// }
 			var connects = source.connects;
 			connects.push( {
 				relatedbrand: target,
@@ -79,9 +79,34 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 			}
 		} );
 		var scatters = this.getElement( "scatter" );
-		console.log( scatters );
 		scatters.on( 'listupdatefinish', function () {
-			//alert( 'finish' );
+			var mode = me.param.mode;
+			var scatterList = me.getElement( "scatter" ).elementList;
+			var cntListContainer = me.getElement( "connects" );
+
+			for ( var i = 0; i < scatterList.length; i++ ) {
+				var disvisConnectLines = scatterList[ i ].param.disvisConnectLines;
+				for ( var j = 0; j < disvisConnectLines.length; j++ ) {
+					var curC = disvisConnectLines[ j ];
+					if ( curC.position === 'start' ) {
+						var param = curC.line.param;
+						var cl = curC.line = new kc.Bezier( param );
+						var source = curC.source;
+						var target = curC.target;
+						cntListContainer.addElement( 'uVcnt' + '0' + i + '0' + j, cl );
+						cl.update( {
+							x1: source.x,
+							y1: source.y,
+							x2: target.x,
+							y2: target.y,
+							cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
+							cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
+							width: param.originwidth,
+							color: param.color
+						} );
+					}
+				}
+			}
 		} );
 		this._uvCnt = []; //用于记录暂时不显示的连线
 	},
@@ -93,11 +118,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
-		//清空非可见连线
-		// for ( var s = 0; s < uvCnt.length; s++ ) {
-		// 	uvCnt[ s ].line.canvas.removeShape();
-		// 	console.log( uvCnt[ s ].line.canvas.getPaper() );
-		// }
 		uvCnt = this._uvCnt = [];
 		//设置全部节点和连线的透明度
 		//disvisConnectLines
@@ -177,19 +197,12 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var x = 0; x < uvCnt.length; x++ ) {
 			if ( uvCnt[ x ].position === 'start' ) {
 				var param = uvCnt[ x ].line.param;
-				var cl = uvCnt[ x ].line = new kc.Bezier( param );
+				var cl = uvCnt[ x ].line;
 				var source = uvCnt[ x ].source;
 				var target = uvCnt[ x ].target;
-				cntListContainer.addElement( 'uVcnt' + x, cl );
+				uvCnt[ x ].line.canvas.setOpacity( 1 );
 				cl.update( {
-					x1: source.x,
-					y1: source.y,
-					x2: target.x,
-					y2: target.y,
-					cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
-					cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
 					width: param.highlightwidth,
-					color: param.color
 				} );
 			}
 		}
@@ -253,6 +266,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		//更新连线
 		connects.removeElement();
+		connects.canvas.clear();
 		var cList = data.classList;
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
@@ -276,9 +290,12 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
 				} );
 				//只往画布上添加一部分的连线
-				if ( data.connectCount < 300 || cntwidth > data.connectCount / 21000 ) {
+				if ( data.connectCount < 300 || cntwidth > data.connectCount / 13000 ) {
+					if ( connects.getElement( 'Vcnt' + n + n1 ) ) {
+						console.log( n, n1 );
+					}
 					connects.addElement(
-						'Vcnt' + n + n1, cnt
+						'Vcnt' + '0' + n + '0' + n1, cnt
 					);
 					source.connectLines.push( {
 						position: 'start',
