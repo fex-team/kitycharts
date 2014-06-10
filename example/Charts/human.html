@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Your Coffee</title>
+	<script src="../../kity/dist/kitygraph.all.min.js"></script>
+    <script src="../../build.js"></script>
+    <script src="../lib/jquery-2.1.0.min.js"></script>
+	<style>
+		body{
+			font-family: Arial;
+			padding: 0;
+			margin: 0;
+            background: #004c86;
+            color: white
+		}
+		body h1.main-title{
+			border-bottom: 1px solid white;
+            margin: 20px
+		}
+        #chart{
+            width: 900px;
+            float: left;
+        }
+        #tip{
+            width: 300px;
+            float: left;
+        }
+	</style>
+</head>
+<body>
+	<h1 class='main-title'>人体的构成</h1>
+	<div id='chart'></div>
+    <div id='tip'>
+        <h1 class='title'></h1>
+        <p class='content'></p>
+    </div>
+</body>
+<script>
+
+    (function(){
+        var data = [
+            {
+                name:'普通身材',
+                constituent:[
+                    {
+                        name:'水',
+                        percent:0.55
+                    },
+                    {
+                        name:'蛋白质',
+                        percent:0.2
+                    },
+                    {
+                        name:'体脂肪',
+                        percent:0.2
+                    },
+                    {
+                        name:'无机物',
+                        percent:0.05
+                    }
+                ]
+            }
+        ];
+        var colors = {
+            '体脂肪':'#FFFF99',
+            '蛋白质':'#facd89',
+            '无机物':'#a69581',
+            '水':'#7ecef4'
+        };
+        var chart = new kc.HumanChart('chart',{colors:colors});
+        chart.showTip = function(name){
+            
+        }
+        chart.getData().update(data);
+    })();
+</script>
+</html>

@@ -289,9 +289,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				} );
 				//只往画布上添加一部分的连线
 				if ( data.connectCount < 300 || cntwidth > data.connectCount / 13000 ) {
-					if ( connects.getElement( 'Vcnt' + n + n1 ) ) {
-						console.log( n, n1 );
-					}
 					connects.addElement(
 						'Vcnt' + '0' + n + '0' + n1, cnt
 					);
