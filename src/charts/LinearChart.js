@@ -5,6 +5,9 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
+        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
+        this.setData( new kc.ChartData( param ) );
+        this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
     },
 
     onmousemove : function( ev ){

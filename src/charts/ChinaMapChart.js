@@ -60,7 +60,7 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
         for (var province in china) {
             block = map.findBlockById(province);
             if (!block) continue;
-            var color = data[province] ? tweenColor(data[province]) : defaultColor;
+            var color = data[province].value ? tweenColor(data[province].value) : defaultColor;
             block.animate({
                 color: color
             });
@@ -82,4 +82,5 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
         });
         return element;
     }
+    
 });

@@ -9,9 +9,6 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     constructor: function ( target, param ) {
         this.callBase( target, param );
         this.config = this.param;
-        this.setData( new kc.ChartData( param ) );
-
-        this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
 
         this.callMixin();
 
@@ -20,18 +17,23 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     },
 
-    update : function( param ){
-        var DataFormatter = arguments[ 1 ] || kc.ChartData;
+    setConfig : function( formatter, param ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
             base = kc.ChartsConfig.init(),
             data, coordConf;
 
         this.config = kity.Utils.deepExtend( base, config ),
-        this.setData( new DataFormatter( this.config ) );
+        this.setData( new formatter( this.config ) );
 
         data = this.data.format();
-        this.config = kity.Utils.deepExtend( base, data );
+        this.config = kity.Utils.deepExtend( this.config, data );
+
+    },
+
+    update : function( param ){
+        var DataFormatter = arguments[ 1 ] || kc.ChartData;
+        this.setConfig( DataFormatter, param );
         
         coordConf = kc.ChartsConfig.setCoordinateConf( this.config );
 
@@ -87,12 +89,9 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     bindAction : function(){
         var self = this;
         this.currentIndex = -1;
-        this.hoverDots = this.addElement( 'hoverDots', new kc.ElementList() );
 
         this.paper.on( 'mousemove', function( ev ) {
-
             self.onmousemove && self.onmousemove( ev );
-
         } );
 
         this.paper.on('click', function(ev){

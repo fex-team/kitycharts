@@ -14,7 +14,7 @@
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 200px;
+                height: 500px;
                 /*background: #EEE;*/
             }
         </style>
@@ -25,15 +25,18 @@
         </div>
     </body>
     <script>
-        var relation = new kc.SimpleRelationChart( 'container' );
+        var relation = new kc.SimpleRelationChart( 'container', {
+            color : [ 'rgb(31, 119, 180)', 'rgb(174, 199, 232)', 'rgb(255, 127, 14)', 'rgb(255, 187, 120)', 'green' ]
+        } );
 
-        relation.update();//这一行可要可不要 
+        // relation.update(); //这一行可要可不要 
    
         $.ajax({
-            url: '../data/base/scatter.json',
+            url: '../data/simplerelation/simplerelation.json',
             success: function( data ) {
 
-                relation.update( data );
+                // relation.setData(data).update( data );
+                relation.getData().update(data);
 
             }
         });

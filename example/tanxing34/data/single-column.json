@@ -1,7 +1,7 @@
 {
 
     "chart": {
-        "type": "bar"
+        "type": "column"
     },
 
     "xAxis": {
@@ -10,16 +10,20 @@
             "enabled" : false
         },
         "margin" : {
-            "right" : 200,
-            "left" : 200
+            "right" : 10,
+            "left" : 60
         },
 
         "axis" : {
             "arrow" : false
         },
         "padding" : {
-            "left" : 0,
-            "right" : 50
+            "left" : 20,
+            "right" : 20
+        },
+        "label" : {
+            "enabled" : true,
+            "rotate" : -90
         },
         "min" : 0
     },
@@ -27,42 +31,51 @@
     "yAxis": {
         "min" : 0,
         "ticks" : {
-            "enabled" : false
+            "enabled" : true
         },
         "label" : {
-            "at" : "left",
-            "margin" : 0
+            "enabled" : false
         },
         "axis" : {
             "enabled" : false
         },
         "padding" : {
-            "top" : 10,
-            "bottom" : 30
-        },
-        "stacked" : 0,
-        "inverted" : true
+            "top" : 0,
+            "bottom" : 0
+        }
     },
 
     "plotOptions" : {
 
         "column" : {
-            "width" : 10,
-            "margin": 1
+            "width" : 15,
+            "margin": 3,
+            "label" : {
+                "enabled" : true
+            }
+        },
+
+        "label" : {
+            "enabled" : true,
+            "text" : {
+                "margin" : 12
+            }
         }
 
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : null
     },
 
     "series": [
         {
             "name": "John",
             "data": [15, 23, 4, 7, 2]
-        }, {
-            "name": "Joe",
-            "data": [13, 24, 4, 2, 5]
-        }, {
-            "name": "Jane",
-            "data": [12, 25, 6, 2, 1]
         }
     ]
 

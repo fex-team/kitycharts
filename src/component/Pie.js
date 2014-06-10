@@ -77,6 +77,7 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 		this.pie.startAngle = startAngle;
 		this.pie.pieAngle = pieAngle;
 		this.pie.draw();
+		// this.pie.bringTop();
 
 		var pen = new kity.Pen();
 		pen.setWidth( strokeWidth );

@@ -17,6 +17,15 @@ var ColumnPlots = kc.ColumnPlots = kity.createClass( 'ColumnPlots', {
         this.measureValueMethod    = 'measurePointY';
     },
 
+    getStickLabelParam : function( height, text, config ){
+        return {
+            at: 'bottom',
+            color: config.plotOptions.label.text.color, 
+            text: text,
+            x : 0,
+            y : -height - config.plotOptions.label.text.margin
+        };
+    }
 
 } );
 

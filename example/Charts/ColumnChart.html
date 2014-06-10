@@ -37,29 +37,29 @@
             url: '../data/bar-column/basic-column.json',
             success: function( data ) {
 
-                data.interaction = {
-                    onStickHover : function( info, stick ){
+                // data.interaction = {
+                //     onStickHover : function( info, stick ){
 
-                        var x = stick.param.x,
-                            y = stick.param.y + stick.param.offset * stick.param.dir - stick.param.height;
+                //         var x = stick.param.x,
+                //             y = stick.param.y + stick.param.offset * stick.param.dir - stick.param.height;
 
-                        var str = '';
-                        str += 'category : ' + this.config.xAxis.categories[ info.indexInCategories ] + '<br>';
-                        str += 'name : ' + this.config.series[ info.indexInSeries ].name + '<br>';
-                        str += 'data : ' + info.data + '<br>';
-                        str += 'x:' + stick.param.x + ' y:' + stick.param.y;
+                //         var str = '';
+                //         str += 'category : ' + this.config.xAxis.categories[ info.indexInCategories ] + '<br>';
+                //         str += 'name : ' + this.config.series[ info.indexInSeries ].name + '<br>';
+                //         str += 'data : ' + info.data + '<br>';
+                //         str += 'x:' + stick.param.x + ' y:' + stick.param.y;
 
-                        var max = this.config.series[ info.indexInSeries ].sum[ info.indexInCategories ];
+                //         var max = this.config.series[ info.indexInSeries ].sum[ info.indexInCategories ];
 
-                        tootip.css({
-                            left : x,
-                            top : y
-                        }).html( str );
+                //         tootip.css({
+                //             left : x,
+                //             top : y
+                //         }).html( str );
 
-                        console.log( info, stick );
+                //         console.log( info, stick );
 
-                    }
-                };
+                //     }
+                // };
 
                 column.update( data );
 
