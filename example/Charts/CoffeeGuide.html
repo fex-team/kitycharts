@@ -11,89 +11,120 @@
 			background: #f6f2ef;
 			font-family: Arial;
 			padding: 0;
-			margin: 20px;
+			margin: 0;
 		}
 		body h1.main-title{
 			color: #2d2115;
 			border-bottom: 1px solid #342a20;
+            margin: 20px
 		}
+        #chart{
+            width: 900px;
+            float: left;
+        }
+        #tip{
+            width: 300px;
+            float: left;
+            padding-top: 20px;
+        }
 	</style>
 </head>
 <body>
 	<h1 class='main-title'>COFFEE GUIDE</h1>
 	<div id='chart'></div>
+    <div id='tip'>
+        <h1 class='title'></h1>
+        <p class='content'></p>
+    </div>
 </body>
 <script>
-    var data = [
-    	//一杯咖啡
-    	{
-    		name:'ESPRESSO',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.25}
-    		]
-    	},
-    	{
-    		name:'MACCHIATO',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.25},
-    			{name:'MILK FOAM',percent:0.2}
-    		]
-    	},
-    	{
-    		name:'LATTE',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.25},
-    			{name:'STEAMED MILK',percent:0.55},
-    			{name:'MILK FOAM',percent:0.2}
-    		]
-    	},
-    	{
-    		name:'FLAT WHITE',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.25},
-    			{name:'STEAMED MILK',percent:0.55}
-    		]
-    	},
-    	{
-    		name:'DOPPIO',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.25},
-    			{name:'ESPRESSO',percent:0.25}
-    		]
-    	},
-    	{ 
-    		name:'CAPPUCINO',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.3},
-    			{name:'STEAMED MILK',percent:0.35},
-    			{name:'MILK FOAM',percent:0.35},
-    		]
-    	},
-    	{
-    		name:'MOCHA',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.3},
-    			{name:'HOT CHOCOLATE',percent:0.25},
-    			{name:'STEAMED MILK',percent:0.45},
-    		]
-    	},
-    	{
-    		name:'LONG BLACK',
-    		constituent:[
-    			{name:'ESPRESSO',percent:0.3},
-    			{name:'WATER',percent:0.7},
-    		]
-    	}    
-    ];
-    var colors = {
-    	'ESPRESSO':'#574539',
-    	'MILK FOAM':'#f4efeb',
-    	'STEAMED MILK':'#a69581',
-    	'HOT CHOCOLATE':'#3e2b1c',
-    	'WATER':'#e4edf4'
-    };
 	(function(){
+        var data = [
+        //一杯咖啡
+            {
+                name:'ESPRESSO',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.25}
+                ]
+            },
+            {
+                name:'MACCHIATO',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.25},
+                    {name:'MILK FOAM',percent:0.2}
+                ]
+            },
+            {
+                name:'LATTE',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.25},
+                    {name:'STEAMED MILK',percent:0.55},
+                    {name:'MILK FOAM',percent:0.2}
+                ]
+            },
+            {
+                name:'FLAT WHITE',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.25},
+                    {name:'STEAMED MILK',percent:0.55}
+                ]
+            },
+            {
+                name:'DOPPIO',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.25},
+                    {name:'ESPRESSO',percent:0.25}
+                ]
+            },
+            { 
+                name:'CAPPUCINO',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.3},
+                    {name:'STEAMED MILK',percent:0.35},
+                    {name:'MILK FOAM',percent:0.35},
+                ]
+            },
+            {
+                name:'MOCHA',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.3},
+                    {name:'HOT CHOCOLATE',percent:0.25},
+                    {name:'STEAMED MILK',percent:0.45},
+                ]
+            },
+            {
+                name:'LONG BLACK',
+                constituent:[
+                    {name:'ESPRESSO',percent:0.3},
+                    {name:'WATER',percent:0.7},
+                ]
+            }    
+        ];
+        var colors = {
+            'ESPRESSO':'#574539',
+            'MILK FOAM':'#f4efeb',
+            'STEAMED MILK':'#a69581',
+            'HOT CHOCOLATE':'#3e2b1c',
+            'WATER':'#e4edf4'
+        };
+        var tips = {
+            'ESPRESSO':'“Espresso”是一个意大利咖啡语单词，有on the spur of the moment与“for you”（立即为您现煮）的意思。',
+            'MACCHIATO':'玛奇朵Macchiato在意大利文里是“印记、烙印”的意思。顾名思义，它的名字焦糖玛奇朵就象征着甜蜜的印记。',
+            'LATTE':'latte即拿铁 。拿铁咖啡是意大利浓缩咖啡与牛奶的经典混合，意大利人也很喜欢把拿铁作为早餐的饮料。',
+            'FLAT WHITE':'这算是新西兰人自己发明的一种咖啡的形式。其实很简单，cappuccino的奶要打出很浓的泡沫，而flat white只需要出平滑的奶沫就够了。为什么叫flat呢，因为倒出来的牛奶要刚好跟杯子成一个平面。',
+            'DOPPIO':'2杯浓缩咖啡，也称作double。两杯浓缩咖啡的量大概在40-60ml左右。Doppio是无可比拟的，令人愉悦的苦味成倍出现，余味无穷。',
+            'CAPPUCINO':'20世纪初期，意大利人阿奇布夏发明蒸汽压力咖啡机的同时，也发展出了卡布奇诺咖啡。卡布奇诺是一种加入以同量的意大利特浓咖啡和蒸汽泡沫牛奶相混合的意大利咖啡。此时咖啡的颜色，就像卡布奇诺教会的修士在深褐色的外衣上覆上一条头巾一样，咖啡因此得名。传统的卡布奇诺咖啡是三分之一浓缩咖啡，三分之一蒸汽牛奶和三分之一泡沫牛奶。',
+            'MOCHA':'白摩卡咖啡（又名莫加或者摩卡英文 Café Mocha意思巧克力咖啡）是意式拿铁咖啡 (Café Latté) 的变种，通常由三分之一意式特浓咖啡(Caffè Espresso) 和三分之二奶沫配成，还会加入少量巧克力。',
+            'LONG BLACK':'short black意式蒸馏咖啡(espresso)。因盛放传统正宗意式咖啡杯非常小(大概5cm高度)因此得名short black，long black即short black加热水盛放较高杯里。'
+        };
 		var chart = new kc.CoffeeChart('chart',{colors:colors});
+        chart.showTip = function(name){
+            var tip = tips[name];
+            var $title = $("#tip").find(".title");
+            var $content = $("#tip").find(".content");
+            $title.text(name);
+            $content.text(tip);
+        }
 		chart.getData().update(data);
 	})();
 </script>

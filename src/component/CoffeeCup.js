@@ -27,6 +27,7 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 	base: kc.AnimatedChartElement,
 
 	constructor: function ( param ) {
+		var me = this;
 		this.callBase( kity.Utils.extend( {}, param ) );
 		//咖啡杯的路径数据
 		var cupPath = "M184.158,118c0.519-1,0.606-1.575,0.842-1.741c16.145-11.406,22.017-28.092,22.454-46.841 c0.484-20.817,0.146-41.737,0.06-62.565C207.504,4.595,206.792,3,206.405,0H49.425c-1.923,1-3.806,1.529-5.775,1.795 C19.513,5.055,4.265,31.251,13.763,53.713c5.667,13.402,15.804,21.458,30.418,23.689c1.966,0.3,5.022,1.589,5.423,2.96 C53.962,95.245,60.549,109,74.142,118H0c0.696,5,2.934,7.513,7.985,6.847c6.871-0.906,13.14,0.395,18.539,5.164 c1.049,0.927,3.08,0.987,4.658,0.988c62.818,0.048,125.637,0.028,188.455-0.025c1.751-0.001,3.8-0.201,5.203-1.098 c6.733-4.303,14.007-5.675,21.859-4.731c5.234,0.629,7.416-2.145,8.657-7.145H184.158z M48,68.811 c-14,1.584-28.313-12.144-28.832-27.518C18.583,23.984,32,9.46,48,10.169V68.811z";
@@ -42,6 +43,18 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 		var innerPath = new kity.Path().translate( 2, 0 ).setPathData( clipPath );
 		this.inner = new kity.Clip();
 		this.inner.addShape( innerPath );
+		this.ripple = new kity.Path();
+		this.on( 'mouseover', function ( e ) {
+			this.canvas.addShape( this.ripple );
+			var d = this.ripple.getDrawer();
+			var stacktop = this.stacktop;
+			var fill = stacktop.getAttr( 'fill' );
+			this.ripple.fill( fill );
+			me.chart.showTip( this._name );
+		} );
+		this.on( 'mouseout', function ( e ) {
+			//this.ripple.remove();
+		} );
 	},
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
@@ -49,6 +62,8 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 		} );
 	},
 	updateAll: function ( name, constituent, colors, chart ) {
+		this.chart = chart;
+		this._name = name;
 		chart.paper.addResource( this.inner );
 		this.name.setContent( name );
 		var stack = this.stack.clear();
@@ -76,9 +91,13 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 			var transY = deep - height - count;
 			var s = new kity.Rect().setWidth( width ).setHeight( height ).translate( 0, transY ).fill( color );
 			stack.addShape( s );
+			if ( i === 0 ) {
+				this.stacktop = s; //记录最顶端的那个
+			}
 			if ( t ) {
-				stack.addShape( t );
-				t.translate( 74, transY + height / 2 + t.getHeight() / 2 )
+				this.canvas.addShape( t );
+
+				t.translate( 128, transY + height / 2 + t.getHeight() / 2 );
 			}
 			count += height;
 		}

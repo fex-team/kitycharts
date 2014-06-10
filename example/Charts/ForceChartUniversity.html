@@ -17,11 +17,6 @@
                     <a href="javascript:void(0)" id="s-force" class='active'></a>
                     <a href="javascript:void(0)" id="s-circle"></a>
                 </div>
-                <div class="select">
-                    <h3>gender</h3>
-                    <a href="javascript:void(0)" id="s-women" class="active"></a>
-                    <a href="javascript:void(0)" id="s-men"></a>
-                </div>
                 <div>
                     <h3></h3>
                 </div>
@@ -230,23 +225,19 @@
         var paper, chart;
         var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
                       "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
-                      "#aeb117","#da92c6",'gray','red','blue'];
-        chart = new kc.ForceChart('chart',{
-            colors:colors,
-            legendTarget:'legend'}
-        );
+                      "#aeb117","#da92c6",'black','red','blue'];
+        chart = new kc.ForceChart('chart',{colors:colors,legendTarget:'legend'});
         var d;
         $.ajax({
-            url: '../data/force/ForceChartFootball.json',
+            url: '../data/force/ForceChartUniversity.json',
             dataType: 'json',
             success: function( data ) {
                 //d = simpleData;
                 d = data;
-                chart.getData().update(d["women"]);
+                chart.getData().update(d);
             }
         });
         var curmode = 'force';
-        var curgender = 'women';
         document.getElementById("s-force").addEventListener("click",function(e){
             if(curmode==='force'){return false;}
             document.getElementById("s-circle").className='';
@@ -259,22 +250,6 @@
             document.getElementById("s-force").className='';
             e.target.className='active';
             curmode = 'circle';
-            chart.update({mode:curmode});
-        },false);
-        document.getElementById("s-men").addEventListener("click",function(e){
-            if(curgender==='men'){return false;}
-            curgender='men';
-            document.getElementById("s-women").className='';
-            e.target.className='active';
-            chart.getData().reset(d["men"]);
-            chart.update({mode:curmode});
-        },false);
-        document.getElementById("s-women").addEventListener("click",function(e){
-            if(curgender==='women'){return false;}
-            curgender='women';
-            document.getElementById("s-men").className='';
-            e.target.className='active';
-            chart.getData().reset(d["women"]);
             chart.update({mode:curmode});
         },false);
         

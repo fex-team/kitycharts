@@ -32,7 +32,6 @@ var dependience = [
     'src/component/Bezier.js',
     'src/component/Label.js',
     'src/component/Bar.js',
-    'src/component/ArrowLine.js',
     'src/component/Coordinate.js',
     'src/component/XYCoordinate.js',
     'src/component/CategoryCoordinate.js',
@@ -57,16 +56,15 @@ var dependience = [
     'src/config/line.js',
     'src/config/area.js',
     'src/config/scatter.js',
-    'src/config/pie.js',
     'src/config/ChartsConfig.js',
 
-    'src/formatter/ChartData.js',
-    'src/formatter/ScatterData.js',
-    'src/formatter/PieData.js',
+    'src/formatter/chartData.js',
+    'src/formatter/scatterData.js',
+    'src/formatter/pieData.js',
     'src/formatter/TreemapData.js',
-    'src/formatter/SimpleRelationData.js',
 
-
+    
+    
     'src/plots/PiePlots.js',
 
     'src/plots/BasePlots.js', //base
@@ -83,7 +81,6 @@ var dependience = [
 
     'src/charts/BaseCharts.js', //base
 
-    'src/charts/StickChart.js', //base - stick
     'src/charts/ColumnChart.js', //base - column
     'src/charts/BarChart.js', //base - bar
 
@@ -99,13 +96,11 @@ var dependience = [
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
 
-    'src/charts/PieChart.js',
+    'src/charts/PieCharts.js',
     'src/charts/Treemap.js',
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
-    'src/charts/KityCharts.js',
-    'src/charts/SimpleRelationChart.js'
-
+    'src/charts/KityCharts.js'
 ];
 
 function nodeBuild() {
