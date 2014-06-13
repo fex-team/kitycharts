@@ -102,7 +102,7 @@ var dependience = [
     'src/charts/PieCharts.js',
     'src/charts/Treemap.js',
     'src/charts/ScatterChart.js',
-    'src/charts/ForceChart.js',
+    'src/charts/ForceSimplifyChart.js',
     'src/charts/KityCharts.js'
 ];
 
