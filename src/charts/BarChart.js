@@ -1,22 +1,23 @@
 (function(){
 
-var ColumnChart = kc.ColumnChart = kity.createClass( 'ColumnChart', {
+var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     base: kc.StickChart,
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
-        var plots = this.addElement( 'plots', new kc.ColumnPlots() );
+        var plots = this.addElement( 'plots', new kc.BarPlots() );
         this.setPlots( plots );
     },
 
     getTooltipPosition : function( val ){
 
         return {
-            x : this.currentStick.param.x,
-            y : this.coordinate.measurePointY( val )
+            x : this.coordinate.measurePointX( val ),
+            y : this.currentStick.param.y
         };
-
+        
     }
+
 } );
 
 

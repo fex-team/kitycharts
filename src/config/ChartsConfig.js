@@ -7,6 +7,7 @@ var ChartsConfig = kc.ChartsConfig = {
         line    : kc.Config.line,
         bar     : kc.Config.bar,
         column  : kc.Config.column,
+        pie  : kc.Config.pie,
         scatter : kc.Config.scatter
     },
 
@@ -22,9 +23,7 @@ var ChartsConfig = kc.ChartsConfig = {
     },
 
     setCoordinateConf : function( conf, index ) {
-        var reuslt = {
-                dataSet: conf,
-            },
+        var reuslt = {},
             components = [];
 
         var xAxis = conf.xAxis,
@@ -78,21 +77,24 @@ var ChartsConfig = kc.ChartsConfig = {
         reuslt.yLabelsAt = yAxis.label.at || ( index > 0 ? "right" : "left" );
         reuslt.labelMargin = yAxis.label.margin || 10;
 
-        // categories 判断
-        if( yAxis.inverted ){
-            conf.yAxis.categories = conf.xAxis.categories;
-            delete( conf.xAxis.categories );
-        }else{
-            delete( conf.yAxis.categories );
-        }
-
-
         reuslt.xLabelRotate = xAxis.label.rotate;
         reuslt.yLabelRotate = yAxis.label.rotate;
 
         reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
         reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
 
+
+        var confCopy = kity.Utils.copy( conf );
+
+        // categories 判断
+        if( confCopy.yAxis.inverted ){
+            confCopy.yAxis.categories = confCopy.xAxis.categories;
+            delete( confCopy.xAxis.categories );
+        }else{
+            delete( confCopy.yAxis.categories );
+        }
+
+        reuslt.dataSet = confCopy;
         return reuslt;
     }
     

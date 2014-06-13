@@ -15,7 +15,7 @@
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 200px;
+                height: 300px;
                 /*background: #EEE;*/
             }
         </style>
@@ -28,7 +28,7 @@
     <script>
         var bar = new kc.BarChart( 'container' );
 
-        bar.update();
+        // bar.update();
 
         $.ajax({
             url: '../data/bar-column/basic-bar.json',
@@ -59,6 +59,7 @@
                             "group": "female"
                         }
                     ] );
+                    
                     bar.update();
                 }, 1000);
             }

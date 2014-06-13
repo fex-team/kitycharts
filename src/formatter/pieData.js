@@ -1,7 +1,7 @@
 kc.PieData = kity.createClass( 'PieData', {
     base: kc.Data,
     
-    format: function ( index ) {
+    format: function () {
         var origin = this.origin,
             queryPath = kity.Utils.queryPath;
 
@@ -11,12 +11,12 @@ kc.PieData = kity.createClass( 'PieData', {
         if( series ){
 
             for( i = 0; i < series.length; i++ ){
+                series[ i ].index = i;
                 getPercent( series[ i ].data );
             }
             
         }
         
-
         function getPercent( arr ){
             var i, sum = 0, arr, percent = [], angle = [], offset = [];
 
@@ -33,13 +33,13 @@ kc.PieData = kity.createClass( 'PieData', {
                 obj.percent = tmp = val / sum;
                 obj.angle = tmp * 360;
                 obj.offsetAngle = offsetAngle;
+                obj.index = i;
 
                 offsetAngle += obj.angle;
             }
 
             return arr;
         }
-
 
         var result = {
                 chart : origin.chart,

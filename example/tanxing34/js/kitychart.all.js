@@ -2968,7 +2968,6 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 		this.pie.startAngle = startAngle;
 		this.pie.pieAngle = pieAngle;
 		this.pie.draw();
-		// this.pie.bringTop();
 
 		var pen = new kity.Pen();
 		pen.setWidth( strokeWidth );
@@ -4153,10 +4152,6 @@ kc.Config.pie = {
                 x : 200,
                 y : 200
             },
-            stroke : {
-                width : 1,
-                color : '#FFF'
-            },
             innerRadius : 40,
             outerRadius : 80,
             incrementRadius : 30
@@ -4744,21 +4739,12 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
          return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
     },
 
-    getLabelColor : function( isCenter ){
-        var opt = this.config.plotOptions,
-            lpos = opt.pie.labelPosition,
-            text = opt.label.text;
-        
-        return lpos == 'outside' ? text.color : isCenter ? '#FFF' : text.color;
-    },
-
     drawPlots : function ( config ){
         var self = this;
         var list = [], series = config.series, opt = config.plotOptions,
             outer = opt.pie.outerRadius,
             inner = opt.pie.innerRadius,
-            increment = opt.pie.incrementRadius
-            lpos = opt.pie.labelPosition;
+            increment = opt.pie.incrementRadius;
 
         for( var i = 0 ; i < series.length; i++ ){
 
@@ -4767,19 +4753,16 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
                 list.push({
 
                     labelText: opt.label.enabled && entry.angle > 10 ? entry.name : null,
-                    labelColor: self.getLabelColor( i == 0 ),
-                    labelPosition: lpos ? lpos : i == 0 ? 'inside' : 'none',
+                    labelColor: i == 0 ? '#FFF' : '#888',
+                    labelPosition: i == 0 ? 'inside' : 'none',
 
                     connectLineWidth: 1,
-                    connectLineColor: self.getEntryColor( entry ),
+                    connectLineColor: entry.color,
 
                     innerRadius : i == 0 ? inner : (outer  + ( i - 1 ) * increment),
                     outerRadius : outer + increment * i,
                     startAngle : entry.offsetAngle - 90,
                     pieAngle: entry.angle,
-
-                    strokeWidth : opt.pie.stroke.width,
-                    strokeColor : opt.pie.stroke.color,
 
                     color: self.getEntryColor( entry ),
 

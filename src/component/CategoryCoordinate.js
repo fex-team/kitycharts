@@ -325,7 +325,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             xMesh && xMesh.update( {
                 rules: xGrid.map,
-                length: height - yGrid.map[ yGrid.map.length - 1 ],
+                length: height,
                 y: height,
                 step: dataSet.xAxis && dataSet.xAxis.step || 1
             } );

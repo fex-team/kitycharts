@@ -17,6 +17,15 @@ var BarPlots = kc.BarPlots = kity.createClass( 'BarPlots', {
         this.measureValueMethod    = 'measurePointX';
     },
 
+    getStickLabelParam : function( height, text, config ){
+        return {
+            at: 'right',
+            color: config.plotOptions.label.text.color, 
+            text: text,
+            x : height + config.plotOptions.label.text.margin,
+            y : 0
+        };
+    }
 
 } );
 

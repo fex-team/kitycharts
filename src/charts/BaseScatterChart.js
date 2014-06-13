@@ -5,8 +5,10 @@ var BaseScatterChart = kc.BaseScatterChart = kity.createClass( 'BaseScatterChart
 
     constructor: function ( target, param ) {
         this.callBase( target, param );
+        this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
         var plots = this.addElement( 'plots', new kc.ScatterPlots() );
         this.setPlots( plots );
+
     },
 
     update : function( param ){

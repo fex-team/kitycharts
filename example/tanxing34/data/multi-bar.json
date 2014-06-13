@@ -10,16 +10,20 @@
             "enabled" : false
         },
         "margin" : {
-            "right" : 200,
-            "left" : 200
+            "right" : 10,
+            "left" : 60
         },
 
         "axis" : {
+            "enabled" : false,
             "arrow" : false
         },
         "padding" : {
-            "left" : 0,
+            "left" : 30,
             "right" : 50
+        },
+        "label" : {
+            "enabled" : false
         },
         "min" : 0
     },
@@ -46,11 +50,19 @@
 
     "plotOptions" : {
 
-        "column" : {
-            "width" : 10,
-            "margin": 1
+        "bar" : {
+            "width" : 5,
+            "margin": 3
         }
 
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : null
     },
 
     "series": [

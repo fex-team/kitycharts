@@ -6,7 +6,7 @@ kc.Config.area = {
             width : 2,
             dash : null,
 
-	        dot : {
+	        label : {
 	        	enabled : true,
 	            radius : 3
 	        },

@@ -33,22 +33,35 @@
                 color: '#000',
                 width: 10,
                 height: 0,
-                rotate: 0
+                rotate: 0,
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: null,
+                }
             }, param ) );
             this.rect = new kity.Path();
             this.canvas.addShape( this.rect );
+            this.addElement( 'label', new kc.Label() );
         },
 
         registerUpdateRules: function () {
             return kity.Utils.extend( this.callBase(), {
                 draw: [ 'width', 'height', 'dir', 'offset', 'rotate' ],
-                fill: [ 'color' ]
+                fill: [ 'color' ],
+                // updateText: [ 'labelText' ]
             } );
         },
 
         getAnimatedParam: function () {
             return [ 'width', 'height', 'offset']; //color暂时去掉color
         },
+
+        // updateText: function ( labelText ) {
+        //     this.getElement( 'label' ).update( {
+        //         text: labelText
+        //     } ).setRotate( rotate );
+        // },
 
         fill: function ( color ) {
             this.rect.fill( color );

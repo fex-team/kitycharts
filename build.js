@@ -30,7 +30,6 @@ var dependience = [
     'src/component/Polyline.js',
     'src/component/ConnectLine.js',
     'src/component/Bezier.js',
-    'src/component/BezierGroup.js',
     'src/component/Label.js',
     'src/component/Bar.js',
     'src/component/Coordinate.js',
@@ -50,7 +49,6 @@ var dependience = [
     'src/component/Map.js',
     'src/component/Rectage.js',
     'src/component/CoffeeCup.js',
-    'src/component/HumanBody.js',
 
     'src/config/base.js',
     'src/config/bar.js',
@@ -65,8 +63,8 @@ var dependience = [
     'src/formatter/pieData.js',
     'src/formatter/TreemapData.js',
 
-
-
+    
+    
     'src/plots/PiePlots.js',
 
     'src/plots/BasePlots.js', //base
@@ -95,7 +93,6 @@ var dependience = [
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/CoffeeChart.js',
-    'src/charts/HumanChart.js',
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
 
