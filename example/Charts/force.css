@@ -31,6 +31,7 @@
                 margin: 5px 20px 45px 300px;
                 height: 570px;
                 top: 15px;
+                position: relative;
             }
             .select{
                 display: inline-block;
