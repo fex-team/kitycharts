@@ -4,6 +4,7 @@
                 padding: 0;
                 background: #718993;
                 font-family: '冬青黑体','Hiragino Sans GB','Helvetica','Arial';
+                cursor: pointer;
             }
             h5{
                 margin-top: 0;

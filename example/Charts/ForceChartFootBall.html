@@ -64,6 +64,7 @@
             $this.addClass('active');
             if(val==='men'||val==='women'){
                 if(curgender===val)return false;
+                curgender = val;
                 chart.getData().reset(d[val]);
             } else {
                 if(curmode===val)return false;
@@ -71,22 +72,10 @@
             }
             chart.update({mode:curmode});
         });
-        
-        var Clegend = document.getElementById('legend');
-        Clegend.addEventListener("click",function(e){
-            var ele = (function(){
-                if(e.target.tagName==='LI'){
-                    return e.target;
-                } else if (e.target.className==='color-block'||e.target.className==='c-name-highlight'){
-                    return e.target.parentElement;
-                } else {
-                    return false;
-                }
-            })();
-            if(ele){
-                chart.highlightBrand(ele.getAttribute('value'));
-            }
-        },false);
+        $('#legend').on('click','li',function(e){
+            var val = $(this).attr("value");
+            chart.highlightBrand(val);
+        });
         var setView = function(){
             var paperWidth = $("#chart").width();
             var paperHeight = $("#chart").height();
