@@ -1,0 +1,39 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "plotOptions": {
+        "pie": {
+            "shadow": false,
+            "center": {
+                "x" : 200,
+                "y" : 200
+            },
+            "innerRadius" : 60,
+            "outerRadius" : 80,
+            "incrementRadius" : 30
+        },
+
+        "label" : {
+            "enabled" : false
+        }
+    },
+    "legend" : {
+        "enabled" : false
+    },
+    "series": [
+        {
+            "name": "Browsers",
+            "data": [
+                {
+                    "name": "男",
+                    "value": 55.11
+                },
+                {
+                    "name": "女",
+                    "value": 21.63
+                }
+            ]
+        }
+    ]
+}

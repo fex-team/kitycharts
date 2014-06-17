@@ -14,7 +14,7 @@
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 200px;
+                height: 400px;
                 /*background: #EEE;*/
             }
         </style>
@@ -26,7 +26,8 @@
     </body>
     <script>
         var column = new kc.ColumnChart( 'container', {
-            color : [ '#356893','#3f7bad','#4c92cc','#58a3e2','#63b4f8','#98d1ff' ]//设定基本颜色
+            // color : [ '#356893','#3f7bad','#4c92cc','#58a3e2','#63b4f8','#98d1ff' ]//设定基本颜色
+            color : [ '#6c6aae', '#ff5759', '#3ebdb7', '#f6d809', '#2c93d4' ]//设定基本颜色
         } );
 
         column.update();//这一行可要可不要
@@ -34,7 +35,7 @@
         var tootip = $('<div style="background-color:#FFF;position:absolute;left:-1000px;font-size:10px;"></div>').appendTo($('#container')[0]);
 
         $.ajax({
-            url: '../data/bar-column/basic-column.json',
+            url: '../data/bar-column/basic-column1.json',
             success: function( data ) {
 
                 // data.interaction = {

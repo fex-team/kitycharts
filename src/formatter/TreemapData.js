@@ -3,34 +3,70 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
     var ratio = 0.5 * (1 + Math.sqrt(5));
     var mode = "squarify";
 
+    function getPrevWeight( parent, index ){
+        var sum = 0;
+        for (var i = 0; i < index; i++) {
+            sum += parent.children[ i ].weight;
+        }
+        return sum;
+    }
+
     function setAttr( node ){
         if( !node.parent ){
             node.depth = 0;
             node.index = 0;
-            node.weightStart = 0;
-            node.weight = 1;
         }
 
-        var sum = 0, func = arguments.callee, childWeight = 0;
+        var sum = 0, func = arguments.callee;
+
         if( node.children && node.children.length > 0 ){
 
-            childWeight = node.weight / node.children.length;
-
+            if( node.value ){
+                sum += node.value;
+            }
             node.children.forEach(function( n, i ){
                 n.parent = node;
                 n.depth = node.depth + 1;
                 n.index = i;
-                n.weightStart = n.parent.weightStart + i * childWeight;
-                n.weight = childWeight;
-                sum += func( n );
+                
+                if( !node.value ){
+                    sum += func( n );
+                }else{
+                    func( n );
+                }
             });
+
         }else{
             node.depth = node.parent.depth + 1;
             return node.value || 0;
         }
 
-        node.value = sum;
+        node.value = node.value || sum;
         return sum;
+    }
+
+    function setWeight( node ){
+        if( !node.parent ){
+            node.weightStart = 0;
+            node.weight = 1;
+        }
+
+        var func = arguments.callee, unitWeight = 0, prevWeight = 0;
+
+        unitWeight = node.weight / node.value;
+
+        if( node.children && node.children.length > 0 ){
+
+            node.children.forEach(function( n, i ){
+                prevWeight = getPrevWeight( node, i );
+                n.weight = unitWeight * n.value;
+                n.weightStart = n.parent.weightStart + prevWeight;
+                
+                func( n );
+            });
+
+        }
+
     }
 
     function scale(children, k) {
@@ -170,6 +206,7 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
             if( !(( 'name' in root ) && ( 'value' in root || 'children' in root )) ) return null;
 
             setAttr( root );
+            setWeight( root );
 
             root.x = 0;
             root.y = 0;

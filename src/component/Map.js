@@ -15,7 +15,7 @@ var MapBlock = kity.createClass('MapBlock', {
         this.callBase(kity.Utils.extend({
             scale: 1,
             color: new kity.Color('#EEE'),
-            stroke: 'white',
+            stroke: '#888',
             path: null
         }), param);
 
@@ -41,7 +41,7 @@ var MapBlock = kity.createClass('MapBlock', {
     },
 
     fill: function(color, stroke) {
-        this._shape.fill(color).stroke(stroke, 1.5);
+        this._shape.fill(color).stroke(stroke, 1);
     }
 });
 

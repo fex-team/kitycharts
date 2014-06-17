@@ -1,0 +1,97 @@
+{
+
+    "chart": {
+        "type": "line"
+    },
+
+    "color" : ["#dc0000"],
+
+    "xAxis": {
+        "categories": [201201, 201202, 201203, 201204, 201205, 201206, 201207, 201208, 201209, 201210, 201211, 201212, 201301, 201302, 201303, 201304, 201305, 201306, 201307, 201308, 201309, 201310, 201311, 201312, 201401, 201402, 201403, 201404, 201405, 201406],
+        "ticks": {
+            "enabled" : true,
+            "dash" : null,
+            "value": 0,
+            "width": 1,
+            "color": "#cacaca"
+        },
+        "margin" : {
+            "right" : 30,
+            "left" : 70
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 30,
+            "right" : 30
+        },
+        "label" : {
+            "rotate" : -30
+        }
+    },
+
+    "yAxis": {
+        "ticks": {
+            "enabled" : true,
+            "dash" : null,
+            "value": 0,
+            "width": 1,
+            "color": "#cacaca"
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 40,
+            "bottom" : 0
+        },
+        "stacked" : false
+    },
+
+    "plotOptions" : {
+
+        "line" : {
+            "width" : 5,
+            "dot" : {
+                "enabled" : true,
+                "radius" : 5
+            }
+        },
+        "label" : {
+            "enabled" : false,
+            "text" : {
+                "color" : "#FFF",
+                "margin" : -20
+            }
+            
+        }
+
+    },
+
+    "interaction" : {
+        "hover" : {
+            "enabled" : true
+        }
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [5, 3, 4, 7, 2, 5, 3, 4, 7, 2, 7, 2, 5, 3, 7, 2, 5, 3, 7, 2, 5, 3, 7, 2, 5, 3, 7, 2, 5, 30]
+        }
+    ]
+
+}
+
+
+

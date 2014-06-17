@@ -1,10 +1,4 @@
 ( function ( kc, kity ) {
-    var utlis = kity.Utils;
-    utlis.copy = function ( obj ) {
-        if ( typeof obj !== 'object' ) return obj;
-        if ( typeof obj === 'function' ) return null;
-        return JSON.parse( JSON.stringify( obj ) );
-    };
 
     kc.AnimatedChartElement = kity.createClass( "AnimatedChartElement", {
         base: kc.ChartElement,
@@ -31,7 +25,7 @@
 
             var canAnimated = this.getAnimatedParam(),
                 beforeAnimated = this.param,
-                beforeAnimatedCopy = utlis.copy( beforeAnimated ),
+                beforeAnimatedCopy = kity.Utils.copy( beforeAnimated ),
                 beginParam = {},
                 finishParam = {},
                 staticParam = {},

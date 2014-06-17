@@ -48,36 +48,36 @@
             }
         });
 
-        // var multibar = new kc.BarChart( 'multibar', {
-        //     color : [ '#62a9dd', '#df6164', '#72c380' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/multi-bar.json',
-        //     success: function( data ) {
-        //         multibar.update( data );
-        //     }
-        // });
+        var multibar = new kc.BarChart( 'multibar', {
+            color : [ '#62a9dd', '#df6164', '#72c380' ]
+        } );
+        $.ajax({
+            url: 'data/multi-bar.json',
+            success: function( data ) {
+                multibar.update( data );
+            }
+        });
 
 
-        // var singlebar = new kc.BarChart( 'singlebar', {
-        //     color : [ '#df6164' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/single-bar.json',
-        //     success: function( data ) {
-        //         singlebar.update( data );
-        //     }
-        // });
+        var singlebar = new kc.BarChart( 'singlebar', {
+            color : [ '#df6164' ]
+        } );
+        $.ajax({
+            url: 'data/single-bar.json',
+            success: function( data ) {
+                singlebar.update( data );
+            }
+        });
 
-        // var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
-        //     color : [ '#df6164' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/single-column.json',
-        //     success: function( data ) {
-        //         singlecolumn.update( data );
-        //     }
-        // });
+        var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
+            color : [ '#df6164' ]
+        } );
+        $.ajax({
+            url: 'data/single-column.json',
+            success: function( data ) {
+                singlecolumn.update( data );
+            }
+        });
 
 
         (function(){

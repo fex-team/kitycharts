@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>China Map</title>
+        <script src="../../kity/dist/kity.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="js/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div id="china-map-chart">
+            </div>
+            <div id="ctrl">
+                <input id="range_min" type="range" min="0" max="1" value="0" step="0.05" />
+                <input id="range_max" type="range" min="0" max="1" value="1" step="0.05" />
+            </div>
+        </div>
+    </body>
+    <script>
+        (function(){
+            var h = document.body.clientHeight, w = document.body.clientWidth;
+            var map = new kc.ChinaMapChart('china-map-chart', {
+                width: 600,
+                height: h,
+                colors: ['#3e92c5','#68a8d0','#7bb2d6','#aacde2','#f5edeb','#f2e0dd','#ecc1b9','#e6a599','#de7c6a'],
+                defaultColor: 'lightgray'
+            });
+
+            var china_province = kc.Map.CHINA.blocks;
+            var data;
+            $.ajax({
+                url: 'data/map.json',
+                success: function( json ) {
+                    data = json;
+                    updateRange( data, 0, 1 );
+                }
+            });
+
+
+            function updateRange( data, min, max ) {
+                var ranged = {};
+                for(var p in data) {
+                    if (data[p].value > min && data[p].value < max) ranged[p] = data[p];
+                    else ranged[p] = {};
+                }
+
+                map.getData().update(ranged);
+            }
+
+            // function legend(){
+            //     var colors = map.param.colors;
+
+            //     $('<div></div>').css({
+            //         width : '200px',
+            //         height : '30px',
+            //         background : 'linear-gradient(-90deg, ' + colors[ 0 ] + ', ' + colors[ colors.length - 1 ] + ')'
+            //     }).appendTo($('#china-map-chart'));
+            // }
+
+            // legend();
+            range_min.addEventListener('input', function(){
+                updateRange(data, range_min.value, range_max.value);
+            });
+            range_max.addEventListener('input', function(){
+                updateRange(data, range_min.value, range_max.value);
+            });
+        })();
+
+
+    </script>
+</html>
