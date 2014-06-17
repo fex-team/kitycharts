@@ -50,7 +50,6 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             }
             tooltip.style.left = ( selfparam.x - selfparam.radius ) + 'px';
             tooltip.style.top = ( selfparam.y + selfparam.radius ) + 'px';
-
         } );
         this.on( 'mouseout', function ( e ) {
             me.hover( false );

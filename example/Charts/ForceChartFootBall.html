@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Force Chart test</title>
-        <script src="../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../../kity/dist/kity.min.js"></script>
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
         <link rel="stylesheet" href="force.css">
@@ -14,13 +14,13 @@
                 <div class='logo'><img src="../images/logo.png" /></div>
                 <div class="select">
                     <h3>layout</h3>
-                    <a href="javascript:void(0)" id="s-force" class='active'></a>
-                    <a href="javascript:void(0)" id="s-circle"></a>
+                    <a href="javascript:void(0)" id="s-force" class='active' value='force'></a>
+                    <a href="javascript:void(0)" id="s-circle" value='circle'></a>
                 </div>
                 <div class="select">
                     <h3>gender</h3>
-                    <a href="javascript:void(0)" id="s-women" class="active"></a>
-                    <a href="javascript:void(0)" id="s-men"></a>
+                    <a href="javascript:void(0)" id="s-women" class="active" value='women'></a>
+                    <a href="javascript:void(0)" id="s-men" value='men'></a>
                 </div>
                 <div>
                     <h3></h3>
@@ -37,196 +37,6 @@
         </div>
     </body>
     <script>
-    var simpleData = {
-            "men": [ {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "A",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "B",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "C",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "B",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "A",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "C",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "C",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "A",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "B",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }
-            ],
-            "women": [ {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "A",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "B",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "C",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "A",
-                "relatedbrand": "D",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "B",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "A",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "C",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "B",
-                "relatedbrand": "D",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "C",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "A",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "B",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "C",
-                "relatedbrand": "D",
-                "relation": "2",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "D",
-                "relatedbrand": "D",
-                "relation": "0",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "D",
-                "relatedbrand": "A",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            }, {
-                "brandclass": "22",
-                "brand": "D",
-                "relatedbrand": "B",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            {
-                "brandclass": "22",
-                "brand": "D",
-                "relatedbrand": "C",
-                "relation": "5",
-                "percent": "0.25",
-                "percentall": "0.04"
-            },
-            ]
-        };
         var paper, chart;
         var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
                       "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
@@ -247,51 +57,36 @@
         });
         var curmode = 'force';
         var curgender = 'women';
-        document.getElementById("s-force").addEventListener("click",function(e){
-            if(curmode==='force'){return false;}
-            document.getElementById("s-circle").className='';
-            e.target.className='active';
-            curmode = 'force';
-            chart.update({mode:curmode});
-        },false);
-        document.getElementById("s-circle").addEventListener("click",function(e){
-            if(curmode==='circle'){return false;}
-            document.getElementById("s-force").className='';
-            e.target.className='active';
-            curmode = 'circle';
-            chart.update({mode:curmode});
-        },false);
-        document.getElementById("s-men").addEventListener("click",function(e){
-            if(curgender==='men'){return false;}
-            curgender='men';
-            document.getElementById("s-women").className='';
-            e.target.className='active';
-            chart.getData().reset(d["men"]);
-            chart.update({mode:curmode});
-        },false);
-        document.getElementById("s-women").addEventListener("click",function(e){
-            if(curgender==='women'){return false;}
-            curgender='women';
-            document.getElementById("s-men").className='';
-            e.target.className='active';
-            chart.getData().reset(d["women"]);
-            chart.update({mode:curmode});
-        },false);
-        
-        var Clegend = document.getElementById('legend');
-        Clegend.addEventListener("click",function(e){
-            var ele = (function(){
-                if(e.target.tagName==='LI'){
-                    return e.target;
-                } else if (e.target.className==='color-block'||e.target.className==='c-name-highlight'){
-                    return e.target.parentElement;
-                } else {
-                    return false;
-                }
-            })();
-            if(ele){
-                chart.highlightBrand(ele.getAttribute('value'));
+        $(".select").on('click','a',function(){
+            var $this = $(this);
+            var val = $this.attr('value');
+            $this.siblings().removeClass('active');
+            $this.addClass('active');
+            if(val==='men'||val==='women'){
+                if(curgender===val)return false;
+                curgender = val;
+                chart.getData().reset(d[val]);
+            } else {
+                if(curmode===val)return false;
+                curmode = val;
             }
-        },false);
+            chart.update({mode:curmode});
+        });
+        $('#legend').on('click','li',function(e){
+            var val = $(this).attr("value");
+            chart.highlightBrand(val);
+        });
+        var setView = function(){
+            var paperWidth = $("#chart").width();
+            var paperHeight = $("#chart").height();
+            var paperSize = paperWidth<paperHeight?paperWidth:paperHeight;
+            var view = chart.getPaper().getViewPort();
+            view.zoom = paperSize/700;
+            chart.getPaper().setViewPort(view);
+        }
+        $(window).on("resize",function(){
+            setView();
+        });
+        setView();
     </script>
 </html>

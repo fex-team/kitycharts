@@ -240,7 +240,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var Oy = paperHeight / 2;
 		var brandTop = data.brandTop;
 		//计算全图半径
-		var R = ( Ox < Oy ? Ox : Oy ) - 10;
+		var R = 350 || ( ( Ox < Oy ? Ox : Oy ) - 10 );
 		if ( mode === 'circle' ) {
 			R -= 100;
 		}
@@ -248,7 +248,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
+			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 27 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -289,9 +289,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				} );
 				//只往画布上添加一部分的连线
 				if ( data.connectCount < 300 || cntwidth > data.connectCount / 13000 ) {
-					if ( connects.getElement( 'Vcnt' + n + n1 ) ) {
-						console.log( n, n1 );
-					}
 					connects.addElement(
 						'Vcnt' + '0' + n + '0' + n1, cnt
 					);

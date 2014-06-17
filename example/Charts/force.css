@@ -4,6 +4,7 @@
                 padding: 0;
                 background: #718993;
                 font-family: '冬青黑体','Hiragino Sans GB','Helvetica','Arial';
+                cursor: pointer;
             }
             h5{
                 margin-top: 0;
@@ -12,7 +13,6 @@
                 font-size: 14px;
             }
             .container{
-                width: 1020px;
                 height: 660px;
                 margin: 10px auto;
                 background: white;
@@ -28,13 +28,11 @@
                 height: 660px;
             }
             #chart {
-                position: absolute;
-                left: 300px;
                 right: 0;
-                margin: 5px 20px 45px 0px;
+                margin: 5px 20px 45px 300px;
                 height: 570px;
-                width: 720px;
                 top: 15px;
+                position: relative;
             }
             .select{
                 display: inline-block;

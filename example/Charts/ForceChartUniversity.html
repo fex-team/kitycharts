@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Force Chart test</title>
-        <script src="../../kity/dist/kitygraph.all.min.js"></script>
+        <script src="../../kity/dist/kity.min.js"></script>
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
         <link rel="stylesheet" href="force.css">
@@ -268,5 +268,17 @@
                 chart.highlightBrand(ele.getAttribute('value'));
             }
         },false);
+        var setView = function(){
+            var paperWidth = $("#chart").width();
+            var paperHeight = $("#chart").height();
+            var paperSize = paperWidth<paperHeight?paperWidth:paperHeight;
+            var view = chart.getPaper().getViewPort();
+            view.zoom = paperSize/700;
+            chart.getPaper().setViewPort(view);
+        }
+        $(window).on("resize",function(){
+            setView();
+        });
+        setView();
     </script>
 </html>
