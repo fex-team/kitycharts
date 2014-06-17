@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Force Chart test</title>
+        <script src="../../kity/dist/kity.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            #chart{
+                height: 700px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="chart">
+            </div>
+        </div>
+    </body>
+    <script>
+        var paper, chart;
+        var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
+                      "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
+                      "#aeb117","#da92c6",'gray','red','blue'];
+        chart = new kc.ForceSimplifyChart('chart',{colors:colors});
+        var d;
+        $.ajax({
+            url: '../data/force/ForceChartFootball.json',
+            dataType: 'json',
+            success: function( data ) {
+                //d = simpleData;
+                d = data;
+                chart.getData().update(d["women"]);
+            }
+        });
+    </script>
+</html>
