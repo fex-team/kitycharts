@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title>Scatter Chart test</title>
-        <script src="../../kity/dist/kity.min.js"></script>
-        <script src="../../build.js"></script>
-        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <script src="kitygraph.all.min.js"></script>
+        <script src="kitychart.all.js"></script>
+        <script src="jquery-2.1.0.min.js"></script>
         <style>
             #chart {
                 position: absolute;
@@ -39,23 +39,19 @@
             enableCollapse: true
         });
         chart.update();
-        $.ajax({
-            url: '../data/scatter/ScatterChart.json',
-            success: function( data ) {
-                // 模拟网络延迟而已
-                setTimeout(function() {
-                    chart.getData().update(data);
-                }, 1000);
-            }
-        });
+
+        window.setData = function(data) {
+            chart.getData().update(data);
+        };
 
         window.onresize = function () {
             chart.update();
-        }
+        };
 
         var checker = document.getElementById('collapse-checker');
         checker.onchange = function() {
             chart.enableCollapse(checker.checked);
-        }
+        };
     </script>
+    <script type="text/javascript" src="ScatterChart.js"></script>
 </html>

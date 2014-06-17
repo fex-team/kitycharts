@@ -1,0 +1,87 @@
+{
+
+    "chart": {
+        "type": "bar"
+    },
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+        "ticks" : {
+            "enabled" : true
+        },
+        "margin" : {
+            "right" : 10,
+            "left" : 60
+        },
+        "axis" : {
+            "enabled" : false,
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 0,
+            "right" : 0
+        },
+        "label" : {
+            "enabled" : false
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : true
+        },
+        "padding" : {
+            "top" : 20,
+            "bottom" : 20
+        },
+        "margin" : {
+            "top" : 10,
+            "bottom" : 10
+        },
+        "inverted" : true
+    },
+
+    "plotOptions" : {
+
+        "bar" : {
+            "width" : 15,
+            "margin": 3
+        },
+
+        "label" : {
+            "enabled" : 0,
+            "text" : {
+                "margin" : 7
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : null
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [15, 23, 4, 7, 2]
+        }
+    ]
+
+}
+
+
+

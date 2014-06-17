@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Treemap</title>
+        <script src="kitygraph.all.min.js"></script>
+        <script src="kitychart.all.js"></script>
+        <script src="jquery-2.1.0.min.js"></script>
+        <style>
+            #chart {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+/*                width: 500px;
+                height: 300px;*/
+                bottom : 10px;
+                right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="chart">
+            
+        </div>
+    </body>
+    <script src="data.js"></script>
+    <script>
+        var treemap = new kc.Treemap('chart', {
+            width : $('#chart').width(),
+            height : $('#chart').height()
+        });
+        treemap.update();
+
+        treemap.getData().update( data );
+
+        window.onresize = function () {
+            treemap.update({
+                width : $('#chart').width(),
+                height : $('#chart').height()
+            });
+        }
+
+    </script>
+</html>

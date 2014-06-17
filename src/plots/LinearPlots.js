@@ -105,7 +105,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
                     dotParam.label = {
                             margin: opt.label.text.margin,
                             color:  opt.label.text.color,
-                            text: line.values[ m ],
+                            text: line.data[ m ],
                         };
                 }
 

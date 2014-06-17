@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Line Chart</title>
+
+        <script src="../../kity/dist/kity.min.js"></script>
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            html, body{
+                height : 100%;
+            }
+            body{
+                background: url(cro.jpg) no-repeat center center;
+                background-size: cover;
+            }
+
+            #container {
+                position: absolute;
+                left: 100px;
+                top: 100px;
+                right: 100px;
+                bottom: 100px;
+
+                /*height: 200px;*/
+                /*background: #EEE;*/
+            }
+
+            .kitycharts-legend-label{
+                color : #FFF;
+            }
+
+            #title{
+                color: #FFF;
+                font-size: 30px;
+                margin-top: 30px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            
+        </div>
+        <div id="title">C罗 2002-2013年每年进球数</div>
+    </body>
+    <script>
+        var line = new kc.LineChart( 'container' );
+
+        line.update();
+
+        $.ajax({
+            url: 'data/cro.json',
+            success: function( data ) {
+                // line.update( data );
+
+                // setTimeout(function(){
+                    // line.setOption( 'series' , [
+                    //     {
+                    //         "name": "John",
+                    //         "data": [23, 23, 23, 22, 21],
+                    //     },
+                    //     {
+                    //         "name": "John",
+                    //         "data": [21, 23, 23, 23, 22]
+                    //     }
+                    // ] );
+
+                    // line.setOption('interaction', {
+                    //     onCircleClick : function( info, circle ){
+                    //         console.log( info.indexInCategories, info.data );
+                    //     }
+                    // });
+
+                    // line.setOption('interaction.onCircleHover', null);
+
+                    // data.interaction = {
+                    //     onCircleClick : function( info, circle ){
+                    //         console.log( info, circle );
+                    //     }
+                    // };
+
+                    // data.interaction.onCircleHover = null;   
+
+                    line.update( data );
+                // }, 1000);
+            }
+        });
+
+
+    </script>
+</html>

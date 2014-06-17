@@ -19,7 +19,6 @@ function getParents( node, callback ){
         tmp = tmp.parent;
         callback && callback( tmp );
     }
-
 }
 
 var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {

@@ -853,6 +853,12 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
 } );
 
 ( function ( kc, kity ) {
+    var utlis = kity.Utils;
+    utlis.copy = function(obj){
+        if(typeof obj !== 'object') return obj;
+        if(typeof obj === 'function') return null;
+        return JSON.parse(JSON.stringify(obj));
+    };
 
     kc.AnimatedChartElement = kity.createClass( "AnimatedChartElement", {
         base: kc.ChartElement,
@@ -879,7 +885,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
 
             var canAnimated = this.getAnimatedParam(),
                 beforeAnimated = this.param,
-                beforeAnimatedCopy = kity.Utils.copy( beforeAnimated ),
+                beforeAnimatedCopy = utlis.copy( beforeAnimated ),
                 beginParam = {},
                 finishParam = {},
                 staticParam = {},
@@ -1776,6 +1782,137 @@ var Label = kc.Label = kity.createClass( "Label", {
 } )( kity, kc );
 
 /**
+ *
+ * @class Arrow
+ *
+ */
+
+( function ( kity, kc ) {
+
+    var ArrowLine = kc.ArrowLine = kity.createClass( "ArrowLine", {
+        base: kc.AnimatedChartElement,
+
+        constructor: function ( param ) {
+            this.callBase( kity.Utils.extend( {
+                x1: 0, 
+                y1: 0,
+                x2: 0,
+                y2: 0,
+                offset: 0,
+                color: '#000',
+                width: 10,
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: null,
+                },
+            }, param ) );
+
+            var arrowParam = {
+                w: 0,
+                h: 1,
+                a: 7,
+                b: 2,
+                c: 3,
+                d: 0,
+                t: 0
+            };
+
+            this.arrow = new kity.Arrow( arrowParam );
+            this.canvas.addShape( this.arrow );
+
+            this.line = new kity.Path();
+            this.canvas.addShape( this.line );
+
+            this.addElement( 'label', new kc.Label() );
+        },
+
+        registerUpdateRules: function () {
+            return kity.Utils.extend( this.callBase(), {
+                draw: [ 'width', 'x1', 'y1', 'x2', 'y2' ],
+                stroke: [ 'color' ],
+                setArrowAngleAndPosition: [ 'x1', 'y1', 'x2', 'y2' ],
+                moveOffset : [ 'offset', 'x1', 'y1', 'x2', 'y2' ],
+                updateText : [ 'x1', 'y1', 'x2', 'y2' ]
+            } );
+        },
+
+        updateText: function ( x1, y1, x2, y2 ) {
+            //left->end
+
+            var label = this.getElement( 'label' ),
+                angle = this.getAngle( x1, y1, x2, y2 ),
+                PI = Math.PI,
+                sin = Math.sin,
+                cos = Math.cos,
+                nor = angle + PI/2,
+                off = 4;
+
+            var at = (angle > 0 && angle < PI) ? 'left' : 'right';
+            if( y2 == y1 ){
+                at = 'bottom';
+            }
+
+            var ex = cos( nor ) * off,
+                ey = sin( nor ) * off;
+
+            var pos = Math.random() * 0.4 + 0.3;
+            label.update( {
+                at : at,
+                x : ( x2 - x1 ) * pos + x1 + ex,
+                y : ( y2 - y1 ) * pos + y1 + ey
+            } );
+        },
+
+        moveOffset : function( offset, x1, y1, x2, y2 ){
+            if( offset > 0 ){
+                var angle = this.getAngle( x1, y1, x2, y2 );
+                this.canvas.setTranslate( offset * Math.cos( angle + Math.PI/2 ),  offset * Math.sin( angle + Math.PI/2 ) );
+            }
+        },
+
+        getAnimatedParam: function () {
+            return [ 'x1', 'y1', 'x2', 'y2' ];
+        },
+
+        stroke: function ( color ) {
+            this.line.stroke( color );
+        },
+
+        draw: function ( width, x1, y1, x2, y2 ) {
+
+            var seq = [];
+
+            seq.push( 'M', x1, y1 );
+            seq.push( 'L', x2, y2 );
+
+            this.line.setPathData( seq );//.setRotate( rotate );
+
+            // this.interestPoint = {
+            //     x: 0,
+            //     y: dir * height
+            // };
+        },
+
+        getAngle : function( x1, y1, x2, y2 ){
+            return Math.atan2( y2 - y1, x2 - x1 );
+        },
+
+        setArrowAngleAndPosition : function( x1, y1, x2, y2 ){
+            var angle = this.getAngle( x1, y1, x2, y2 ) / Math.PI * 180;
+            this.arrow.setTranslate( x2, y2 ).setRotate( angle );
+
+            this.arrow.fill( this.param.color );
+        },
+
+        getInterestPoint: function () {
+            return this.canvas.getTransform().transformPoint( this.interestPoint );
+        }
+
+    } );
+} )( kity, kc );
+
+/**
  * @build
  * @require base/ChartElement.js
  */
@@ -2352,7 +2489,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         this.fxTimers = [];
     },
 
-    getElementList: function () {
+    getElementList : function(){
         return this.elementList;
     },
 
@@ -2385,32 +2522,19 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             clearTimeout( this.fxTimers.pop() );
         }
 
-        var count = elementList.length,
-            fill = 0,
-            me = this;
-
-        function checkFinish() {
-            if ( fill == count ) {
-                me.trigger( 'listupdatefinish' );
-            }
-        }
         elementList.forEach( function ( element, index ) {
 
             if ( fx && ( 'animate' in element ) ) {
                 fxTimers.push( setTimeout( function () {
-                    element.animate( list[ index ], me.param.animateDuration || 300 ).timeline.on( 'finish', function () {
-                        fill++;
-                        checkFinish();
-                    } );
+                    element.animate( list[ index ], me.param.animateDuration || 300 );
                 }, delay ) );
 
                 delay += Math.random() * delayBase;
 
             } else {
 
-                fill++;
-                checkFinish();
                 element.update( list[ index ] );
+
             }
 
         } );
@@ -2844,7 +2968,6 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 		this.pie.startAngle = startAngle;
 		this.pie.pieAngle = pieAngle;
 		this.pie.draw();
-		// this.pie.bringTop();
 
 		var pen = new kity.Pen();
 		pen.setWidth( strokeWidth );
@@ -2995,9 +3118,10 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
         var tooltip = document.createElement( 'div' );
         tooltip.setAttribute( 'class', 'tooltip' );
         this.on( "mouseover", function ( e ) {
-            me.hover();
+            me.hightlight();
             var container = selfparam.chart.paper.container;
             container.appendChild( tooltip );
+            if ( selfparam.mode !== 'circle' ) label.canvas.setOpacity( 1 );
             tooltip.innerHTML = '<h1>' + selfparam.label.text + '</h1>';
             if ( selfparam.tags && selfparam.tags.length !== 0 ) {
                 var tags = selfparam.tags;
@@ -3012,7 +3136,10 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
 
         } );
         this.on( 'mouseout', function ( e ) {
-            me.hover( false );
+            me.hightlight( false );
+            if ( selfparam.radius < 20 && selfparam.mode !== 'circle' ) {
+                label.canvas.setOpacity( 0 );
+            }
             var container = selfparam.chart.paper.container;
             try {
                 container.removeChild( tooltip );
@@ -3021,33 +3148,11 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             }
         } );
     },
-    hover: function ( ishover ) {
-        if ( this.param.ishighlight ) return false;
-        var selfparam = this.param;
-        var label = this.getElement( 'label' );
-        if ( ishover === undefined || ishover ) {
-            this.circle.stroke( new kity.Pen( new kity.Color( this.param.color ).dec( 'l', 10 ), 2 ) );
-            label.canvas.setOpacity( 1 );
-        } else {
-            this.circle.stroke( 0 );
-            if ( selfparam.radius < 10 && selfparam.mode !== 'circle' ) {
-                label.canvas.setOpacity( 0 );
-            }
-        }
-    },
-    highlight: function ( ishighlight ) {
-        var label = this.getElement( 'label' );
-        var selfparam = this.param;
+    hightlight: function ( ishighlight ) {
         if ( ishighlight === undefined || ishighlight ) {
-            selfparam.ishighlight = true;
             this.circle.stroke( new kity.Pen( new kity.Color( this.param.color ).dec( 'l', 10 ), 2 ) );
-            label.canvas.setOpacity( 1 );
         } else {
-            selfparam.ishighlight = false;
             this.circle.stroke( 0 );
-            if ( selfparam.radius < 10 && selfparam.mode !== 'circle' ) {
-                label.canvas.setOpacity( 0 );
-            }
         }
     },
     registerUpdateRules: function () {
@@ -3135,8 +3240,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 }
                 var targetparam = target.param;
                 var label = target.getElement( 'label' );
-                var fontSize = targetparam.originradius * 0.8;
-                //console.log( beforeAnimated.radius );
+                var fontSize = Math.log( targetparam.size ) * 2;
                 //label.text.setScale( 0.9, 0.8 );
                 if ( fontSize < 2 ) {
                     fontSize = 2;
@@ -3166,7 +3270,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                     label.text.setTextAnchor( 'middle' );
                     label.canvas.setTranslate( 0, 0 );
                     label.canvas.setRotate( 0 );
-                    if ( afterAnimated.radius < 10 ) {
+                    if ( afterAnimated.radius < 15 ) {
                         label.canvas.setOpacity( 0 );
                     } else {
                         label.canvas.setOpacity( 1 );
@@ -3431,7 +3535,7 @@ var MapBlock = kity.createClass('MapBlock', {
         this.callBase(kity.Utils.extend({
             scale: 1,
             color: new kity.Color('#EEE'),
-            stroke: '#888',
+            stroke: 'white',
             path: null
         }), param);
 
@@ -3457,7 +3561,7 @@ var MapBlock = kity.createClass('MapBlock', {
     },
 
     fill: function(color, stroke) {
-        this._shape.fill(color).stroke(stroke, 1);
+        this._shape.fill(color).stroke(stroke, 1.5);
     }
 });
 
@@ -3776,7 +3880,6 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 	base: kc.AnimatedChartElement,
 
 	constructor: function ( param ) {
-		var me = this;
 		this.callBase( kity.Utils.extend( {}, param ) );
 		//咖啡杯的路径数据
 		var cupPath = "M184.158,118c0.519-1,0.606-1.575,0.842-1.741c16.145-11.406,22.017-28.092,22.454-46.841 c0.484-20.817,0.146-41.737,0.06-62.565C207.504,4.595,206.792,3,206.405,0H49.425c-1.923,1-3.806,1.529-5.775,1.795 C19.513,5.055,4.265,31.251,13.763,53.713c5.667,13.402,15.804,21.458,30.418,23.689c1.966,0.3,5.022,1.589,5.423,2.96 C53.962,95.245,60.549,109,74.142,118H0c0.696,5,2.934,7.513,7.985,6.847c6.871-0.906,13.14,0.395,18.539,5.164 c1.049,0.927,3.08,0.987,4.658,0.988c62.818,0.048,125.637,0.028,188.455-0.025c1.751-0.001,3.8-0.201,5.203-1.098 c6.733-4.303,14.007-5.675,21.859-4.731c5.234,0.629,7.416-2.145,8.657-7.145H184.158z M48,68.811 c-14,1.584-28.313-12.144-28.832-27.518C18.583,23.984,32,9.46,48,10.169V68.811z";
@@ -3792,18 +3895,6 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 		var innerPath = new kity.Path().translate( 2, 0 ).setPathData( clipPath );
 		this.inner = new kity.Clip();
 		this.inner.addShape( innerPath );
-		this.ripple = new kity.Path();
-		this.on( 'mouseover', function ( e ) {
-			this.canvas.addShape( this.ripple );
-			var d = this.ripple.getDrawer();
-			var stacktop = this.stacktop;
-			var fill = stacktop.getAttr( 'fill' );
-			this.ripple.fill( fill );
-			me.chart.showTip( this._name );
-		} );
-		this.on( 'mouseout', function ( e ) {
-			//this.ripple.remove();
-		} );
 	},
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
@@ -3811,8 +3902,6 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 		} );
 	},
 	updateAll: function ( name, constituent, colors, chart ) {
-		this.chart = chart;
-		this._name = name;
 		chart.paper.addResource( this.inner );
 		this.name.setContent( name );
 		var stack = this.stack.clear();
@@ -3840,13 +3929,9 @@ var CoffeeCup = kc.CoffeeCup = kity.createClass( "CoffeeCup", {
 			var transY = deep - height - count;
 			var s = new kity.Rect().setWidth( width ).setHeight( height ).translate( 0, transY ).fill( color );
 			stack.addShape( s );
-			if ( i === 0 ) {
-				this.stacktop = s; //记录最顶端的那个
-			}
 			if ( t ) {
-				this.canvas.addShape( t );
-
-				t.translate( 128, transY + height / 2 + t.getHeight() / 2 );
+				stack.addShape( t );
+				t.translate( 74, transY + height / 2 + t.getHeight() / 2 )
 			}
 			count += height;
 		}
@@ -4045,28 +4130,6 @@ kc.Config.area = {
     
 };
 
-kc.Config.pie = {
-
-    plotOptions : {
-
-        pie: {
-            center: {
-                x : 200,
-                y : 200
-            },
-            stroke : {
-                width : 1,
-                color : '#FFF'
-            },
-            innerRadius : 40,
-            outerRadius : 80,
-            incrementRadius : 30
-        }
-
-    }
-
-};
-
 kc.Config.scatter = {
 
     plotOptions : {
@@ -4078,6 +4141,24 @@ kc.Config.scatter = {
         
     }
     
+};
+
+kc.Config.pie = {
+
+    plotOptions : {
+
+        pie: {
+            center: {
+                x : 200,
+                y : 200
+            },
+            innerRadius : 40,
+            outerRadius : 80,
+            incrementRadius : 30
+        }
+
+    }
+
 };
 
 var ChartsConfig = kc.ChartsConfig = {
@@ -4434,162 +4515,39 @@ kc.PieData = kity.createClass( 'PieData', {
     }
 } );
 
-kc.SunData = kity.createClass( 'SunData', (function(){
-
-    function getPrevWeight( parent, index ){
-        var sum = 0;
-        for (var i = 0; i < index; i++) {
-            sum += parent.children[ i ].weight;
-        }
-        return sum;
-    }
-
-    function setAttr( node ){
-        if( !node.parent ){
-            node.depth = 0;
-            node.index = 0;
-        }
-
-        var sum = 0, func = arguments.callee;
-
-        if( node.children && node.children.length > 0 ){
-
-            if( node.value ){
-                sum += node.value;
-            }
-            node.children.forEach(function( n, i ){
-                n.parent = node;
-                n.depth = node.depth + 1;
-                n.index = i;
-                
-                if( !node.value ){
-                    sum += func( n );
-                }else{
-                    func( n );
-                }
-            });
-
-        }else{
-            node.depth = node.parent.depth + 1;
-            return node.value || 0;
-        }
-
-        node.value = node.value || sum;
-        return sum;
-    }
-
-    function setWeight( node ){
-        if( !node.parent ){
-            node.weightStart = 0;
-            node.weight = 1;
-        }
-
-        var func = arguments.callee, unitWeight = 0, prevWeight = 0;
-
-        unitWeight = node.weight / node.value;
-
-        if( node.children && node.children.length > 0 ){
-
-            node.children.forEach(function( n, i ){
-                prevWeight = getPrevWeight( node, i );
-                n.weight = unitWeight * n.value;
-                n.weightStart = n.parent.weightStart + prevWeight;
-                
-                func( n );
-            });
-
-        }
-
-    }
-
-    return {
-        base: kc.Data,
-        
-        format: function () {
-            var root = this.origin;
-
-            if( !root.value && !root.children ){
-                return null;
-            }
-
-            var sum = setAttr( root );
-            setWeight( root );
-            return root;
-        }
-
-    };
-
-})() );
-
 kc.TreemapData = kity.createClass( 'TreemapData', (function(){
 
     var ratio = 0.5 * (1 + Math.sqrt(5));
     var mode = "squarify";
 
-    function getPrevWeight( parent, index ){
-        var sum = 0;
-        for (var i = 0; i < index; i++) {
-            sum += parent.children[ i ].weight;
-        }
-        return sum;
-    }
-
     function setAttr( node ){
         if( !node.parent ){
             node.depth = 0;
             node.index = 0;
+            node.weightStart = 0;
+            node.weight = 1;
         }
 
-        var sum = 0, func = arguments.callee;
-
+        var sum = 0, func = arguments.callee, childWeight = 0;
         if( node.children && node.children.length > 0 ){
 
-            if( node.value ){
-                sum += node.value;
-            }
+            childWeight = node.weight / node.children.length;
+
             node.children.forEach(function( n, i ){
                 n.parent = node;
                 n.depth = node.depth + 1;
                 n.index = i;
-                
-                if( !node.value ){
-                    sum += func( n );
-                }else{
-                    func( n );
-                }
+                n.weightStart = n.parent.weightStart + i * childWeight;
+                n.weight = childWeight;
+                sum += func( n );
             });
-
         }else{
             node.depth = node.parent.depth + 1;
             return node.value || 0;
         }
 
-        node.value = node.value || sum;
+        node.value = sum;
         return sum;
-    }
-
-    function setWeight( node ){
-        if( !node.parent ){
-            node.weightStart = 0;
-            node.weight = 1;
-        }
-
-        var func = arguments.callee, unitWeight = 0, prevWeight = 0;
-
-        unitWeight = node.weight / node.value;
-
-        if( node.children && node.children.length > 0 ){
-
-            node.children.forEach(function( n, i ){
-                prevWeight = getPrevWeight( node, i );
-                n.weight = unitWeight * n.value;
-                n.weightStart = n.parent.weightStart + prevWeight;
-                
-                func( n );
-            });
-
-        }
-
     }
 
     function scale(children, k) {
@@ -4729,7 +4687,6 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
             if( !(( 'name' in root ) && ( 'value' in root || 'children' in root )) ) return null;
 
             setAttr( root );
-            setWeight( root );
 
             root.x = 0;
             root.y = 0;
@@ -4746,6 +4703,19 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
 })());  
 
 
+
+kc.SimpleRelationData = kity.createClass( 'SimpleRelationData', {
+    base: kc.Data,
+    
+    format: function () {
+        var origin = this.origin;
+
+        return {
+        	nodes : origin.nodes || [],
+        	edges : origin.edges || []
+        };
+    }
+} );
 
 (function(){
 
@@ -4769,21 +4739,12 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
          return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
     },
 
-    getLabelColor : function( isCenter ){
-        var opt = this.config.plotOptions,
-            lpos = opt.pie.labelPosition,
-            text = opt.label.text;
-        
-        return lpos == 'outside' ? text.color : isCenter ? '#FFF' : text.color;
-    },
-
     drawPlots : function ( config ){
         var self = this;
         var list = [], series = config.series, opt = config.plotOptions,
             outer = opt.pie.outerRadius,
             inner = opt.pie.innerRadius,
-            increment = opt.pie.incrementRadius
-            lpos = opt.pie.labelPosition;
+            increment = opt.pie.incrementRadius;
 
         for( var i = 0 ; i < series.length; i++ ){
 
@@ -4792,19 +4753,16 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
                 list.push({
 
                     labelText: opt.label.enabled && entry.angle > 10 ? entry.name : null,
-                    labelColor: self.getLabelColor( i == 0 ),
-                    labelPosition: lpos ? lpos : i == 0 ? 'inside' : 'none',
+                    labelColor: i == 0 ? '#FFF' : '#888',
+                    labelPosition: i == 0 ? 'inside' : 'none',
 
                     connectLineWidth: 1,
-                    connectLineColor: self.getEntryColor( entry ),
+                    connectLineColor: entry.color,
 
                     innerRadius : i == 0 ? inner : (outer  + ( i - 1 ) * increment),
                     outerRadius : outer + increment * i,
                     startAngle : entry.offsetAngle - 90,
                     pieAngle: entry.angle,
-
-                    strokeWidth : opt.pie.stroke.width,
-                    strokeColor : opt.pie.stroke.color,
 
                     color: self.getEntryColor( entry ),
 
@@ -5143,7 +5101,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
                     dotParam.label = {
                             margin: opt.label.text.margin,
                             color:  opt.label.text.color,
-                            text: line.data[ m ],
+                            text: line.values[ m ],
                         };
                 }
 
@@ -6437,10 +6395,10 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			count++;
 			var source = brandSet[ connectList[ i ].brand ];
 			var target = brandSet[ connectList[ i ].relatedbrand ];
-			// if ( !target ) {
-			// 	console.log( connectList[ i ].relatedbrand );
-			// 	continue;
-			// }
+			if ( !target ) {
+				console.log( connectList[ i ].relatedbrand );
+				continue;
+			}
 			var connects = source.connects;
 			connects.push( {
 				relatedbrand: target,
@@ -6469,36 +6427,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				me.highlightBrand();
 			}
 		} );
-		var scatters = this.getElement( "scatter" );
-		scatters.on( 'listupdatefinish', function () {
-			var mode = me.param.mode;
-			var scatterList = me.getElement( "scatter" ).elementList;
-			var cntListContainer = me.getElement( "connects" );
-
-			for ( var i = 0; i < scatterList.length; i++ ) {
-				var disvisConnectLines = scatterList[ i ].param.disvisConnectLines;
-				for ( var j = 0; j < disvisConnectLines.length; j++ ) {
-					var curC = disvisConnectLines[ j ];
-					if ( curC.position === 'start' ) {
-						var param = curC.line.param;
-						var cl = curC.line = new kc.Bezier( param );
-						var source = curC.source;
-						var target = curC.target;
-						cntListContainer.addElement( 'uVcnt' + '0' + i + '0' + j, cl );
-						cl.update( {
-							x1: source.x,
-							y1: source.y,
-							x2: target.x,
-							y2: target.y,
-							cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
-							cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
-							width: param.originwidth,
-							color: param.color
-						} );
-					}
-				}
-			}
-		} );
 		this._uvCnt = []; //用于记录暂时不显示的连线
 	},
 	highlightBrand: function ( e ) {
@@ -6509,12 +6437,20 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
+		//清空非可见连线
+		// for ( var s = 0; s < uvCnt.length; s++ ) {
+		// 	uvCnt[ s ].line.canvas.removeShape();
+		// 	console.log( uvCnt[ s ].line.canvas.getPaper() );
+		// }
 		uvCnt = this._uvCnt = [];
 		//设置全部节点和连线的透明度
+		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
 			for ( var c = 0; c < scatterList.length; c++ ) {
-				scatterList[ c ].highlight( false );
 				scatterList[ c ].canvas.setOpacity( opaC || 0 );
+				scatterList[ c ].update( {
+					stroke: 0
+				} );
 			}
 			for ( var k in cntList ) {
 				cntList[ k ].canvas.setOpacity( opaL || 0 );
@@ -6572,7 +6508,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		//disvisConnectLines
 		for ( var n = 0; n < highlightCircleList.length; n++ ) {
 			highlightCircleList[ n ].canvas.setOpacity( 1 );
-			highlightCircleList[ n ].highlight( true );
 		}
 		for ( var m = 0; m < highlightConnectList.length; m++ ) {
 			var l = highlightConnectList[ m ];
@@ -6586,12 +6521,19 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var x = 0; x < uvCnt.length; x++ ) {
 			if ( uvCnt[ x ].position === 'start' ) {
 				var param = uvCnt[ x ].line.param;
-				var cl = uvCnt[ x ].line;
+				var cl = uvCnt[ x ].line = new kc.Bezier( param );
 				var source = uvCnt[ x ].source;
 				var target = uvCnt[ x ].target;
-				uvCnt[ x ].line.canvas.setOpacity( 1 );
+				cntListContainer.addElement( 'uVcnt' + x, cl );
 				cl.update( {
+					x1: source.x,
+					y1: source.y,
+					x2: target.x,
+					y2: target.y,
+					cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
+					cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
 					width: param.highlightwidth,
+					color: param.color
 				} );
 			}
 		}
@@ -6639,7 +6581,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
+			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -6655,7 +6597,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		//更新连线
 		connects.removeElement();
-		//connects.canvas.clear();
 		var cList = data.classList;
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
@@ -6666,6 +6607,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				var target = targetInfo.relatedbrand;
 				var cnt;
 				var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
+				//console.log( data.connectList.length, list.length );
+				//if ( data.connectList.length < 1000 || cntwidth > 0.07 ) {
 				cnt = new kc.Bezier( {
 					x1: source.x,
 					y1: source.y,
@@ -6673,18 +6616,16 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					y2: target.y,
 					cx: target.cx,
 					cy: target.cy,
-					color: target.color,
+					color: source.color,
 					originwidth: cntwidth,
 					width: cntwidth,
+					//width: 0.2,
 					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
 				} );
 				//只往画布上添加一部分的连线
-				if ( data.connectCount < 300 || cntwidth > data.connectCount / 13000 ) {
-					if ( connects.getElement( 'Vcnt' + n + n1 ) ) {
-						console.log( n, n1 );
-					}
+				if ( data.connectCount < 300 || cntwidth > 0.07 ) {
 					connects.addElement(
-						'Vcnt' + '0' + n + '0' + n1, cnt
+						'Vcnt' + n + n1, cnt
 					);
 					source.connectLines.push( {
 						position: 'start',
@@ -7069,188 +7010,6 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
 
 (function(exports){
 
-var fans = [];
-function getFans( node ){
-    if( node.children && node.children.length > 0 ){
-        !node.hide && node.parent && fans.push( node );
-        node.children.forEach(function(n, i){
-            getFans( n );
-        });
-    }else{
-        !node.hide && node.parent && fans.push( node );
-    }
-    return fans;
-}
-
-function getParents( node, callback ){
-    var tmp = node;
-    tmp && tmp.shape && callback && callback( tmp );
-    while( tmp.parent ){
-        tmp = tmp.parent;
-        tmp && tmp.shape && callback && callback( tmp );
-    }
-}
-
-var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
-    base : kc.Chart,
-
-    constructor: function ( target, param ) {
-        this.callBase( target, param );
-        this.config = this.param;
-        this.setData( new kc.SunData() );
-
-        this.fans = this.addElement( 'fans', new kc.ElementList() );
-    },
-
-    update : function( param ){
-        this.param = kity.Utils.extend( this.param, param );
-        this.setBlurColor();
-        var self = this;
-        var data = this.data.format();
-
-        if( data ){
-            this.paramList = [];
-            this.nodeList = [];
-            var inner = 30, outer = 60, increment = 30;
-            fans = [];
-            var self = this;
-            getFans( data ).forEach(function( node, i ){
-
-                var depth = node.depth - 1;
-                self.paramList.push({
-                    labelText: null,
-                    labelPosition: 'none',
-
-                    connectLineWidth: 0,
-
-                    innerRadius : depth == 0 ? inner : (outer  + ( depth - 1 ) * increment),
-                    outerRadius : outer + increment * depth,
-                    startAngle : node.weightStart * 360,
-                    pieAngle: node.weight * 360,
-
-                    strokeWidth : 1,
-                    strokeColor : "#FFF",
-
-                    color: self.getColor( node.name ),
-
-                    x : self.param.center.x,
-                    y : self.param.center.y,
-
-                });
-
-                self.nodeList.push( node );
-
-            });
-
-            this.updateFans( this.paramList, true );
-            this.updateFans( this.paramList, false );
-            this.bindData();
-            this.bindAction();
-
-        }
-
-    },
-
-    updateFans : function( list, anim ){
-        this.fans.update({
-            elementClass : kc.Pie,
-            list : list,
-            fx : anim
-        });
-    },
-
-    getColor : function( name ){
-        return this.config.color[ name ] || this.config.defaultColor || "#808080";
-    },
-
-    getDefaultColor : function(){
-        return this.config.defaultColor || "#808080";
-    },
-
-    bindData : function(){
-        var self = this;
-        this.fans.getElementList().forEach(function( shape, i ){
-            self.nodeList[ i ].shape = shape;
-            shape.dataNode = self.nodeList[ i ];
-        });
-    },
-
-    bindAction : function(){
-        var self = this;
-        this.fans.getElementList().forEach(function( shape, i ){
-            shape.on('mouseover', function( ev ){
-                var dataNode = self.nodeList[ i ];
-                var ancestors = self.focus( dataNode );
-                self.config.onHover && self.config.onHover( ancestors );
-            });
-
-            shape.on('mouseout', function( ev ){
-                self.blur();
-            });
-        });
-    },
-
-    setBlurColor : function(){
-        var colors = this.config.color;
-        var name, color, light;
-        this.blurColors = {};
-        for( name in colors ){
-            this.blurColors[ name ] = blurColor( this.getColor( name ) );
-        }
-
-        this.blurDefaultColors = blurColor( this.getDefaultColor() );
-
-        function blurColor( c ){
-            var color = new kity.Color( c );
-            light = color.get('l');
-            color.set('l', light *= 1.5 );
-
-            return color.toHEX();
-        }
-    },
-
-    focus : function( dataNode ){
-        var self = this;
-        var ancestors = [];
-        var nodes = [];
-        getParents( dataNode, function( node ){
-            ancestors.push( node.shape );
-            nodes.push( node );
-        });
-
-        var colorList = this.fans.getElementList().map(function( fan, i ){
-            var color = self.blurColors[ self.nodeList[ i ].name ] || self.blurDefaultColors;
-            if( ~ancestors.indexOf( fan ) ){
-               color = fan.param.color;
-            }
-            return {
-                color : color
-            };
-        });
-
-        this.updateFans( colorList, false );
-        return nodes;
-    },
-
-    blur : function(){
-        var self = this;
-        var colorList = this.fans.getElementList().map(function( fan, i ){
-            var color = self.getColor( self.nodeList[ i ].name );
-            return {
-                color : color
-            };
-        });
-
-        this.updateFans( colorList, false );
-    }
-
-} );
-
-
-})( window );
-
-(function(exports){
-
 var rects = [];
 function getRects( node ){
     if( node.children && node.children.length > 0 ){
@@ -7270,6 +7029,7 @@ function getParents( node, callback ){
         tmp = tmp.parent;
         callback && callback( tmp );
     }
+
 }
 
 var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
@@ -7860,10 +7620,10 @@ var ForceData = kc.ForceData = kity.createClass( 'ForceData', {
 			count++;
 			var source = brandSet[ connectList[ i ].brand ];
 			var target = brandSet[ connectList[ i ].relatedbrand ];
-			// if ( !target ) {
-			// 	console.log( connectList[ i ].relatedbrand );
-			// 	continue;
-			// }
+			if ( !target ) {
+				console.log( connectList[ i ].relatedbrand );
+				continue;
+			}
 			var connects = source.connects;
 			connects.push( {
 				relatedbrand: target,
@@ -7892,36 +7652,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				me.highlightBrand();
 			}
 		} );
-		var scatters = this.getElement( "scatter" );
-		scatters.on( 'listupdatefinish', function () {
-			var mode = me.param.mode;
-			var scatterList = me.getElement( "scatter" ).elementList;
-			var cntListContainer = me.getElement( "connects" );
-
-			for ( var i = 0; i < scatterList.length; i++ ) {
-				var disvisConnectLines = scatterList[ i ].param.disvisConnectLines;
-				for ( var j = 0; j < disvisConnectLines.length; j++ ) {
-					var curC = disvisConnectLines[ j ];
-					if ( curC.position === 'start' ) {
-						var param = curC.line.param;
-						var cl = curC.line = new kc.Bezier( param );
-						var source = curC.source;
-						var target = curC.target;
-						cntListContainer.addElement( 'uVcnt' + '0' + i + '0' + j, cl );
-						cl.update( {
-							x1: source.x,
-							y1: source.y,
-							x2: target.x,
-							y2: target.y,
-							cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
-							cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
-							width: param.originwidth,
-							color: param.color
-						} );
-					}
-				}
-			}
-		} );
 		this._uvCnt = []; //用于记录暂时不显示的连线
 	},
 	highlightBrand: function ( e ) {
@@ -7932,12 +7662,20 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		var mode = this.param.mode;
 		var highlightCircleList = [];
 		var highlightConnectList = [];
+		//清空非可见连线
+		// for ( var s = 0; s < uvCnt.length; s++ ) {
+		// 	uvCnt[ s ].line.canvas.removeShape();
+		// 	console.log( uvCnt[ s ].line.canvas.getPaper() );
+		// }
 		uvCnt = this._uvCnt = [];
 		//设置全部节点和连线的透明度
+		//disvisConnectLines
 		var setAll = function ( opaC, opaL ) {
 			for ( var c = 0; c < scatterList.length; c++ ) {
-				scatterList[ c ].highlight( false );
 				scatterList[ c ].canvas.setOpacity( opaC || 0 );
+				scatterList[ c ].update( {
+					stroke: 0
+				} );
 			}
 			for ( var k in cntList ) {
 				cntList[ k ].canvas.setOpacity( opaL || 0 );
@@ -7995,7 +7733,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		//disvisConnectLines
 		for ( var n = 0; n < highlightCircleList.length; n++ ) {
 			highlightCircleList[ n ].canvas.setOpacity( 1 );
-			highlightCircleList[ n ].highlight( true );
 		}
 		for ( var m = 0; m < highlightConnectList.length; m++ ) {
 			var l = highlightConnectList[ m ];
@@ -8009,12 +7746,19 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var x = 0; x < uvCnt.length; x++ ) {
 			if ( uvCnt[ x ].position === 'start' ) {
 				var param = uvCnt[ x ].line.param;
-				var cl = uvCnt[ x ].line;
+				var cl = uvCnt[ x ].line = new kc.Bezier( param );
 				var source = uvCnt[ x ].source;
 				var target = uvCnt[ x ].target;
-				uvCnt[ x ].line.canvas.setOpacity( 1 );
+				cntListContainer.addElement( 'uVcnt' + x, cl );
 				cl.update( {
+					x1: source.x,
+					y1: source.y,
+					x2: target.x,
+					y2: target.y,
+					cx: ( ( mode === 'circle' ) ? source.cx : source.x ),
+					cy: ( ( mode === 'circle' ) ? source.cy : source.y ),
 					width: param.highlightwidth,
+					color: param.color
 				} );
 			}
 		}
@@ -8062,7 +7806,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
+			list[ i ].radius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -8078,7 +7822,6 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		}
 		//更新连线
 		connects.removeElement();
-		//connects.canvas.clear();
 		var cList = data.classList;
 		for ( var n = 0; n < list.length; n++ ) {
 			var source = list[ n ];
@@ -8089,6 +7832,8 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 				var target = targetInfo.relatedbrand;
 				var cnt;
 				var cntwidth = Math.log( sourceConnects[ n1 ].relation ) / 50;
+				//console.log( data.connectList.length, list.length );
+				//if ( data.connectList.length < 1000 || cntwidth > 0.07 ) {
 				cnt = new kc.Bezier( {
 					x1: source.x,
 					y1: source.y,
@@ -8096,18 +7841,16 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 					y2: target.y,
 					cx: target.cx,
 					cy: target.cy,
-					color: target.color,
+					color: source.color,
 					originwidth: cntwidth,
 					width: cntwidth,
+					//width: 0.2,
 					highlightwidth: ( cntwidth * 2 < 1 ? 1 : cntwidth * 2 )
 				} );
 				//只往画布上添加一部分的连线
-				if ( data.connectCount < 300 || cntwidth > data.connectCount / 13000 ) {
-					if ( connects.getElement( 'Vcnt' + n + n1 ) ) {
-						console.log( n, n1 );
-					}
+				if ( data.connectCount < 300 || cntwidth > 0.07 ) {
 					connects.addElement(
-						'Vcnt' + '0' + n + '0' + n1, cnt
+						'Vcnt' + n + n1, cnt
 					);
 					source.connectLines.push( {
 						position: 'start',
@@ -8319,5 +8062,150 @@ var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCha
 } );
 
 })( window );
+
+(function(){
+
+var SimpleRelationChart = kc.SimpleRelationChart = kity.createClass( 'SimpleRelationChart', {
+
+    mixins : [ kc.ConfigHandler ],
+
+    base: kc.Chart,
+
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        this.config = this.param || {};
+        
+        this.callMixin();
+
+        this.setData( new kc.SimpleRelationData() );
+        this.nodes = this.addElement( 'nodes', new kc.ElementList() );
+        this.edges = this.addElement( 'edges', new kc.ElementList() );
+
+    },
+
+    update : function( param ){
+
+        var data = this.data.format();
+        this.config = kity.Utils.extend( this.config, data, param );
+        this.renderRelation( data );
+        this.getOption('legend.enabled') && this.addLegend();
+
+    },
+
+    renderNodes : function( data ){
+        this.center = {
+            x : this.paper.getWidth() / 2,
+            y : this.paper.getHeight() / 2
+        };
+
+        var radius = this.config.distance || 200,
+            count = data.nodes.length,
+            PI = Math.PI,
+            sin = Math.sin,
+            cos = Math.cos;
+
+        var i,
+            piece = ( 2 * PI ) / count,
+            delX = delY = 0, x, y,
+            id, label, tmp, color;
+
+        this.nodesParam = [];
+
+        for( i = 0; i < count; i++ ){
+
+            delX = cos( piece * i - PI/2 ) * radius;
+            delY = sin( piece * i - PI/2 ) * radius;
+
+            x = this.center.x + delX;
+            y = this.center.y + delY;
+
+            tmp = data.nodes[ i ];
+            id = tmp.id;
+            label = tmp.label;
+
+             this.nodesParam.push({
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: label
+                },
+                strokeColor : '#FFF',
+                strokeWidth : 0,
+                color : this.param.color[ i ],
+                radius : this.config.radius || 30,
+                fxEasing : 'easeOutElastic',
+                x : x,
+                y : y,
+                bind : {
+                    id : id,
+                    label : label
+                }
+            });
+        }
+
+        this.nodes.update({
+            elementClass : kc.CircleDot,
+            list : this.nodesParam,
+            fx : true
+        });
+    },
+
+    getNodeParamById : function( id ){
+        var nodes = this.nodesParam;
+        for(var i = 0; i < nodes.length; i++ ){
+            if( nodes[ i ].bind.id == id ){
+                return nodes[ i ];
+            }
+        }
+    },
+
+    renderEdges : function( data ){
+        this.edgesParam = [];
+        var i, startNode, endNode, tmp, angle;
+        var sin = Math.sin,
+            cos = Math.cos,
+            atan2 = Math.atan2;
+
+        var gap = 10, color;
+
+        for( i = 0; i < data.edges.length; i++){
+            color = this.param.color[ i ];
+            tmp = data.edges[ i ];
+            startNode = this.getNodeParamById( tmp.from );
+            endNode = this.getNodeParamById( tmp.to );
+
+            angle = atan2( endNode.y - startNode.y, endNode.x - startNode.x );
+
+            this.edgesParam.push({
+                x1: startNode.x + cos(angle) * ( startNode.radius + gap ), 
+                y1: startNode.y + sin(angle) * ( startNode.radius + gap ),
+                x2: endNode.x - cos(angle) * ( endNode.radius + gap ),
+                y2: endNode.y - sin(angle) * ( endNode.radius + gap ),
+                offset: 5,
+                color: startNode.color,
+                width: 2,
+                label: {
+                    color: startNode.color,
+                    text: tmp.label
+                },
+            });
+        }
+
+        this.edges.update({
+            elementClass : kc.ArrowLine,
+            list : this.edgesParam,
+            fx : true
+        });
+    },
+
+    renderRelation : function( data ){
+        this.renderNodes( data );
+        this.renderEdges( data );
+    }
+
+} );
+
+
+})();
 
 })(kity, window);
