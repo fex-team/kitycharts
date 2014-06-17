@@ -43,6 +43,7 @@ var dependience = [
     'src/component/Pie.js',
     'src/component/CircleDot.js',
     'src/component/ConnectCircleDot.js',
+    'src/component/StaticConnectCircleDot.js',
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
@@ -63,8 +64,8 @@ var dependience = [
     'src/formatter/pieData.js',
     'src/formatter/TreemapData.js',
 
-    
-    
+
+
     'src/plots/PiePlots.js',
 
     'src/plots/BasePlots.js', //base
@@ -92,6 +93,7 @@ var dependience = [
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
+    'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
     'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',

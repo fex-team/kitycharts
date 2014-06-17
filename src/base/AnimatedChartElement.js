@@ -1,9 +1,9 @@
 ( function ( kc, kity ) {
     var utlis = kity.Utils;
-    utlis.copy = function(obj){
-        if(typeof obj !== 'object') return obj;
-        if(typeof obj === 'function') return null;
-        return JSON.parse(JSON.stringify(obj));
+    utlis.copy = function ( obj ) {
+        if ( typeof obj !== 'object' ) return obj;
+        if ( typeof obj === 'function' ) return null;
+        return JSON.parse( JSON.stringify( obj ) );
     };
 
     kc.AnimatedChartElement = kity.createClass( "AnimatedChartElement", {
@@ -55,12 +55,12 @@
                 finishValue: finishParam,
                 setter: function ( target, param, timeline ) {
                     var progress = timeline.getValueProportion();
-                    if(progress > 1) progress=1;
+                    if ( progress > 1 ) progress = 1;
                     target.update( param, beforeAnimatedCopy, progress );
                 }
             } );
 
-            if (this.timeline) this.timeline.stop();
+            if ( this.timeline ) this.timeline.stop();
 
             this.timeline = animator.start( this,
                 duration || this.param.fxTiming || this.fxTiming || 500,

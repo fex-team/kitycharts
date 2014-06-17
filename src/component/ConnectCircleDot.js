@@ -18,7 +18,7 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
             label: {
                 at: 'bottom',
                 color: 'black',
-                text: null,
+                text: null
             },
             color: '#62a9dd',
             radius: 0,
@@ -178,8 +178,8 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
                 var fontSize = targetparam.originradius * 0.8;
                 //console.log( beforeAnimated.radius );
                 //label.text.setScale( 0.9, 0.8 );
-                if ( fontSize < 2 ) {
-                    fontSize = 2;
+                if ( fontSize < 12 ) {
+                    fontSize = 12;
                 };
                 label.text.setFontSize( fontSize );
 

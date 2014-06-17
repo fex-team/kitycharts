@@ -11,7 +11,7 @@
 
         constructor: function ( param ) {
             this.callBase( kity.Utils.extend( {
-                x1: 0, 
+                x1: 0,
                 y1: 0,
                 x2: 0,
                 y2: 0,
@@ -49,8 +49,8 @@
                 draw: [ 'width', 'x1', 'y1', 'x2', 'y2' ],
                 stroke: [ 'color' ],
                 setArrowAngleAndPosition: [ 'x1', 'y1', 'x2', 'y2' ],
-                moveOffset : [ 'offset', 'x1', 'y1', 'x2', 'y2' ],
-                updateText : [ 'x1', 'y1', 'x2', 'y2' ]
+                moveOffset: [ 'offset', 'x1', 'y1', 'x2', 'y2' ],
+                updateText: [ 'x1', 'y1', 'x2', 'y2' ]
             } );
         },
 
@@ -62,11 +62,11 @@
                 PI = Math.PI,
                 sin = Math.sin,
                 cos = Math.cos,
-                nor = angle + PI/2,
+                nor = angle + PI / 2,
                 off = 4;
 
-            var at = (angle > 0 && angle < PI) ? 'left' : 'right';
-            if( y2 == y1 ){
+            var at = ( angle > 0 && angle < PI ) ? 'left' : 'right';
+            if ( y2 == y1 ) {
                 at = 'bottom';
             }
 
@@ -75,16 +75,16 @@
 
             var pos = Math.random() * 0.4 + 0.3;
             label.update( {
-                at : at,
-                x : ( x2 - x1 ) * pos + x1 + ex,
-                y : ( y2 - y1 ) * pos + y1 + ey
+                at: at,
+                x: ( x2 - x1 ) * pos + x1 + ex,
+                y: ( y2 - y1 ) * pos + y1 + ey
             } );
         },
 
-        moveOffset : function( offset, x1, y1, x2, y2 ){
-            if( offset > 0 ){
+        moveOffset: function ( offset, x1, y1, x2, y2 ) {
+            if ( offset > 0 ) {
                 var angle = this.getAngle( x1, y1, x2, y2 );
-                this.canvas.setTranslate( offset * Math.cos( angle + Math.PI/2 ),  offset * Math.sin( angle + Math.PI/2 ) );
+                this.canvas.setTranslate( offset * Math.cos( angle + Math.PI / 2 ), offset * Math.sin( angle + Math.PI / 2 ) );
             }
         },
 
@@ -103,7 +103,7 @@
             seq.push( 'M', x1, y1 );
             seq.push( 'L', x2, y2 );
 
-            this.line.setPathData( seq );//.setRotate( rotate );
+            this.line.setPathData( seq ); //.setRotate( rotate );
 
             // this.interestPoint = {
             //     x: 0,
@@ -111,11 +111,11 @@
             // };
         },
 
-        getAngle : function( x1, y1, x2, y2 ){
+        getAngle: function ( x1, y1, x2, y2 ) {
             return Math.atan2( y2 - y1, x2 - x1 );
         },
 
-        setArrowAngleAndPosition : function( x1, y1, x2, y2 ){
+        setArrowAngleAndPosition: function ( x1, y1, x2, y2 ) {
             var angle = this.getAngle( x1, y1, x2, y2 ) / Math.PI * 180;
             this.arrow.setTranslate( x2, y2 ).setRotate( angle );
 
