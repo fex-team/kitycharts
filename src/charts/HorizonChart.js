@@ -46,32 +46,33 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
         this.setData( new kc.HorizonData() );
         this.addElement( "Lines", new kc.ElementList() );
         this.addElement( "Axis", new kc.ElementList() );
-        this.addElement( "xCate", new kc.ElementList() );
+        this.addElement( "Cate", new kc.ElementList() );
     },
     renderChart: function () {
         var colors = this.param.colors;
         var data = this.getData().format();
         var datacol = this.getData().format( 'col' );
         var labels = datacol.labels;
+        var categories = data.categories;
         var lLength = labels.length - 1;
         var container = this.getPaper().container;
         var _width = container.offsetWidth;
         var _height = container.offsetHeight;
         var padding = this.param.padding;
-        var _space = ( _width - padding[ 1 ] - padding[ 3 ] ) / data.categories.length;
+        var _space = ( _width - padding[ 1 ] - padding[ 3 ] ) / categories.length;
         var _AxisHeight = _height - padding[ 0 ] - padding[ 2 ]; //y坐标轴的高度
         var axis = this.getElement( 'Axis' );
         var lines = this.getElement( 'Lines' );
-        var xCate = this.getElement( 'xCate' );
+        var Cate = this.getElement( 'Cate' );
         var AxisLines = [];
         var Polylines = [];
-        var xCates = [];
+        var Cates = [];
         //生成连线和Categories数据
         var series = data.series;
         for ( var key in series ) {
             var s = series[ key ];
             console.log( labels.indexOf( key ) );
-            xCates.push( {
+            Cates.push( {
                 text: key,
                 at: 'left',
                 x: padding[ 3 ] - 20,
@@ -94,6 +95,13 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
                 }
             }
         };
+        for ( var x = 0; x < categories.length; x++ ) {
+            Cates.push( {
+                text: categories[ x ],
+                x: padding[ 3 ] + _space * ( x + 1 ),
+                y: padding[ 0 ] - 20
+            } );
+        }
         for ( var i = 0; i <= data.categories.length; i++ ) {
             var item = {
                 x1: padding[ 3 ] + _space * i,
@@ -119,9 +127,9 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
             list: Polylines,
             fx: false
         } );
-        xCate.update( {
+        Cate.update( {
             elementClass: kc.Label,
-            list: xCates,
+            list: Cates,
             fx: false
         } );
     },
