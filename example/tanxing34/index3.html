@@ -7,25 +7,66 @@
         <script src="../../build.js"></script>
         <script src="js/jquery-2.1.0.min.js"></script>
         <style>
-            .container {
-                width: 500px;
+            @font-face {
+              font-family: 'Confidel';
+              font-style: normal;
+              font-weight: normal;
+              src: local('Confidel'), local('Confidel'), url(/font/confidel/Confidel.otf) format('otf');
+            }
+
+            body{
+                font-family: 'Oswald', sans-serif;
+                background-color: #EEE;
+            }
+
+            .chart-container {
+                width: 100%;
                 height: 400px;
-                /*background: #EEE;*/
+                background: #FFF;
+                margin: 0 20px 80px 0;
+                box-shadow: 0px 1px 5px rgba(0,0,0,0.07);
+            }
+
+            .container{
+                width: 800px;
+                margin: 0 auto;
+            }
+
+            h2{
+                text-shadow : 0px 1px 2px rgba(0,0,0,0.2);
+                border-left : #18a8f3 3px solid;
+                text-indent: 10px; 
+                color: #555;
+                font-family: 'Confidel'
             }
         </style>
     </head>
     <body>
-        <div id="pie" class="container"></div>
-        <div id="donut" class="container"></div>
-        <div id="multibar" class="container"></div>
-        <div id="singlebar" class="container" style="height:280px"></div>
-        <div id="singlecolumn" class="container"></div>
+        <div class="container">
+            <h2>Pie Chart</h2>
+            <div id="pie" class="chart-container"></div>
 
-        <div id="china-map-chart"></div>
+            <h2>Donut</h2>
+            <div id="donut" class="chart-container"></div>
+
+            <h2>Basic Bar Chart</h2>
+            <div id="singlebar" class="chart-container"></div>
+
+            <h2>Multi Bar Chart</h2>
+            <div id="multibar" class="chart-container"></div>
+
+
+            <h2>Basic Column Chart</h2>
+            <div id="singlecolumn" class="chart-container"></div>
+            <h2>Stacked Column Chart</h2>
+            <div id="stackedcolumn" class="chart-container"></div>
+        <div>
     </body>
     <script>
+        var colors = [ '#df6164', '#CB8552', '#F1CB8A', '#EAD59E', '#86C397' ];
+
         var pie = new kc.PieChart( 'pie', {
-            color : [ '#356893', '#3f7bad', '#4789c0', '#549dda', '#5fb0f4', '#69bbff', '#a3d4fd', '#c2e3ff', '#d7edff' ]
+            color : colors
         } );
         
         $.ajax({
@@ -36,91 +77,79 @@
         });
 
         var donut = new kc.PieChart( 'donut', {
-            color : [ '#4879a7', '#ca5f4b' ]
+            color : colors
         } );
         
         $.ajax({
             url: 'data/donut.json',
             success: function( data ) {
                 donut.update( data );
-                // console.log( donut.getCenter() );
-                // console.log( donut.getSeries() );
+
+                var series = donut.getSeries();
+                var data = series[0].data;
+
+                var txt = (data[0].value/data[1].value).toFixed(2) + ' / 1';
+
+
+                var center = donut.getCenter();
+                var w = 100, h = 100;
+                $('<div></div>').css({
+                    width : w + 'px',
+                    height : h + 'px',
+                    // backgroundColor : '#eee',
+                    position : 'absolute',
+                    left : center.x - w/2 + 'px',
+                    top : center.y -h/2 + 'px',
+                    textAlign : 'center',
+                    lineHeight : h + 'px'
+
+                }).appendTo($('#donut')[0]).html(txt);
+
+                
+
             }
         });
 
-        // var multibar = new kc.BarChart( 'multibar', {
-        //     color : [ '#62a9dd', '#df6164', '#72c380' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/multi-bar.json',
-        //     success: function( data ) {
-        //         multibar.update( data );
-        //     }
-        // });
-
-
-        // var singlebar = new kc.BarChart( 'singlebar', {
-        //     color : [ '#df6164' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/single-bar.json',
-        //     success: function( data ) {
-        //         singlebar.update( data );
-        //     }
-        // });
-
-        // var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
-        //     color : [ '#df6164' ]
-        // } );
-        // $.ajax({
-        //     url: 'data/single-column.json',
-        //     success: function( data ) {
-        //         singlecolumn.update( data );
-        //     }
-        // });
-
-
-        (function(){
-            var map = new kc.ChinaMapChart('china-map-chart', {
-                width: 600,
-                height: 400,
-                colors: ['#3e92c5','#68a8d0','#7bb2d6','#aacde2','#f5edeb','#f2e0dd','#ecc1b9','#e6a599','#de7c6a'],
-                defaultColor: 'lightgray'
-            });
-
-            var china_province = kc.Map.CHINA.blocks;
-
-            $.ajax({
-                url: 'data/map.json',
-                success: function( data ) {
-                    updateRange( data, 0, 1 );
-                }
-            });
-
-
-            function updateRange( data, min, max ) {
-                var ranged = {};
-                for(var p in data) {
-                    if (data[p].value > min && data[p].value < max) ranged[p] = data[p];
-                    else ranged[p] = {};
-                }
-
-                map.getData().update(ranged);
+        var multibar = new kc.BarChart( 'multibar', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/multi-bar.json',
+            success: function( data ) {
+                multibar.update( data );
             }
+        });
 
-            
 
-            function legend(){
-                var colors = map.param.colors;
-
-                $('<div></div>').css({
-                    width : '200px',
-                    height : '30px',
-                    background : 'linear-gradient(-90deg, ' + colors[ 0 ] + ', ' + colors[ colors.length - 1 ] + ')'
-                }).appendTo($('#china-map-chart'));
+        var singlebar = new kc.BarChart( 'singlebar', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/single-bar.json',
+            success: function( data ) {
+                singlebar.update( data );
             }
+        });
 
-            legend();
-        })();
+        var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/single-column.json',
+            success: function( data ) {
+                singlecolumn.update( data );
+            }
+        });
+
+        var stackedcolumn = new kc.ColumnChart( 'stackedcolumn', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/stacked-column.json',
+            success: function( data ) {
+                stackedcolumn.update( data );
+            }
+        });
+
     </script>
 </html>

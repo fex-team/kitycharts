@@ -39,7 +39,8 @@
         "padding" : {
             "top" : 10,
             "bottom" : 0
-        }
+        },
+        "stacked" : true
     },
 
     "plotOptions" : {

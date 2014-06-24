@@ -1,12 +1,22 @@
-kc.Config.bar = {
+
+kc.ChartsConfig.add('bar', {
+
+	yAxis : {
+		padding : {
+			bottom : 30,
+			top : 30
+		},
+		inverted : true,
+		min : 0
+	},
 
     plotOptions : {
 
         bar : {
-            width : 5,
+            width : 25,
             margin: 0
         }
 
     }
-
-};
+    
+});

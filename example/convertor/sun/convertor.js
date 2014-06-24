@@ -1,67 +1,63 @@
 function convert2Standard( origin ) {
+
     var lines = origin.split('\n');
-    var leaves = [];
-    var paths = lines.map(function( line, i ){
+    var root = {};
+    var output = {};
+    lines.forEach(function( line, i ){
         var arr = line.split(',');
-        var path = arr[0].split('-');
-        var value = arr[1];
+        var pathArr = arr[0].split('-');
+        var val = arr[1];
 
-        var leaf = {
-            name : path[ path.length-1 ],
-            value : value
-        }
-
-        leaves.push( leaf );
-        return path;
+        setPath( pathArr, Number(val), root );
     });
 
+    var a = kity.Utils.copy(root);
+    var output = {name:'root'};
+    traversal( a, output );
+    console.log( output );
 
-    step(paths);
-
-    var standard = {};
-    return standard;
+    return output;
 }
 
-function step(paths){
-    var obj = {}, i, j;
-    for(i = 0; i < 7; i++){
+function setPath( pathArr, value, root ) {
+    var arr = pathArr;
+    arr.unshift('root');
+    var  i = 1, p, cur, exp;
 
-        for(j = 0; j < paths.length; j++){
-            if(i == 0){
-                obj[ paths[j][i] ] = {};
-            }else{
-                if( paths[j][i-1] ){
-                    obj[ paths[j][i-1] ] = obj[ paths[j][i-1] ] || {};
-                    obj[ paths[j][i-1] ][ paths[j][i] ] = {};
-                    console.log( paths[j][i] );     
-                }
-
-            }
+    while(i < arr.length){
+        cur = arr[i];
+        p = getPath( i-1, arr );
+        if( !eval('"' + cur + '" in ' + p ) ){
+            exp = p + '.' + cur + ' = ' + (i == arr.length-1 ? 'value' : '{}');
+            eval( exp );
         }
 
-
-
-        
+        i++
     }
-    console.log( obj );
 }
 
+function getPath( index, arr ){
+    var p = [];
+    for(var i=0; i<=index; i++){
+        p.push( arr[i] );
+    }
+    return p.join('.');
+}
 
+function traversal( node, output ){
+    var i, obj = {}, child;
+    output.children = [];
+    for( i in node ){
+        obj = {};
+        obj.name = i;
 
-function queryPath(path, obj) {
-    var arr = path.split('.');
-    var i = 0,
-        tmp = obj,
-        l = arr.length;
-    while (i < l) {
-        if (arr[i] in tmp) {
-            tmp = tmp[arr[i]];
-            i++;
-            if (i >= l || tmp === undefined) {
-                return tmp;
-            }
-        } else {
-            return undefined;
+        if(typeof node[i] == 'object'){
+            traversal( node[i], obj );
+        }else{
+            obj.value = node[i];
         }
+
+        output.children.push( obj );
+
     }
 }

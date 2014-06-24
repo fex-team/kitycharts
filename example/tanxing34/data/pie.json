@@ -8,7 +8,7 @@
     "plotOptions": {
         "pie": {
             "center": {
-                "x" : 200,
+                "x" : 400,
                 "y" : 200
             },
             "innerRadius" : 0,
@@ -25,7 +25,7 @@
         }
     },
     "legend" : {
-        "enabled" : false
+        "enabled" : true
     },
     "series": [
         {

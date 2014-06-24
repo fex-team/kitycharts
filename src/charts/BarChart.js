@@ -4,6 +4,7 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
     base: kc.StickChart,
 
     constructor: function ( target, param ) {
+        this.chartType = 'bar';
         this.callBase( target, param );
         var plots = this.addElement( 'plots', new kc.BarPlots() );
         this.setPlots( plots );

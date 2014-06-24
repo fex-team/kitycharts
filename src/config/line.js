@@ -1,4 +1,5 @@
-kc.Config.line = {
+
+kc.ChartsConfig.add('line', {
 
     plotOptions : {
 
@@ -6,13 +7,13 @@ kc.Config.line = {
             width : 2,
             dash : [ 2 ],
 
-	        dot : {
-	        	enabled : true,
-	            radius : 3
-	        }
+            dot : {
+                enabled : true,
+                radius : 3
+            }
 
         }
 
     }
     
-};
+});

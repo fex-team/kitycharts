@@ -42,10 +42,14 @@ var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
         if( data ){
             this.paramList = [];
             this.nodeList = [];
-            var inner = 30, outer = 60, increment = 30;
+            var inner = this.param.inner || 30, outer = this.param.outer || 60, increment = this.param.increment || 30;
             fans = [];
             var self = this;
             getFans( data ).forEach(function( node, i ){
+                var pieAngle = node.weight * 360;
+                if(pieAngle < 0.5){
+                    return;
+                }
 
                 var depth = node.depth - 1;
                 self.paramList.push({
@@ -57,7 +61,7 @@ var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
                     innerRadius : depth == 0 ? inner : (outer  + ( depth - 1 ) * increment),
                     outerRadius : outer + increment * depth,
                     startAngle : node.weightStart * 360,
-                    pieAngle: node.weight * 360,
+                    pieAngle: pieAngle,
 
                     strokeWidth : 1,
                     strokeColor : "#FFF",
@@ -73,7 +77,10 @@ var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
 
             });
 
-            this.updateFans( this.paramList, true );
+            if( this.paramList.length < 50 ){
+                this.updateFans( this.paramList, true );
+            }
+            
             this.updateFans( this.paramList, false );
             this.bindData();
             this.bindAction();
@@ -112,7 +119,7 @@ var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
             shape.on('mouseover', function( ev ){
                 var dataNode = self.nodeList[ i ];
                 var ancestors = self.focus( dataNode );
-                self.config.onHover && self.config.onHover( ancestors );
+                self.config.onHover && self.config.onHover( ancestors.reverse() );
             });
 
             shape.on('mouseout', function( ev ){
@@ -133,10 +140,8 @@ var SunChart = kc.SunChart = kity.createClass( 'SunChart', {
 
         function blurColor( c ){
             var color = new kity.Color( c );
-            light = color.get('l');
-            color.set('l', light *= 1.5 );
-
-            return color.toHEX();
+            color.set('a', 0.5 );
+            return color.toRGBA();
         }
     },
 

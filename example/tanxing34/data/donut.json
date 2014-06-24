@@ -6,7 +6,7 @@
         "pie": {
             "shadow": false,
             "center": {
-                "x" : 200,
+                "x" : 400,
                 "y" : 200
             },
             "innerRadius" : 60,
@@ -19,11 +19,12 @@
         }
     },
     "legend" : {
-        "enabled" : false
+        "enabled" : true,
+        "level" : "data"
     },
     "series": [
         {
-            "name": "Browsers",
+            "name": "男女比例",
             "data": [
                 {
                     "name": "男",

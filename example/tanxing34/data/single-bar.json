@@ -10,8 +10,8 @@
             "enabled" : true
         },
         "margin" : {
-            "right" : 10,
-            "left" : 60
+            "right" : 60,
+            "left" : 80
         },
         "axis" : {
             "enabled" : false,
@@ -40,12 +40,12 @@
             "enabled" : true
         },
         "padding" : {
-            "top" : 20,
-            "bottom" : 20
+            "top" : 30,
+            "bottom" : 30
         },
         "margin" : {
-            "top" : 10,
-            "bottom" : 10
+            "top" : 40,
+            "bottom" : 40
         },
         "inverted" : true
     },
@@ -53,7 +53,7 @@
     "plotOptions" : {
 
         "bar" : {
-            "width" : 15,
+            "width" : 25,
             "margin": 3
         },
 
@@ -71,7 +71,7 @@
     },
 
     "interaction" : {
-        "onStickHover" : null
+        "onStickHover" : ""
     },
 
     "series": [

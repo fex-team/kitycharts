@@ -4,6 +4,7 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
     base : kc.BaseChart,
 
     constructor: function ( target, param ) {
+        this.chartType = 'pie';
         this.callBase( target, param );
         this.config = this.param;
         this.setData( new kc.PieData( param ) );
@@ -16,7 +17,7 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
     },
 
     update : function( param ){
-        this.setConfig( kc.PieData, param );
+        this.setConfig( param, kc.PieData );
         
         this.getPlots().update( this.config );
         this.getOption('legend.enabled') && this.addLegend();

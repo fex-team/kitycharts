@@ -17,10 +17,10 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     },
 
-    setConfig : function( formatter, param ){
+    setConfig : function( param, formatter ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
-            base = kc.ChartsConfig.init(),
+            base = kc.ChartsConfig.init( this.chartType ),
             data, coordConf;
 
         this.config = kity.Utils.deepExtend( base, config ),
@@ -33,10 +33,9 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     update : function( param ){
         var DataFormatter = arguments[ 1 ] || kc.ChartData;
-        this.setConfig( DataFormatter, param );
+        this.setConfig( param, DataFormatter );
         
-        coordConf = kc.ChartsConfig.setCoordinateConf( this.config );
-
+        coordConf = this.coordinate.setCoordinateConf( this.config );
         this.coordinate.update( coordConf );
         this.getPlots().update( this.coordinate, this.config );
 
@@ -149,34 +148,52 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     addLegend : function(){
         var series = this.config.series || [],
-            i, j, entry, label, color, tmp;
+            i, j, entry, label, color, tmp, dataEntry;
 
         this.legend && this.legend.remove();
         this.legend = $('<div></div>').css({
             position : 'absolute',
-            bottom : '0',
-            left : this.config.xAxis.margin.left + 'px',
+            bottom : '10px',
+            right : '30px',
             height : '26px',
             lineHeight : '26px'
         }).appendTo( this.container );
 
-
+        var labelArr = [], colorArr = [];
         for ( i = 0; i < series.length; i++ ) {
             
             entry = series[ i ];
             
-            label = entry.name;
-            color = this.getEntryColor( entry );
+            if( this.config.legend.level == 'data' ){
+                for (var i = 0; i < entry.data.length; i++) {
+                    dataEntry = entry.data[ i ];
+                    labelArr.push( dataEntry.name );
+                    colorArr.push( this.getEntryColor( dataEntry ) );
+                }
+            }else{
+                label = entry.name;
+                color = this.getEntryColor( entry );
 
-            tmp = $('<div></div>').css({
+                labelArr.push(label);
+                colorArr.push(color);
+            }
+
+
+
+        }
+
+        var self = this;
+
+        labelArr.forEach(function(label, i){
+           tmp = $('<div></div>').css({
                 marginRight : '20px',
                 display : 'inline-block'
-            }).appendTo( this.legend );
+            }).appendTo( self.legend );
 
             $('<div class="kitycharts-legend-color"></div>').css({
                 width : '12px',
                 height : '12px',
-                backgroundColor : color,
+                backgroundColor : colorArr[i],
                 display : 'inline-block',
                 marginRight : '5px',
                 position: 'relative',
@@ -187,8 +204,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
                 fontSize : '10px',
                 display : 'inline-block'
             }).appendTo( tmp );
-
-        }
+        });
 
     }
 

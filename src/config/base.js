@@ -1,7 +1,4 @@
-kc.Config = {};
-
-kc.Config.base = {
-
+kc.ChartsConfig.add('base', {
     color : [
         'rgb(31, 119, 180)',
         'rgb(174, 199, 232)',
@@ -17,7 +14,6 @@ kc.Config.base = {
         ticks: {
             enabled : true,
             dash : null,
-            value: 0,
             width: 1,
             color: '#808080'
         },
@@ -38,8 +34,8 @@ kc.Config.base = {
         },
 
         margin : {
-            left : 200,
-            right : 10
+            left : 80,
+            right : 50
         }
     },
 
@@ -111,8 +107,9 @@ kc.Config.base = {
     },
 
     legend : {
-        enabled : true
+        enabled : true,
+        level : 'entry'
     },
 
     enableAnimation : true
-};
+});

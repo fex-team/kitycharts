@@ -10,8 +10,8 @@
             "enabled" : false
         },
         "margin" : {
-            "right" : 10,
-            "left" : 60
+            "right" : 60,
+            "left" : 80
         },
 
         "axis" : {
@@ -19,7 +19,7 @@
             "arrow" : false
         },
         "padding" : {
-            "left" : 30,
+            "left" : 0,
             "right" : 50
         },
         "label" : {
@@ -41,7 +41,7 @@
             "enabled" : false
         },
         "padding" : {
-            "top" : 10,
+            "top" : 30,
             "bottom" : 30
         },
         "stacked" : 0,
@@ -51,18 +51,18 @@
     "plotOptions" : {
 
         "bar" : {
-            "width" : 5,
+            "width" : 10,
             "margin": 3
         }
 
     },
 
     "legend" : {
-        "enabled" : false
+        "enabled" : true
     },
 
     "interaction" : {
-        "onStickHover" : null
+        "onStickHover" : ""
     },
 
     "series": [

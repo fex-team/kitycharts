@@ -1,4 +1,5 @@
-kc.Config.pie = {
+
+kc.ChartsConfig.add('pie', {
 
     plotOptions : {
 
@@ -17,5 +18,5 @@ kc.Config.pie = {
         }
 
     }
-
-};
+    
+});
