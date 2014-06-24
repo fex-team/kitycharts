@@ -3301,100 +3301,6 @@ var ConnectCircleDot = kc.ConnectCircleDot = kity.createClass( "ConnectCircleDot
     }
 } );
 
-//参数格式
-// {
-//             label: {
-//                 at: 'bottom',
-//                 color: 'black',
-//                 text: null,
-//             },
-//             color: '#62a9dd',
-//             radius: 0,
-//             fxEasing: 'easeOutElastic'
-// }
-var StaticConnectCircleDot = kc.StaticConnectCircleDot = kity.createClass( "StaticConnectCircleDot", {
-
-    base: kc.AnimatedChartElement,
-
-    constructor: function ( param ) {
-        this.callBase( kity.Utils.extend( {
-            label: {
-                at: 'bottom',
-                color: 'black',
-                text: null,
-            },
-            strokeColor: '#ccc',
-            strokeWidth: 4,
-            color: '#62a9dd',
-            radius: 0,
-            fxEasing: 'easeOutElastic',
-            x: 0,
-            y: 0
-        }, param ) );
-        var param = this.param;
-        var me = this;
-        this.circle = new kity.Circle();
-        var label = new kc.Label();
-        this.canvas.addShapes( [ this.circle ] );
-        this.addElement( 'label', label );
-        label.text.setFontSize( 15 );
-        this.on( 'click', function ( e ) {
-
-        } );
-        this.on( 'mouseover', function ( e ) {
-            me.hover();
-        } );
-        this.on( 'mouseout', function ( e ) {
-            me.hover( false );
-        } );
-    },
-    hover: function ( ishover ) {
-        if ( this.param.ishighlight ) return false;
-        var param = this.param;
-        var label = this.getElement( 'label' );
-        if ( ishover === undefined || ishover ) {
-            this.circle.stroke( new kity.Pen( new kity.Color( param.color ).dec( 'l', 10 ), 2 ) );
-            param.line.update( {
-                color: param.color
-            } );
-        } else {
-            this.circle.stroke( param.strokeColor, param.strokeWidth );
-            param.line.update( {
-                color: param.strokeColor
-            } );
-        }
-    },
-    registerUpdateRules: function () {
-        return kity.Utils.extend( this.callBase(), {
-            'updateRadius': [ 'radius' ],
-            'updateStyle': [ 'color', 'strokeColor', 'strokeWidth' ],
-            'updateText': [ 'labelText' ]
-        } );
-    },
-    updateText: function ( labelText ) {
-        this.getElement( 'label' ).update( {
-            text: labelText
-        } );
-    },
-
-    updateRadius: function ( radius ) {
-        this.circle.setRadius( radius );
-    },
-
-    updateStyle: function ( color, strokeColor, strokeWidth ) {
-        var pen = new kity.Pen();
-
-        pen.setWidth( strokeWidth );
-        pen.setColor( strokeColor );
-
-        this.circle.stroke( pen );
-        this.circle.fill( color );
-    },
-    getAnimatedParam: function () {
-        return [ 'radius', 'x', 'y' ];
-    }
-} );
-
 /**
  * 网格绘制
  * @param {int} dir
@@ -4162,6 +4068,133 @@ var HumanBody = kc.HumanBody = kity.createClass( "HumanBody", {
 	getAnimatedParam: function () {
 		return [ 'x', 'y' ];
 	}
+} );
+
+var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
+    base: kc.AnimatedChartElement,
+    constructor: function ( param ) {
+        this.callBase( kity.Utils.extend( {
+            x1: 0,
+            y1: 0,
+            x2: 100,
+            y2: 0,
+            bound: null,
+            width: 1,
+            color: 'black',
+            dash: null
+        }, param ) );
+        this.line = new kity.Path();
+        this.canvas.addShape( this.line );
+    },
+
+    getAnimatedParam: function () {
+        return [ 'x1', 'y1', 'x2', 'y2', 'width' ];
+    },
+
+    registerUpdateRules: function () {
+        return kity.Utils.extend( this.callBase(), {
+            draw: [ 'x1', 'y1', 'x2', 'y2', 'bound', 'max', 'divide' ],
+            stroke: [ 'color', 'width', 'dash' ]
+        } );
+    },
+
+    draw: function ( x1, y1, x2, y2, bound, max, divide ) {
+        var drawer = this.line.getDrawer(),
+            s = kc.sharpen;
+
+        if ( bound ) {
+            bound = this.boundTo( x1, y1, x2, y2, bound );
+        }
+        bound = bound || [
+            [ x1, y1 ],
+            [ x2, y2 ]
+        ];
+        drawer.clear();
+        drawer.moveTo( s( bound[ 0 ][ 0 ] ), s( bound[ 0 ][ 1 ] ) );
+        drawer.lineTo( s( bound[ 1 ][ 0 ] ), s( bound[ 1 ][ 1 ] ) );
+        if ( max ) {
+            //计算最大值的数量级
+            var oom = Math.log( max ) / Math.log( 10 );
+            var oomV = Math.floor( oom );
+            //根据数量级和max的值决定分隔情况
+            var base = Math.pow( 10, oomV );
+            var n = max / base;
+            var part = n / 5;
+            // console.log( part );
+            // console.log( max, oom, upper );
+        } else {
+            var length = y2 - y1;
+            var space = length / ( divide - 1 );
+            for ( var i = 0; i < divide; i++ ) {
+                var bd = [
+                    [ x1 - 5, y1 + space * i ],
+                    [ x1, y1 + space * i ]
+                ];
+                drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
+                drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
+            }
+        }
+    },
+
+    stroke: function ( color, width, dash ) {
+        var pen = new kity.Pen();
+        pen.setWidth( width );
+        pen.setColor( color );
+        if ( dash ) {
+            pen.setDashArray( dash );
+        }
+        this.line.stroke( pen );
+    },
+
+    boundTo: function ( x1, y1, x2, y2, bound ) {
+        var b = bound,
+            bx1 = b.x1,
+            by1 = b.y1,
+            bx2 = b.x2,
+            by2 = b.y2,
+            k, kk, bx1y, bx2y, by1x, by2x;
+
+        function inRange( x, a, b ) {
+            return ( a <= x && x <= b ) || ( a >= x && x >= b );
+        }
+
+        if ( x1 == x2 ) {
+            return [
+                [ x1, b.y1 ],
+                [ x2, b.y2 ]
+            ];
+        }
+        if ( y1 == y2 ) {
+            return [
+                [ b.x1, y1 ],
+                [ b.x2, y2 ]
+            ];
+        }
+
+        k = ( x1 - x2 ) / ( y1 - y2 );
+        kk = 1 / k;
+        bx1y = kk * ( bx1 - x1 ) + y1;
+        bx2y = kk * ( bx2 - x1 ) + y1;
+        by1x = k * ( by1 - y1 ) + x1;
+        by2x = k * ( by2 - y1 ) + x1;
+
+        var inc = [];
+        if ( inRange( bx1y, by1, by2 ) ) {
+            inc.push( [ bx1, bx1y ] );
+        }
+        if ( inRange( bx2y, by1, by2 ) ) {
+            inc.push( [ bx2, bx2y ] );
+        }
+        if ( inRange( by1x, bx1, bx2 ) ) {
+            inc.push( [ by1x, by1 ] );
+        }
+        if ( inRange( by2x, bx1, bx2 ) ) {
+            inc.push( [ by2x, by2 ] );
+        }
+        if ( inc.length > 1 ) {
+            return inc;
+        }
+    }
 } );
 
 kc.ChartsConfig = (function(){
@@ -7140,141 +7173,148 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	}
 } );
 
-var RadarData = kc.RadarData = kity.createClass( 'RadarData', {
-    base: kc.Data
-<<<<<<< HEAD
-=======
+var HorizonData = kc.HorizonData = kity.createClass( 'HorizonData', {
+    base: kc.Data,
+    format: function ( format ) {
+        var origin = this.origin;
+        if ( format === undefined ) {
+            return origin;
+        } else if ( format === 'col' ) {
+            //返回每项属性的最大和最小值
+            var series = data.series;
+            var result = {};
+            var dividecount = 0;
+            var ranges = [];
+            var labels = [];
+            for ( var i = 0; i < origin.categories.length; i++ ) {
+                ranges.push( {
+                    max: 0,
+                    min: 0
+                } );
+            }
+            for ( var key in series ) {
+                labels.push( key );
+                dividecount++;
+                var s = series[ key ];
+                for ( var j = 0; j < s.length; j++ ) {
+                    var sa = s[ j ].args;
+                    for ( var k = 0; k < origin.categories.length; k++ ) {
+                        if ( parseFloat( sa[ k ] ) > ranges[ k ].max ) {
+                            ranges[ k ].max = sa[ k ];
+                        } else if ( parseFloat( sa[ k ] ) < ranges[ k ].min ) {
+                            ranges[ k ].min = sa[ k ];
+                        }
+                    }
+                }
+            }
+            result.dividecount = dividecount;
+            result.ranges = ranges;
+            result.labels = labels;
+            return result;
+        }
+    }
 } );
-var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
+var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
     base: kc.Chart,
     constructor: function ( target, param ) {
         this.callBase( target, param );
-        //add chart elements
-        this.addElement( "net", new kc.ElementList() );
-        this.addElement( "items", new kc.ElementList() );
-        this.addElement( "circles", new kc.ElementList() );
-        this.addElement( "labels", new kc.ElementList() );
-        this.setData( new kc.RadarData() );
+        this.setData( new kc.HorizonData() );
+        this.addElement( "Lines", new kc.ElementList() );
+        this.addElement( "Axis", new kc.ElementList() );
+        this.addElement( "Cate", new kc.ElementList() );
     },
-    render: function () {
-        var data = this.getData().format();
+    renderChart: function () {
         var colors = this.param.colors;
-        var divide = data.categories.length;
-        var delta = Math.PI * 2 / divide;
-        var net = this.getElement( 'net' );
-        var items = this.getElement( 'items' );
-        var circles = this.getElement( 'circles' );
-        var labels = this.getElement( 'labels' );
-        var lineList = []; //线条数据
-        var circleList = []; //点数据
-        var labelList = []; //标签数据
-        var container = this.container;
+        var data = this.getData().format();
+        var datacol = this.getData().format( 'col' );
+        var labels = datacol.labels;
+        var categories = data.categories;
+        var lLength = labels.length - 1;
+        var container = this.getPaper().container;
         var _width = container.offsetWidth;
         var _height = container.offsetHeight;
-        //计算中点和半径
-        var Cx = _width / 2;
-        var Cy = _height / 2;
-        var R = ( _width < _height ? _width : _height ) / 2 - 50;
-        var step = R / 5;
-        var Angle = 0;
-        //绘制罗圈
-        for ( var j = 0; j < divide; j++ ) {
-            for ( var i = 0; i < 6; i++ ) {
-                var r = step * i;
+        var padding = this.param.padding;
+        var _space = ( _width - padding[ 1 ] - padding[ 3 ] ) / categories.length;
+        var _AxisHeight = _height - padding[ 0 ] - padding[ 2 ]; //y坐标轴的高度
+        var axis = this.getElement( 'Axis' );
+        var lines = this.getElement( 'Lines' );
+        var Cate = this.getElement( 'Cate' );
+        var AxisLines = [];
+        var Polylines = [];
+        var Cates = [];
+        //生成连线和Categories数据
+        var series = data.series;
+        for ( var key in series ) {
+            var s = series[ key ];
+            console.log( labels.indexOf( key ) );
+            Cates.push( {
+                text: key,
+                at: 'left',
+                x: padding[ 3 ] - 20,
+                y: padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength
+            } );
+            for ( var j = 0; j < s.length; j++ ) {
                 var item = {
-                    x1: Cx + r * Math.cos( Angle ),
-                    y1: Cy + r * Math.sin( Angle ),
-                    x2: Cx + r * Math.cos( Angle + delta ),
-                    y2: Cy + r * Math.sin( Angle + delta ),
-                    color: colors.net
+                    points: [
+                        [ padding[ 3 ], padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength ]
+                    ],
+                    color: colors[ labels.indexOf( key ) ] || 'black',
+                    width: 0.3
                 };
-                lineList.push( item );
+                Polylines.push( item );
+                var args = s[ j ].args;
+                for ( var k = 0; k < args.length; k++ ) {
+                    item.points.push(
+                        [ padding[ 3 ] + _space * ( k + 1 ), padding[ 0 ] + ( 1 - args[ k ] / datacol.ranges[ k ].max ) * _AxisHeight ]
+                    );
+                }
             }
-            var item_d = {
-                x1: Cx,
-                y1: Cy,
-                x2: Cx + R * Math.cos( Angle ),
-                y2: Cy + R * Math.sin( Angle ),
-                color: colors.net
-            };
-            lineList.push( item_d );
-            Angle += delta;
+        };
+        for ( var x = 0; x < categories.length; x++ ) {
+            Cates.push( {
+                text: categories[ x ],
+                x: padding[ 3 ] + _space * ( x + 1 ),
+                y: padding[ 0 ] - 20
+            } );
         }
-        net.update( {
-            elementClass: kc.Line,
-            list: lineList,
+        for ( var i = 0; i <= data.categories.length; i++ ) {
+            var item = {
+                x1: padding[ 3 ] + _space * i,
+                y1: padding[ 0 ],
+                x2: padding[ 3 ] + _space * i,
+                y2: _height - padding[ 2 ]
+            };
+            if ( i !== 0 ) {
+                item.max = datacol.ranges[ i - 1 ].max;
+            } else {
+                item.divide = datacol.dividecount;
+            }
+            AxisLines.push( item );
+        }
+        //绘制线
+        axis.update( {
+            elementClass: kc.AxisLine,
+            list: AxisLines,
             fx: false
         } );
-        //绘制对象
-        var itemColors = colors.items;
-        var itemList = [];
-        var series = data.series;
-        for ( var k = 0; k < series.length; k++ ) {
-            var points = [];
-            var attributes = series[ k ].data;
-            for ( var l = 0; l < attributes.length; l++ ) {
-                var r = R * attributes[ l ];
-                var _x = Cx + r * Math.cos( delta * l ),
-                    _y = Cy + r * Math.sin( delta * l );
-                points.push( [ _x, _y ] );
-                circleList.push( {
-                    radius: 5,
-                    x: _x,
-                    y: _y
-                } );
-            }
-            var item = {
-                points: points,
-                color: itemColors[ k ],
-                close: true,
-                fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 )
-            };
-            itemList.push( item );
-        }
-        items.update( {
+        lines.update( {
             elementClass: kc.Polyline,
-            list: itemList
+            list: Polylines,
+            fx: false
         } );
-        circles.update( {
-            elementClass: kc.CircleDot,
-            list: circleList,
-        } );
-        //绘制label
-        for ( var m = 0; m < data.categories.length; m++ ) {
-            var categorie = data.categories[ m ];
-            var item = {
-                text: categorie,
-                x: Cx + ( R + 30 ) * Math.cos( delta * m ),
-                y: Cy + ( R + 30 ) * Math.sin( delta * m ),
-            };
-            labelList.push( item );
-        }
-        labels.update( {
+        Cate.update( {
             elementClass: kc.Label,
-            list: labelList,
+            list: Cates,
+            fx: false
         } );
     },
     update: function () {
-        this.render();
+        this.renderChart();
     }
 } );
 
-var CoffeeData = kc.CoffeeData = kity.createClass( 'CoffeeData', {
-    base: kc.Data,
-    format: function ( colors, chart ) {
-        var list = [];
-        var origin = this.origin;
-        for ( var key in origin ) {
-            var o = origin[ key ];
-            o.x = 20 + ( list.length % 3 ) * 300;
-            o.y = 50 + parseInt( list.length / 3 ) * 200;
-            o.colors = colors;
-            o.chart = chart;
-            list.push( o );
-        }
-        return list;
-    }
->>>>>>> bab716fadac5aad235d9fe60952b1bd95abe4c1a
+var RadarData = kc.RadarData = kity.createClass( 'RadarData', {
+    base: kc.Data
 } );
 var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
     base: kc.Chart,
@@ -8311,7 +8351,6 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
     }
 } );
 
-<<<<<<< HEAD
 var HumanData = kc.HumanData = kity.createClass( 'HumanData', {
     base: kc.Data,
     format: function ( colors, chart ) {
@@ -8330,213 +8369,6 @@ var HumanData = kc.HumanData = kity.createClass( 'HumanData', {
 } );
 var HumanChart = kc.HumanChart = kity.createClass( 'HumanChart', {
     base: kc.Chart,
-=======
-var ForceSimplifyData = kc.ForceSimplifyData = kity.createClass( 'ForceSimplifyData', {
-	base: kc.Data,
-	format: function () {
-		var origin = this.origin;
-		var brandSet = {};
-		var brandList = [];
-		var connectList = [];
-		var classList = [];
-		var otherList = [];
-		//生成List
-		for ( var key in origin ) {
-			var d = origin[ key ];
-			//如果集合中还不存在品牌则将品牌加到集合中
-			if ( d.brand === d.relatedbrand ) {
-				//找到和自身class相同的项并按尺寸插入到合适的位置（降序排列）
-				for ( var index = 0; index < brandList.length; index++ ) {
-					if ( brandList[ index ].brandclass === d.brandclass ) break;
-				}
-				while ( brandList[ index ] && ( brandList[ index ].brandclass === d.brandclass ) && ( parseInt( brandList[ index ].size ) > parseInt( d.relation ) ) ) {
-					index++;
-				}
-				brandList.splice( index, 0, {
-					brand: d.brand,
-					brandclass: d.brandclass,
-					percent: d.percent,
-					percentall: d.percentall,
-					size: d.relation,
-					tags: d.tags,
-					connects: [] //初始化记录联系的数组
-				} );
-				brandSet[ d.brand ] = brandList[ index ];
-			}
-			//记录数据中的相互关联项
-			connectList.push( {
-				brand: d.brand,
-				relatedbrand: d.relatedbrand,
-				relation: d.relation
-			} );
-			if ( classList.indexOf( d.brandclass ) === -1 ) {
-				classList.push( d.brandclass );
-			}
-		}
-		var count = 0;
-		for ( var i = 0; i < connectList.length; i++ ) {
-			if ( connectList[ i ].brand === connectList[ i ].relatedbrand || parseInt( connectList[ i ].relation ) === 0 ) continue;
-			count++;
-			var source = brandSet[ connectList[ i ].brand ];
-			var target = brandSet[ connectList[ i ].relatedbrand ];
-			// if ( !target ) {
-			// 	console.log( connectList[ i ].relatedbrand );
-			// 	continue;
-			// }
-			var connects = source.connects;
-			connects.push( {
-				relatedbrand: target,
-				relation: connectList[ i ].relation
-			} );
-		}
-		//选取每个品类中占比最大的形成一个单独列表
-
-		//console.log( brandList );
-		var topList = [ brandList[ 0 ] ];
-		for ( var i = 1; i < brandList.length; i++ ) {
-			if ( brandList[ i ].brandclass !== brandList[ i - 1 ].brandclass ) {
-				topList.push( brandList[ i ] );
-			}
-		}
-		//console.log( topList );
-		return {
-			brandSet: brandSet,
-			brandList: brandList,
-			classList: classList,
-			connectCount: count,
-			topList: topList
-		};
-	}
-} );
-var ForceSimplifyhart = kc.ForceSimplifyChart = kity.createClass( 'ForceSimplifyhart', {
-	base: kc.Chart,
-	constructor: function ( target, param ) {
-		var me = this;
-		this.callBase( target, param );
-		this.addElement( "connects", new kc.ElementList() );
-		this.addElement( "scatter", new kc.ElementList() );
-		this.setData( new kc.ForceSimplifyData() );
-	},
-	adjustScatter: function () {
-		var scatter = this.getElement( "scatter" );
-		var connects = this.getElement( "connects" );
-		var data = this.getData().format();
-		var param = this.param;
-		var colors = ( function () {
-			var c = {};
-			var cList = data.classList;
-			for ( var i = 0; i < cList.length; i++ ) {
-				var color = param.colors[ i ];
-				c[ cList[ i ] ] = color;
-			}
-			return c;
-		} )();
-		var topList = data.topList;
-		var container = this.container;
-		var _width = container.offsetWidth;
-		var _height = container.offsetHeight;
-		var l = _width < _height ? _width : _height; //求分布的直径
-		var R = l / 3;
-		var cX = _width / 2,
-			cY = _height / 2;
-		var delta = 2 * Math.PI / topList.length,
-			max = delta * ( topList.length - 1 );
-		var curAngle = 0;
-		for ( var i = 0; i < topList.length; i++ ) {
-			var brand = topList[ i ];
-			brand.radius = Math.pow( brand.size + 1, 0.27 );
-			brand.color = colors[ brand.brandclass ];
-			//计算点的位置
-			//brand.x = cX + ( brand.radius * 10 ) * Math.cos( curAngle );
-			//brand.y = cY + ( brand.radius * 10 ) * Math.sin( curAngle );
-			brand.x = cX + R * Math.cos( curAngle );
-			brand.y = cY + R * Math.sin( curAngle );
-			brand.r = R;
-			brand.R = brand.radius * 15;
-			brand.Cx = cX;
-			brand.Cy = cY;
-			brand.line = new kc.Line();
-			brand.label = {
-				at: 'bottom',
-				color: 'black',
-				text: brand.brand
-			},
-			connects.addElement( 'c0' + i, brand.line );
-			brand.line.update( {
-				color: "#ccc",
-				x1: cX,
-				y1: cY,
-				x2: brand.x,
-				y2: brand.y,
-				width: 3
-			} );
-			brand.curAngle = curAngle;
-		}
-		scatter.update( {
-			elementClass: kc.StaticConnectCircleDot,
-			list: topList,
-			fx: false
-		} );
-		var elList = scatter.elementList;
-		//过场动画第二阶段
-		var times = 0;
-		var Animate2 = function () {
-			for ( var k = 0; k < elList.length; k++ ) {
-				var brand = topList[ k ];
-				var delta = ( brand.R - brand.r ) / 20;
-				brand.r += delta;
-				//if ( brand.r > brand.R ) brand.r = brand.R;
-				brand.x = cX + brand.r * Math.cos( brand.curAngle );
-				brand.y = cY + brand.r * Math.sin( brand.curAngle );
-				elList[ k ].setPosition( brand.x, brand.y );
-				brand.line.update( {
-					x2: brand.x,
-					y2: brand.y
-				} );
-			}
-			times++;
-			if ( times < 21 )
-				requestAnimationFrame( Animate2 );
-		};
-		var speed = 0;
-		//过场动画第一阶段
-		var Animate1 = function () {
-			for ( var j = 0; j < elList.length; j++ ) {
-				var brand = topList[ j ];
-				if ( brand.curAngle >= delta * j ) continue;
-				brand.curAngle += Math.PI / 45 * speed;
-				if ( brand.curAngle > delta * j ) brand.curAngle = delta * j;
-				brand.x = cX + R * Math.cos( brand.curAngle );
-				brand.y = cY + R * Math.sin( brand.curAngle );
-				elList[ j ].setPosition( brand.x, brand.y );
-				brand.line.update( {
-					x2: brand.x,
-					y2: brand.y
-				} );
-			}
-			speed += 0.5;
-			if ( topList[ topList.length - 1 ].curAngle < max ) requestAnimationFrame( Animate1 );
-			else {
-				Animate2();
-			}
-		}
-		Animate1();
-	},
-	update: function ( args ) {
-		for ( var key in args ) {
-			this.param[ key ] = args[ key ];
-		}
-		this.adjustScatter();
-		//this.renderLegend();
-	}
-} );
-
-(function(exports){
-
-var KityCharts = exports.KityCharts = kc.KityCharts = kity.createClass( 'KityCharts', {
-    base : kc.Chart,
-
->>>>>>> bab716fadac5aad235d9fe60952b1bd95abe4c1a
     constructor: function ( target, param ) {
         this.callBase( target, param );
         //add chart elements
