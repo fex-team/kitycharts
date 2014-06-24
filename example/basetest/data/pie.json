@@ -1,0 +1,57 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "yAxis": {
+        
+    },
+    "plotOptions": {
+        "pie": {
+            "center": {
+                "x" : 400,
+                "y" : 200
+            },
+            "innerRadius" : 0,
+            "stroke" : {
+                "width" : 0
+            },
+            "labelPosition" : "outside"
+        },
+        "label" : {
+            "enabled" : true,
+            "text" : {
+                "color" : "#333"
+            }
+        }
+    },
+    "legend" : {
+        "enabled" : true
+    },
+    "series": [
+        {
+            "name": "Browsers",
+            "data": [
+                {
+                    "name": "MSIE",
+                    "value": 55.11
+                },
+                {
+                    "name": "Firefox",
+                    "value": 21.63
+                },
+                {
+                    "name": "Chrome",
+                    "value": 11.94
+                },
+                {
+                    "name": "Safari",
+                    "value": 7.15
+                },
+                {
+                    "name": "Opera",
+                    "value": 2.14
+                }
+            ]
+        }
+    ]
+}

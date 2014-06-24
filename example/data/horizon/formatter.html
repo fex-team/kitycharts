@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>horizon</title>
+</head>
+<body>
+	<textarea name="" id="source" cols="30" rows="10">Thomas MUELLER,德国,前锋,100000,82,3,0,3,80%,14,90%,0,0,1,4,20000 Robin VAN PERSIE,荷兰,前锋,90000,166,3,0,6,40%,16,90%,0,0,0,5,18000 Arjen ROBBEN,荷兰,前锋,70000,180,3,0,4,70%,19,80%,0,0,0,6,14000 Karim BENZEMA,法国,前锋,60000,90,2,0,1,40%,23,80%,0,0,0,1,12000 Mario MANDZUKIC,意大利,前锋,80000,90,2,0,0,33%,54,70%,0,0,0,0,16000 Tim CAHILL,澳大利亚,中场,50000,159,2,0,0,38%,40,70%,0,0,2,0,10000 NEYMAR,巴西,前锋,85000,178,2,0,0,90%,16,60%,0,1,6,0,17000 Memphis DEPAY,哥斯达黎加,中场,30000,42,1,1,0,90%,60,50%,0,4,1,0,6000 Joel CAMPBELL,荷兰,中场,20000,90,1,1,0,50%,20,50%,0,1,3,0,4000 Charles ARANGUIZ,智利,中场,5000,154,1,1,0,40%,100,50%,0,6,8,7,1000 Ivan PERISIC,克罗地亚,后卫,60000,168,1,1,1,30%,15,40%,0,12,0,2,12000 Eduardo VARGAS,智利,后卫,40000,173,1,1,4,10%,13,40%,0,8,0,4,8000 OSCAR,巴西,中场,60000,174,1,1,3,80%,29,40%,0,0,0,0,12000 Alexis SANCHEZ,智利,后卫,10000,180,1,1,0,50%,5,40%,0,0,0,0,2000 Marcos URENA,荷兰,前锋,80000,7,1,0,0,50%,6,38%,0,0,0,0,16000 Haris SEFEROVIC,瑞士,中场,15000,15,1,0,0,60%,14,33%,0,0,12,0,3000 Aleksandr KERZHAKOV,法国,后卫,70000,19,1,0,0,30%,19,30%,0,11,2,1,14000 Vedad IBISEVIC,波黑,后卫,40000,21,1,0,0,40%,23,30%,0,4,4,8,8000 Jean BEAUSEJOUR,智利,后卫,3000,22,1,0,1,70%,24,10%,0,2,1,2,600 Iker Casillas,西班牙,守门员,120000,180,0,0,0,0%,0,0%,50,0,0,4,24000</textarea>	
+	<textarea name="" id="target" cols="30" rows="10"></textarea>
+</body>
+<script>
+	(function(){
+		// 球员热度	上场时间(分钟）	进球数	助攻数	越位数	射门成功率	传球数	传球成功率 	扑救数	抢断数	犯规次数	被犯规次数	贴吧粉丝数
+		var sourceVal = document.getElementById('source').value;
+		var items = sourceVal.replace(/0 /g,'0+').split("+");
+		var contriesMap = {};
+		for(var i = 0;i < items.length;i ++){
+			var record = items[i].split(',');
+			var contry = record[1];
+			if(!contriesMap[contry])contriesMap[contry]=[];
+			var contryList = contriesMap[contry];
+			var item = {
+				name:record[0],
+				position:record[2],
+				args:record.slice(3)
+			}
+			contryList.push(item);
+		}
+		var target = document.getElementById('target');
+		target.value = JSON.stringify(contriesMap);
+	})();
+</script>
+</html>

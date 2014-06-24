@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>探星第4模块</title>
+        <script src="js/kity.min.js"></script>
+        <script src="../../build.js"></script>
+        <script src="js/jquery-2.1.0.min.js"></script>
+        <style>
+            .container {
+                width: 500px;
+                height: 400px;
+                /*background: #EEE;*/
+            }
+
+            #simplerelation{
+                width: 800px;
+                height: 800px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="scatter" class="container"></div>
+        <div id="simplerelation" cplass="container"></div>
+    </body>
+    <script>
+        var scatter = new kc.BaseScatterChart( 'scatter', {
+            color : [ '#356893','#3f7bad','#4c92cc','#58a3e2','#63b4f8','#98d1ff' ]//设定基本颜色
+        } );
+
+        scatter.update();
+   
+        $.ajax({
+            url: 'data/scatter.json',
+            success: function( data ) {
+
+                // 不设置即为默认tooltip
+                data.interaction = {
+                    onCircleHover : function( info, circle ){
+
+                        console.log( info, circle );
+
+                    }
+                };
+
+                scatter.update( data ); 
+
+            }
+        });
+
+
+        var relation = new kc.SimpleRelationChart( 'simplerelation', {
+            color : [ 'rgb(31, 119, 180)', 'rgb(174, 199, 232)', 'rgb(255, 127, 14)', 'rgb(255, 187, 120)', 'green' ],
+            distance : 200,
+            radius : 30
+        } );
+
+        relation.update();
+   
+        $.ajax({
+            url: 'data/simplerelation.json',
+            success: function( data ) {
+
+                relation.getData().update(data);
+
+            }
+        });
+    </script>
+</html>

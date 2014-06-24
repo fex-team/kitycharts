@@ -49,7 +49,11 @@ var dependience = [
     'src/component/Map.js',
     'src/component/Rectage.js',
     'src/component/CoffeeCup.js',
+<<<<<<< HEAD
     'src/component/HumanBody.js',
+=======
+    'src/component/AxisLine.js',
+>>>>>>> bab716fadac5aad235d9fe60952b1bd95abe4c1a
 
     'src/config/ChartsConfig.js',
     'src/config/base.js',
@@ -93,6 +97,7 @@ var dependience = [
 
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
+    'src/charts/HorizonChart.js',
     'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
     'src/charts/ChinaMapChart.js',
