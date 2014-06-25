@@ -1,4 +1,5 @@
-kc.Config.area = {
+
+kc.ChartsConfig.add('area', {
 
     plotOptions : {
 
@@ -6,10 +7,10 @@ kc.Config.area = {
             width : 2,
             dash : null,
 
-	        label : {
-	        	enabled : true,
-	            radius : 3
-	        },
+            label : {
+                enabled : true,
+                radius : 3
+            },
 
             fill : {
                 grandientStopOpacity : 0.5
@@ -19,4 +20,4 @@ kc.Config.area = {
 
     }
     
-};
+});

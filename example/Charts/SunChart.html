@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Bar Chart</title>
+        <title>Sun Chart</title>
 
 
         <script src="../../kity/dist/kity.min.js"></script>
@@ -12,58 +12,113 @@
         <style>
             #container {
                 position: absolute;
-                left: 10px;
-                top: 10px;
-                right: 10px;
-                height: 400px;
+                left: 80px;
+                top: 0px;
+                right: 80px;
+                /*height: 600px;*/
+                bottom: 0px;
                 /*background: #EEE;*/
+            }
+
+            #path{
+                line-height: 14px;
+                font-size: 12px;
+            }
+
+            #path span{
+                margin-left: 10px;
+            }
+
+            .step{
+                display: inline-block;
+                padding: 8px;
+                color: #FFF;
+                margin: 3px 1px;
+                font-size: 12px;
+                border-radius: 3px;
             }
         </style>
     </head>
     <body>
-        <div id="legend"></div>
+        <div id="path"></div>
         <div id="container">
             
         </div>
     </body>
     <script src="../convertor/sun/convertor.js"></script>
     <script>
+        var w = $('#container').width(),
+            h = $('#container').height();
+
+        var unit = Math.min(w, h)/(7*2);
+
+        // var colorMap = {
+        //         home : "#324d5d",
+        //         product : "#3fb39d",
+        //         search : "#f0ca3e",
+        //         account : "#e47a36",
+        //         other : "#e14744",
+        //         end : "#bbbbbb"
+        //     };
+
+        var colorMap = {
+                home : "#e14744",
+                product : "#e47a36",
+                search : "#f0ca3e",
+                account : "#3fb39d",
+                other : "#324d5d",
+                end : "#bbbbbb"
+            };
+
         var sunchart = new kc.SunChart( 'container', {
-            color : {
-                Coolpad : "#5485d4",
-                ZTE :  "#7c615b",
-                Oppo :  "#e07832",
-                Meizu :  "#e07832",
-                Vivo :  "#a270d3",
-                iPhone : "#bbbbbb"
-            },
+            color : colorMap,
+            inner : unit * 1.5,
+            outer : unit * 2.3,
+            increment : unit * 0.6,
             defaultColor : "#808080",
             center : {
-                x : 200,
-                y : 150
+                x : w/2,
+                y : h/2
             },
             onHover : function( path ){
                 var str = path.map(function( p, i ){
-                    return p.name
-                }).reverse().join('>');
+                    return '<div class="step" style="background-color:' + colorMap[ p.name ] + '">' + p.name + '</div>';
+                }).join('');
 
-                $('#legend').html( str );
+                $('#path').html( str + '<span>' +( path[path.length-1].weight * 100 ).toFixed(3) + '%</span>' );
+
             }
         } );
 
         sunchart.update();
 
         $.ajax({
-            url: '../data/sun/sun.json',
-            // url: '../data/sun/small.txt',
+            url: '../data/sun/final.json',
+            // url: '../data/sun/big.txt',
             // dataType : 'text',
             success: function( data ) {
-                // console.log(data);
                 // var data = convert2Standard( data );
+                // console.log( JSON.stringify(data) );
                 sunchart.getData().update( data );
             }
         });
 
+        function addLegend(){
+            var legend = $('<div></div>').addClass('path').css({
+                position : 'absolute',
+                top : '100px',
+                left : '0px',
+                width : '40px'
+            }).appendTo(document.body);
+
+            var html = '';
+            for( var i in colorMap ){
+                html += '<div class="step" style="background-color:' + colorMap[ i ] + '">' + i + '</div>';
+            }
+            legend.html(html);
+        }
+
+        addLegend();
 
     </script>
 </html>

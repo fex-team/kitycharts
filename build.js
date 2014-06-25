@@ -43,15 +43,16 @@ var dependience = [
     'src/component/Pie.js',
     'src/component/CircleDot.js',
     'src/component/ConnectCircleDot.js',
-    'src/component/StaticConnectCircleDot.js',
     'src/component/Mesh.js',
     'src/component/Categories.js',
     'src/component/Marquee.js',
     'src/component/Map.js',
     'src/component/Rectage.js',
     'src/component/CoffeeCup.js',
+    'src/component/HumanBody.js',
     'src/component/AxisLine.js',
 
+    'src/config/ChartsConfig.js',
     'src/config/base.js',
     'src/config/bar.js',
     'src/config/column.js',
@@ -59,7 +60,7 @@ var dependience = [
     'src/config/area.js',
     'src/config/pie.js',
     'src/config/scatter.js',
-    'src/config/ChartsConfig.js',
+    
 
     'src/formatter/chartData.js',
     'src/formatter/scatterData.js',
@@ -96,15 +97,13 @@ var dependience = [
     'src/charts/HorizonChart.js',
     'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
-    'src/charts/KityCharts.js',
     'src/charts/ChinaMapChart.js',
 
     'src/charts/PieChart.js',
     'src/charts/SunChart.js',
     'src/charts/Treemap.js',
     'src/charts/ScatterChart.js',
-    'src/charts/ForceSimplifyChart.js',
-    'src/charts/KityCharts.js'
+    'src/charts/HumanChart.js'
 ];
 
 function nodeBuild() {

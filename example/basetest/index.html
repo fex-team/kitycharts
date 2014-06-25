@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>探星第3模块</title>
+        <title>基础图表集合</title>
         <script src="js/kity.min.js"></script>
         <script src="../../build.js"></script>
         <script src="js/jquery-2.1.0.min.js"></script>
@@ -43,6 +43,9 @@
     </head>
     <body>
         <div class="container">
+
+            <div id="singlebar_simple" class="chart-container"></div>
+
             <h2>Pie Chart</h2>
             <div id="pie" class="chart-container"></div>
 
@@ -64,6 +67,20 @@
     </body>
     <script>
         var colors = [ '#df6164', '#CB8552', '#F1CB8A', '#EAD59E', '#86C397' ];
+
+
+        // 最简化参数
+        var singlebar_simple = new kc.BarChart( 'singlebar_simple', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/single-bar-simple.json',
+            success: function( data ) {
+                singlebar_simple.update( data );
+            }
+        });
+        // 最简化参数
+
 
         var pie = new kc.PieChart( 'pie', {
             color : colors

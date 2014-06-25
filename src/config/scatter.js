@@ -1,4 +1,4 @@
-kc.Config.scatter = {
+kc.ChartsConfig.add('scatter', {
 
     plotOptions : {
 
@@ -9,4 +9,4 @@ kc.Config.scatter = {
         
     }
     
-};
+});

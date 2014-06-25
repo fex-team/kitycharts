@@ -7,10 +7,14 @@
     "xAxis": {
         "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
         "ticks" : {
-            "enabled" : false
+            "enabled" : true,
+            "dash" : null,
+            "value": 0,
+            "width": 4,
+            "color": "red"
         },
         "margin" : {
-            "right" : 10,
+            "right" : 60,
             "left" : 60
         },
 
@@ -18,12 +22,12 @@
             "arrow" : false
         },
         "padding" : {
-            "left" : 20,
-            "right" : 20
+            "left" : 40,
+            "right" : 40
         },
         "label" : {
             "enabled" : true,
-            "rotate" : -90
+            "rotate" : 0
         },
         "min" : 0
     },
@@ -48,7 +52,7 @@
     "plotOptions" : {
 
         "column" : {
-            "width" : 15,
+            "width" : 35,
             "margin": 3,
             "label" : {
                 "enabled" : true
@@ -69,7 +73,7 @@
     },
 
     "interaction" : {
-        "onStickHover" : null
+        "onStickHover" : ""
     },
 
     "series": [

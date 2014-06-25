@@ -1,0 +1,14 @@
+{
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ]
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [15, 23, 4, 7, 2]
+        }
+    ]
+
+}

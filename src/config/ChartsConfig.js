@@ -1,101 +1,28 @@
-var ChartsConfig = kc.ChartsConfig = {
+kc.ChartsConfig = (function(){
 
-    defaultConfigs : {
+    var _configs = {};
 
-        base    : kc.Config.base,
-        area    : kc.Config.area,
-        line    : kc.Config.line,
-        bar     : kc.Config.bar,
-        column  : kc.Config.column,
-        pie  : kc.Config.pie,
-        scatter : kc.Config.scatter
-    },
-
-    init : function(){
-        var base = this.defaultConfigs.base, mix;
-        for( var i in this.defaultConfigs ){
-            if( i !== 'chart' ){
-                mix = kity.Utils.deepExtend( base, this.defaultConfigs[ i ] );
-            }
-        }
-
-        return kity.Utils.copy( mix );
-    },
-
-    setCoordinateConf : function( conf, index ) {
-        var reuslt = {},
-            components = [];
-
-        var xAxis = conf.xAxis,
-            yAxis = conf.yAxis,
-            tmp;
-
-        // 组件
-        xAxis.axis.enabled  && components.push( 'xAxis' );
-        xAxis.ticks.enabled && components.push( 'xMesh' );
-        xAxis.label.enabled && components.push( 'xCat' );
-        yAxis.axis.enabled  && components.push( 'yAxis' );
-        yAxis.ticks.enabled && components.push( 'yMesh' );
-        yAxis.label.enabled && components.push( 'yCat' );
-        reuslt.components = components;
-
-        // 外部空隙
-        var xm = xAxis.margin,
-            ym = yAxis.margin;
-        reuslt.margin = {
-            left   : xm.left || 0,
-            right  : xm.right || 0,
-            top    : ym.top || 0,
-            bottom : ym.bottom || 0
-        };
-
-        // 内部空隙
-        var xp = xAxis.padding,
-            yp = yAxis.padding;
-        reuslt.padding = {
-            left   : xp.left || 0,
-            right  : xp.right || 0,
-            top    : yp.top || 0,
-            bottom : yp.bottom || 0
-        };
-
-        // 指定刻度最小值
-        var minX = kity.Utils.queryPath('xAxis.min', conf);
-        if( kity.Utils.isNumber( minX ) ){
-            reuslt['minX'] = minX;
-        }
-        var minY = kity.Utils.queryPath('yAxis.min', conf);
-        if( kity.Utils.isNumber( minY ) ){
-            reuslt['minY'] = minY;
-        }
-
-        // 指定范围
-        conf.rangeX && (reuslt.rangeX = conf.rangeX);
-        conf.rangeY && (reuslt.rangeY = conf.rangeY);
-
-        // label位置
-        reuslt.yLabelsAt = yAxis.label.at || ( index > 0 ? "right" : "left" );
-        reuslt.labelMargin = yAxis.label.margin || 10;
-
-        reuslt.xLabelRotate = xAxis.label.rotate;
-        reuslt.yLabelRotate = yAxis.label.rotate;
-
-        reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
-        reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
-
-
-        var confCopy = kity.Utils.copy( conf );
-
-        // categories 判断
-        if( confCopy.yAxis.inverted ){
-            confCopy.yAxis.categories = confCopy.xAxis.categories;
-            delete( confCopy.xAxis.categories );
-        }else{
-            delete( confCopy.yAxis.categories );
-        }
-
-        reuslt.dataSet = confCopy;
-        return reuslt;
+    function add( key, val ){
+        _configs[key] = val;
     }
-    
-};
+
+    function remove( key ){
+        delete _configs[key];
+    }
+
+    function init( type ){
+        var base = kity.Utils.copy(_configs.base), mix;
+
+        if( type in _configs ){
+            mix = kity.Utils.deepExtend( base, _configs[ type ] );
+        }
+
+        return  mix;
+    }
+
+    return {
+        add : add,
+        init : init
+    }
+
+})();

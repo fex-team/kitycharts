@@ -1,7 +1,7 @@
 {
 
     "chart": {
-        "type": "bar"
+        "type": "column"
     },
 
     "xAxis": {
@@ -11,19 +11,15 @@
         },
         "margin" : {
             "right" : 60,
-            "left" : 80
+            "left" : 60
         },
 
         "axis" : {
-            "enabled" : false,
             "arrow" : false
         },
         "padding" : {
-            "left" : 0,
-            "right" : 50
-        },
-        "label" : {
-            "enabled" : false
+            "left" : 40,
+            "right" : 40
         },
         "min" : 0
     },
@@ -41,40 +37,37 @@
             "enabled" : false
         },
         "padding" : {
-            "top" : 30,
-            "bottom" : 30
+            "top" : 10,
+            "bottom" : 0
         },
-        "stacked" : 0,
-        "inverted" : true
+        "stacked" : true
     },
 
     "plotOptions" : {
 
-        "bar" : {
-            "width" : 10,
-            "margin": 3
+        "column" : {
+            "width" : 35,
+            "margin": 1
         }
 
-    },
-
-    "legend" : {
-        "enabled" : true
-    },
-
-    "interaction" : {
-        "onStickHover" : ""
     },
 
     "series": [
         {
             "name": "John",
-            "data": [15, 23, 4, 7, 2]
+            "data": [5, 3, 4, 7, 2]
         }, {
             "name": "Joe",
-            "data": [13, 24, 4, 2, 5]
+            "data": [3, 4, 4, 2, 5]
         }, {
             "name": "Jane",
-            "data": [12, 25, 6, 2, 1]
+            "data": [2, 5, 6, 2, 1]
+        }, {
+            "name": "Janet",
+            "data": [3, 0, 4, 4, 3]
+        }, {
+            "name": "Marry",
+            "data": [4, 1, 2, 3, 5]
         }
     ]
 

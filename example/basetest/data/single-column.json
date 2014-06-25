@@ -1,0 +1,44 @@
+{
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ]
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 35,
+            "margin": 3,
+            "label" : {
+                "enabled" : true
+            }
+        },
+
+        "label" : {
+            "enabled" : true,
+            "text" : {
+                "margin" : 12
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : ""
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [15, 23, 4, 7, 2]
+        }
+    ]
+
+}
+
+
+

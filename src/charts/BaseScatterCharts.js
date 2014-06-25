@@ -7,6 +7,7 @@ var BaseScatterChart = kc.BaseScatterChart = kity.createClass( 'BaseScatterChart
     base: kc.Chart,
 
     constructor: function ( target, param ) {
+        this.chartType = 'scatter';
         this.callBase( target, param );
         this.config = this.param;
         this.setData( new kc.ChartData( param ) );
@@ -32,7 +33,7 @@ var BaseScatterChart = kc.BaseScatterChart = kity.createClass( 'BaseScatterChart
         data = this.data.format();
         this.config = kity.Utils.deepExtend( base, data );
         
-        coordConf = kc.ChartsConfig.setCoordinateConf( this.config );
+        coordConf = this.coordinate.setCoordinateConf( this.config );
 
         this.coordinate.update( coordConf );
         this.getPlots().update( this.coordinate, this.config );
