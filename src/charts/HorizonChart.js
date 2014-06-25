@@ -6,7 +6,7 @@ var HorizonData = kc.HorizonData = kity.createClass( 'HorizonData', {
             return origin;
         } else if ( format === 'col' ) {
             //返回每项属性的最大和最小值
-            var series = data.series;
+            var series = origin.series;
             var result = {};
             var dividecount = 0;
             var ranges = [];
@@ -71,7 +71,6 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
         var series = data.series;
         for ( var key in series ) {
             var s = series[ key ];
-            console.log( labels.indexOf( key ) );
             Cates.push( {
                 text: key,
                 at: 'left',
@@ -83,14 +82,14 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
                     points: [
                         [ padding[ 3 ], padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength ]
                     ],
-                    color: colors[ labels.indexOf( key ) ] || 'black',
-                    width: 0.3
+                    color: colors[ parseInt( labels.indexOf( key ) / 4 ) ],
+                    width: 1.5
                 };
                 Polylines.push( item );
                 var args = s[ j ].args;
                 for ( var k = 0; k < args.length; k++ ) {
                     item.points.push(
-                        [ padding[ 3 ] + _space * ( k + 1 ), padding[ 0 ] + ( 1 - args[ k ] / datacol.ranges[ k ].max ) * _AxisHeight ]
+                        [ padding[ 3 ] + _space * ( k + 1 ), padding[ 0 ] + ( 1 - ( args[ k ] || 0 ) / datacol.ranges[ k ].max ) * _AxisHeight ]
                     );
                 }
             }
