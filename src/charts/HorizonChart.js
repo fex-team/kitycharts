@@ -48,6 +48,27 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
         this.addElement( "Axis", new kc.ElementList() );
         this.addElement( "Cate", new kc.ElementList() );
     },
+    highlightLines: function ( args ) {
+        var key, val;
+        for ( var k in args ) {
+            key = k;
+            val = args[ key ];
+            break;
+        }
+        var lines = this.getElement( 'Lines' ).elementList;
+        for ( var i = 0; i < lines.length; i++ ) {
+            var param = lines[ i ].param;
+            if ( param[ key ] === val ) {
+                lines[ i ].update( {
+                    width: 2,
+                    opacity: 1
+                } );
+            }
+        }
+    },
+    unhighlightLines: function () {
+
+    },
     renderChart: function () {
         var colors = this.param.colors;
         var data = this.getData().format();
@@ -84,7 +105,11 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
                     ],
                     color: colors[ parseInt( labels.indexOf( key ) / 4 ) ],
                     width: 1,
-                    opacity: 0.5
+                    opacity: 0.05,
+                    contry: key,
+                    position: s[ j ].position,
+                    name: s[ j ].name,
+                    englishname: s[ j ].englishname,
                 };
                 Polylines.push( item );
                 var args = s[ j ].args;
