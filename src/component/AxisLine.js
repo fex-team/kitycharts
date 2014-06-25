@@ -73,7 +73,9 @@ var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
                 ];
                 drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
                 drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
-                this.canvas.addShape( new kity.Text( base * i ).setX( x1 - 10 ).setY( y2i + 6 ).setTextAnchor( 'end' ) );
+                this.canvas.addShape( new kity.Text( ( base * i ).toLocaleString() ).setX( x1 - 10 ).setY( y2i + 6 ).setTextAnchor( 'end' ).setStyle( {
+                    'font-size': '12px'
+                } ) );
             }
         } else {
             var length = y2 - y1;

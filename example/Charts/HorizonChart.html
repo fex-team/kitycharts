@@ -13,10 +13,10 @@
         </div>
     </body>
     <script>
-        // var colors = ["#305cb0","#95599e","#e01e14","#219bf2","#f08700","#75b219","#9cc0ef",
-        //               "#bfc4b4","#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
-        //               "#aeb117","#da92c6"];
-        var colors = ['lightgreen','orange','lightblue','#ff6161','lightgreen','orange','lightblue','#ff6161'];
+        var colors = ["#95599e","#e01e14","#219bf2","#f08700","#75b219","#bfc4b4","#9cc0ef","#305cb0",
+                      "#9993c7","#d28b8b","#5da0e7","#feda00","#8cb6aa","#96989c",
+                      "#aeb117","#da92c6"];
+        // var colors = ['lightgreen','orange','lightblue','#ff6161','lightgreen','orange','lightblue','#ff6161'];
         var chart = new kc.HorizonChart('chart',{colors:colors,padding:[30,30,40,100]});
         $.ajax({
             url: '../data/horizon/HorizonData.json',

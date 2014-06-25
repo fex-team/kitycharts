@@ -83,7 +83,8 @@ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
                         [ padding[ 3 ], padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength ]
                     ],
                     color: colors[ parseInt( labels.indexOf( key ) / 4 ) ],
-                    width: 1.5
+                    width: 1,
+                    opacity: 0.5
                 };
                 Polylines.push( item );
                 var args = s[ j ].args;
