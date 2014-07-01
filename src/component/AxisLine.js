@@ -57,7 +57,6 @@ var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
                     base = base * 2;
                 }
             }
-            console.log( base );
             //绘制顶端的线段
             var bd = [
                 [ x1 - 5, y1 ],

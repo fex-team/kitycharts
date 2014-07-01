@@ -27,7 +27,7 @@
             url: '../data/horizon/HorizonData.json',
             dataType: 'json',
             success: function( data ) {
-                //d = simpleData;
+                console.log(data);
                 d = data;
                 chart.getData().update(d);
             }
