@@ -41,17 +41,17 @@ var Clock = kc.Clock = kity.createClass( "Clock", {
 		var selfparam = this.param;
 
 		var circlePathData = "M44.981,0.301c-17.978,0-33.575,10.174-41.362,25.075c-0.113,0.29-0.253,0.567-0.417,0.83 c-0.082,0.165-0.164,0.33-0.246,0.495c-0.031,0.079-0.059,0.159-0.094,0.236l0.143,0.068c-0.069,0.127-0.135,0.256-0.215,0.377 c-0.144,0.43-0.32,0.846-0.575,1.218c-1.429,4.859-3.168,13.391,0.487,17.97C7.996,53.202,15.635,31.68,15.635,31.68l-0.244-0.135 c5.668-10.756,16.936-18.102,29.94-18.102c18.697,0,33.853,15.157,33.853,33.853S64.028,81.15,45.331,81.15 c-9.524,0-18.123-3.939-24.275-10.269c-3.431,2.491-7.767,4.337-13.115,4.406c8.525,11.125,21.941,18.305,37.039,18.305 c25.761,0,46.645-20.884,46.645-46.645C91.626,21.185,70.742,0.301,44.981,0.301z";
-		this.clockedge = new kity.Path().setPathData( circlePathData );
+		this.clockedge = new kity.Path().setPathData( circlePathData ).translate( -47, -47 );
+		this.armS = new kity.Rect().setWidth( 7 ).setHeight( 30 ).translate( -4, -20 ).setRadius( 3 );
+		this.armL = new kity.Rect().setWidth( 7 ).setHeight( 40 ).translate( -4, -30 ).setRadius( 3 );
 
-		this.canvas.addShape( this.clockedge );
+		this.canvas.addShapes( [ this.clockedge, this.armL, this.armS ] );
 	},
 
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
-			//updatePies: [ 'innerRadius', 'outerRadius', 'startAngle', 'pieAngle', 'strokeWidth', 'strokeColor' ],
-			updateClockColor: [ 'color' ]
-			//updateLabel: [ 'labelText', 'labelColor', 'labelPosition', 'outerRadius', 'startAngle', 'pieAngle' ],
-			//updateConnectLine: [ 'labelText', 'connectLineWidth', 'connectLineColor', 'labelPosition', 'innerRadius', 'outerRadius', 'startAngle', 'pieAngle' ]
+			updateClockColor: [ 'color' ],
+			updateArms: [ 'circle', 'target', 'total', 'duraction' ]
 		} );
 	},
 
@@ -61,8 +61,26 @@ var Clock = kc.Clock = kity.createClass( "Clock", {
 
 	updateClockColor: function ( color ) {
 		this.clockedge.fill( color );
+		this.armS.fill( color );
+		this.armL.fill( color );
 	},
-
+	updateArms: function ( circle, target, total, duraction ) {
+		//计算长针要转几度
+		var angles = 360 * target / circle;
+		var armS = this.armS;
+		var armL = this.armL;
+		armL.fxRotate( angles, duraction );
+		// var rotate = 0;
+		// var run = function () {
+		// 	rotate += 4;
+		// 	if ( rotate > angles ) {
+		// 		rotate = angles;
+		// 	}
+		// 	armL.setRotate( rotate );
+		// 	if ( rotate < angles ) requestAnimationFrame( run );
+		// };
+		// run();
+	}
 	// updatePies: function ( innerRadius, outerRadius, startAngle, pieAngle, strokeWidth, strokeColor ) {
 
 	// 	this.pie.innerRadius = innerRadius;

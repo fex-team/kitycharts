@@ -13,7 +13,6 @@ var ClockChart = kc.ClockChart = kity.createClass( 'ClockChart', {
         var clocks = this.getElement( "clocks" );
         var data = this.getData().format();
         var list = data.list;
-        console.log( data );
         var colors = this.param.colors;
         for ( var i = 0; i < list.length; i++ ) {
             list[ i ].color = colors[ 0 ];
