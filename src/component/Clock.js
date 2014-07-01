@@ -69,67 +69,7 @@ var Clock = kc.Clock = kity.createClass( "Clock", {
 		var angles = 360 * target / circle;
 		var armS = this.armS;
 		var armL = this.armL;
-		armL.fxRotate( angles, duraction );
-		// var rotate = 0;
-		// var run = function () {
-		// 	rotate += 4;
-		// 	if ( rotate > angles ) {
-		// 		rotate = angles;
-		// 	}
-		// 	armL.setRotate( rotate );
-		// 	if ( rotate < angles ) requestAnimationFrame( run );
-		// };
-		// run();
+		armL.fxRotate( angles, duraction || 1000 );
+		armS.fxRotate( 360 * target / total, duraction || 1000 );
 	}
-	// updatePies: function ( innerRadius, outerRadius, startAngle, pieAngle, strokeWidth, strokeColor ) {
-
-	// 	this.pie.innerRadius = innerRadius;
-	// 	this.pie.outerRadius = outerRadius;
-	// 	this.pie.startAngle = startAngle;
-	// 	this.pie.pieAngle = pieAngle;
-	// 	this.pie.draw();
-	// 	// this.pie.bringTop();
-
-	// 	var pen = new kity.Pen();
-	// 	pen.setWidth( strokeWidth );
-	// 	pen.setColor( strokeColor );
-	// 	this.pie.stroke( pen );
-
-	// },
-
-	// updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, startAngle, pieAngle ) {
-	// 	if ( labelPosition == 'none' ) return;
-
-	// 	var r = labelPosition == 'inside' ? outerRadius - 30 : outerRadius + 50;
-	// 	var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
-
-	// 	this.label.setVisible( true );
-	// 	this.label.update( {
-	// 		text: labelText,
-	// 		color: labelColor,
-	// 		at: 'bottom',
-	// 		margin: 0,
-	// 		x: r * Math.cos( a ),
-	// 		y: r * Math.sin( a )
-	// 	} );
-
-	// },
-
-	// updateConnectLine: function ( labelText, connectLineWidth, connectLineColor, labelPosition, innerRadius, outerRadius, startAngle, pieAngle ) {
-	// 	if ( labelPosition != 'outside' || !labelText ) return;
-
-	// 	var r = outerRadius + 30;
-	// 	var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
-
-	// 	this.connectLine.update( {
-	// 		x1: ( innerRadius + 2 ) * Math.cos( a ),
-	// 		y1: ( innerRadius + 2 ) * Math.sin( a ),
-	// 		x2: r * Math.cos( a ),
-	// 		y2: r * Math.sin( a ),
-	// 		width: connectLineWidth,
-	// 		color: connectLineColor
-	// 	} );
-
-	// }
-
 } );
