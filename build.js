@@ -100,6 +100,7 @@ var dependience = [
     'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
     'src/charts/ChinaMapChart.js',
+    'src/charts/BubbleChart.js',
 
     'src/charts/PieChart.js',
     'src/charts/SunChart.js',
