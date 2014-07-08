@@ -51,6 +51,7 @@ var dependience = [
     'src/component/CoffeeCup.js',
     'src/component/HumanBody.js',
     'src/component/AxisLine.js',
+    'src/component/Clock.js',
 
     'src/config/ChartsConfig.js',
     'src/config/base.js',
@@ -60,7 +61,7 @@ var dependience = [
     'src/config/area.js',
     'src/config/pie.js',
     'src/config/scatter.js',
-    
+
 
     'src/formatter/ChartData.js',
     'src/formatter/ScatterData.js',
@@ -85,6 +86,7 @@ var dependience = [
     'src/charts/StickChart.js', //base - stick
     'src/charts/ColumnChart.js', //base - column
     'src/charts/BarChart.js', //base - bar
+    'src/charts/ClockChart.js',
 
     'src/charts/LinearChart.js', //base - linear
     'src/charts/LineChart.js', //base - line
@@ -98,6 +100,7 @@ var dependience = [
     'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
     'src/charts/ChinaMapChart.js',
+    'src/charts/BubbleChart.js',
 
     'src/charts/PieChart.js',
     'src/charts/SunChart.js',

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Clock</title>
+	<script src="../../kity/dist/kity.min.js"></script>
+    <script src="../../build.js"></script>
+    <script src="../lib/jquery-2.1.0.min.js"></script>
+</head>
+<body>
+	<div id="chart">
+		
+	</div>
+</body>
+<script>
+	(function(){
+		var colors = ['#f2bd3d'];
+		var d = {
+			list:[ {
+	            x: 50,
+	            y: 50,
+	            circle: 1,//长针转一圈代表的数值
+	            target: 2.2,//目标数值
+	            total: 60,//整个表盘刻度代表的数值
+	            duraction:2200//完成刻度所需的时间
+	        }, {
+	            x: 250,
+	            y: 50,
+	            circle: 1,
+	            target: 3,
+	            total: 12,
+	            duraction:1000
+	        }]
+		};
+		var chart = new kc.ClockChart('chart',{
+			colors:colors
+		});
+		chart.getData().update(d);
+	})();
+</script>
+</html>

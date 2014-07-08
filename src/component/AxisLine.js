@@ -47,9 +47,35 @@ var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
             //根据数量级和max的值决定分隔情况
             var base = Math.pow( 10, oomV );
             var n = max / base;
-            var part = n / 5;
+            //var part = n / 5;
             // console.log( part );
-            // console.log( max, oom, upper );
+            if ( ( n < 5 || n > 6 ) && base > 1 ) {
+                base = base / 10;
+                n = n * 10;
+                while ( n > 6 ) {
+                    n = n / 2;
+                    base = base * 2;
+                }
+            }
+            //绘制顶端的线段
+            var bd = [
+                [ x1 - 5, y1 ],
+                [ x1, y1 ]
+            ];
+            drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
+            drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
+            for ( var i = 0; i < n; i++ ) {
+                var y2i = y2 - base * i / max * ( y2 - y1 );
+                var bd = [
+                    [ x1 - 5, y2i ],
+                    [ x1, y2i ]
+                ];
+                drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
+                drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
+                this.canvas.addShape( new kity.Text( ( base * i ).toLocaleString() ).setX( x1 - 10 ).setY( y2i + 6 ).setTextAnchor( 'end' ).setStyle( {
+                    'font-size': '12px'
+                } ) );
+            }
         } else {
             var length = y2 - y1;
             var space = length / ( divide - 1 );
