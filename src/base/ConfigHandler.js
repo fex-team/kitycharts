@@ -27,10 +27,12 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
         while(i < arr.length){
             cur = arr[i];
             p = getPath( i-1, arr );
-            if( !eval('"' + cur + '" in this.' + p ) ){
+            if( !eval('"' + cur + '" in this.' + p ) ){ //属性不存在
                 exp = 'this.' + p + '.' + cur + ' = ' + (i == arr.length-1 ? 'value' : '{}');
-                eval( exp );
+            }else{ //属性存在
+                exp = 'this.' + p + '.' + cur + ' = value';
             }
+            eval( exp );
 
             i++
         }

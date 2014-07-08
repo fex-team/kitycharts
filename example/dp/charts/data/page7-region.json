@@ -1,0 +1,89 @@
+{
+
+    "chart": {
+        "type": "bar"
+    },
+
+    "xAxis": {
+        "categories": [ "广东",  "浙江",  "江苏",  "山东",  "北京",  "上海",  "河北",  "福建",  "四川",  "湖北" ],
+        "ticks" : {
+            "enabled" : true
+        },
+        "margin" : {
+            "right" : 60,
+            "left" : 80
+        },
+        "axis" : {
+            "enabled" : false,
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 0,
+            "right" : 0
+        },
+        "label" : {
+            "enabled" : true
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : true
+        },
+        "padding" : {
+            "top" : 20,
+            "bottom" : 20
+        },
+        "margin" : {
+            "top" : 0,
+            "bottom" : 30
+        },
+        "inverted" : true
+    },
+
+    "plotOptions" : {
+
+        "bar" : {
+            "width" : 15,
+            "margin": 3
+        },
+
+        "label" : {
+            "enabled" : 1,
+            "text" : {
+                "margin" : 7
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : ""
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "color": "#fed35d",
+            "data": [0.109,   0.06,    0.058,   0.057,   0.054,  0.041,   0.04,    0.04,    0.036,   0.035]
+        }
+    ]
+
+}
+
+
+
+

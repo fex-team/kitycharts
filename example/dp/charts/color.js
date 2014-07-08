@@ -1,0 +1,2 @@
+// var colors = [ '#df6164', '#CB8552', '#6c7497', '#EAD59E', '#86C397', '#6abddc', '#ba84c4' ];
+var colors = [ '#eb5867', '#8cd2d8', '#fdbf2d', '#659aa0', '#1ec18e', '#feda75', '#51a2fa', '#064089' ];

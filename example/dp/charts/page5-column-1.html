@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Base Charts</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="singlecolumn" class="chart-container"></div>
+    </body>
+    <script src="color.js"></script>
+    <script>
+        var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
+            color : colors
+        } );
+        $.ajax({
+            url: 'data/page5-solution-all.json',
+            success: function( data ) {
+                singlecolumn.update( data );
+            }
+        });
+
+    </script>
+</html>

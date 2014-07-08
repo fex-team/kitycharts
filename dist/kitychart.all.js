@@ -994,10 +994,12 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
         while(i < arr.length){
             cur = arr[i];
             p = getPath( i-1, arr );
-            if( !eval('"' + cur + '" in this.' + p ) ){
+            if( !eval('"' + cur + '" in this.' + p ) ){ //属性不存在
                 exp = 'this.' + p + '.' + cur + ' = ' + (i == arr.length-1 ? 'value' : '{}');
-                eval( exp );
+            }else{ //属性存在
+                exp = 'this.' + p + '.' + cur + ' = value';
             }
+            eval( exp );
 
             i++
         }
@@ -1362,6 +1364,7 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
             color: 'black',
             dash: null,
             animatedDir: 'y',
+            fxEasing: 'ease',
             factor: 0,
             close: false,
             fill: null
@@ -1397,9 +1400,9 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
         if ( points.length > 0 ) {
             drawer.clear();
             var dir = this.param.animatedDir,
-                xDir = ( dir == undefined || dir == 'x' ),
-                yDir = ( dir == undefined || dir == 'y' );
-
+                xDir, yDir;
+            ( dir == 'x' || dir == 'both' ) && ( xDir = true );
+            ( dir == 'y' || dir == 'both' ) && ( yDir = true );
 
             if ( animatedBeginValueCopy ) {
                 var prevPoints = animatedBeginValueCopy.points;
@@ -3032,7 +3035,7 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
             strokeWidth: 0,
             color: '#62a9dd',
             radius: 0,
-            fxEasing: 'easeOutElastic',
+            fxEasing: 'ease',
             x: 0,
             y: 0
         }, param ) );
@@ -4213,10 +4216,10 @@ kc.ChartsConfig = (function(){
         var base = kity.Utils.copy(_configs.base), mix;
 
         if( type in _configs ){
-            mix = kity.Utils.deepExtend( base, _configs[ type ] );
+            return kity.Utils.deepExtend( base, _configs[ type ] );
+        }else{
+            return  base;
         }
-
-        return  mix;
     }
 
     return {
@@ -5685,7 +5688,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     setConfig : function( param, formatter ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
-            base = kc.ChartsConfig.init( this.chartType ),
+            base = kc.ChartsConfig.init( this.chartType || '' ),
             data, coordConf;
 
         this.config = kity.Utils.deepExtend( base, config ),
@@ -6259,11 +6262,11 @@ var BaseScatterChart = kc.BaseScatterChart = kity.createClass( 'BaseScatterChart
     base: kc.BaseChart,
 
     constructor: function ( target, param ) {
+        this.chartType = 'scatter';
         this.callBase( target, param );
         this.coordinate = this.addElement( 'oxy', new kc.CategoryCoordinate() );
         var plots = this.addElement( 'plots', new kc.ScatterPlots() );
         this.setPlots( plots );
-
     },
 
     update : function( param ){
@@ -7329,7 +7332,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
     },
     render: function () {
         var data = this.getData().format();
-        var colors = this.param.colors;
+        var param = this.param;
+        var colors = param.colors;
         var divide = data.categories.length;
         var delta = Math.PI * 2 / divide;
         var net = this.getElement( 'net' );
@@ -7389,7 +7393,9 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                     _y = Cy + r * Math.sin( delta * l );
                 points.push( [ _x, _y ] );
                 circleList.push( {
-                    radius: 5,
+                    radius: param.circle && param.circle.radius || 5,
+                    fxEasing: param.circle && param.circle.fxEasing || 'ease',
+                    color: itemColors[ k ] || '#7ecffe',
                     x: _x,
                     y: _y
                 } );
@@ -7397,8 +7403,11 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             var item = {
                 points: points,
                 color: itemColors[ k ],
+                fxEasing: 'ease',
                 close: true,
-                fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 )
+                fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 ),
+                animatedDir : 'both',
+                factor : +new Date
             };
             itemList.push( item );
         }
@@ -7406,10 +7415,14 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             elementClass: kc.Polyline,
             list: itemList
         } );
-        circles.update( {
-            elementClass: kc.CircleDot,
-            list: circleList,
-        } );
+
+        if( param.circle && param.circle.enabled ){
+            circles.update( {
+                elementClass: kc.CircleDot,
+                list: circleList,
+            } );
+        }
+
         //绘制label
         for ( var m = 0; m < data.categories.length; m++ ) {
             var categorie = data.categories[ m ];
@@ -7851,7 +7864,7 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
                 } )
                 str = str.reverse().join(' > ');
 
-                var color = new kity.Color(255,204,191);
+                var color = new kity.Color(255, 204, 191);
                 color.set('h', node.parent.weightStart * 200);
                 color.set('s', 80);
                 color.set('l', 75);

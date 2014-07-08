@@ -74,6 +74,10 @@ kc.ChartData = kity.createClass( 'ChartData', {
                 min = all.length > 0 ? Math.min.apply( [], all ) : 0;
                 max = all.length > 0 ? Math.max.apply( [], all ) : 100;
             }
+
+            if( isStacked || isPercentage ){
+                min = 0;
+            }
         }
         
 

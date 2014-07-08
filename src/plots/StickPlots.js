@@ -63,7 +63,7 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
                 stickParam = {
                     // dir: -1,
                     offset : oxy.measureValueRange( bottom, this.valueAxis ) * dir,
-                    color  : this.getEntryColor( stick ),
+                    color  : this.getEntryColor( stick, j ),
                     width  : width,
                     height : height,
                     rotate : rotateAngle,
@@ -75,7 +75,7 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
                 };
 
                 if( opt.label.enabled )
-                    stickParam.label = this.getStickLabelParam( height, tmp, config );;
+                    stickParam.label = this.getStickLabelParam( height, tmp, config );
 
                 stickParam[ this.valueAxis ] = oxy[ measureValueMethod ]( 0 );
                 stickParam[ this.categoryAxis ] = posCategory - left + distance * stick.groupIndex;

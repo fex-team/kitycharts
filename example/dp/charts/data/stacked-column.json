@@ -1,0 +1,77 @@
+{
+
+    "chart": {
+        "type": "column"
+    },
+
+    "xAxis": {
+        "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 60,
+            "left" : 60
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 40,
+            "right" : 40
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 10,
+            "bottom" : 0
+        },
+        "stacked" : true
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 35,
+            "margin": 1
+        }
+
+    },
+
+    "series": [
+        {
+            "name": "John",
+            "data": [5, 3, 4, 7, 2]
+        }, {
+            "name": "Joe",
+            "data": [3, 4, 4, 2, 5]
+        }, {
+            "name": "Jane",
+            "data": [2, 5, 6, 2, 1]
+        }, {
+            "name": "Janet",
+            "data": [3, 0, 4, 4, 3]
+        }, {
+            "name": "Marry",
+            "data": [4, 1, 2, 3, 5]
+        }
+    ]
+
+}
+
+
+

@@ -20,6 +20,7 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
             color: 'black',
             dash: null,
             animatedDir: 'y',
+            fxEasing: 'ease',
             factor: 0,
             close: false,
             fill: null
@@ -55,9 +56,9 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
         if ( points.length > 0 ) {
             drawer.clear();
             var dir = this.param.animatedDir,
-                xDir = ( dir == undefined || dir == 'x' ),
-                yDir = ( dir == undefined || dir == 'y' );
-
+                xDir, yDir;
+            ( dir == 'x' || dir == 'both' ) && ( xDir = true );
+            ( dir == 'y' || dir == 'both' ) && ( yDir = true );
 
             if ( animatedBeginValueCopy ) {
                 var prevPoints = animatedBeginValueCopy.points;

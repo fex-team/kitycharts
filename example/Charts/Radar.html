@@ -7,12 +7,12 @@
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
         <style>
-            #container {
+            #chart {
                 position: absolute;
                 left: 10px;
                 top: 10px;
                 right: 10px;
-                height: 500px;
+                height: 300px;
                 /*background: #EEE;*/
             }
         </style>
@@ -25,20 +25,43 @@
 	<script>
 		(function(){
 			var colors = {
-				items:['#7ecffe'],
+				items:['#7ecffe', 'red'],
 				net:'#ccc'
 			};
+
 			var data = {
 				'categories':['有创新精神','家庭式的','年轻化的','有社会责任感的','有经济实力的','低级趣味','过分关注性感的','老旧传统的'],
 				'series':[
 					{
-						'name':'unknown',
+						'name':'Messi',
 						'data':[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
-					}
+					},
+                    {
+                        'name':'Ronaldo',
+                        'data':[0.5,0.5,0.5,0.8,0.5,0.9,0.5,0.5]
+                    }
 				],
 			};
-			var chart = new kc.RadarChart('chart',{colors:colors});
+			var chart = new kc.RadarChart('chart', { 
+                'colors' : colors
+            });
 			chart.getData().update(data);
+
+
+            data = {
+                'categories':['有创新精神','家庭式的','年轻化的','有社会责任感的','有经济实力的','低级趣味','过分关注性感的','老旧传统的'],
+                'series':[
+                    {
+                        'name':'unknown',
+                        'data':[0.5,0.5,0.5,0.8,0.5,0.9,0.5,0.5]
+                    }
+                ],
+            };
+
+            setTimeout(function(){
+                chart.getData().update(data);
+            }, 1000);
+            
 		})();
 	</script>
 </html>

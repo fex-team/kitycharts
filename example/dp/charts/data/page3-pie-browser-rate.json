@@ -1,0 +1,75 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "yAxis": {
+        
+    },
+    "plotOptions": {
+        "pie": {
+            "center": {
+                "x" : 400,
+                "y" : 200
+            },
+            "innerRadius" : 0,
+            "outerRadius" : 30,
+            "stroke" : {
+                "width" : 0
+            },
+            "labelPosition" : "inside"
+        },
+        "label" : {
+            "enabled" : true,
+            "text" : {
+                "color" : "#333"
+            }
+        }
+    },
+    "legend" : {
+        "enabled" : true,
+        "level" : "data"
+    },
+    "series": [
+        {
+            "name": "Browsers",
+            "data": [
+                {
+                    "name": "Chrome",
+                    "value": 0.431316,
+                    "label": "43%"
+                },
+                {
+                    "name": "IE",
+                    "value": 0.34235902,
+                    "label": "34%"
+                },
+                {
+                    "name": "FireFox",
+                    "value": 0.0207939,
+                    "label": "2%"
+                },
+                {
+                    "name": "Safari",
+                    "value": 0.0399089,
+                    "label": "3%"
+                },
+                {
+                    "name": "Sogou",
+                    "value": 0.0693798,
+                    "label": "6%"
+                },
+                {
+                    "name": "QQ",
+                    "value": 0.0366141,
+                    "label": "3%"
+                },
+                {
+                    "name": "Other",
+                    "value": 0.05711146,
+                    "label": "5%"
+                }
+            ]
+        }
+    ]
+}
+                  

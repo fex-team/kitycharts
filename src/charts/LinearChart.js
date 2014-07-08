@@ -164,6 +164,9 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
     },
 
     processHover : function( xInfo ){
+
+        if( !this.config.interaction.hover.enabled ) return;
+
     	var self = this;
         var pX = xInfo.posX + this.coordinate.param.margin.left;
         var index = xInfo.index;

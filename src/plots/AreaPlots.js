@@ -19,21 +19,22 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
     areas : [],
 
     renderLineByData : function( line ){
-            
+        
+        var offset = line.offsetX || 0;
         if( this.config.yAxis.stacked ){
 
             var p = this.config.yAxis.percentage;
             var offsetType = p ? 'percentageOffset' : 'offset';
             var allOffsetType = p ? 'allPercentageOffset' : 'allOffset';
 
-            var arr1 = this.array2points( line[ offsetType ], line.offsetX || 0 );
+            var arr1 = this.array2points( line[ offsetType ], offset );
             var arr2 = this.array2points( kity.Utils.copy( line[ allOffsetType ][ line.indexInGroup + 1 ] ), offset ).reverse();
 
             pointsArr = arr1.concat( arr2 );
 
         }else{
 
-            pointsArr = this.array2points( line.data, line.offsetX || 0 );
+            pointsArr = this.array2points( line.data, offset );
             var areaPointArr = kity.Utils.copy( pointsArr );
             var oxy = this.coordinate;
             var x0 = oxy.measurePointX( 0 ),
@@ -46,9 +47,9 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
             pointsArr = areaPointArr;
         }   
 
-        for(var i in this.areas){
-            this.canvas.removeShape( this.areas[ i ] );
-        }
+        // for(var i in this.areas){
+        //     this.canvas.removeShape( this.areas[ i ] );
+        // }
 
         var area = this.drawPolygon( pointsArr, line );
         this.areas.push( area );

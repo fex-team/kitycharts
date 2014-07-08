@@ -1,0 +1,88 @@
+{
+
+    "chart": {
+        "type": "column"
+    },
+
+    "xAxis": {
+        "categories": [ "16x9", "16x10", "4x3", "5x4", "8x5", "10x6", "85x48", "other" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 60,
+            "left" : 60
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 40,
+            "right" : 40
+        },
+        "label" : {
+            "enabled" : true,
+            "rotate" : 0
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : true
+        },
+        "label" : {
+            "enabled" : true
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 0,
+            "bottom" : 0
+        }
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 20,
+            "margin": 1,
+            "label" : {
+                "enabled" : true
+            }
+        },
+
+        "label" : {
+            "enabled" : 0,
+            "text" : {
+                "margin" : 12
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : ""
+    },
+
+    "series": [
+        {
+            "name": "屏幕分辨率比例",
+            "data": [0.43300043, 0.2867965, 0.16000181, 0.037989, 0.0354592, 0.0223265, 0.0229577, 0.00107548]
+        }
+    ]
+
+}
+
+
+
+
+
+

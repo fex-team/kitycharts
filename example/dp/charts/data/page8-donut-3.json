@@ -1,0 +1,46 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "plotOptions": {
+        "pie": {
+            "shadow": false,
+            "center": {
+                "x" : 400,
+                "y" : 200
+            },
+            "innerRadius" : 60,
+            "outerRadius" : 80,
+            "incrementRadius" : 30,
+            "stroke" : {
+                "width" : 0
+            }
+        },
+
+        "label" : {
+            "enabled" : false
+        }
+    },
+    "legend" : {
+        "enabled" : false,
+        "level" : "data"
+    },
+    "series": [
+        {
+            "name": "男女比例",
+            "data": [
+                {
+                    "name": "WebGL",
+                    "value": 75,
+                    "label": "75%",
+                    "color": "#ed5665"
+                },
+                {
+                    "name": "",
+                    "value": 25,
+                    "color": "rgba(0, 0, 0, 0.05)"
+                }
+            ]
+        }
+    ]
+}

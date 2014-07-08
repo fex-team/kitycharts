@@ -46,6 +46,10 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
                     v.a + (vv.a - v.a) * t);
             };
 
+        var getColor = function( val ){
+
+        };
+
         var block, defaultColor;
 
         defaultColor = param.defaultColor && new kity.Color(param.defaultColor) || colors[0];
@@ -60,7 +64,10 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
         for (var province in china) {
             block = map.findBlockById(province);
             if (!block) continue;
-            var color = data[province].value ? tweenColor(data[province].value) : defaultColor;
+
+            var pro = data[province];
+            var color = pro.color ? kity.Color.parse(pro.color) : data[province].value ? tweenColor(data[province].value) : defaultColor ;
+
             block.animate({
                 color: color
             });

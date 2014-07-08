@@ -42,7 +42,7 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
 
                 list.push({
 
-                    labelText: opt.label.enabled && entry.angle > 10 ? entry.name : null,
+                    labelText: opt.label.enabled && entry.angle > 10 ? (entry.label ? entry.label : entry.value) : null,
                     labelColor: self.getLabelColor( i == 0 ),
                     labelPosition: lpos ? lpos : i == 0 ? 'inside' : 'none',
 
