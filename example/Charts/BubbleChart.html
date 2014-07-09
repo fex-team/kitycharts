@@ -37,110 +37,36 @@
                 'G':'#f60526',
                 'H':'#4b86fe'
             };
-            var d={
-                list:[
-                    {
-                        date:'2014/6/18',
-                        series:[
-                            {
-                                nation:'巴西',
-                                goal:3,
-                                pass:400,
-                                search:200000,
-                                group:'A'
-                            },
-                            {
-                                nation:'意大利',
-                                goal:2,
-                                pass:450,
-                                search:30000,
-                                group:'D'
-                            },
-                            {
-                                nation:'德国',
-                                goal:4,
-                                pass:200,
-                                search:100000,
-                                group:'G'
-                            }
-                        ]
-                    },
-                    {
-                        date:'2014/6/23',
-                        series:[
-                            {
-                                nation:'巴西',
-                                goal:7,
-                                pass:900,
-                                search:900000,
-                                group:'A'
-                            },
-                            {
-                                nation:'意大利',
-                                goal:2,
-                                pass:1100,
-                                search:150000,
-                                group:'D'
-                            },
-                            {
-                                nation:'德国',
-                                goal:6,
-                                pass:300,
-                                search:250000,
-                                group:'G'
-                            }
-                        ]
-                    },
-                    {
-                        date:'2014/6/14',
-                        series:[
-                            {
-                                nation:'巴西',
-                                goal:3,
-                                pass:400,
-                                search:200000,
-                                group:'A'
-                            },
-                            {
-                                nation:'意大利',
-                                goal:2,
-                                pass:450,
-                                search:30000,
-                                group:'D'
-                            },
-                            {
-                                nation:'德国',
-                                goal:7,
-                                pass:400,
-                                search:300000,
-                                group:'G'
-                            }
-                        ]
-                    }
-                ]
-            };
-			var chart = new kc.BubbleChart('chart',{
-                    mode:'bubble',
-                    date:0,
-                    x:'goal',
-                    y:'pass',
-                    size:'search',
-                    label:'nation',
-                    type:'group',
-                    padding:[20,20,20,20],
-                    colors:colors       
+            var d;
+			$.ajax({
+                url: '../data/bubble/bubble.json',
+                dataType: 'json',
+                success: function( data ) {
+                    console.log(data);
+                    d = {list:data};
+                    var chart = new kc.BubbleChart('chart',{
+                            mode:'bubble',
+                            date:0,
+                            x:'goal',
+                            y:'pass',
+                            size:'search',
+                            label:'nation',
+                            type:'group',
+                            padding:[20,20,20,20],
+                            colors:colors       
+                        });
+                    chart.getData().update(d);
+                    var date = 0;
+                    var interval = 1000;
+                    var bubbleDisplay =  setInterval(function(){
+                        date = (++date)%3;
+                        chart.update({
+                            date:date,
+                            animateInterval:interval
+                        });
+                    },interval);
                 }
-            );
-            chart.getData().update(d);
-            var date = 0;
-            var interval = 1000;
-            var bubbleDisplay =  setInterval(function(){
-                date = (++date)%3;
-                chart.update({
-                    date:date,
-                    animateInterval:interval
-                });
-            },interval);
+            });
 		})();
 	</script>
 </html>
