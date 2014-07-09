@@ -180,6 +180,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
                 animateDuration: param.animateInterval
             } );
         } else if ( param.mode === 'col' ) { //柱状模式
+            var series = list[ date ].series;
 
         } else { //折线图模式
 
