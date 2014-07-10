@@ -24,9 +24,13 @@ var BubbleData = kc.BubbleData = kity.createClass( 'BubbleData', {
                 }
                 List.push( obj );
             }
-            return {
-                list: List
-            };
+            if ( mode !== 'line' ) {
+                return {
+                    list: List
+                };
+            } else {
+                //生成国家-数据列表
+            }
         }
     }
 } );
@@ -52,7 +56,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             size: param.size,
             label: param.label,
             type: param.type
-        } );
+        }, param.mode );
         var colors = param.colors;
         var date = param.date;
         var horizonLines = [];
@@ -172,7 +176,6 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         } else if ( param.mode === 'col' ) { //柱状模式
             var series = list[ date ].series;
             var colWidth = chartWidth / series.length; //每一列占据的列宽
-            console.log( colWidth, series.length );
             var colList = [];
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
@@ -194,6 +197,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             var labelMap = {};
             for ( var i = 0; i < list.length; i++ ) {
                 var item = list[ i ];
+                console.log( list[ i ] );
             }
         }
         items.update( {

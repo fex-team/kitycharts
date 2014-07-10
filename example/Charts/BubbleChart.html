@@ -8,7 +8,7 @@
         <script src="../lib/jquery-2.1.0.min.js"></script>
         <style>
             #chart{
-                width: 600px;
+                width: 800px;
                 height: 600px;
             }
         </style>
@@ -69,7 +69,7 @@
                     var bubbleDisplay;
                     var startInterval = function(){
                         bubbleDisplay =  setInterval(function(){
-                            date = (++date)%3;
+                            date = (++date)%data.length;
                             chart.update({
                                 mode:curMode,
                                 date:date,
