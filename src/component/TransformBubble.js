@@ -38,7 +38,8 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
         return kity.Utils.extend( this.callBase(), {
             'updateShape': [ 'shape', 'color', 'strokeColor', 'strokeWidth' ],
             'updateRadius': [ 'radius' ],
-            'updateRect': [ 'width', 'height' ]
+            'updateRect': [ 'width', 'height' ],
+            'updatePoints': [ 'points' ]
         } );
     },
     updateShape: function ( shape, color, strokeColor, strokeWidth ) { //更新形状
@@ -54,9 +55,11 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
             this.shape = new kity.Rect();
             this.canvas.addShapes( [ this.shape ] );
             break;
-        default:
+        case 'line':
             this.shape = new kity.Polyline();
             this.canvas.addShapes( [ this.shape ] );
+            break;
+        default:
             break;
         }
         var pen = new kity.Pen();
@@ -73,11 +76,20 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
         } );
     },
     updateRadius: function ( radius ) {
-        if ( !this.shape ) return false;
+        if ( !this.shape || !this.shape.setRadius ) return false;
         this.shape.setRadius( radius );
     },
     updateRect: function ( width, height ) {
         this.shape.setWidth( width ).setHeight( height );
+    },
+    updatePoints: function ( points ) {
+        var items = [];
+        for ( var i = 0; i < points.length; i++ ) {
+            var item = points[ i ];
+            items.push( new kity.Point( item.x, item.y ) );
+        }
+        console.log( items );
+        this.shape.setPoints( items );
     },
     getAnimatedParam: function () {
         return [ 'radius', 'x', 'y' ];

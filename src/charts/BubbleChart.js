@@ -48,7 +48,8 @@ var BubbleData = kc.BubbleData = kity.createClass( 'BubbleData', {
                 }
                 return {
                     xCates: xCates,
-                    list: Map
+                    list: List,
+                    map: Map
                 }
             }
         }
@@ -211,13 +212,28 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
                 };
                 bubbleList.push( obj );
             }
-            //console.log( bubbleList );
         } else { //折线图模式
-            //转换出国家-数据对应列表
-            var labelMap = {};
-            for ( var i = 0; i < list.length; i++ ) {
-                var item = list[ i ];
-                console.log( list[ i ] );
+            var xCates = data.xCates;
+            var map = data.map;
+            var lineSpace = chartWidth / ( xCates.length - 1 );
+            for ( var key in map ) {
+                var item = map[ key ];
+                var points = [];
+                for ( var i = 0; i < item.length; i++ ) {
+                    points.push( {
+                        x: padding[ 3 ] + lineSpace * i,
+                        y: paperHeight - ( padding[ 2 ] + item[ i ].y * chartHeight / maxY ),
+                    } );
+                }
+                bubbleList.push( {
+                    x: 0,
+                    y: 0,
+                    shape: 'line',
+                    points: points,
+                    strokeColor: colors[ item[ 0 ].type ],
+                    color: 'none',
+                    strokeWidth: 2
+                } );
             }
         }
         items.update( {
