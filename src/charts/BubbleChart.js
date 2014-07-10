@@ -63,6 +63,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         this.addElement( "gridhorizon", new kc.ElementList() );
         this.addElement( "gridvertical", new kc.ElementList() );
         this.addElement( "items", new kc.ElementList() );
+        this.addElement( "categories", new kc.ElementList() );
         this.setData( new kc.BubbleData() );
     },
     renderBubble: function () {
@@ -128,6 +129,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         var gridHorizon = this.getElement( 'gridhorizon' );
         var gridVertical = this.getElement( 'gridvertical' );
         var items = this.getElement( 'items' );
+        var categories = this.getElement( 'categories' )
         var spaceX = getSpace( maxX );
         var spaceY = getSpace( maxY );
         maxX = spaceX.base * spaceX.n;
@@ -142,7 +144,7 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             y2: paperHeight - padding[ 2 ],
             color: 'gray'
         } ];
-        for ( var x = 0; x <= spaceX.n; x++ ) {
+        for ( var x = 0; x < spaceX.n; x++ ) {
             var y = padding[ 0 ] + chartHeight * x / spaceX.n;
             xAxis.push( {
                 x1: padding[ 3 ],
@@ -164,8 +166,8 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             y2: paperHeight - padding[ 2 ],
             color: 'gray'
         } ];
-        for ( var y = 0; y <= spaceY.n; y++ ) {
-            var x = padding[ 0 ] + chartWidth * y / spaceY.n;
+        for ( var y = 1; y <= spaceY.n; y++ ) {
+            var x = padding[ 3 ] + chartWidth * y / spaceY.n;
             yAxis.push( {
                 x1: x,
                 y1: padding[ 0 ],
