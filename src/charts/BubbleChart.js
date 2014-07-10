@@ -1,6 +1,6 @@
 var BubbleData = kc.BubbleData = kity.createClass( 'BubbleData', {
     base: kc.Data,
-    format: function ( config ) {
+    format: function ( config, mode ) {
         var origin = this.origin;
         if ( config === undefined ) {
             return origin;
@@ -153,38 +153,54 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             elementClass: kc.Line,
             list: yAxis
         } );
+        var bubbleList = [];
         if ( param.mode === 'bubble' ) { //气泡模式
             //获取数据序列
             var series = list[ date ].series;
-            var circlelist = [];
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
                 var obj = {
+                    shape: 'circle',
                     x: padding[ 3 ] + item.x * chartWidth / maxX,
                     y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
                     radius: Math.log( item.size ),
-                    shape: 'circle',
                     color: colors[ item.type ],
-                    label: {
-                        at: 'bottom',
-                        color: 'black',
-                        text: item.label
-                    }
+                    text: item.label
                 };
-                circlelist.push( obj );
+                bubbleList.push( obj );
             }
-            //console.log( circlelist );
-            items.update( {
-                elementClass: kc.TransformBubble,
-                list: circlelist,
-                animateDuration: param.animateInterval
-            } );
         } else if ( param.mode === 'col' ) { //柱状模式
             var series = list[ date ].series;
-
+            var colWidth = chartWidth / series.length; //每一列占据的列宽
+            console.log( colWidth, series.length );
+            var colList = [];
+            for ( var i = 0; i < series.length; i++ ) {
+                var item = series[ i ];
+                var obj = {
+                    shape: 'col',
+                    x: padding[ 3 ] + colWidth * ( i + 0.2 ),
+                    y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
+                    width: colWidth * 0.6,
+                    height: item.y * chartHeight / maxY,
+                    color: colors[ item.type ],
+                    text: item.label,
+                    radius: 0
+                };
+                bubbleList.push( obj );
+            }
+            //console.log( bubbleList );
         } else { //折线图模式
-
+            //转换出国家-数据对应列表
+            var labelMap = {};
+            for ( var i = 0; i < list.length; i++ ) {
+                var item = list[ i ];
+            }
         }
+        items.update( {
+            elementClass: kc.TransformBubble,
+            list: bubbleList,
+            animateDuration: param.animateInterval
+        } );
     },
     update: function ( args ) {
         for ( var key in args ) {

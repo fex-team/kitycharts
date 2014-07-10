@@ -87,8 +87,12 @@
                         curMode = $this.attr('value');
                         resetDateandInterval();
                         chart.update({
-                            mode:curMode
+                            mode:curMode,
+                            date:date
                         });
+                        if(curMode!=='line'){
+                            startInterval();
+                        }
                     });
                 }
             });
