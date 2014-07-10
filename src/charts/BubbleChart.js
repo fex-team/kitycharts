@@ -30,6 +30,26 @@ var BubbleData = kc.BubbleData = kity.createClass( 'BubbleData', {
                 };
             } else {
                 //生成国家-数据列表
+                var Map = {};
+                var L0 = List[ 0 ];
+                var xCates = [ List[ 0 ].date ];
+                //初始化列表
+                for ( var i = 0; i < L0.series.length; i++ ) {
+                    var label = L0.series[ i ].label;
+                    Map[ label ] = [ L0.series[ i ] ];
+                }
+                for ( var j = 1; j < List.length; j++ ) {
+                    var item = List[ j ];
+                    xCates.push( List[ j ].date );
+                    for ( var k = 0; k < item.series.length; k++ ) {
+                        var obj = item.series[ k ];
+                        Map[ obj.label ].push( obj );
+                    }
+                }
+                return {
+                    xCates: xCates,
+                    list: Map
+                }
             }
         }
     }
