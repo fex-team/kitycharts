@@ -1,0 +1,199 @@
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+#container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    margin: 0 auto !important;
+    background-color: #f2f2f2;
+    overflow: hidden;
+}
+
+#go{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    border-top: #333 3px solid;
+    border-right: #333 3px solid;
+    width: 20px;
+    height: 20px; 
+    -webkit-transform: rotate(45deg);
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: 0.3s;
+}
+
+#go:hover{
+    opacity: 1;
+    -webkit-transform: scale(1.2) rotate(45deg);
+}
+
+@-webkit-keyframes blink{
+    0% { opacity: 1;}
+    50% { opacity: 1;}
+    51% { opacity: 0;}
+    100% { opacity: 0; }
+}
+
+@-webkit-keyframes rotate{
+    0% { -webkit-transform: rotate(0deg);}
+    100% { -webkit-transform: rotate(360deg);}
+}
+
+#control{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    width: 80px;
+    height: 60px;
+    text-align: center;
+}
+
+#control .progress{
+    font-size: 10px;
+    position: relative;
+    top: 36px;
+    text-align: center;
+}
+
+#control .prev, #control .next{
+    position: absolute;
+    top: 30px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: 0.3s;
+}
+
+#control .next{
+    right : 0px;
+    border-top: #333 3px solid;
+    border-right: #333 3px solid;
+    -webkit-transform: rotate(45deg);
+}
+
+#control .prev{
+    position: absolute;
+    left : 0px;
+    top: 30px;
+    border-top: #333 3px solid;
+    border-left: #333 3px solid;
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(-45deg);
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: 0.3s;
+}
+
+#control .next:hover{
+    opacity: 1;
+    -webkit-transform: scale(1.2) rotate(45deg);
+}
+
+#control .prev:hover{
+    opacity: 1;
+    -webkit-transform: scale(1.2) rotate(-45deg);
+}
+
+.blink{
+    -webkit-animation : blink 0.4s linear;
+    -webkit-animation-iteration-count : 3;
+}
+
+.rotate{
+    -webkit-animation : rotate 1.5s linear;
+    -webkit-animation-iteration-count : infinite;
+}
+
+.desc{
+    font-size: 18px;
+    color: #5a5a5a;
+}
+
+.desc .red{
+    font-size: 30px;
+    color: #ff6b6b;
+}
+
+.iframe{
+    border: 0;
+    opacity: 0;
+}
+
+.page2-desc-blue{
+    font-size: 20px;
+    color: #4ca0fd;
+}
+
+.page2-desc-black{
+    font-size: 20px;
+    color: #515151;
+}
+
+.no1chrome{
+    font-size: 20px;
+    color: #00c28d;
+    font-weight: bold;
+}
+
+.page8-label{
+    font-size: 20px;
+    color: #252525;
+    font-weight: bold;
+}
+
+.page9-right{
+    line-height: 30px;
+    font-size: 20px;
+    color: #FFF;
+}
+
+.page9-right a{
+    color: #FFF;
+    margin-left: 15px;
+}
+
+.page9-cop{
+    color: #FFF;
+    font-size: 20px;
+}
+
+.page9-cop .left{
+    display: inline-block;
+    float: left;
+}
+
+.page9-cop .right{
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+}
+
+.page9-cop .right a{
+    display: block;
+    margin-top: 10px;
+    color: #FFF;
+}
+
+.page9-cop .right img.ue{
+    margin-top: 40px;
+}
+
+.page2-clock{
+    width: 60px;
+    height: 60px;
+}
+
+.chart-title{
+    font-size: 20px;
+}

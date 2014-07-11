@@ -14,10 +14,10 @@ kc.ChartsConfig = (function(){
         var base = kity.Utils.copy(_configs.base), mix;
 
         if( type in _configs ){
-            mix = kity.Utils.deepExtend( base, _configs[ type ] );
+            return kity.Utils.deepExtend( base, _configs[ type ] );
+        }else{
+            return  base;
         }
-
-        return  mix;
     }
 
     return {

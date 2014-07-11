@@ -61,7 +61,7 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
                 } )
                 str = str.reverse().join(' > ');
 
-                var color = new kity.Color(255,204,191);
+                var color = new kity.Color(255, 204, 191);
                 color.set('h', node.parent.weightStart * 200);
                 color.set('s', 80);
                 color.set('l', 75);

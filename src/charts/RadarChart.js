@@ -14,7 +14,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
     },
     render: function () {
         var data = this.getData().format();
-        var colors = this.param.colors;
+        var param = this.param;
+        var colors = param.colors;
         var divide = data.categories.length;
         var delta = Math.PI * 2 / divide;
         var net = this.getElement( 'net' );
@@ -74,7 +75,9 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                     _y = Cy + r * Math.sin( delta * l );
                 points.push( [ _x, _y ] );
                 circleList.push( {
-                    radius: 5,
+                    radius: param.circle && param.circle.radius || 5,
+                    fxEasing: param.circle && param.circle.fxEasing || 'ease',
+                    color: itemColors[ k ] || '#7ecffe',
                     x: _x,
                     y: _y
                 } );
@@ -82,8 +85,11 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             var item = {
                 points: points,
                 color: itemColors[ k ],
+                fxEasing: 'ease',
                 close: true,
-                fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 )
+                fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 ),
+                animatedDir : 'both',
+                factor : +new Date
             };
             itemList.push( item );
         }
@@ -91,10 +97,14 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             elementClass: kc.Polyline,
             list: itemList
         } );
-        circles.update( {
-            elementClass: kc.CircleDot,
-            list: circleList,
-        } );
+
+        if( param.circle && param.circle.enabled ){
+            circles.update( {
+                elementClass: kc.CircleDot,
+                list: circleList,
+            } );
+        }
+
         //绘制label
         for ( var m = 0; m < data.categories.length; m++ ) {
             var categorie = data.categories[ m ];

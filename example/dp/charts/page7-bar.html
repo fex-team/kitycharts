@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Base Charts</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="singlebar" class="chart-container"></div>
+    </body>
+    <script src="color.js"></script>
+    <script>
+        var singlebar = new kc.BarChart( 'singlebar', {
+            color : colors
+        } );
+
+        $.ajax({
+            url: 'data/page7-region.json',
+            success: function( data ) {
+                data.xAxis.categories.reverse();
+                data.series[0].data.reverse();
+
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        return (num *= 100).toFixed(2);
+                    });
+                }
+                singlebar.update( data );
+            }
+        });
+
+    </script>
+</html>

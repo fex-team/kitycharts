@@ -1,0 +1,46 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "plotOptions": {
+        "pie": {
+            "shadow": false,
+            "center": {
+                "x" : 400,
+                "y" : 200
+            },
+            "innerRadius" : 60,
+            "outerRadius" : 80,
+            "incrementRadius" : 30,
+            "stroke" : {
+                "width" : 0
+            }
+        },
+
+        "label" : {
+            "enabled" : false
+        }
+    },
+    "legend" : {
+        "enabled" : false,
+        "level" : "data"
+    },
+    "series": [
+        {
+            "name": "男女比例",
+            "data": [
+                {
+                    "name": "Canvas",
+                    "value": 80,
+                    "label": "80%",
+                    "color": "#ffc000"
+                },
+                {
+                    "name": "",
+                    "value": 20,
+                    "color": "rgba(0, 0, 0, 0.05)"
+                }
+            ]
+        }
+    ]
+}

@@ -20,7 +20,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
     setConfig : function( param, formatter ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
-            base = kc.ChartsConfig.init( this.chartType ),
+            base = kc.ChartsConfig.init( this.chartType || '' ),
             data, coordConf;
 
         this.config = kity.Utils.deepExtend( base, config ),
@@ -151,9 +151,9 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             i, j, entry, label, color, tmp, dataEntry;
 
         this.legend && this.legend.remove();
-        this.legend = $('<div></div>').css({
+        this.legend = $('<div class="kitycharts-legend"></div>').css({
             position : 'absolute',
-            bottom : '10px',
+            bottom : '5px',
             right : '30px',
             height : '26px',
             lineHeight : '26px'

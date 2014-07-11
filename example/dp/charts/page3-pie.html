@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Base Charts</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <style>
+    .kitycharts-legend{
+        width : 100px;
+        height: auto!important;
+        right: 0!important;
+    }
+    </style>
+    <body>
+        <div id="pie" class="chart-container"></div>
+    </body>
+    <script src="color.js"></script>
+    <script>
+        var pie = new kc.PieChart( 'pie', {
+            color : colors
+        });
+        
+        $.ajax({
+            url: 'data/page3-pie-browser-rate.json',
+            success: function( data ) {
+                var r = Math.min( document.body.clientHeight, document.body.clientWidth )/2;
+                data.plotOptions.pie.center.x = r;
+                data.plotOptions.pie.center.y = document.body.clientHeight/2;
+                data.plotOptions.pie.outerRadius = r - 30;
+                pie.update( data );
+            }
+        });
+
+    </script>
+</html>

@@ -64,9 +64,9 @@ var dependience = [
     'src/config/scatter.js',
 
 
-    'src/formatter/chartData.js',
-    'src/formatter/scatterData.js',
-    'src/formatter/pieData.js',
+    'src/formatter/ChartData.js',
+    'src/formatter/ScatterData.js',
+    'src/formatter/PieData.js',
     'src/formatter/SunData.js',
     'src/formatter/TreemapData.js',
     'src/plots/PiePlots.js',

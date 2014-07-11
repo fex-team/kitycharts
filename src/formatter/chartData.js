@@ -74,6 +74,10 @@ kc.ChartData = kity.createClass( 'ChartData', {
                 min = all.length > 0 ? Math.min.apply( [], all ) : 0;
                 max = all.length > 0 ? Math.max.apply( [], all ) : 100;
             }
+
+            if( isStacked || isPercentage ){
+                min = 0;
+            }
         }
         
 
@@ -84,7 +88,7 @@ kc.ChartData = kity.createClass( 'ChartData', {
                 tmpSum = 0;
 
                 for( j = 0; j < arr.length; j++ ){
-                    tmpSum += ( arr[ j ][ i ] || 0 );
+                    tmpSum += Number(( arr[ j ][ i ] || 0 ));
                     offsetLevel[ j+1 ] = offsetLevel[ j+1 ] || [];
                     offsetLevel[ j+1 ][ i ] = tmpSum;
                 }
@@ -110,7 +114,6 @@ kc.ChartData = kity.createClass( 'ChartData', {
                     percentage : percentage
                 };
         }
-
 
         var result = {
                 chart : origin.chart || 'line',

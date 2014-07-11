@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Base Charts</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="donut" class="chart-container"></div>
+    </body>
+    <script src="color.js"></script>
+    <script>
+        var donut = new kc.PieChart( 'donut', {
+            color : colors
+        } );
+        
+        $.ajax({
+            url: 'data/page8-donut-2.json',
+            success: function( data ) {
+                data.plotOptions.pie.center.x = document.body.clientWidth/2;
+                data.plotOptions.pie.center.y = document.body.clientHeight/2;
+                data.plotOptions.pie.outerRadius = Math.min( document.body.clientHeight, document.body.clientWidth )/2 - 30;
+                data.plotOptions.pie.innerRadius = data.plotOptions.pie.outerRadius - 20;
+
+                donut.update( data );
+
+                var series = donut.getSeries();
+                var data = series[0].data;
+
+                var txt = data[0].label;
+
+
+                var center = donut.getCenter();
+                var w = 100, h = 100;
+                $('<div></div>').css({
+                    width : w + 'px',
+                    height : h + 'px',
+                    // backgroundColor : '#eee',
+                    position : 'absolute',
+                    left : center.x - w/2 + 'px',
+                    top : center.y -h/2 + 'px',
+                    textAlign : 'center',
+                    lineHeight : h + 'px',
+                    fontSize : '20px'
+
+                }).appendTo($('#donut')[0]).html(txt);
+
+                
+
+            }
+        });
+    </script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Area Chart</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="container" class="chart-container"></div>
+    </body>
+    <script src="color.js"></script>
+    <script>
+        var area = new kc.LineChart( 'container', {
+            color : colors
+        });
+
+        $.ajax({
+            url: 'data/page3-browser-rate.json',
+            success: function( data ) {
+                var cate = [];
+                for(var i=1; i<77; i++){
+                    cate.push( i );
+                }
+
+                data.xAxis.categories = cate;
+                data.xAxis.step = 10;
+
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        return (num *= 100).toFixed(2);
+                    });
+                }
+
+                area.update( data );
+            }
+        });
+
+    </script>
+</html>

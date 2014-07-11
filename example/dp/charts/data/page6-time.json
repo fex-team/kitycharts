@@ -1,0 +1,92 @@
+{
+
+    "chart": {
+        "type": "column"
+    },
+
+    "xAxis": {
+        "categories": [ ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 60,
+            "left" : 60
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 20,
+            "right" : 20
+        },
+        "label" : {
+            "enabled" : true,
+            "rotate" : 0
+        },
+        "unit" : {
+            "text" : "小时"
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : true
+        },
+        "label" : {
+            "enabled" : true
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "unit" : {
+            "text" : "%"
+        },
+        "padding" : {
+            "top" : 0,
+            "bottom" : 0
+        }
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 10,
+            "margin": 3,
+            "label" : {
+                "enabled" : true
+            }
+        },
+
+        "label" : {
+            "enabled" : 0,
+            "text" : {
+                "margin" : 12
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : ""
+    },
+
+    "series": [
+        {
+            "name": "该时段访问占比",
+            "color": "#00c28d",
+            "data": [0.0255636, 0.0149878, 0.00987694, 0.00735836, 0.00628753, 0.00662835, 0.00893062, 0.0141097, 0.0309776, 0.0494077, 0.0591186, 0.0571062, 0.0484403, 0.054246, 0.0591639, 0.0638887, 0.0660505, 0.0600003, 0.0536224, 0.0595415, 0.067899, 0.0700537, 0.0626794, 0.0440611]
+        }
+    ]
+
+}
+
+
+

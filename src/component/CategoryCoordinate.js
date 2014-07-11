@@ -292,6 +292,29 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 y2: height
             } );
 
+            if( unitX ){
+                this.unitXLabel = this.unitXLabel || this.addElement( 'unitXLabel', new kc.Label() );
+                this.unitXLabel.update({
+                    text: '(' + unitX + ')',
+                    at: 'right',
+                    margin: 0,
+                    x : width + 10,
+                    y : height + 16
+                }); 
+            }
+
+            if( unitY ){
+                this.unitYLabel = this.unitYLabel || this.addElement( 'unitYLabel', new kc.Label() );
+
+                this.unitYLabel.update({
+                    text: '(' + unitY + ')',
+                    at: yLabelsAt,
+                    margin: 0,
+                    x : -8,
+                    y : -14
+                });
+            }
+
             var xLabels = xCategories ? xCategories : xGrid.ref.map( xFormat );
             if(xCat){
                 xCat.update( {
@@ -403,6 +426,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
             reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
 
+            reuslt.unitX = kity.Utils.queryPath('xAxis.unit.text', conf) || '';
+            reuslt.unitY = kity.Utils.queryPath('yAxis.unit.text', conf) || '';
 
             var confCopy = kity.Utils.copy( conf );
 

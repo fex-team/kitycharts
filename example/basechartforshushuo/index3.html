@@ -24,16 +24,105 @@
         <div id="china-map-chart"></div>
     </body>
     <script>
-        var pie = new kc.PieChart( 'pie', {
-            color : [ '#356893', '#3f7bad', '#4789c0', '#549dda', '#5fb0f4', '#69bbff', '#a3d4fd', '#c2e3ff', '#d7edff' ]
-        } );
+        // var pie = new kc.PieChart( 'pie', {
+        //     color : [ '#356893', '#3f7bad', '#4789c0', '#549dda', '#5fb0f4', '#69bbff', '#a3d4fd', '#c2e3ff', '#d7edff' ]
+        // } );
         
-        $.ajax({
-            url: 'data/pie.json',
-            success: function( data ) {
-                pie.update( data );
-            }
-        });
+        // $.ajax({
+        //     url: 'data/pie.json',
+        //     success: function( data ) {
+        //         pie.update( data );
+        //     }
+        // });
+
+        // var donut = new kc.PieChart( 'donut', {
+        //     color : [ '#4879a7', '#ca5f4b' ]
+        // } );
+        
+        // $.ajax({
+        //     url: 'data/donut.json',
+        //     success: function( data ) {
+        //         donut.update( data );
+        //         // console.log( donut.getCenter() );
+        //         // console.log( donut.getSeries() );
+        //     }
+        // });
+
+        // var multibar = new kc.BarChart( 'multibar', {
+        //     color : [ '#62a9dd', '#df6164', '#72c380' ]
+        // } );
+        // $.ajax({
+        //     url: 'data/multi-bar.json',
+        //     success: function( data ) {
+        //         multibar.update( data );
+        //     }
+        // });
+
+
+        // var singlebar = new kc.BarChart( 'singlebar', {
+        //     color : [ '#df6164' ]
+        // } );
+        // $.ajax({
+        //     url: 'data/single-bar.json',
+        //     success: function( data ) {
+        //         singlebar.update( data );
+        //     }
+        // });
+
+        // var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
+        //     color : [ '#df6164' ]
+        // } );
+        // $.ajax({
+        //     url: 'data/single-column.json',
+        //     success: function( data ) {
+        //         singlecolumn.update( data );
+        //     }
+        // });
+
+
+        // (function(){
+        //     var map = new kc.ChinaMapChart('china-map-chart', {
+        //         width: 600,
+        //         height: 400,
+        //         colors: ['#3e92c5','#68a8d0','#7bb2d6','#aacde2','#f5edeb','#f2e0dd','#ecc1b9','#e6a599','#de7c6a'],
+        //         defaultColor: 'lightgray'
+        //     });
+
+        //     var china_province = kc.Map.CHINA.blocks;
+
+        //     $.ajax({
+        //         url: 'data/map.json',
+        //         success: function( data ) {
+        //             updateRange( data, 0, 1 );
+        //         }
+        //     });
+
+
+        //     function updateRange( data, min, max ) {
+        //         var ranged = {};
+        //         for(var p in data) {
+        //             if (data[p].value > min && data[p].value < max) ranged[p] = data[p];
+        //             else ranged[p] = {};
+        //         }
+
+        //         map.getData().update(ranged);
+        //     }
+
+            
+
+        //     function legend(){
+        //         var colors = map.param.colors;
+
+        //         $('<div></div>').css({
+        //             width : '200px',
+        //             height : '30px',
+        //             background : 'linear-gradient(-90deg, ' + colors[ 0 ] + ', ' + colors[ colors.length - 1 ] + ')'
+        //         }).appendTo($('#china-map-chart'));
+        //     }
+
+        //     legend();
+        // })();
+
 
         var donut = new kc.PieChart( 'donut', {
             color : [ '#4879a7', '#ca5f4b' ]
@@ -47,80 +136,5 @@
                 // console.log( donut.getSeries() );
             }
         });
-
-        var multibar = new kc.BarChart( 'multibar', {
-            color : [ '#62a9dd', '#df6164', '#72c380' ]
-        } );
-        $.ajax({
-            url: 'data/multi-bar.json',
-            success: function( data ) {
-                multibar.update( data );
-            }
-        });
-
-
-        var singlebar = new kc.BarChart( 'singlebar', {
-            color : [ '#df6164' ]
-        } );
-        $.ajax({
-            url: 'data/single-bar.json',
-            success: function( data ) {
-                singlebar.update( data );
-            }
-        });
-
-        var singlecolumn = new kc.ColumnChart( 'singlecolumn', {
-            color : [ '#df6164' ]
-        } );
-        $.ajax({
-            url: 'data/single-column.json',
-            success: function( data ) {
-                singlecolumn.update( data );
-            }
-        });
-
-
-        (function(){
-            var map = new kc.ChinaMapChart('china-map-chart', {
-                width: 600,
-                height: 400,
-                colors: ['#3e92c5','#68a8d0','#7bb2d6','#aacde2','#f5edeb','#f2e0dd','#ecc1b9','#e6a599','#de7c6a'],
-                defaultColor: 'lightgray'
-            });
-
-            var china_province = kc.Map.CHINA.blocks;
-
-            $.ajax({
-                url: 'data/map.json',
-                success: function( data ) {
-                    updateRange( data, 0, 1 );
-                }
-            });
-
-
-            function updateRange( data, min, max ) {
-                var ranged = {};
-                for(var p in data) {
-                    if (data[p].value > min && data[p].value < max) ranged[p] = data[p];
-                    else ranged[p] = {};
-                }
-
-                map.getData().update(ranged);
-            }
-
-            
-
-            function legend(){
-                var colors = map.param.colors;
-
-                $('<div></div>').css({
-                    width : '200px',
-                    height : '30px',
-                    background : 'linear-gradient(-90deg, ' + colors[ 0 ] + ', ' + colors[ colors.length - 1 ] + ')'
-                }).appendTo($('#china-map-chart'));
-            }
-
-            legend();
-        })();
     </script>
 </html>

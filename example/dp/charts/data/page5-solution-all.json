@@ -1,0 +1,99 @@
+{
+
+    "xAxis": {
+        "categories": [ "1366x768", "1440x900", "1024x768", "1920x1080", "1280x800", "1600x900", "1280x1024", "1680x1050" ],
+        "ticks" : {
+            "enabled" : false
+        },
+        "margin" : {
+            "right" : 60,
+            "left" : 60
+        },
+
+        "axis" : {
+            "arrow" : false
+        },
+        "padding" : {
+            "left" : 40,
+            "right" : 40
+        },
+        "label" : {
+            "enabled" : true,
+            "rotate" : -90
+        },
+        "unit" : {
+            "text" : "天"
+        },
+        "min" : 0
+    },
+
+    "yAxis": {
+        "min" : 0,
+        "ticks" : {
+            "enabled" : true
+        },
+        "label" : {
+            "enabled" : true
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 0,
+            "bottom" : 0
+        },
+        "unit" : {
+            "text" : "%"
+        }
+    },
+
+    "plotOptions" : {
+
+        "column" : {
+            "width" : 15,
+            "margin": 3,
+            "label" : {
+                "enabled" : true
+            }
+        },
+
+        "label" : {
+            "enabled" : false,
+            "text" : {
+                "margin" : 12
+            }
+        }
+
+    },
+
+    "legend" : {
+        "enabled" : false
+    },
+
+    "interaction" : {
+        "onStickHover" : ""
+    },
+
+    "series": [
+        {
+            "name": "分辨率",
+            "data": [ 0.298946, 0.187232, 0.113754, 0.107575, 0.0574968, 0.0640641, 0.0460283, 0.0336727 ],
+            "style": [
+                {"color" : "#eb5867"},
+                {"color" : "#8cd2d8"},
+                {"color" : "#fdbf2d"},
+                {"color" : "#659aa0"},
+                {"color" : "#1ec18e"},
+                {"color" : "#feda75"},
+                {"color" : "#51a2fa"},
+                {"color" : "#064089"}
+            ]
+        }
+    ]
+
+}
+
+
+
+
+

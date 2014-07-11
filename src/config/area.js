@@ -14,7 +14,12 @@ kc.ChartsConfig.add('area', {
 
             fill : {
                 grandientStopOpacity : 0.5
-            }
+            },
+
+            dot : {
+                enabled : true,
+                radius : 3
+            }    
 
         }
 

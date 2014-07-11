@@ -28,24 +28,24 @@
     <script>
         var line = new kc.LineChart( 'container' );
 
-        // line.update();
+        line.update();
 
         $.ajax({
             url: '../data/kitycharts/line-basic.json',
             success: function( data ) {
-                // line.update( data );
+                line.update( data );
 
-                // setTimeout(function(){
-                    // line.setOption( 'series' , [
-                    //     {
-                    //         "name": "John",
-                    //         "data": [23, 23, 23, 22, 21],
-                    //     },
-                    //     {
-                    //         "name": "John",
-                    //         "data": [21, 23, 23, 23, 22]
-                    //     }
-                    // ] );
+                setTimeout(function(){
+                    line.setOption( 'series' , [
+                        {
+                            "name": "John",
+                            "data": [23, 23, 83, 22, 21],
+                        },
+                        {
+                            "name": "John",
+                            "data": [21, 40, 23, 23, 22]
+                        }
+                    ] );
 
                     // line.setOption('interaction', {
                     //     onCircleClick : function( info, circle ){
@@ -55,16 +55,16 @@
 
                     // line.setOption('interaction.onCircleHover', null);
 
-                    data.interaction = {
-                        onCircleClick : function( info, circle ){
-                            console.log( info, circle );
-                        }
-                    };
+                    // data.interaction = {
+                    //     onCircleClick : function( info, circle ){
+                    //         console.log( info, circle );
+                    //     }
+                    // };
 
-                    data.interaction.onCircleHover = null;
+                    // data.interaction.onCircleHover = null;
 
-                    line.update( data );
-                // }, 1000);
+                    line.update();
+                }, 500);
             }
         });
 

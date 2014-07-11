@@ -1,0 +1,46 @@
+{
+    "chart": {
+        "type": "pie"
+    },
+    "plotOptions": {
+        "pie": {
+            "shadow": false,
+            "center": {
+                "x" : 400,
+                "y" : 200
+            },
+            "innerRadius" : 60,
+            "outerRadius" : 80,
+            "incrementRadius" : 30,
+            "stroke" : {
+                "width" : 0
+            }
+        },
+
+        "label" : {
+            "enabled" : false
+        }
+    },
+    "legend" : {
+        "enabled" : false,
+        "level" : "data"
+    },
+    "series": [
+        {
+            "name": "男女比例",
+            "data": [
+                {
+                    "name": "SVG",
+                    "value": 82,
+                    "label": "82%",
+                    "color": "#003e8b"
+                },
+                {
+                    "name": "",
+                    "value": 18,
+                    "color": "rgba(0, 0, 0, 0.05)"
+                }
+            ]
+        }
+    ]
+}

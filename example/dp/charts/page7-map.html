@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>China Map</title>
+        <link rel="stylesheet" media="screen" href="style.css" />
+        <script src="../js/kity.min.js"></script>
+        <script src="../../../build.js"></script>
+        <script src="../js/libs/jquery-2.1.0.min.js"></script>
+    </head>
+    <body>
+        <div id="china-map-chart" class="chart-container" ></div>
+    </body>
+    <script>
+
+        (function(){
+            var h = document.body.clientHeight, w = document.body.clientWidth;
+            var map = new kc.ChinaMapChart('china-map-chart', {
+                width: 400,
+                height: 300,
+                colors: ['#00428c','#fff6cd','#ffe6aa','#ffce52','#fdbb05'],
+                defaultColor: '#00408b'
+            });
+
+            var china_province = kc.Map.CHINA.blocks;
+            var data;
+            $.ajax({
+                url: 'data/page7-map.json',
+                success: function( json ) {
+                    data = json;
+                    for(var i in data){
+                        if(!data[i].color){
+                            data[i].color = '#00408b';
+                        }
+                    }
+                    updateRange( data, 0, 1 );
+                }
+            });
+
+
+            function updateRange( data, min, max ) {
+                var ranged = {};
+                for(var p in data) {
+                    if (data[p].value > min && data[p].value < max) ranged[p] = data[p];
+                    else ranged[p] = {};
+                }
+
+                map.getData().update(ranged);
+            }
+
+
+            function legend(){
+                var colors = map.param.colors;
+
+                var container = $('<div></div>').css({
+                    padding : '0 30px 30px',
+                    display : 'inline-block'
+                }).appendTo($('#china-map-chart'));
+
+                var unit = 30;
+                var w = unit * colors.length;
+                var outer = $('<div></div>').css({
+                    width : w + 'px',
+                    height : '30px',
+                    position : 'relative'
+                }).appendTo(container);
+
+                colors.forEach(function( color, i ){
+                    $('<div></div>').css({
+                        width : '30px',
+                        height : '30px',
+                        background : color,
+                        float : 'left'
+                    }).attr('index', i).appendTo(outer);
+                });
+
+                var slider = $('<div></div>').css({
+                    width : w + 'px',
+                }).appendTo(container[0]);
+                
+                slider.slider({
+                    range: true,
+                    min: 0,
+                    max: w,
+                    values: [ 0, w ],
+                    slide: function( event, ui ) {
+                        var min = ui.values[ 0 ];
+                        var max = ui.values[ 1 ];
+
+                        var left = (min/unit)|0;
+                        var c;
+
+                        for(var i = 0; i < colors.length; i++){
+                            c = i < left ? map.param.defaultColor : colors[i];
+                            $(outer[0].children[i]).css('background-color', c);
+                        }
+
+                        var right = (max/unit)|0;
+
+                        for(i = left; i < colors.length; i++){
+                            c = i > right ? map.param.defaultColor : colors[i];
+                            $(outer[0].children[i]).css('background-color', c);
+                        }
+
+                        updateRange(data, min/w, max/w);
+                    }
+                });
+
+                slider.css({
+                    border : 'none'
+                }).find('.ui-slider-range').css({
+                    visibility : 'hidden'
+                });
+
+                
+            }
+
+            // legend();
+
+        })();
+
+
+    </script>
+</html>
