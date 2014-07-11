@@ -64,9 +64,50 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         this.addElement( "gridvertical", new kc.ElementList() );
         this.addElement( "items", new kc.ElementList() );
         this.addElement( "categories", new kc.ElementList() );
+        this.tooltips = this.addElement( "tooltips", new kc.ElementList() );
         this.setData( new kc.BubbleData() );
+        this.tooltipList = [];
+    },
+    addTooltip: function ( e ) {
+        var target = e.target;
+        var param = target.param;
+        var label = param.label;
+        var tooltips = this.tooltips;
+        window.clearInterval( this.param.interval );
+        var item = {
+            content: {
+                color: '#787878',
+                text: label,
+            },
+            background: '#e9e9e9'
+        };
+        switch ( this.param.mode ) {
+        case 'circle':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'col':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'line':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        default:
+            break;
+        }
+        this.tooltipList = this.tooltipList.concat( [ item ] );
+        // tooltips.update( {
+        //     elementClass: kc.Tooltip,
+        //     list: this.tooltipList
+        // } );
     },
     renderBubble: function () {
+        this.tooltipList = [];
+        this.tooltips.update( {
+            list: this.tooltipList
+        } );
         var container = this.container;
         var paperWidth = container.clientWidth;
         var paperHeight = container.clientHeight;
@@ -202,13 +243,17 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             var series = list[ date ].series;
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
+                var X = padding[ 3 ] + item.x * chartWidth / maxX,
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
                 var obj = {
                     shape: 'circle',
-                    x: padding[ 3 ] + item.x * chartWidth / maxX,
-                    y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
                     radius: Math.log( item.size ),
                     color: colors[ item.type ],
-                    text: item.label
+                    label: item.label
                 };
                 bubbleList.push( obj );
             }
@@ -218,14 +263,18 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             var colList = [];
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
+                var X = padding[ 3 ] + colWidth * ( i + 0.2 ),
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
                 var obj = {
                     shape: 'col',
-                    x: padding[ 3 ] + colWidth * ( i + 0.2 ),
-                    y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
                     width: colWidth * 0.6,
                     height: item.y * chartHeight / maxY,
                     color: colors[ item.type ],
-                    text: item.label,
+                    label: item.label,
                     radius: 0
                 };
                 bubbleList.push( obj );
