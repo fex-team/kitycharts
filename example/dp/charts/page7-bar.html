@@ -22,6 +22,12 @@
             success: function( data ) {
                 data.xAxis.categories.reverse();
                 data.series[0].data.reverse();
+
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        return (num *= 100).toFixed(2);
+                    });
+                }
                 singlebar.update( data );
             }
         });

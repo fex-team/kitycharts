@@ -1,9 +1,5 @@
 {
 
-    "chart": {
-        "type": "column"
-    },
-
     "xAxis": {
         "categories": [ "16x9", "16x10", "4x3", "5x4", "8x5", "10x6", "85x48", "other" ],
         "ticks" : {
@@ -25,6 +21,9 @@
             "enabled" : true,
             "rotate" : 0
         },
+        "unit" : {
+            "text" : "天"
+        },
         "min" : 0
     },
 
@@ -42,6 +41,9 @@
         "padding" : {
             "top" : 0,
             "bottom" : 0
+        },
+        "unit" : {
+            "text" : "%"
         }
     },
 

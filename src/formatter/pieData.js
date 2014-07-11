@@ -22,12 +22,12 @@ kc.PieData = kity.createClass( 'PieData', {
 
             for( i = 0; i < arr.length; i++ ){
                 offset.push( sum );
-                sum += ( arr[ i ].value || arr[ i ] );
+                sum += kity.Utils.isNumber( arr[ i ].value ) ? arr[ i ].value : arr[ i ] ;
             }
 
             var val, tmp, obj, offsetAngle = 0;
             for( i = 0; i < arr.length; i++ ){
-                val = arr[ i ].value || arr[ i ];
+                val = kity.Utils.isNumber( arr[ i ].value ) ? arr[ i ].value : arr[ i ] ;
                 obj = arr[ i ] = kity.Utils.isObject( arr[ i ] ) ? arr[ i ] : {};
 
                 obj.percent = tmp = val / sum;

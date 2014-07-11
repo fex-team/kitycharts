@@ -151,7 +151,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             i, j, entry, label, color, tmp, dataEntry;
 
         this.legend && this.legend.remove();
-        this.legend = $('<div></div>').css({
+        this.legend = $('<div class="kitycharts-legend"></div>').css({
             position : 'absolute',
             bottom : '5px',
             right : '30px',

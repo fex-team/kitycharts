@@ -36,8 +36,8 @@ window.K = window.K || {};
         this.pages = [];
         this.pageIndex = 0;
 
-        var WIDTH = 1024,
-            HEIGHT = 768;
+        var WIDTH = this.STATIC_WIDTH = 1024,
+            HEIGHT = this.STATIC_HEIGHT = 768;
 
         this.aspectRatio = WIDTH / HEIGHT;
 
@@ -50,10 +50,20 @@ window.K = window.K || {};
             this.height = this.width / this.aspectRatio;
         }
 
-        this.ratio = this.width / 1024;
+        var containerRatio = this.height / HEIGHT;
+        this.ratio = 1;
 
         this.container = $('#' + id)[0];
-        $(this.container).width( this.width );
+        $(this.container).width( WIDTH );
+        $(this.container).height( HEIGHT );
+
+
+        if( containerRatio < 1 ){
+            $(this.container).css({
+                'webkitTransformOrigin' : 'center 0',
+                'webkitTransform' : 'scale(' + containerRatio + ')'
+            });
+        }
     }
 
     Slider.prototype = {
@@ -117,6 +127,14 @@ window.K = window.K || {};
             } );
             return this;
         },
+
+        setBg : function( color ){
+            this.bgColor = color;
+        },
+
+        getBg : function(){
+            return this.bgColor;
+        }
 
     };
 
@@ -196,6 +214,8 @@ window.K = window.K || {};
                 if( i <= index )
                     frame.showComponents();
             });
+
+            this.getSlider().setBg(this.getPage().getBg());
         },
 
         showComponents : function(){
@@ -219,11 +239,11 @@ window.K = window.K || {};
 
     function Component( html ){
         this.element = $( html );
-        this.element[0].id = ( Component.index++ );
+        // this.element[0].id = ( Component.index++ );
         this.attachments = [];
     }
 
-    Component.index = 0;
+    // Component.index = 0;
 
     Component.prototype = {
 
@@ -284,7 +304,11 @@ window.K = window.K || {};
                 left : this.element.css('left')
             }).append( attachment ).appendTo( this.container );
 
-            this.attachments.push( att[0] );
+            var tmp = att[0];
+            tmp.host = this;
+
+            this.attachments.push( tmp );
+            return tmp;
         },
 
         measure : function( length ){
@@ -296,10 +320,38 @@ window.K = window.K || {};
         }
     };
 
+    var Hanger = {
+        _store : {},
+        _components : {},
+
+        store : function( index, func ){
+            var queue = this.store[index] = this.store[index] || [];
+            queue.push( func );
+        },
+
+        exe : function( index ){
+            if( this.store[ index ] && this.store[ index ].length > 0 ){
+                this.store[ index ].forEach(function(f, i){
+                    f();
+                });
+            }
+        },
+
+        set : function( name, obj ){
+            this._components[ name ] = obj;
+        },
+
+        get : function( name ){
+            return this._components[ name ];
+        }
+
+    };
+
     K.Slider = Slider;
     K.Page = Page;
     K.Frame = Frame;
     K.Timeline = Timeline;
     K.Component = Component;
+    K.Hanger = Hanger;
 
 })(K);

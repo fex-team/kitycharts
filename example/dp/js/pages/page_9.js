@@ -6,10 +6,11 @@
 
 	var slider = window.slider;
 	var page = slider.addPage(new K.Page());
+	page.setBg('#8ed2d7');
 
 	// 背景色
 	addFrame( page, function(){
-		slider.setBg('#8ed2d7');
+		slider.setBg(page.getBg());
 
 		var com = new K.Component('<div></div>').setStyle({
 			width : '100%',
@@ -19,11 +20,7 @@
 
 		this.addComponent( com );
 
-	});
-
-	// 彩条 & 标题
-	addFrame( page, function(){
-
+		// 彩条 & 标题
 		addImage(this, {
 			src : 'page9-qrcode',
 			width : 179,
@@ -61,7 +58,7 @@
 		});	
 
 		addHTML(this, {
-			html : '<div class="page9-cop"><div><div class="left">合作:</div><div class="right"><img src="img/page9-shushuo.png" /><a target="_blank" href="http://shushuo.baidu.com/">http://shushuo.baidu.com/</a><img class="ue" src="img/page9-ue.png" /><a target="_blank" href="http://shushuo.baidu.com/">http://ue.baidu.com/</a></div></div>',
+			html : '<div class="page9-cop"><div><div class="left">合作:</div><div class="right"><img width="140" src="img/page9-shushuo.png" /><a target="_blank" href="http://shushuo.baidu.com/">http://shushuo.baidu.com/</a><img class="ue" width="150" src="img/page9-ue.png" /><a target="_blank" href="http://shushuo.baidu.com/">http://ue.baidu.com/</a></div></div>',
 			left : 452,
 			top : 348,
 			opacity : 0

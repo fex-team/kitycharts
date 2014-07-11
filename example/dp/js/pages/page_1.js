@@ -11,80 +11,49 @@
 	addFrame( page, function(){
 		slider.setBg('#ef5363');
 
-		var com = new K.Component('<div></div>').setStyle({
-			width : '100%',
-			height : '100%',
-			backgroundColor : '#ef5363'
-		})
-
-		this.addComponent( com );
+		addHTML(this, {
+			html : '<div style="width:100%;height:100%;background-color:#ef5363"></div>',
+			width : 1024,
+			height : 768
+		}, {});
 
 	});
 
 	// 彩条 & 标题
 	addFrame( page, function(){
 
-		var com = new K.Component('<img src="img/caitiao.png" />').setStyle({
-			position : 'absolute',
-			display : 'inline-block',
-			marginLeft : slider.measure(-400) + 'px',
-			width : slider.measure(800) + 'px',
-			height : 'auto',
-			top : slider.measure(100) + 'px',
-			left : '50%'
+		addImage(this, {
+			src : 'caitiao',
+			width : 800,
+			left : 112,
+			top : 100
+		}, {
+			y : 150,
 		});
 
-		this.addComponent( com );
-
-		com.transit({
-			opacity : 1,
-			y : slider.measure(150)
-		}, 600);
-
-
-		var attach = $('<img src="img/title.png" />').css({
-			position : 'absolute',
-			display : 'inline-block',
-			marginLeft : slider.measure(-300) + 'px',
-			width : slider.measure(600) + 'px',
-			height : 'auto',
-			top : slider.measure(12) + 'px',
-			left : '50%'
+		addImage(this, {
+			src : 'title',
+			width : 600,
+			left : 212,
+			top : 412
+		}, {
+			y : -150
 		});
-
-		attach.transit({
-			y : slider.measure(300)
-		}, 0);
-
-		com.attach( attach );
-
-		attach.transit({
-			y : slider.measure(150)
-		}, 600);
 
 	});
 
-	// 背景色
+	// 日期
 	addFrame( page, function(){
 
-		var com = new K.Component('<img src="img/date.png" />').setStyle({
-
-			position : 'absolute',
-			display : 'inline-block',
-			marginLeft : slider.measure(-100) + 'px',
-			width : slider.measure(200) + 'px',
-			height : 'auto',
-			top : slider.measure(380) + 'px',
-			left : '50%',
+		addImage(this, {
+			src : 'date',
+			width : 200,
+			left : 412,
+			top : 380,
 			opacity : 0
-
-		})
-
-		this.addComponent( com );
-
-		com.transit({
+		}, {
 			opacity : 1
-		}, 600);
+		});
 
 	});
 

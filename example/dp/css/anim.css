@@ -48,6 +48,63 @@ html, body{
     100% { -webkit-transform: rotate(360deg);}
 }
 
+#control{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    width: 80px;
+    height: 60px;
+    text-align: center;
+}
+
+#control .progress{
+    font-size: 10px;
+    position: relative;
+    top: 36px;
+    text-align: center;
+}
+
+#control .prev, #control .next{
+    position: absolute;
+    top: 30px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: 0.3s;
+}
+
+#control .next{
+    right : 0px;
+    border-top: #333 3px solid;
+    border-right: #333 3px solid;
+    -webkit-transform: rotate(45deg);
+}
+
+#control .prev{
+    position: absolute;
+    left : 0px;
+    top: 30px;
+    border-top: #333 3px solid;
+    border-left: #333 3px solid;
+    width: 20px;
+    height: 20px;
+    -webkit-transform: rotate(-45deg);
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: 0.3s;
+}
+
+#control .next:hover{
+    opacity: 1;
+    -webkit-transform: scale(1.2) rotate(45deg);
+}
+
+#control .prev:hover{
+    opacity: 1;
+    -webkit-transform: scale(1.2) rotate(-45deg);
+}
+
 .blink{
     -webkit-animation : blink 0.4s linear;
     -webkit-animation-iteration-count : 3;
@@ -130,4 +187,13 @@ html, body{
 
 .page9-cop .right img.ue{
     margin-top: 40px;
+}
+
+.page2-clock{
+    width: 60px;
+    height: 60px;
+}
+
+.chart-title{
+    font-size: 20px;
 }

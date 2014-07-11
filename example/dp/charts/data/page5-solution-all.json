@@ -1,9 +1,5 @@
 {
 
-    "chart": {
-        "type": "column"
-    },
-
     "xAxis": {
         "categories": [ "1366x768", "1440x900", "1024x768", "1920x1080", "1280x800", "1600x900", "1280x1024", "1680x1050" ],
         "ticks" : {
@@ -25,6 +21,9 @@
             "enabled" : true,
             "rotate" : -90
         },
+        "unit" : {
+            "text" : "天"
+        },
         "min" : 0
     },
 
@@ -42,6 +41,9 @@
         "padding" : {
             "top" : 0,
             "bottom" : 0
+        },
+        "unit" : {
+            "text" : "%"
         }
     },
 

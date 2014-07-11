@@ -28,6 +28,12 @@
                 data.xAxis.categories = cate;
                 data.xAxis.step = 10;
 
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        return (num *= 100).toFixed(2);
+                    });
+                }
+
                 area.update( data );
             }
         });

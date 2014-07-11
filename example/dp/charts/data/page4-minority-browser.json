@@ -18,8 +18,11 @@
             "arrow" : false
         },
         "padding" : {
-            "left" : 30,
-            "right" : 30
+            "left" : 5,
+            "right" : 5
+        },
+        "unit" : {
+            "text" : "天"
         }
     },
 
@@ -38,7 +41,10 @@
             "top" : 40,
             "bottom" : 0
         },
-        "stacked" : 0,
+        "unit" : {
+            "text" : "%"
+        },
+        "stacked" : true,
         "min" : 0
     },
 

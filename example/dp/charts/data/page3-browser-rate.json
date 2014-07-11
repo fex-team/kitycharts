@@ -20,6 +20,9 @@
         "padding" : {
             "left" : 30,
             "right" : 30
+        },
+        "unit" : {
+            "text" : "天"
         }
     },
 
@@ -32,11 +35,15 @@
             "margin" : 0
         },
         "axis" : {
-            "enabled" : false
+            "enabled" : true,
+            "arrow" : true
         },
         "padding" : {
             "top" : 40,
             "bottom" : 0
+        },
+        "unit" : {
+            "text" : "%"
         },
         "stacked" : 0,
         "min" : 0

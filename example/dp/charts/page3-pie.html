@@ -8,6 +8,13 @@
         <script src="../../../build.js"></script>
         <script src="../js/libs/jquery-2.1.0.min.js"></script>
     </head>
+    <style>
+    .kitycharts-legend{
+        width : 100px;
+        height: auto!important;
+        right: 0!important;
+    }
+    </style>
     <body>
         <div id="pie" class="chart-container"></div>
     </body>
@@ -20,9 +27,10 @@
         $.ajax({
             url: 'data/page3-pie-browser-rate.json',
             success: function( data ) {
-                data.plotOptions.pie.center.x = document.body.clientWidth/2;
+                var r = Math.min( document.body.clientHeight, document.body.clientWidth )/2;
+                data.plotOptions.pie.center.x = r;
                 data.plotOptions.pie.center.y = document.body.clientHeight/2;
-                data.plotOptions.pie.outerRadius = Math.min( document.body.clientHeight, document.body.clientWidth )/2 - 30;
+                data.plotOptions.pie.outerRadius = r - 30;
                 pie.update( data );
             }
         });

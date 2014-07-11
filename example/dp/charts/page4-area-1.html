@@ -13,7 +13,7 @@
     </body>
     <script src="color.js"></script>
     <script>
-        var area = new kc.LineChart( 'container', {
+        var area = new kc.AreaChart( 'container', {
             color : colors
         });
 
@@ -27,7 +27,14 @@
 
                 data.xAxis.categories = cate;
                 data.xAxis.step = 10;
-                
+
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        // return (num *= 100).toFixed(2);
+                        return num *= 100;
+                    });
+                }
+
                 area.update( data );
             }
         });

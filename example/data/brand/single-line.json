@@ -1,7 +1,7 @@
 {
 
     "chart": {
-        "type": "column"
+        "type": "line"
     },
 
     "xAxis": {
@@ -10,22 +10,20 @@
             "enabled" : false
         },
         "margin" : {
-            "right" : 60,
-            "left" : 60
+            "right" : 30,
+            "left" : 70
         },
 
         "axis" : {
             "arrow" : false
         },
         "padding" : {
-            "left" : 40,
-            "right" : 40
-        },
-        "min" : 0
+            "left" : 30,
+            "right" : 30
+        }
     },
 
     "yAxis": {
-        "min" : 0,
         "ticks" : {
             "enabled" : false
         },
@@ -37,37 +35,36 @@
             "enabled" : false
         },
         "padding" : {
-            "top" : 10,
+            "top" : 40,
             "bottom" : 0
         },
-        "stacked" : true
+        "unit" : {
+            "text" : "元"
+        },
+        "stacked" : false
     },
 
     "plotOptions" : {
 
-        "column" : {
-            "width" : 35,
-            "margin": 1
+        "line" : {
+            "width" : 5,
+            "dot" : {
+                "enabled" : false
+            }
         }
 
+    },
+
+    "interaction" : {
+        "hover" : {
+            "enabled" : true
+        }
     },
 
     "series": [
         {
             "name": "John",
             "data": [5, 3, 4, 7, 2]
-        }, {
-            "name": "Joe",
-            "data": [3, 4, 4, 2, 5]
-        }, {
-            "name": "Jane",
-            "data": [2, 5, 6, 2, 1]
-        }, {
-            "name": "Janet",
-            "data": [3, 0, 4, 4, 3]
-        }, {
-            "name": "Marry",
-            "data": [4, 1, 2, 3, 5]
         }
     ]
 

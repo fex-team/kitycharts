@@ -19,6 +19,11 @@
         $.ajax({
             url: 'data/page5-solution-ratio.json',
             success: function( data ) {
+                for(var j=0; j<data.series.length; j++){
+                    data.series[j].data = data.series[j].data.map(function(num, i){
+                        return (num *= 100).toFixed(2);
+                    });
+                }
                 singlecolumn.update( data );
             }
         });

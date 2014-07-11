@@ -6,10 +6,11 @@
 
 	var slider = window.slider;
 	var page = slider.addPage(new K.Page());
+	page.setBg('#f2f2f2');
 
 	// 标题
 	addFrame( page, function(){
-		slider.setBg('#f2f2f2');
+		slider.setBg(page.getBg());
 		var com = new K.Component('<img src="img/page2-title.png" />').setStyle({
 			position : 'absolute',
 			width : slider.measure(250) + 'px',
@@ -96,8 +97,47 @@
 
 	}
 
-	// computer 1
+	function addClockContainer(frame, id, left, time){
+		addHTML(frame, {
+			html : '<div id="'+id+'" class="page2-clock"></div>',
+			width: 60,
+			height : 60,
+			left : left,
+			top : 490,
+			opacity : 0
+		}, {
+			opacity : 1,
+			// delay : 600
+		}, function(){
 
+			addClock( id, time );
+
+		});
+	}
+
+	function addClock(id, time){
+		var colors = ['#f2bd3d'];
+		var d = {
+			list:[ {
+	            x: 50,
+	            y: 50,
+	            circle: 1,//长针转一圈代表的数值
+	            target: time,//目标数值
+	            total: 4,//整个表盘刻度代表的数值
+	            duraction: 600//完成刻度所需的时间
+	        } ]
+		};
+
+		var clock = new kc.ClockChart(id,{
+			colors : colors
+		});
+
+		clock.canvas.setScale(0.5);
+
+		clock.getData().update(d);
+	}
+
+	// computer 1
 	addFrame( page, function(){
 
 		addComputer( this, computersMarginLeft, moveX );
@@ -107,6 +147,7 @@
 		addPassText( this, '屏幕开始有内容', 'page2-desc-blue', 205, 170 );
 		addPassText( this, '平均等待时间: 1s', 'page2-desc-black', 205, 550 );	
 
+		addClockContainer(this, 'page2-clock-1', 245, 1);
 	});
 
 	// computer 2
@@ -120,6 +161,8 @@
 
 		addPassText( this, '首屏所有内容显示完毕', 'page2-desc-blue', 405, 170 );
 		addPassText( this, '平均等待时间: 2s', 'page2-desc-black', 435, 550 );
+
+		addClockContainer(this, 'page2-clock-2', 482, 2);
 
 	});
 
@@ -140,6 +183,8 @@
 
 		addPassText( this, '鼠标可点击', 'page2-desc-blue', 685, 170 );
 		addPassText( this, '平均等待时间: 2.2s', 'page2-desc-black', 675, 550 );
+
+		addClockContainer(this, 'page2-clock-3', 717, 2.2);
 
 	});
 

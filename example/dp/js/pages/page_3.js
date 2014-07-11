@@ -6,10 +6,11 @@
 
 	var slider = window.slider;
 	var page = slider.addPage(new K.Page());
+	page.setBg('#f2f2f2');
 
 	// 标题
 	addFrame( page, function(){
-
+		slider.setBg(page.getBg());
 		addImage(this, {
 			src : 'page3-title',
 			width : 264,
@@ -25,13 +26,13 @@
 	// chrome
 	addFrame( page, function(){
 
-		addImage(this, {
-			src : 'page3-desc1',
-			width : 362,
+		addHTML(this, {
+			html : '<div class="desc">各浏览器份额保持<span class="red">稳定</span>，Chrome略有<span class="red">下降</span></div>',
 			left : 90,
 			top : 150,
 			opacity : 0
 		}, {
+			// x : -50,
 			opacity : 1
 		});
 
@@ -76,8 +77,8 @@
 			src : 'page3-pie',
 			width : 400,
 			height : 306,
-			left : 90,
-			top : 400,
+			left : 70,
+			top : 370,
 			opacity : 0
 		}, {
 			opacity : 1,
@@ -89,12 +90,22 @@
 	//stacked
 	addFrame( page, function(){
 
+		addHTML(this, {
+			html : '<div class="chart-title">浏览器变化趋势</div>',
+			left : 660,
+			top : 330,
+			opacity : 0
+		}, {
+			opacity : 1,
+			delay : 600
+		});
+
 		addIFrame(this, {
 			src : 'page3-area',
 			width : 530,
 			height : 340,
 			left : 520,
-			top : 380,
+			top : 350,
 			opacity : 0
 		}, {
 			opacity : 1,

@@ -6,10 +6,11 @@
 
 	var slider = window.slider;
 	var page = slider.addPage(new K.Page());
+	page.setBg('#f2f2f2');
 
 	// 标题
 	addFrame( page, function(){
-
+		slider.setBg(page.getBg());
 		addImage(this, {
 			src : 'page8-title',
 			width : 495,
@@ -39,7 +40,7 @@
 	var dTop = 200,
 		dMoveY = 50,
 		dWidth = 250,
-		dMLeft = (slider.width - dWidth*4)/2,
+		dMLeft = (slider.STATIC_WIDTH - dWidth*4)/2,
 		lTop = 530,
 		lMoveY = -30,
 		delay = 800;

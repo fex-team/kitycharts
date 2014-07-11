@@ -1,9 +1,5 @@
 {
 
-    "chart": {
-        "type": "line"
-    },
-
     "xAxis": {
         "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
         "ticks" : {
@@ -20,6 +16,9 @@
         "padding" : {
             "left" : 0,
             "right" : 0
+        },
+        "unit" : {
+            "text" : "天"
         }
     },
 
@@ -37,6 +36,9 @@
         "padding" : {
             "top" : 40,
             "bottom" : 0
+        },
+        "unit" : {
+            "text" : "%"
         },
         "stacked" : false
     },
