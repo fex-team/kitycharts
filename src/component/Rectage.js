@@ -28,19 +28,19 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
 
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
-            x : 0,
-            y : 0,
-            width : 0,
-            height : 0,
-            color : 'rgba( 255, 255, 255, 0 )',
-            
-            strokeWidth : 0,
-            strokeColor : '#888',
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+            color: 'rgba( 255, 255, 255, 0 )',
 
-            labelText : null,
-            labelColor : 'red',
-            labelX : 5,
-            labelY : 5
+            strokeWidth: 0,
+            strokeColor: '#888',
+
+            labelText: null,
+            labelColor: 'red',
+            labelX: 5,
+            labelY: 5
 
         }, param ) );
 
@@ -78,15 +78,15 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
     drawText: function ( labelText, labelColor, labelX, labelY, width, height ) {
 
         this.label.setVisible( true );
-        this.label.update({
+        this.label.update( {
             text: labelText,
             color: labelColor,
             at: 'bottom',
-            x : labelX,
-            y : labelY
-        });
+            x: labelX,
+            y: labelY
+        } );
 
-        if( width > 0 ){
+        if ( width > 0 ) {
             var textWidth = this.label.getSize().width;
             var con = textWidth > width;
 
@@ -99,7 +99,7 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
             // paper.addResource( this.textFilter );
             // this.label.text.applyFilter( this.textFilter );
 
-            if( textWidth > width && textWidth > height ){
+            if ( textWidth > width && textWidth > height ) {
                 this.label.setVisible( false );
             }
 

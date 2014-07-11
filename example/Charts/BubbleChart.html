@@ -6,15 +6,95 @@
         <script src="../../kity/dist/kity.min.js"></script>
         <script src="../../build.js"></script>
         <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            #chart{
+                width: 800px;
+                height: 600px;
+            }
+        </style>
     </head>
     <body>
-        <div id="chart">
-            
+        <div id='buttons'>
+            <button id="btn-bubble" value='bubble'>气泡图</button>
+            <button id="btn-col" value='col'>柱状图</button>
+            <button id="btn-line" value='line'>折线图</button>
         </div>
+        <select name="" id="s-y">
+            <option value="goal">进球数</option>
+            <option value="pass" selected>传球数</option>
+        </select>
+        <div id="chart">
+        </div>
+        <select name="" id="s-x">
+            <option value="goal" selected>进球数</option>
+            <option value="pass">传球数</option>
+        </select>
+        <div id='timeline'></div>
     </body>
 	<script>
+
 		(function(){
-			var chart = new kc.BubbleChart('chart',{mode:'bubble'});
+            var colors = {
+                'A':'#4b85ff',
+                'B':'#ffd800',
+                'C':'#f60526',
+                'D':'#00cec2',
+                'E':'#4b85ff',
+                'F':'#ffd800',
+                'G':'#f60526',
+                'H':'#00cec2'
+            };
+            var d;
+			$.ajax({
+                url: '../data/bubble/bubble.json',
+                dataType: 'json',
+                success: function( data ) {
+                    d = {list:data};
+                    var curMode = 'bubble';
+                    var date = 0;
+                    var chart = new kc.BubbleChart('chart',{
+                            mode:curMode,
+                            date:date,
+                            x:'goal',
+                            y:'pass',
+                            size:'search',
+                            label:'nation',
+                            type:'group',
+                            padding:[20,20,20,50],
+                            colors:colors       
+                        });
+                    chart.getData().update(d);
+                    var interval = 1000;
+                    var bubbleDisplay;
+                    var startInterval = function(){
+                        bubbleDisplay =  setInterval(function(){
+                            date = (++date)%data.length;
+                            chart.update({
+                                mode:curMode,
+                                date:date,
+                                animateInterval:interval
+                            });
+                        },interval);
+                    };
+                    var resetDateandInterval = function(){
+                        clearInterval(bubbleDisplay);
+                        date = 0;
+                    };
+                    startInterval();
+                    $("#buttons").on('click','button',function(){
+                        var $this = $(this);
+                        curMode = $this.attr('value');
+                        resetDateandInterval();
+                        chart.update({
+                            mode:curMode,
+                            date:date
+                        });
+                        if(curMode!=='line'){
+                            startInterval();
+                        }
+                    });
+                }
+            });
 		})();
 	</script>
 </html>

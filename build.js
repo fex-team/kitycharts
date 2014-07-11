@@ -52,6 +52,7 @@ var dependience = [
     'src/component/HumanBody.js',
     'src/component/AxisLine.js',
     'src/component/Clock.js',
+    'src/component/TransformBubble.js',
 
     'src/config/ChartsConfig.js',
     'src/config/base.js',

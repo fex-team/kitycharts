@@ -62,6 +62,6 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
         this.circle.fill( color );
     },
     getAnimatedParam: function () {
-        return [ 'radius', 'y' ];
+        return [ 'radius', 'x', 'y' ];
     }
 } );
