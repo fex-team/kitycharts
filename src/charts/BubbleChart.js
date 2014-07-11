@@ -129,13 +129,14 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         var gridHorizon = this.getElement( 'gridhorizon' );
         var gridVertical = this.getElement( 'gridvertical' );
         var items = this.getElement( 'items' );
-        var categories = this.getElement( 'categories' )
+        var categories = this.getElement( 'categories' );
         var spaceX = getSpace( maxX );
         var spaceY = getSpace( maxY );
         maxX = spaceX.base * spaceX.n;
         maxY = spaceY.base * spaceY.n;
         var chartHeight = paperHeight - padding[ 0 ] - padding[ 2 ];
         var chartWidth = paperWidth - padding[ 1 ] - padding[ 3 ];
+        var cateList = [];
         //更新横向刻度
         var xAxis = [ {
             x1: padding[ 3 ],
@@ -144,21 +145,27 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             y2: paperHeight - padding[ 2 ],
             color: 'gray'
         } ];
-        for ( var x = 0; x < spaceX.n; x++ ) {
-            var y = padding[ 0 ] + chartHeight * x / spaceX.n;
+        for ( var y = 0; y < spaceY.n; y++ ) {
+            var Y = padding[ 0 ] + chartHeight * y / spaceY.n;
             xAxis.push( {
                 x1: padding[ 3 ],
-                y1: y,
+                y1: Y,
                 x2: paperWidth - padding[ 1 ],
-                y2: y,
+                y2: Y,
                 color: '#cecece'
+            } );
+            cateList.push( {
+                text: spaceY.base * y,
+                at: 'left',
+                x: padding[ 3 ] - 10,
+                y: paperHeight - padding[ 2 ] - chartHeight * y / spaceY.n
             } );
         }
         gridHorizon.update( {
             elementClass: kc.Line,
             list: xAxis
         } );
-        //更新纵向刻度
+        //更新纵向刻度和坐标数据
         var yAxis = [ {
             x1: padding[ 3 ],
             y1: padding[ 0 ],
@@ -166,19 +173,28 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             y2: paperHeight - padding[ 2 ],
             color: 'gray'
         } ];
-        for ( var y = 1; y <= spaceY.n; y++ ) {
-            var x = padding[ 3 ] + chartWidth * y / spaceY.n;
+        for ( var x = 1; x <= spaceX.n; x++ ) {
+            var X = padding[ 3 ] + chartWidth * x / spaceX.n;
             yAxis.push( {
-                x1: x,
+                x1: X,
                 y1: padding[ 0 ],
-                x2: x,
+                x2: X,
                 y2: paperHeight - padding[ 2 ],
                 color: '#cecece'
+            } );
+            cateList.push( {
+                x: X,
+                y: paperHeight - padding[ 2 ] + 10,
+                text: spaceX.base * x
             } );
         }
         gridVertical.update( {
             elementClass: kc.Line,
             list: yAxis
+        } );
+        categories.update( {
+            elementClass: kc.Label,
+            list: cateList
         } );
         var bubbleList = [];
         if ( param.mode === 'bubble' ) { //气泡模式

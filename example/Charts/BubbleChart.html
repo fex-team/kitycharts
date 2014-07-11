@@ -49,7 +49,6 @@
                 url: '../data/bubble/bubble.json',
                 dataType: 'json',
                 success: function( data ) {
-                    console.log(data);
                     d = {list:data};
                     var curMode = 'bubble';
                     var date = 0;
@@ -65,7 +64,7 @@
                             colors:colors       
                         });
                     chart.getData().update(d);
-                    var interval = 2000;
+                    var interval = 1000;
                     var bubbleDisplay;
                     var startInterval = function(){
                         bubbleDisplay =  setInterval(function(){

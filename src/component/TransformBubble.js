@@ -88,7 +88,6 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
             var item = points[ i ];
             items.push( new kity.Point( item.x, item.y ) );
         }
-        console.log( items );
         this.shape.setPoints( items );
     },
     getAnimatedParam: function () {
