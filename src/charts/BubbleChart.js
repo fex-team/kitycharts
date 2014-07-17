@@ -98,16 +98,12 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             break;
         }
         this.tooltipList = this.tooltipList.concat( [ item ] );
-        // tooltips.update( {
-        //     elementClass: kc.Tooltip,
-        //     list: this.tooltipList
-        // } );
-    },
-    renderBubble: function () {
-        this.tooltipList = [];
-        this.tooltips.update( {
+        tooltips.update( {
+            elementClass: kc.Tooltip,
             list: this.tooltipList
         } );
+    },
+    renderBubble: function () {
         var container = this.container;
         var paperWidth = container.clientWidth;
         var paperHeight = container.clientHeight;
