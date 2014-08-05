@@ -1,0 +1,6887 @@
+[ {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "色斑",
+	"relation": "73",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "便秘",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "月经失调",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "湿疹",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "痛经",
+	"relation": "16",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "黑头",
+	"relation": "16",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "口疮",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "口臭",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "色斑",
+	"relatedbrand": "眼袋",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "色斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "雀斑",
+	"relation": "466",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "月经失调",
+	"relation": "84",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "便秘",
+	"relation": "81",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "黑头",
+	"relation": "78",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "过敏",
+	"relation": "76",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "口疮",
+	"relation": "75",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "痛经",
+	"relation": "75",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "雀斑",
+	"relatedbrand": "湿疹",
+	"relation": "72",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "雀斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "皮肤粗糙",
+	"relation": "53",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "黑头",
+	"relation": "14",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "月经失调",
+	"relation": "13",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "13",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "过敏",
+	"relation": "13",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "口疮",
+	"relation": "12",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "皮肤粗糙",
+	"relatedbrand": "脂肪粒",
+	"relation": "12",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤粗糙"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "脸色暗黄",
+	"relation": "89",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "口疮",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "口臭",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "月经失调",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "增生",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "头痛",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "过敏",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "便秘",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "脸色暗黄",
+	"relatedbrand": "毛孔粗大",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脸色暗黄"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "红斑",
+	"relation": "727",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "月经失调",
+	"relation": "138",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "湿疹",
+	"relation": "133",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "口疮",
+	"relation": "122",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "过敏",
+	"relation": "120",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "便秘",
+	"relation": "117",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "痛经",
+	"relation": "113",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "黑头",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "红斑",
+	"relatedbrand": "头痛",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "红斑"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "肤色暗沉",
+	"relation": "14",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "便秘",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "头痛",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "湿疹",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "肤质差",
+	"brand": "肤色暗沉",
+	"relatedbrand": "过敏",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肤色暗沉"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "晒红",
+	"relation": "160",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "月经失调",
+	"relation": "38",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "口疮",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "痛经",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "湿疹",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "过敏",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "便秘",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "头痛",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "晒红",
+	"relatedbrand": "牙痛",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "晒红"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "面部红血丝",
+	"relation": "310",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "54",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "月经失调",
+	"relation": "52",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "痛经",
+	"relation": "51",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "湿疹",
+	"relation": "49",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "便秘",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "口疮",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "过敏",
+	"relation": "45",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "面部红血丝",
+	"relatedbrand": "黑头",
+	"relation": "45",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "面部红血丝"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "角质堆积",
+	"relation": "422",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "月经失调",
+	"relation": "58",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "黑头",
+	"relation": "56",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "粉刺",
+	"relation": "52",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "便秘",
+	"relation": "51",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "51",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "口疮",
+	"relation": "50",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "牙痛",
+	"relation": "49",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "角质堆积",
+	"relatedbrand": "痛经",
+	"relation": "48",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "角质堆积"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "黑头",
+	"relation": "2436",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "毛孔粗大",
+	"relation": "209",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "月经失调",
+	"relation": "203",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "粉刺",
+	"relation": "189",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "痛经",
+	"relation": "176",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "湿疹",
+	"relation": "173",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "口疮",
+	"relation": "172",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "过敏",
+	"relation": "172",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "黑头",
+	"relatedbrand": "便秘",
+	"relation": "169",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑头"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "过敏",
+	"relation": "1912",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "湿疹",
+	"relation": "225",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "月经失调",
+	"relation": "215",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "痛经",
+	"relation": "190",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "便秘",
+	"relation": "184",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "口疮",
+	"relation": "182",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "黑头",
+	"relation": "172",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "皮炎",
+	"relation": "158",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "过敏",
+	"relatedbrand": "头痛",
+	"relation": "157",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "过敏"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "粉刺",
+	"relation": "1524",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "痤疮",
+	"relation": "279",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "黑头",
+	"relation": "189",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "月经失调",
+	"relation": "170",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "口疮",
+	"relation": "142",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "湿疹",
+	"relation": "142",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "便秘",
+	"relation": "138",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "过敏",
+	"relation": "128",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "环境诱发",
+	"brand": "粉刺",
+	"relatedbrand": "脂肪粒",
+	"relation": "126",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "粉刺"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "荨麻疹",
+	"relation": "863",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "湿疹",
+	"relation": "154",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "过敏",
+	"relation": "142",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "月经失调",
+	"relation": "129",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "口疮",
+	"relation": "121",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "便秘",
+	"relation": "109",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "痛经",
+	"relation": "109",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "荨麻疹",
+	"relatedbrand": "黑头",
+	"relation": "107",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "荨麻疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "湿疹",
+	"relation": "1847",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "月经失调",
+	"relation": "225",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "过敏",
+	"relation": "225",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "口疮",
+	"relation": "204",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "便秘",
+	"relation": "184",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "痛经",
+	"relation": "181",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "黑头",
+	"relation": "173",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "湿疹",
+	"relatedbrand": "皮炎",
+	"relation": "170",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "湿疹"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "皮炎",
+	"relation": "975",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "湿疹",
+	"relation": "170",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "过敏",
+	"relation": "158",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "月经失调",
+	"relation": "148",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "口疮",
+	"relation": "125",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "便秘",
+	"relation": "123",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "痛经",
+	"relation": "118",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "脱发",
+	"relation": "114",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "皮炎",
+	"relatedbrand": "黑头",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮炎"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "鳞屑",
+	"relation": "9",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "毛孔粗大",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "红斑",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "不孕",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "乳房胀痛",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "体毛增多",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "便秘",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "季节交替",
+	"brand": "鳞屑",
+	"relatedbrand": "口疮",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鳞屑"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "脂肪粒",
+	"relation": "1196",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "月经失调",
+	"relation": "144",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "黑头",
+	"relation": "138",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "便秘",
+	"relation": "130",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "口疮",
+	"relation": "130",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "粉刺",
+	"relation": "126",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "痛经",
+	"relation": "119",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "湿疹",
+	"relation": "118",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "脂肪粒",
+	"relatedbrand": "过敏",
+	"relation": "117",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脂肪粒"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "油脂过多",
+	"relation": "95",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "过敏",
+	"relation": "25",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "湿疹",
+	"relation": "24",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "脂肪粒",
+	"relation": "24",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "黑头",
+	"relation": "24",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "口疮",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "月经失调",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "油脂过多",
+	"relatedbrand": "脱发",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "油脂过多"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "毛孔粗大",
+	"relation": "1162",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "黑头",
+	"relation": "209",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "月经失调",
+	"relation": "134",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "口疮",
+	"relation": "124",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "便秘",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "湿疹",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "痛经",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "头痛",
+	"relation": "101",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "毛孔粗大",
+	"relatedbrand": "过敏",
+	"relation": "101",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "毛孔粗大"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "盗汗",
+	"relation": "129",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "月经失调",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "便秘",
+	"relation": "40",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "痛经",
+	"relation": "39",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "湿疹",
+	"relation": "38",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "过敏",
+	"relation": "38",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "口疮",
+	"relation": "37",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "头痛",
+	"relation": "37",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "盗汗",
+	"relatedbrand": "脱发",
+	"relation": "36",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "盗汗"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "痤疮",
+	"relation": "494",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "粉刺",
+	"relation": "279",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "月经失调",
+	"relation": "84",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "口疮",
+	"relation": "74",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "黑头",
+	"relation": "71",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "湿疹",
+	"relation": "68",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "过敏",
+	"relation": "67",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "便秘",
+	"relation": "65",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "痤疮",
+	"relatedbrand": "痛经",
+	"relation": "63",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痤疮"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "便秘",
+	"relation": "1961",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "月经失调",
+	"relation": "237",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "痛经",
+	"relation": "204",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "口疮",
+	"relation": "194",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "湿疹",
+	"relation": "184",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "过敏",
+	"relation": "184",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "头痛",
+	"relation": "174",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "黑头",
+	"relation": "169",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "牙痛",
+	"relation": "163",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "便秘",
+	"relatedbrand": "口臭",
+	"relation": "159",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "便秘"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "白发",
+	"relation": "393",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "月经失调",
+	"relation": "76",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "口疮",
+	"relation": "70",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "便秘",
+	"relation": "69",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "头痛",
+	"relation": "69",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "痛经",
+	"relation": "66",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "湿疹",
+	"relation": "64",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "过敏",
+	"relation": "64",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "牙痛",
+	"relation": "62",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "内分泌失调",
+	"brand": "白发",
+	"relatedbrand": "黑头",
+	"relation": "60",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "白发"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "增生",
+	"relation": "947",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "月经失调",
+	"relation": "155",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "口疮",
+	"relation": "135",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "便秘",
+	"relation": "129",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "痛经",
+	"relation": "127",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "湿疹",
+	"relation": "126",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "过敏",
+	"relation": "122",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "黑头",
+	"relation": "116",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "增生",
+	"relatedbrand": "头痛",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "增生"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "月经失调",
+	"relation": "2942",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "痛经",
+	"relation": "267",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "口疮",
+	"relation": "245",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "便秘",
+	"relation": "237",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "湿疹",
+	"relation": "225",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "过敏",
+	"relation": "215",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "头痛",
+	"relation": "210",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "黑头",
+	"relation": "203",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "月经失调",
+	"relatedbrand": "牙痛",
+	"relation": "188",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "月经失调"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "痛经",
+	"relation": "2364",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "月经失调",
+	"relation": "267",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "便秘",
+	"relation": "204",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "口疮",
+	"relation": "195",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "过敏",
+	"relation": "190",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "湿疹",
+	"relation": "181",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "黑头",
+	"relation": "176",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "头痛",
+	"relation": "164",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "痛经",
+	"relatedbrand": "牙痛",
+	"relation": "158",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "痛经"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "乳房胀痛",
+	"relation": "442",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "月经失调",
+	"relation": "180",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "便秘",
+	"relation": "84",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "痛经",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "湿疹",
+	"relation": "81",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "口疮",
+	"relation": "75",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "过敏",
+	"relation": "73",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "乳房胀痛",
+	"relatedbrand": "增生",
+	"relation": "71",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "乳房胀痛"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "黄褐斑",
+	"relation": "115",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "雀斑",
+	"relation": "69",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "月经失调",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "口疮",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "湿疹",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "痛经",
+	"relation": "29",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "便秘",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "口臭",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "黄褐斑",
+	"relatedbrand": "粉刺",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黄褐斑"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "不孕",
+	"relation": "329",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "月经失调",
+	"relation": "95",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "痛经",
+	"relation": "81",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "便秘",
+	"relation": "79",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "口疮",
+	"relation": "76",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "湿疹",
+	"relation": "73",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "口臭",
+	"relation": "70",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "过敏",
+	"relation": "70",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "女性生理失调",
+	"brand": "不孕",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "69",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "不孕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "易疲劳",
+	"relation": "14",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "便秘",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "烦躁",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "痛经",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "痤疮",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "皮肤下垂",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易疲劳",
+	"relatedbrand": "脂肪粒",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易疲劳"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "易怒",
+	"relation": "99",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "月经失调",
+	"relation": "32",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "过敏",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "口疮",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "痛经",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "便秘",
+	"relation": "29",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "湿疹",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "牙痛",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "易怒",
+	"relatedbrand": "增生",
+	"relation": "25",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "易怒"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "压力大",
+	"relation": "125",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "月经失调",
+	"relation": "39",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "便秘",
+	"relation": "38",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "湿疹",
+	"relation": "38",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "口疮",
+	"relation": "36",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "过敏",
+	"relation": "35",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "牙痛",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "痛经",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "压力大",
+	"relatedbrand": "头痛",
+	"relation": "33",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "压力大"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "胸闷气短",
+	"relation": "520",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "月经失调",
+	"relation": "100",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "口疮",
+	"relation": "93",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "湿疹",
+	"relation": "89",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "过敏",
+	"relation": "89",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "痛经",
+	"relation": "87",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "便秘",
+	"relation": "85",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "头痛",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "胸闷气短",
+	"relatedbrand": "黑头",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "胸闷气短"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "头痛",
+	"relation": "1546",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "月经失调",
+	"relation": "210",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "便秘",
+	"relation": "174",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "口疮",
+	"relation": "172",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "痛经",
+	"relation": "164",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "过敏",
+	"relation": "157",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "黑头",
+	"relation": "153",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "湿疹",
+	"relation": "148",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "牙痛",
+	"relation": "146",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "头痛",
+	"relatedbrand": "口臭",
+	"relation": "134",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "头痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "健忘",
+	"relation": "47",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "月经失调",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "湿疹",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "便秘",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "过敏",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "黑头",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "口疮",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "健忘",
+	"relatedbrand": "烦躁",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "健忘"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "急躁",
+	"relation": "12",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "烦躁",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "过敏",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "粉刺",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "视力下降",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "急躁",
+	"relatedbrand": "颈椎酸痛",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "急躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "反应迟钝",
+	"relation": "16",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "便秘",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "月经失调",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "牙痛",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "粉刺",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "口疮",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "口臭",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "增生",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "反应迟钝",
+	"relatedbrand": "头痛",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "反应迟钝"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "烦躁",
+	"relation": "785",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "月经失调",
+	"relation": "143",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "口疮",
+	"relation": "132",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "痛经",
+	"relation": "122",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "过敏",
+	"relation": "118",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "便秘",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "黑头",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "烦躁",
+	"relatedbrand": "湿疹",
+	"relation": "111",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "烦躁"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "多梦",
+	"relation": "155",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "月经失调",
+	"relation": "37",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "牙痛",
+	"relation": "37",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "过敏",
+	"relation": "36",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "痛经",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "口疮",
+	"relation": "33",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "口臭",
+	"relation": "32",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "便秘",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-精神",
+	"brand": "多梦",
+	"relatedbrand": "湿疹",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "多梦"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "1182",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "月经失调",
+	"relation": "181",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "口疮",
+	"relation": "164",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "痛经",
+	"relation": "152",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "便秘",
+	"relation": "139",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "过敏",
+	"relation": "137",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "湿疹",
+	"relation": "135",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "黑头",
+	"relation": "129",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼睛浮肿",
+	"relatedbrand": "头痛",
+	"relation": "124",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼睛浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "眼袋",
+	"relation": "933",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "月经失调",
+	"relation": "121",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "黑眼圈",
+	"relation": "114",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "便秘",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "痛经",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "过敏",
+	"relation": "108",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "黑头",
+	"relation": "108",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "口疮",
+	"relation": "107",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "眼袋",
+	"relatedbrand": "湿疹",
+	"relation": "104",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼袋"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "皮肤灼热",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "月经失调",
+	"relation": "11",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "湿疹",
+	"relation": "11",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "脱发",
+	"relation": "11",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "便秘",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "痛经",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "红斑",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤灼热",
+	"relatedbrand": "肥胖",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤灼热"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "皮肤浮肿",
+	"relation": "51",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "过敏",
+	"relation": "17",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "口疮",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "口臭",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "头痛",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "月经失调",
+	"relation": "15",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "痛经",
+	"relation": "14",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "湿疹",
+	"relation": "13",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤浮肿",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "13",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤浮肿"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "皮肤刺痛",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "毛孔粗大",
+	"relation": "6",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "皮炎",
+	"relation": "6",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "肥胖",
+	"relation": "6",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "荨麻疹",
+	"relation": "6",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "黑头",
+	"relation": "6",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "口疮",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤刺痛",
+	"relatedbrand": "口臭",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤刺痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "皮肤苍白",
+	"relation": "12",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "月经失调",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "口疮",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "口臭",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "毛孔粗大",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "湿疹",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "痛经",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "皮肤苍白",
+	"relatedbrand": "痤疮",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤苍白"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "黑眼圈",
+	"relation": "743",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "眼袋",
+	"relation": "114",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "月经失调",
+	"relation": "106",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "黑头",
+	"relation": "103",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "口疮",
+	"relation": "95",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "便秘",
+	"relation": "93",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "痛经",
+	"relation": "91",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "湿疹",
+	"relation": "85",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-皮肤",
+	"brand": "黑眼圈",
+	"relatedbrand": "过敏",
+	"relation": "84",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "黑眼圈"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "眼干",
+	"relation": "40",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "牙痛",
+	"relation": "9",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "月经失调",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "脱发",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "过敏",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "便秘",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "头痛",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "眼干",
+	"relatedbrand": "红斑",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼干"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "牙痛",
+	"relation": "1371",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "月经失调",
+	"relation": "188",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "口疮",
+	"relation": "177",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "便秘",
+	"relation": "163",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "痛经",
+	"relation": "158",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "湿疹",
+	"relation": "156",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "过敏",
+	"relation": "154",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "黑头",
+	"relation": "153",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "牙痛",
+	"relatedbrand": "头痛",
+	"relation": "146",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "牙痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "消化不良",
+	"relation": "216",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "口疮",
+	"relation": "54",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "月经失调",
+	"relation": "52",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "便秘",
+	"relation": "49",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "口臭",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "湿疹",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "痛经",
+	"relation": "46",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "牙痛",
+	"relation": "45",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "消化不良",
+	"relatedbrand": "粉刺",
+	"relation": "44",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "消化不良"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "脱发",
+	"relation": "1060",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "月经失调",
+	"relation": "181",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "口疮",
+	"relation": "146",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "便秘",
+	"relation": "144",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "湿疹",
+	"relation": "142",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "痛经",
+	"relation": "142",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "过敏",
+	"relation": "134",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "头痛",
+	"relation": "128",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "脱发",
+	"relatedbrand": "黑头",
+	"relation": "125",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱发"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "体毛增多",
+	"relation": "457",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "月经失调",
+	"relation": "105",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "便秘",
+	"relation": "88",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "湿疹",
+	"relation": "88",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "痛经",
+	"relation": "88",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "口疮",
+	"relation": "86",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "黑头",
+	"relation": "85",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "体毛增多",
+	"relatedbrand": "头痛",
+	"relation": "81",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "体毛增多"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "视力下降",
+	"relation": "1025",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "月经失调",
+	"relation": "130",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "口疮",
+	"relation": "116",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "湿疹",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "便秘",
+	"relation": "111",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "过敏",
+	"relation": "106",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "痛经",
+	"relation": "105",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "视力下降",
+	"relatedbrand": "黑头",
+	"relation": "100",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "视力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "落枕",
+	"relation": "537",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "月经失调",
+	"relation": "103",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "口疮",
+	"relation": "96",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "湿疹",
+	"relation": "92",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "便秘",
+	"relation": "91",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "痛经",
+	"relation": "89",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "过敏",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "黑头",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "落枕",
+	"relatedbrand": "头痛",
+	"relation": "82",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "落枕"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "口疮",
+	"relation": "2060",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "月经失调",
+	"relation": "245",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "口臭",
+	"relation": "210",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "湿疹",
+	"relation": "204",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "痛经",
+	"relation": "195",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "便秘",
+	"relation": "194",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "过敏",
+	"relation": "182",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "牙痛",
+	"relation": "177",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口疮",
+	"relatedbrand": "头痛",
+	"relation": "172",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口疮"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "口臭",
+	"relation": "1145",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "口疮",
+	"relation": "210",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "月经失调",
+	"relation": "182",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "便秘",
+	"relation": "159",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "湿疹",
+	"relation": "150",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "痛经",
+	"relation": "149",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "过敏",
+	"relation": "141",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "口臭",
+	"relatedbrand": "黑头",
+	"relation": "135",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "口臭"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "颈椎酸痛",
+	"relation": "705",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "月经失调",
+	"relation": "143",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "口疮",
+	"relation": "131",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "痛经",
+	"relation": "117",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "便秘",
+	"relation": "116",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "头痛",
+	"relation": "113",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "湿疹",
+	"relation": "113",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "过敏",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "颈椎酸痛",
+	"relatedbrand": "黑头",
+	"relation": "105",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈椎酸痛"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "肥胖",
+	"relation": "1171",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "月经失调",
+	"relation": "149",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "便秘",
+	"relation": "126",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "口疮",
+	"relation": "123",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "痛经",
+	"relation": "122",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "黑头",
+	"relation": "120",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "湿疹",
+	"relation": "117",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "过敏",
+	"relation": "112",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "肥胖",
+	"relatedbrand": "头痛",
+	"relation": "108",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "肥胖"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "耳鸣",
+	"relation": "494",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "口疮",
+	"relation": "104",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "便秘",
+	"relation": "97",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "月经失调",
+	"relation": "97",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "湿疹",
+	"relation": "87",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "痛经",
+	"relation": "86",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "口臭",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "耳鸣",
+	"relatedbrand": "头痛",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "耳鸣"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "抵抗力下降",
+	"relation": "92",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "月经失调",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "湿疹",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "黑头",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "便秘",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "口疮",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "口臭",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "失眠少觉-生理",
+	"brand": "抵抗力下降",
+	"relatedbrand": "牙痛",
+	"relation": "19",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抵抗力下降"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "鱼尾纹",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "口疮",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "头痛",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "月经失调",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "眼袋",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "粉刺",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "雀斑",
+	"relation": "8",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "鱼尾纹",
+	"relatedbrand": "便秘",
+	"relation": "7",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "鱼尾纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "眼角松弛下垂",
+	"relation": "290",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "月经失调",
+	"relation": "36",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "口疮",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "湿疹",
+	"relation": "33",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "黑头",
+	"relation": "32",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "过敏",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "便秘",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "口臭",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼角松弛下垂",
+	"relatedbrand": "头痛",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼角松弛下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "眼部细纹",
+	"relation": "10",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "眼袋",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "不孕",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "乳房胀痛",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "体毛增多",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "便秘",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "口疮",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "口臭",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部细纹",
+	"relatedbrand": "增生",
+	"relation": "2",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部细纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "眼部干纹",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "口疮",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "增生",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "月经失调",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "湿疹",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "牙痛",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "眼袋",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "红斑",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "眼部干纹",
+	"relatedbrand": "视力下降",
+	"relation": "1",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "眼部干纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "抬头纹",
+	"relation": "165",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "黑头",
+	"relation": "36",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "便秘",
+	"relation": "35",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "口疮",
+	"relation": "35",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "月经失调",
+	"relation": "35",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "口臭",
+	"relation": "34",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "湿疹",
+	"relation": "33",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "过敏",
+	"relation": "33",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "抬头纹",
+	"relatedbrand": "痛经",
+	"relation": "31",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "抬头纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "皮肤下垂",
+	"relation": "424",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "月经失调",
+	"relation": "77",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "过敏",
+	"relation": "76",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "口疮",
+	"relation": "74",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "湿疹",
+	"relation": "72",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "便秘",
+	"relation": "68",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "口臭",
+	"relation": "66",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "62",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤下垂",
+	"relatedbrand": "黑头",
+	"relation": "62",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤下垂"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "皮肤肌肉松弛",
+	"relation": "18",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "皮肤下垂",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "便秘",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "口疮",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "月经失调",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "过敏",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "黑头",
+	"relation": "4",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "口臭",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "皮肤肌肉松弛",
+	"relatedbrand": "毛孔粗大",
+	"relation": "3",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤肌肉松弛"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "颈纹",
+	"relation": "47",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "口臭",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "头痛",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "月经失调",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "牙痛",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "痛经",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "脂肪粒",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "颈纹",
+	"relatedbrand": "脱发",
+	"relation": "5",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "颈纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "法令纹",
+	"relation": "222",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "口疮",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "月经失调",
+	"relation": "30",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "头痛",
+	"relation": "29",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "湿疹",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "痛经",
+	"relation": "28",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "27",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "过敏",
+	"relation": "26",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤衰老",
+	"brand": "法令纹",
+	"relatedbrand": "便秘",
+	"relation": "25",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "法令纹"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "嘴唇干燥",
+	"relation": "135",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "眼睛浮肿",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "口疮",
+	"relation": "22",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "月经失调",
+	"relation": "22",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "痛经",
+	"relation": "22",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "头痛",
+	"relation": "21",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "过敏",
+	"relation": "21",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "嘴唇干燥",
+	"relatedbrand": "增生",
+	"relation": "20",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "嘴唇干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "脱皮",
+	"relation": "701",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "月经失调",
+	"relation": "127",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "口疮",
+	"relation": "124",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "便秘",
+	"relation": "115",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "痛经",
+	"relation": "114",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "湿疹",
+	"relation": "111",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "过敏",
+	"relation": "110",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "黑头",
+	"relation": "108",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "脱皮",
+	"relatedbrand": "头痛",
+	"relation": "101",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "脱皮"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "皮肤干燥",
+	"relation": "495",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "月经失调",
+	"relation": "101",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "湿疹",
+	"relation": "97",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "黑头",
+	"relation": "95",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "痛经",
+	"relation": "92",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "口疮",
+	"relation": "89",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "便秘",
+	"relation": "87",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "过敏",
+	"relation": "83",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "皮肤干燥",
+	"relatedbrand": "牙痛",
+	"relation": "78",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "皮肤干燥"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "龟裂",
+	"relation": "92",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "便秘",
+	"relation": "26",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "过敏",
+	"relation": "26",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "月经失调",
+	"relation": "25",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "口疮",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "头痛",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "痛经",
+	"relation": "23",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+}, {
+	"brandclass": "皮肤脱水",
+	"brand": "龟裂",
+	"relatedbrand": "脱发",
+	"relation": "22",
+	"percent": "0.00",
+	"percentall": "0.00",
+	"tags": [ {
+		"name": "tag2",
+		"value": "龟裂"
+	} ]
+} ]
