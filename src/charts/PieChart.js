@@ -17,7 +17,7 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
     },
 
     update : function( param ){
-        this.setConfig( param, kc.PieData );
+        this._setConfig( param, kc.PieData );
         
         this.getPlots().update( this.config );
         this.getOption('legend.enabled') && this.addLegend();
@@ -33,6 +33,10 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
 
     getSeries : function(){
         return this.config.series;
+    },
+
+    getParamList : function(){
+        return this.getPlots().pies.param.list;
     },
 
     bindAction : function(){

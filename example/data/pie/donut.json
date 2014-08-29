@@ -9,7 +9,7 @@
         "pie": {
             "shadow": false,
             "center": [
-                "50%",
+                "200",
                 "50%"
             ]
         }

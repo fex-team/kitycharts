@@ -29,7 +29,7 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
         this.setData( new kc.TreemapData( param ) );
         this.rects = this.addElement( 'rects', new kc.ElementList() );
 
-        this.tip = this.addElement( 'tip', new kc.Tooltip( {
+        this.tip = this.addElement( 'tip', a = new kc.Tooltip( {
             background: '#FFF',
             at: 'up',
             padding: [ 10, 20, 10, 20 ],
@@ -37,10 +37,10 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
             anchorSize: 4
         } ) );
 
-        var filter = new kity.ProjectionFilter( 2, 1, 1 );
-        filter.setColor( "rgba( 0, 0, 0, 0.3 )" );
-        this.paper.addResource( filter );
-        this.tip.canvas.applyFilter( filter );
+        // var filter = new kity.ProjectionFilter( 2, 1, 1 );
+        // filter.setColor( "rgba( 0, 0, 0, 0.3 )" );
+        // this.paper.addResource( filter );
+        // this.tip.canvas.applyFilter( filter );
 
         this._bindAction();
     },
@@ -130,31 +130,34 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
                         y : rectPos.y + rectSize.height / 2
                     };
 
-                    var paperWidth = self.paper.getWidth();
+                    var paperWidth = self.paper.getWidth() || self.paper.node.getClientRects()[0].width;
+
                     var tipPos = self.tip.getPosition();
                     var tipSize = self.tip.getSize();
 
                     var at = 'up';
                     var posX = 0, posY = 0;
-                    var gap = fontSize;
+                    var gap = fontSize,
+                        tipHalfWidth = tipSize.width / 2,
+                        tipHalfHeight = tipSize.height / 2;
 
-                    posY = rectCenter.y - tipSize.height / 2 - gap;
+                    posY = rectCenter.y - tipHalfHeight - gap;
 
-                    if( rectCenter.x + tipSize.width / 2 > paperWidth ){
+                    if( rectCenter.x + tipHalfWidth > paperWidth ){
                         at = 'left';
-                        posX = rectCenter.x - tipSize.width / 2 - gap;
+                        posX = rectCenter.x - tipHalfWidth - gap;
                         posY = rectCenter.y;
-                    }else if( rectCenter.x - tipSize.width / 2 < 0 ){
+                    }else if( rectCenter.x - tipHalfWidth < 0 ){
                         at = 'right';
-                        posX = rectCenter.x + tipSize.width / 2 + gap;
+                        posX = rectCenter.x + tipHalfWidth + gap;
                         posY = rectCenter.y;
                     }else{
                         posX = rectCenter.x;
                     }
 
-                    if( rectCenter.y - tipSize.height - gap < 0 ){
+                    if( rectCenter.y - tipHalfHeight - gap < 0 && rectCenter.x + tipHalfWidth <= paperWidth && rectCenter.x - tipHalfWidth >= 0 ){
                         at = 'down';
-                        posY = rectCenter.y + tipSize.height / 2 + gap;
+                        posY = rectCenter.y + tipHalfHeight + gap;
                     }
 
                     self.tip

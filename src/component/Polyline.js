@@ -87,12 +87,35 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
             }
             if ( close ) {
                 drawer.close();
-                this.polyline.fill( fill );
+
+                var f = fill;
+                var pl = this.polyline;
+                if( kity.Utils.isArray( fill ) ){ //判断fill是否为数组，是则为渐变
+
+                    this.polyline.whenPaperReady(function(paper){
+                        f = new kity.LinearGradientBrush().pipe( function() {
+                            var g;
+                            for( var i = 0; i < fill.length; i++ ){
+                                g = fill[i];
+                                this.addStop( g.pos, g.color||'#000', fill[i].opacity );
+                            }
+                            this.setStartPosition(0, 0);
+                            this.setEndPosition(0, 1);
+                            paper.addResource( this );
+                        });
+                    });
+
+                }
+
+                this.polyline.fill( f );
+
             }
         }
     },
 
     stroke: function ( color, width, dash ) {
+        // if(width === 0) width = 0.001;
+        
         var pen = new kity.Pen();
         pen.setWidth( width );
         pen.setColor( color );

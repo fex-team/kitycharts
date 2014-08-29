@@ -1,8 +1,31 @@
-var ChinaMapData = kc.MapData = kity.createClass('ChinaMapData', {
+var ChinaMapData = kc.ChinaMapData = kity.createClass('ChinaMapData', {
     base: kc.Data,
 
     format: function() {
         var origin = this.origin;
+
+        var hasVal = function( entry ){
+            return ('value' in entry) && kity.Utils.isNumber( entry.value );
+        }
+
+        var arr = [];
+        for( var i in origin ){
+            hasVal( origin[ i ] ) && arr.push( origin[ i ].value );
+        }
+
+        var max = Math.max.apply( {}, arr ),
+            min = Math.min.apply( {}, arr ),
+            dur = max - min;
+
+        var t,
+            range = 0.999999;
+
+        for( i in origin ){
+            t = origin[ i ];
+            if( hasVal( origin[ i ] ) )
+                t.mapVal = ( t.value - min ) / dur * range;
+        }   
+
         return origin;
     }
 });
@@ -18,6 +41,8 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
             maxColor: 'red'
         }, param));
 
+        this.setData( new kc.ChinaMapData() );
+
         this.addElement('map', new kc.Map({
             width: this.param.width,
             height: this.param.height
@@ -27,6 +52,8 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
     updateChart: function(param, data) {
         var has = 'hasOwnProperty';
         var map = this.getElement('map');
+
+        var data = this.data.format();
 
         var colors = param.colors.map(kity.Color.parse),
             tweenColor = function (t) {
@@ -66,7 +93,7 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
             if (!block) continue;
 
             var pro = data[province];
-            var color = pro.color ? kity.Color.parse(pro.color) : data[province].value ? tweenColor(data[province].value) : defaultColor ;
+            var color = pro.color ? kity.Color.parse(pro.color) : data[province].mapVal ? tweenColor(data[province].mapVal) : defaultColor ;
 
             block.animate({
                 color: color

@@ -48,8 +48,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             map_grid = [],
             current;
 
-        for ( current = start; current < ref.to + step; current += step ) {
-            ref_grid.push( current );
+        if( kity.Utils.isArray( start ) ){
+            ref_grid = start;
+        }else{
+            for ( current = start; current < ref.to + step; current += step ) {
+                ref_grid.push( current );
+            }
         }
 
         this.ref_grid = ref_grid;
@@ -87,12 +91,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             adjust *= 10;
         }
 
-        while(sdur < 10) {
+        while(sdur < 10 && sdur > 0) {
             sdur *= 10;
             adjust /= 10;
         }
 
-        return (sdur | 0) * adjust;
+        return (sdur | 0) * adjust || 1;
     },
 
     align : function ( value, mod, dir ) {
@@ -112,6 +116,10 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         var size = mod;
         while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size, alignRef );
+    },
+
+    gridByArray: function( arr ){
+        return this.grid( arr, null, true );
     },
 
     gridByCategories : function( count ){

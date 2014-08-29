@@ -90,17 +90,25 @@ var StickChart = kc.StickChart = kity.createClass( 'StickChart', {
 
     setTooltipContent : function( bind ){
     	var j = bind.indexInSeries, i = bind.indexInCategories
-    	var series = this.config.series;
-    	var categories = this.config.xAxis.categories;
-    	var html = '<div style="font-weight:bold">' + categories[ i ] + '</div>';
-        var valueAxis = this.getPlots().valueAxis == 'x' ? 'xAxis' : 'yAxis';
-    	html += '<div>' + series[ j ].name + ' : ' + series[ j ].data[ i ] + this.config[ valueAxis ].unit.text + '</div>';
 
-        if( this.config.yAxis.stacked ){
-            html += '<div> Total : ' + series[ j ].sum[ i ] + '</div>';
+        var func = kity.Utils.queryPath('tooltip.content', this.config);
+        if( func ){
+            return func( i, j );
+        }else{
+            var series = this.config.series;
+            var categories = this.config.xAxis.categories;
+            var html = '<div style="font-weight:bold">' + categories[ i ] + '</div>';
+            var valueAxis = this.getPlots().valueAxis == 'x' ? 'xAxis' : 'yAxis';
+            var unitText = this.config[ valueAxis ].unit && this.config[ valueAxis ].unit.text || '';
+            html += '<div>' + series[ j ].name + ' : ' + series[ j ].data[ i ] + unitText + '</div>';
+
+            if( this.config.yAxis.stacked ){
+                html += '<div> Total : ' + series[ j ].sum[ i ] + '</div>';
+            }
+
+            return html;
         }
 
-    	return html;
     },
 
 } );

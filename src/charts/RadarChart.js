@@ -31,7 +31,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         //计算中点和半径
         var Cx = _width / 2;
         var Cy = _height / 2;
-        var R = ( _width < _height ? _width : _height ) / 2 - 50;
+        var R = param.radius || ( _width < _height ? _width : _height ) / 2 - 50;
         var step = R / 5;
         var Angle = 0;
         //绘制罗圈
@@ -113,6 +113,11 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                 x: Cx + ( R + 30 ) * Math.cos( delta * m ),
                 y: Cy + ( R + 30 ) * Math.sin( delta * m ),
             };
+            if ( item.x > Cx ) {
+                item.at = 'right';
+            } else if ( item.x < Cx ) {
+                item.at = 'left';
+            }
             labelList.push( item );
         }
         labels.update( {

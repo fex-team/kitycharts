@@ -43,6 +43,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
                     color      : this.getEntryColor( line ),
                     dash       : line.dash || null,
                     width      : this.getLineWidth(),
+                    animatedDir: 'y',
                     defaultPos : coordinate.param.height,
                     factor     : +new Date,
                     bind       : lineData
@@ -57,7 +58,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
         this.getPlotsElements().update({
             elementClass: kc.Polyline,
             list: linesArr,
-            fx: config.enableAnimation
+            fx: config.animation.enabled
         });
         
         this.addDots();
@@ -123,7 +124,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
             lineDots.update({
                 elementClass: kc.CircleDot,
                 list: this.dotArr,
-                fx: this.config.enableAnimation
+                fx: this.config.animation.enabled
             });
         }
     }

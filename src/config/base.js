@@ -13,19 +13,26 @@ kc.ChartsConfig.add('base', {
 
         ticks: {
             enabled : true,
-            dash : null,
+            dash : [1],
             width: 1,
             color: '#808080'
         },
 
         axis : {
             enabled : true,
-            arrow : true
+            arrow : false,
+            width : 1,
+            color : '#000'
         },
 
         label : {
             enabled : true,
-            rotate : 0
+            rotate : 0,
+            font : {
+                color : "#000",
+                fontSize : 12,
+                family : "Arial"
+            }
         },
 
         padding : {
@@ -44,20 +51,26 @@ kc.ChartsConfig.add('base', {
 
         ticks: {
             enabled : true,
-            dash : null,
-            value: 0,
+            dash : [1],
             width: 1,
             color: '#808080'
         },
 
         axis : {
             enabled : true,
-            arrow : true
+            arrow : false,
+            width : 1,
+            color : '#000'
         },
 
         label : {
             enabled : true,
-            rotate : 0
+            rotate : 0,
+            font : {
+                color : "#000",
+                fontSize : 12,
+                family : "Arial"
+            }
         },
 
         padding : {
@@ -111,5 +124,9 @@ kc.ChartsConfig.add('base', {
         level : 'entry'
     },
 
-    enableAnimation : true
+    animation : {
+        enabled : true,
+        duration : 600,
+        mode : 'ease'
+    },
 });

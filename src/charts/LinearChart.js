@@ -14,14 +14,14 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         var oxy = this.coordinate,
             param = oxy.param,
             oev = ev.originEvent,
-            x = oev.offsetX,
-            y = oev.offsetY,
+            x = oev.offsetX || oev.layerX,
+            y = oev.offsetY || oev.layerY,
             i,
             self = this,
             maxLength = 0,
             lenArr = [],
             tmpL,
-            lines = self.config.series;;
+            lines = self.config.series;
         
         if( self.isOutOfXRange( x ) ) return;
 
@@ -79,6 +79,16 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         this.updateTooltip( this.config.xAxis.categories[ info.indexInCategories ] + ' : ' + info.data, info.position.x, info.position.y );
     },
 
+    update : function( data ){
+        this.callBase( data );
+
+        this.hoverDots.update({
+            elementClass : kc.CircleDot,
+            list : [],
+            fx : false
+        });
+    },
+
     setCirclePosYByIndex : function( index ){
         var i, pY = 0,
             self = this,
@@ -119,18 +129,24 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
     },
 
     setTooltipContent : function( index ){
-        var series = this.config.series;
-        var categories = this.config.xAxis.categories;
-        var html = '<div style="font-weight:bold">' + categories[ index ] + '</div>';
-        series.forEach(function( entry, i ){
-            html += '<div>' + entry.name + ' : ' + entry.data[ index ] + '</div>';
-        });
+        var func = kity.Utils.queryPath('tooltip.content', this.config);
 
-        return html;
+        if( func ){
+            return func(index);
+        }else{
+            var series = this.config.series;
+            var categories = this.config.xAxis.categories;
+            var html = '<div style="font-weight:bold">' + categories[ index ] + '</div>';
+            series.forEach(function( entry, i ){
+                html += '<div>' + entry.name + ' : ' + entry.data[ index ] + '</div>';
+            });
+
+            return html;
+        }
     },
 
-    defaultCircleHover : function( binds ){
-        var index = binds[ 0 ].indexInCategories;
+    defaultHover : function( circles ){
+        var index = circles[ 0 ].bind.indexInCategories;
         var series = this.config.series;
         var posArr = [];
         var posX = 0;
@@ -151,14 +167,14 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         var binds = [];
 
         this.circleArr.forEach(function( dot, i ){
-            binds.push( dot.bind );
+            binds.push( dot );
         });
 
-        var onCircleHover = this.config.interaction.onCircleHover;
-        if( typeof onCircleHover == 'function' ){
-            onCircleHover( binds );
-        }else if( onCircleHover !== null ){
-            this.defaultCircleHover( binds );
+        var onHover = this.config.interaction.onHover;
+        if( typeof onHover == 'function' ){
+            onHover( binds );
+        }else if( onHover !== null ){
+            this.defaultHover( binds );
         }
 
     },

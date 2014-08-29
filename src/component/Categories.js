@@ -25,7 +25,8 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 			color: 'black',
 			margin: 10,
 			step: 1,
-			rotate: 0
+			rotate: 0,
+			font : {}
 		}, param ) );
 
 		this.addElement( 'labels', new kc.ElementList( {
@@ -35,13 +36,12 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
-			'updateCategories': [ 'rules', 'labels', 'at', 'margin', 'rotate', 'step' ],
-			'updateColor': 'color',
+			'updateCategories': [ 'rules', 'labels', 'at', 'margin', 'rotate', 'font', 'step' ],
 			'updateCommon': 'common'
 		} );
 	},
 
-	updateCategories: function ( rules, labels, at, margin, rotate, step ) {
+	updateCategories: function ( rules, labels, at, margin, rotate, font, step ) {
 		var i, rule, x, y, list = [];
 
 		// step == 0 不绘制
@@ -56,28 +56,22 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 			} else if ( at == 'right' ) {
 				x = margin;
 				y = rule;
-			} 
+			}
 
 			list.push({
 				x: x,
 				y: y,
 				at: at,
 				rotate: rotate,
-				text: labels[ i ]
+				text: labels[ i ],
+				style : font,
+				color : font && font.color || 'black'
 			});
 		}
 
 		this.getElement( 'labels' ).update( {
 			list: list,
 			fx: true
-		} );
-	},
-
-	updateColor: function ( color ) {
-		this.getElement( 'labels' ).update( {
-			common: {
-				color: color
-			}
 		} );
 	}
 } );
