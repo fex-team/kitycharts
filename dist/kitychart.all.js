@@ -1251,6 +1251,137 @@ var Star = kity.Star = kity.createClass( 'Star', ( function () {
     };
 } )() );
 
+/**
+ *
+ * @class Arrow
+ *
+ */
+
+( function ( kity, kc ) {
+
+    var ArrowLine = kc.ArrowLine = kity.createClass( "ArrowLine", {
+        base: kc.AnimatedChartElement,
+
+        constructor: function ( param ) {
+            this.callBase( kity.Utils.extend( {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0,
+                offset: 0,
+                color: '#000',
+                width: 10,
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: null,
+                },
+            }, param ) );
+
+            var arrowParam = {
+                w: 0,
+                h: 1,
+                a: 7,
+                b: 2,
+                c: 3,
+                d: 0,
+                t: 0
+            };
+
+            this.arrow = new kity.Arrow( arrowParam );
+            this.canvas.addShape( this.arrow );
+
+            this.line = new kity.Path();
+            this.canvas.addShape( this.line );
+
+            this.addElement( 'label', new kc.Label() );
+        },
+
+        registerUpdateRules: function () {
+            return kity.Utils.extend( this.callBase(), {
+                draw: [ 'width', 'x1', 'y1', 'x2', 'y2' ],
+                stroke: [ 'color' ],
+                setArrowAngleAndPosition: [ 'x1', 'y1', 'x2', 'y2' ],
+                moveOffset: [ 'offset', 'x1', 'y1', 'x2', 'y2' ],
+                updateText: [ 'x1', 'y1', 'x2', 'y2' ]
+            } );
+        },
+
+        updateText: function ( x1, y1, x2, y2 ) {
+            //left->end
+
+            var label = this.getElement( 'label' ),
+                angle = this.getAngle( x1, y1, x2, y2 ),
+                PI = Math.PI,
+                sin = Math.sin,
+                cos = Math.cos,
+                nor = angle + PI / 2,
+                off = 4;
+
+            var at = ( angle > 0 && angle < PI ) ? 'left' : 'right';
+            if ( y2 == y1 ) {
+                at = 'bottom';
+            }
+
+            var ex = cos( nor ) * off,
+                ey = sin( nor ) * off;
+
+            var pos = Math.random() * 0.4 + 0.3;
+            label.update( {
+                at: at,
+                x: ( x2 - x1 ) * pos + x1 + ex,
+                y: ( y2 - y1 ) * pos + y1 + ey
+            } );
+        },
+
+        moveOffset: function ( offset, x1, y1, x2, y2 ) {
+            if ( offset > 0 ) {
+                var angle = this.getAngle( x1, y1, x2, y2 );
+                this.canvas.setTranslate( offset * Math.cos( angle + Math.PI / 2 ), offset * Math.sin( angle + Math.PI / 2 ) );
+            }
+        },
+
+        getAnimatedParam: function () {
+            return [ 'x1', 'y1', 'x2', 'y2' ];
+        },
+
+        stroke: function ( color ) {
+            this.line.stroke( color );
+        },
+
+        draw: function ( width, x1, y1, x2, y2 ) {
+
+            var seq = [];
+
+            seq.push( 'M', x1, y1 );
+            seq.push( 'L', x2, y2 );
+
+            this.line.setPathData( seq ); //.setRotate( rotate );
+
+            // this.interestPoint = {
+            //     x: 0,
+            //     y: dir * height
+            // };
+        },
+
+        getAngle: function ( x1, y1, x2, y2 ) {
+            return Math.atan2( y2 - y1, x2 - x1 );
+        },
+
+        setArrowAngleAndPosition: function ( x1, y1, x2, y2 ) {
+            var angle = this.getAngle( x1, y1, x2, y2 ) / Math.PI * 180;
+            this.arrow.setTranslate( x2, y2 ).setRotate( angle );
+
+            this.arrow.fill( this.param.color );
+        },
+
+        getInterestPoint: function () {
+            return this.canvas.getTransform().transformPoint( this.interestPoint );
+        }
+
+    } );
+} )( kity, kc );
+
 // {
 //             x1: 0,
 //             y1: 0,
@@ -1329,10 +1460,16 @@ var Line = kc.Line = kity.createClass( "Line", {
         }
 
         if ( x1 == x2 ) {
-            return [ [ x1, b.y1 ], [ x2, b.y2 ] ];
+            return [
+                [ x1, b.y1 ],
+                [ x2, b.y2 ]
+            ];
         }
         if ( y1 == y2 ) {
-            return [ [ b.x1, y1 ], [ b.x2, y2 ] ];
+            return [
+                [ b.x1, y1 ],
+                [ b.x2, y2 ]
+            ];
         }
 
         k = ( x1 - x2 ) / ( y1 - y2 );
@@ -4471,11 +4608,6 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
 
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
-            // label: {
-            //     at: 'bottom',
-            //     color: 'black',
-            //     text: null,
-            // },
             shape: 'circle',
             strokeColor: '#FFF',
             strokeWidth: 0,
@@ -4484,12 +4616,12 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
             x: 0,
             y: 0
         }, param ) );
+        var selfparam = this.param;
         this.on( 'click', function ( e ) {
-            //高亮效果
+            var chart = e.target.container.container;
+            chart.addTooltip( e );
         } );
-        // this.addElement( 'label', new kc.Label() );
     },
-
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
             'updateShape': [ 'shape', 'color', 'strokeColor', 'strokeWidth' ],
@@ -4525,11 +4657,6 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
 
         this.shape.stroke( pen );
         this.shape.fill( color );
-    },
-    updateText: function ( labelText ) {
-        this.getElement( 'label' ).update( {
-            text: labelText
-        } );
     },
     updateRadius: function ( radius ) {
         if ( !this.shape || !this.shape.setRadius ) return false;
@@ -5432,6 +5559,19 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
 })());  
 
 
+
+kc.SimpleRelationData = kity.createClass( 'SimpleRelationData', {
+    base: kc.Data,
+    
+    format: function () {
+        var origin = this.origin;
+
+        return {
+        	nodes : origin.nodes || [],
+        	edges : origin.edges || []
+        };
+    }
+} );
 
 (function(){
 
@@ -7501,7 +7641,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 27 / list.length );
+			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -7957,6 +8097,151 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
      }
  } );
 
+(function(){
+
+var SimpleRelationChart = kc.SimpleRelationChart = kity.createClass( 'SimpleRelationChart', {
+
+    mixins : [ kc.ConfigHandler ],
+
+    base: kc.Chart,
+
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        this.config = this.param || {};
+        
+        this.callMixin();
+
+        this.setData( new kc.SimpleRelationData() );
+        this.nodes = this.addElement( 'nodes', new kc.ElementList() );
+        this.edges = this.addElement( 'edges', new kc.ElementList() );
+
+    },
+
+    update : function( param ){
+
+        var data = this.data.format();
+        this.config = kity.Utils.extend( this.config, data, param );
+        this.renderRelation( data );
+        this.getOption('legend.enabled') && this.addLegend();
+
+    },
+
+    renderNodes : function( data ){
+        this.center = {
+            x : this.paper.getWidth() / 2,
+            y : this.paper.getHeight() / 2
+        };
+
+        var radius = this.config.distance || 200,
+            count = data.nodes.length,
+            PI = Math.PI,
+            sin = Math.sin,
+            cos = Math.cos;
+
+        var i,
+            piece = ( 2 * PI ) / count,
+            delX = delY = 0, x, y,
+            id, label, tmp, color;
+
+        this.nodesParam = [];
+
+        for( i = 0; i < count; i++ ){
+
+            delX = cos( piece * i - PI/2 ) * radius;
+            delY = sin( piece * i - PI/2 ) * radius;
+
+            x = this.center.x + delX;
+            y = this.center.y + delY;
+
+            tmp = data.nodes[ i ];
+            id = tmp.id;
+            label = tmp.label;
+
+             this.nodesParam.push({
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: label
+                },
+                strokeColor : '#FFF',
+                strokeWidth : 0,
+                color : this.param.color[ i ],
+                radius : this.config.radius || 30,
+                fxEasing : 'easeOutElastic',
+                x : x,
+                y : y,
+                bind : {
+                    id : id,
+                    label : label
+                }
+            });
+        }
+
+        this.nodes.update({
+            elementClass : kc.CircleDot,
+            list : this.nodesParam,
+            fx : true
+        });
+    },
+
+    getNodeParamById : function( id ){
+        var nodes = this.nodesParam;
+        for(var i = 0; i < nodes.length; i++ ){
+            if( nodes[ i ].bind.id == id ){
+                return nodes[ i ];
+            }
+        }
+    },
+
+    renderEdges : function( data ){
+        this.edgesParam = [];
+        var i, startNode, endNode, tmp, angle;
+        var sin = Math.sin,
+            cos = Math.cos,
+            atan2 = Math.atan2;
+
+        var gap = 10, color;
+
+        for( i = 0; i < data.edges.length; i++){
+            color = this.param.color[ i ];
+            tmp = data.edges[ i ];
+            startNode = this.getNodeParamById( tmp.from );
+            endNode = this.getNodeParamById( tmp.to );
+
+            angle = atan2( endNode.y - startNode.y, endNode.x - startNode.x );
+
+            this.edgesParam.push({
+                x1: startNode.x + cos(angle) * ( startNode.radius + gap ), 
+                y1: startNode.y + sin(angle) * ( startNode.radius + gap ),
+                x2: endNode.x - cos(angle) * ( endNode.radius + gap ),
+                y2: endNode.y - sin(angle) * ( endNode.radius + gap ),
+                offset: 5,
+                color: startNode.color,
+                width: 2,
+                label: {
+                    color: startNode.color,
+                    text: tmp.label
+                },
+            });
+        }
+
+        this.edges.update({
+            elementClass : kc.ArrowLine,
+            list : this.edgesParam,
+            fx : true
+        });
+    },
+
+    renderRelation : function( data ){
+        this.renderNodes( data );
+        this.renderEdges( data );
+    }
+
+} );
+
+
+})();
+
 var RadarData = kc.RadarData = kity.createClass( 'RadarData', {
     base: kc.Data
 } );
@@ -8047,8 +8332,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                 fxEasing: 'ease',
                 close: true,
                 fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 ),
-                animatedDir : 'both',
-                factor : +new Date
+                animatedDir: 'both',
+                factor: +new Date
             };
             itemList.push( item );
         }
@@ -8057,20 +8342,19 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             list: itemList
         } );
 
-        if( param.circle && param.circle.enabled ){
+        if ( param.circle && param.circle.enabled ) {
             circles.update( {
                 elementClass: kc.CircleDot,
-                list: circleList,
+                list: circleList
             } );
         }
-
         //绘制label
         for ( var m = 0; m < data.categories.length; m++ ) {
             var categorie = data.categories[ m ];
             var item = {
                 text: categorie,
-                x: Cx + ( R + 30 ) * Math.cos( delta * m ),
-                y: Cy + ( R + 30 ) * Math.sin( delta * m ),
+                x: Cx + ( R + 10 ) * Math.cos( delta * m ),
+                y: Cy + ( R + 10 ) * Math.sin( delta * m ),
             };
             if ( item.x > Cx ) {
                 item.at = 'right';
@@ -8081,7 +8365,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         }
         labels.update( {
             elementClass: kc.Label,
-            list: labelList,
+            list: labelList
         } );
     },
     update: function () {
@@ -8314,7 +8598,44 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
         this.addElement( "gridvertical", new kc.ElementList() );
         this.addElement( "items", new kc.ElementList() );
         this.addElement( "categories", new kc.ElementList() );
+        this.tooltips = this.addElement( "tooltips", new kc.ElementList() );
         this.setData( new kc.BubbleData() );
+        this.tooltipList = [];
+    },
+    addTooltip: function ( e ) {
+        var target = e.target;
+        var param = target.param;
+        var label = param.label;
+        var tooltips = this.tooltips;
+        window.clearInterval( this.param.interval );
+        var item = {
+            content: {
+                color: '#787878',
+                text: label,
+            },
+            background: '#e9e9e9'
+        };
+        switch ( this.param.mode ) {
+        case 'circle':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'col':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'line':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        default:
+            break;
+        }
+        this.tooltipList = this.tooltipList.concat( [ item ] );
+        tooltips.update( {
+            elementClass: kc.Tooltip,
+            list: this.tooltipList
+        } );
     },
     renderBubble: function () {
         var container = this.container;
@@ -8452,13 +8773,17 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             var series = list[ date ].series;
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
+                var X = padding[ 3 ] + item.x * chartWidth / maxX,
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
                 var obj = {
                     shape: 'circle',
-                    x: padding[ 3 ] + item.x * chartWidth / maxX,
-                    y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
                     radius: Math.log( item.size ),
                     color: colors[ item.type ],
-                    text: item.label
+                    label: item.label
                 };
                 bubbleList.push( obj );
             }
@@ -8468,14 +8793,18 @@ var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
             var colList = [];
             for ( var i = 0; i < series.length; i++ ) {
                 var item = series[ i ];
+                var X = padding[ 3 ] + colWidth * ( i + 0.2 ),
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
                 var obj = {
                     shape: 'col',
-                    x: padding[ 3 ] + colWidth * ( i + 0.2 ),
-                    y: paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY ),
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
                     width: colWidth * 0.6,
                     height: item.y * chartHeight / maxY,
                     color: colors[ item.type ],
-                    text: item.label,
+                    label: item.label,
                     radius: 0
                 };
                 bubbleList.push( obj );
