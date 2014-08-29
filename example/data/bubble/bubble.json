@@ -1,4 +1,199 @@
 [ {
+    "date": "6/13/14",
+    "series": [ {
+        "nation": "阿尔及利亚",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "H"
+    }, {
+        "nation": "阿根廷",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "F"
+    }, {
+        "nation": "澳大利亚",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "B"
+    }, {
+        "nation": "巴西",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "A"
+    }, {
+        "nation": "比利时",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "H"
+    }, {
+        "nation": "波黑",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "F"
+    }, {
+        "nation": "德国",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "G"
+    }, {
+        "nation": "俄罗斯",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "H"
+    }, {
+        "nation": "厄瓜多尔",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "E"
+    }, {
+        "nation": "法国",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "E"
+    }, {
+        "nation": "哥伦比亚",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "C"
+    }, {
+        "nation": "哥斯达黎加",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "D"
+    }, {
+        "nation": "韩国",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "H"
+    }, {
+        "nation": "荷兰",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "B"
+    }, {
+        "nation": "洪都拉斯",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "E"
+    }, {
+        "nation": "加纳",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "G"
+    }, {
+        "nation": "喀麦隆",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "A"
+    }, {
+        "nation": "科特迪瓦",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "C"
+    }, {
+        "nation": "克罗地亚",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "A"
+    }, {
+        "nation": "美国",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "G"
+    }, {
+        "nation": "墨西哥",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "A"
+    }, {
+        "nation": "尼日利亚",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "F"
+    }, {
+        "nation": "葡萄牙",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "G"
+    }, {
+        "nation": "日本",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "C"
+    }, {
+        "nation": "瑞士",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "E"
+    }, {
+        "nation": "乌拉圭",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "D"
+    }, {
+        "nation": "西班牙",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "B"
+    }, {
+        "nation": "希腊",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "C"
+    }, {
+        "nation": "伊朗",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "F"
+    }, {
+        "nation": "意大利",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "D"
+    }, {
+        "nation": "英格兰",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "D"
+    }, {
+        "nation": "智利",
+        "goal": 0,
+        "pass": 0,
+        "search": 1000,
+        "group": "B"
+    } ]
+}, {
     "date": "6/18/14",
     "series": [ {
         "nation": "阿尔及利亚",
@@ -985,7 +1180,7 @@
         "nation": "阿根廷",
         "goal": 8,
         "pass": 2445,
-        "search": 196340,
+        "search": 63235,
         "group": "F"
     }, {
         "nation": "澳大利亚",
@@ -997,7 +1192,7 @@
         "nation": "巴西",
         "goal": 11,
         "pass": 1879,
-        "search": 256574,
+        "search": 205132,
         "group": "A"
     }, {
         "nation": "比利时",
@@ -1057,7 +1252,7 @@
         "nation": "荷兰",
         "goal": 12,
         "pass": 2372,
-        "search": 308752,
+        "search": 255375,
         "group": "B"
     }, {
         "nation": "洪都拉斯",

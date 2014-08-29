@@ -15,11 +15,6 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
 
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
-            // label: {
-            //     at: 'bottom',
-            //     color: 'black',
-            //     text: null,
-            // },
             shape: 'circle',
             strokeColor: '#FFF',
             strokeWidth: 0,
@@ -28,12 +23,12 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
             x: 0,
             y: 0
         }, param ) );
+        var selfparam = this.param;
         this.on( 'click', function ( e ) {
-            //高亮效果
+            var chart = e.target.container.container;
+            chart.addTooltip( e );
         } );
-        // this.addElement( 'label', new kc.Label() );
     },
-
     registerUpdateRules: function () {
         return kity.Utils.extend( this.callBase(), {
             'updateShape': [ 'shape', 'color', 'strokeColor', 'strokeWidth' ],
@@ -69,11 +64,6 @@ var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", 
 
         this.shape.stroke( pen );
         this.shape.fill( color );
-    },
-    updateText: function ( labelText ) {
-        this.getElement( 'label' ).update( {
-            text: labelText
-        } );
     },
     updateRadius: function ( radius ) {
         if ( !this.shape || !this.shape.setRadius ) return false;

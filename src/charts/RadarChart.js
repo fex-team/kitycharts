@@ -88,8 +88,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                 fxEasing: 'ease',
                 close: true,
                 fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 ),
-                animatedDir : 'both',
-                factor : +new Date
+                animatedDir: 'both',
+                factor: +new Date
             };
             itemList.push( item );
         }
@@ -98,20 +98,19 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             list: itemList
         } );
 
-        if( param.circle && param.circle.enabled ){
+        if ( param.circle && param.circle.enabled ) {
             circles.update( {
                 elementClass: kc.CircleDot,
-                list: circleList,
+                list: circleList
             } );
         }
-
         //绘制label
         for ( var m = 0; m < data.categories.length; m++ ) {
             var categorie = data.categories[ m ];
             var item = {
                 text: categorie,
-                x: Cx + ( R + 30 ) * Math.cos( delta * m ),
-                y: Cy + ( R + 30 ) * Math.sin( delta * m ),
+                x: Cx + ( R + 10 ) * Math.cos( delta * m ),
+                y: Cy + ( R + 10 ) * Math.sin( delta * m ),
             };
             if ( item.x > Cx ) {
                 item.at = 'right';
@@ -122,7 +121,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         }
         labels.update( {
             elementClass: kc.Label,
-            list: labelList,
+            list: labelList
         } );
     },
     update: function () {
