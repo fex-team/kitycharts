@@ -86,17 +86,38 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             sdur = dur / count,
             adjust = 1;
 
-        while(sdur > 100) {
+        while(sdur > 10) {
             sdur /= 10;
             adjust *= 10;
         }
 
-        while(sdur < 10 && sdur > 0) {
+        while(sdur < 1) {
             sdur *= 10;
             adjust /= 10;
         }
+        
+        switch (Math.floor(sdur)) {
+            case 1:
+                sdur = 1;
+                break;
+            case 2:
+            case 3:
+                sdur = 2;
+                break;
+            case 4:
+            case 5:
+            case 6:
+                sdur = 5;
+                break;
+            case 7:
+            case 8:
+            case 9:
+                sdur = 1;
+                adjust *= 10;
+                break;
+        }
 
-        return (sdur | 0) * adjust || 1;
+        return sdur * adjust;
     },
 
     align : function ( value, mod, dir ) {
