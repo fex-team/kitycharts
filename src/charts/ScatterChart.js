@@ -5,11 +5,11 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
         var isEmpty = !( 'data_record' in origin );
         var data_record = origin.data_record && origin.data_record.map( function ( r ) {
             return {
-                x: +r.x * 100,
-                y: +r.y * 100,
+                x: +r.x,
+                y: +r.y,
                 label: r.label,
                 value: r.value,
-                percent: +r.percent * 100
+                percent: +r.percent
             };
         } ) || [];
 
@@ -33,8 +33,8 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
         return {
             data_dim: +origin.data_dim,
-            data_average_x: isEmpty ? 0 : +origin.data_average_x * 100,
-            data_average_y: isEmpty ? 0 : +origin.data_average_y * 100,
+            data_average_x: isEmpty ? 0 : +origin.data_average_x,
+            data_average_y: isEmpty ? 0 : +origin.data_average_y,
             unit_x: origin.unit_x,
             unit_y: origin.unit_y,
             data_record: data_record,
@@ -46,7 +46,7 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
 function appendUnit( unit ) {
     return function ( num ) {
-        return ( ( num * 10 ) | 0 ) / 10 + ( unit || '' );
+        return Math.round( num * 10 ) / 10 + ( unit || '' );
     };
 }
 
@@ -95,7 +95,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
     initMarqueeZoom: function () {
         var me = this;
-        var zoomStack = [];
+        var zoomStack = [ null ];
 
         function inRange( x, a, b ) {
             return ( a <= x && x <= b ) || ( a >= x && x >= b );
@@ -119,7 +119,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         }
 
         function updateRange( oxy, range, param, data ) {
-            oxy.update( range );
+            oxy.update( range || {
+                rangeX: data.rangeX,
+                rangeY: data.rangeY
+            } );
             me.drawAverage( param, data, oxy );
             me.drawScatter( param, data, oxy );
         }
@@ -157,11 +160,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             var oxy = me.getElement( 'oxy' ),
                 param = me.param,
                 data = me.data.format(),
-                range = zoomStack[ zoomStack.length - 1 ];
-            if ( range ) {
-                updateRange( oxy, range, param, data );
-            }
-            if ( zoomStack.length ) zoomStack.pop();
+                range = zoomStack[ zoomStack.length - 2 ];
+            updateRange( oxy, range, param, data );
+            if ( zoomStack.length > 1 ) zoomStack.pop();
         } );
     },
 
@@ -203,7 +204,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             yRuler = oxy.getYRuler();
 
         var ax = oxy.param.x + xRuler.measure( data.data_average_x ),
-            ay = oxy.param.y + yRuler.measure( data.data_average_y ),
+            ay = oxy.param.y + yRuler.measure( data.data_average_y ) + oxy.param.heading,
             xLine = this.getElement( 'avg-x-line' ),
             yLine = this.getElement( 'avg-y-line' ),
             xTip = this.getElement( 'avg-x-tip' ),
@@ -274,7 +275,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
             aLine.setVisible( true ).animate( {
                 x1: oxy.param.x + xRuler.measure( 0 ),
-                y1: oxy.param.y + yRuler.measure( 0 ),
+                y1: oxy.param.y + yRuler.measure( 0 ) + oxy.param.heading,
                 x2: ax,
                 y2: ay,
                 bound: {
@@ -306,6 +307,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return Math.sqrt( data.value );
         }
 
+        function inRange(value, range) {
+            return value >= range.from && value <= range.to;
+        }
+
         if ( dim > 2 ) {
 
             rooted = query.map( sqrt );
@@ -316,6 +321,12 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             minRadius = 5;
             maxRadius = 40;
 
+            // 没有差别情况
+            if (minValue == maxValue) {
+                minValue--;
+                maxValue++;
+            }
+
             radiusRuler = new kc.Ruler( minValue, maxValue )
                 .map( minRadius, maxRadius );
         }
@@ -325,7 +336,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return {
                 // common params
                 x: oxy.x + xRuler.measure( data.x ),
-                y: oxy.y + yRuler.measure( data.y ),
+                y: oxy.y + yRuler.measure( data.y ) + oxy.param.heading,
 
                 labelText: data.label,
 
@@ -340,7 +351,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 percent: data.percent,
                 showPercent: true,
 
-                collapsed: 0
+                collapsed: 0,
+
+                opacity: inRange(data.x, xRuler.ref()) && inRange(data.y, yRuler.ref()) ? 1 : 0
             };
         } ).list();
 
@@ -357,6 +370,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return ( x.outerRadius || x.radius ) - ( y.outerRadius || y.radius );
         } );
 
+        // 重叠检测
         if ( dim > 2 && param.enableCollapse ) {
             var i, j;
             for ( i = 0; i < list.length; i++ ) {
@@ -367,9 +381,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                         list[ j ].collapsed = 1;
                     }
                 }
+
             }
         }
-
         scatter.update( {
 
             elementClass: {

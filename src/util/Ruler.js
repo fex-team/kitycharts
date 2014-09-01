@@ -65,7 +65,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         for ( var i = 0; i < ref_grid.length; i++ ) {
             map_grid.push( this.measure( ref_grid[i] ) );
         }
-        
+
         this.map_grid = map_grid;
 
         return {
@@ -84,16 +84,19 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
     fagm: function ( count ) {
         var dur = this._ref.dur,
             sdur = dur / count,
-            adjust = 1;
+            adjust = 1,
+            flag = 0;
 
         while(sdur > 10) {
             sdur /= 10;
             adjust *= 10;
+            flag = 1;
         }
 
         while(sdur < 1) {
             sdur *= 10;
             adjust /= 10;
+            flag = 0;
         }
         
         switch (Math.floor(sdur)) {
@@ -135,7 +138,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         var ref = this._ref;
         start = kity.Utils.isNumber( start )? start : this.align( ref.from, mod, 'left' );
         var size = mod;
-        while ( size * count < ref.dur ) size += mod;
+        //while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size, alignRef );
     },
 
@@ -177,13 +180,13 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
 
     leanTo: function( num, type ){
         var grid = type == 'map'? this.map_grid : this.ref_grid;
-        if( !grid || grid.length == 0 ) return null;
+        if( !grid || grid.length === 0 ) return null;
 
         if( grid.length == 1 ){
             return {
                 value: grid[ 0 ],
                 index: 0
-            }
+            };
         }
 
         var first = grid[ 0 ];
@@ -191,7 +194,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: first,
                 index: 0
-            }
+            };
         }
 
         var last = grid[ grid.length-1 ];
@@ -199,7 +202,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: last,
                 index: grid.length-1
-            }
+            };
         }
 
         var mod = grid[1] - grid[0];
@@ -209,7 +212,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         return {
             value: result,
             index: index
-        }
+        };
     }
 } );
 

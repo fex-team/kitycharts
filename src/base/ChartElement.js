@@ -85,6 +85,10 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         this.canvas.translate( dx, dy );
     },
 
+    setOpacity: function(value) {
+        this.canvas.setOpacity(value);
+    },
+
     getPosition: function () {
         return {
             x: this.param.x || 0,
@@ -100,8 +104,8 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     registerUpdateRules: function () {
         return {
             'setPosition': [ 'x', 'y' ],
-            'setOpacity': [ 'opacity' ],
-            'setVisible': [ 'visible' ]
+            'setVisible': [ 'visible' ],
+            'setOpacity': [ 'opacity' ]
         };
     },
 
