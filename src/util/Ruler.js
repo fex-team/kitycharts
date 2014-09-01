@@ -119,6 +119,27 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
                 adjust *= 10;
                 break;
         }
+        
+        switch (Math.floor(sdur)) {
+            case 1:
+                sdur = 1;
+                break;
+            case 2:
+            case 3:
+                sdur = 2;
+                break;
+            case 4:
+            case 5:
+            case 6:
+                sdur = 5;
+                break;
+            case 7:
+            case 8:
+            case 9:
+                sdur = 1;
+                adjust *= 10;
+                break;
+        }
 
         return sdur * adjust;
     },
