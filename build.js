@@ -157,7 +157,7 @@ function devWrite() {
     }
 }
 
-var env = !( 'window' in this ) ? 'node' : 'script';
+var env = ('window' in this) ? 'script' : 'node';
 
 var task = {
     'node': nodeBuild,

@@ -32,6 +32,7 @@
                 animator;
             canAnimated.push( 'x' );
             canAnimated.push( 'y' );
+            canAnimated.push( 'opacity' );
 
             for ( var p in afterAnimated ) {
                 if ( p in beforeAnimated && ~canAnimated.indexOf( p ) ) {
