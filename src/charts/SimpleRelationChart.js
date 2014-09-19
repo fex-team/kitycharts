@@ -106,6 +106,9 @@ var SimpleRelationChart = kc.SimpleRelationChart = kity.createClass( 'SimpleRela
         for( i = 0; i < data.edges.length; i++){
             color = this.param.color[ i ];
             tmp = data.edges[ i ];
+
+            if(tmp.from == tmp.to) continue;
+
             startNode = this.getNodeParamById( tmp.from );
             endNode = this.getNodeParamById( tmp.to );
 

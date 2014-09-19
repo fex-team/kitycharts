@@ -311,8 +311,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             map_grid = [],
             current;
 
-        for ( current = start; current < ref.to + step; current += step ) {
-            ref_grid.push( current );
+        if( kity.Utils.isArray( start ) ){
+            ref_grid = start;
+        }else{
+            for ( current = start; current < ref.to + step; current += step ) {
+                ref_grid.push( current );
+            }
         }
 
         this.ref_grid = ref_grid;
@@ -324,7 +328,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         for ( var i = 0; i < ref_grid.length; i++ ) {
             map_grid.push( this.measure( ref_grid[i] ) );
         }
-        
+
         this.map_grid = map_grid;
 
         return {
@@ -343,19 +347,47 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
     fagm: function ( count ) {
         var dur = this._ref.dur,
             sdur = dur / count,
-            adjust = 1;
+            adjust = 1,
+            flag = 0;
 
-        while(sdur > 100) {
+        if( dur == 0 ){
+            return 1;
+        }
+
+        while(sdur > 10) {
             sdur /= 10;
             adjust *= 10;
+            flag = 1;
         }
 
-        while(sdur < 10) {
+        while(sdur < 1) {
             sdur *= 10;
             adjust /= 10;
+            flag = 0;
+        }
+        
+        switch (Math.floor(sdur)) {
+            case 1:
+                sdur = 1;
+                break;
+            case 2:
+            case 3:
+                sdur = 2;
+                break;
+            case 4:
+            case 5:
+            case 6:
+                sdur = 5;
+                break;
+            case 7:
+            case 8:
+            case 9:
+                sdur = 1;
+                adjust *= 10;
+                break;
         }
 
-        return (sdur | 0) * adjust;
+        return sdur * adjust;
     },
 
     align : function ( value, mod, dir ) {
@@ -373,8 +405,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         var ref = this._ref;
         start = kity.Utils.isNumber( start )? start : this.align( ref.from, mod, 'left' );
         var size = mod;
-        while ( size * count < ref.dur ) size += mod;
+        //while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size, alignRef );
+    },
+
+    gridByArray: function( arr ){
+        return this.grid( arr, null, true );
     },
 
     gridByCategories : function( count ){
@@ -411,13 +447,13 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
 
     leanTo: function( num, type ){
         var grid = type == 'map'? this.map_grid : this.ref_grid;
-        if( !grid || grid.length == 0 ) return null;
+        if( !grid || grid.length === 0 ) return null;
 
         if( grid.length == 1 ){
             return {
                 value: grid[ 0 ],
                 index: 0
-            }
+            };
         }
 
         var first = grid[ 0 ];
@@ -425,7 +461,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: first,
                 index: 0
-            }
+            };
         }
 
         var last = grid[ grid.length-1 ];
@@ -433,7 +469,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: last,
                 index: grid.length-1
-            }
+            };
         }
 
         var mod = grid[1] - grid[0];
@@ -443,7 +479,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         return {
             value: result,
             index: index
-        }
+        };
     }
 } );
 
@@ -454,6 +490,7 @@ Ruler.from = function ( from ) {
         }
     };
 };
+
 
 /**
  * @author techird
@@ -705,6 +742,10 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
         this.canvas.translate( dx, dy );
     },
 
+    setOpacity: function(value) {
+        this.canvas.setOpacity(value);
+    },
+
     getPosition: function () {
         return {
             x: this.param.x || 0,
@@ -720,8 +761,8 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
     registerUpdateRules: function () {
         return {
             'setPosition': [ 'x', 'y' ],
-            'setOpacity': [ 'opacity' ],
-            'setVisible': [ 'visible' ]
+            'setVisible': [ 'visible' ],
+            'setOpacity': [ 'opacity' ]
         };
     },
 
@@ -886,6 +927,7 @@ var ChartElement = kc.ChartElement = kity.createClass( 'ChartElement', {
                 animator;
             canAnimated.push( 'x' );
             canAnimated.push( 'y' );
+            canAnimated.push( 'opacity' );
 
             for ( var p in afterAnimated ) {
                 if ( p in beforeAnimated && ~canAnimated.indexOf( p ) ) {
@@ -982,10 +1024,18 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
         return kity.Utils.queryPath( path, this.config );
     },
 
+    setConfig : function( config ){
+        this.config = config;
+    },
+
     /*
      * path同getOption参数path
      */
     setOption: function ( path, value ) {
+        if( path.indexOf('series') >= 0 ){
+            console.log('该接口不支持设置series');
+            return;
+        }
 
         var arr = path.split('.');
         arr.unshift('config');
@@ -996,10 +1046,13 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
             p = getPath( i-1, arr );
             if( !eval('"' + cur + '" in this.' + p ) ){ //属性不存在
                 exp = 'this.' + p + '.' + cur + ' = ' + (i == arr.length-1 ? 'value' : '{}');
+                eval( exp );
             }else{ //属性存在
-                exp = 'this.' + p + '.' + cur + ' = value';
+                if( i == arr.length-1 ){
+                    exp = 'this.' + p + '.' + cur + ' = value';
+                    eval( exp );
+                }
             }
-            eval( exp );
 
             i++
         }
@@ -1232,6 +1285,137 @@ var Star = kity.Star = kity.createClass( 'Star', ( function () {
     };
 } )() );
 
+/**
+ *
+ * @class Arrow
+ *
+ */
+
+( function ( kity, kc ) {
+
+    var ArrowLine = kc.ArrowLine = kity.createClass( "ArrowLine", {
+        base: kc.AnimatedChartElement,
+
+        constructor: function ( param ) {
+            this.callBase( kity.Utils.extend( {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0,
+                offset: 0,
+                color: '#000',
+                width: 10,
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: null,
+                },
+            }, param ) );
+
+            var arrowParam = {
+                w: 0,
+                h: 1,
+                a: 7,
+                b: 2,
+                c: 3,
+                d: 0,
+                t: 0
+            };
+
+            this.arrow = new kity.Arrow( arrowParam );
+            this.canvas.addShape( this.arrow );
+
+            this.line = new kity.Path();
+            this.canvas.addShape( this.line );
+
+            this.addElement( 'label', new kc.Label() );
+        },
+
+        registerUpdateRules: function () {
+            return kity.Utils.extend( this.callBase(), {
+                draw: [ 'width', 'x1', 'y1', 'x2', 'y2' ],
+                stroke: [ 'color' ],
+                setArrowAngleAndPosition: [ 'x1', 'y1', 'x2', 'y2' ],
+                moveOffset: [ 'offset', 'x1', 'y1', 'x2', 'y2' ],
+                updateText: [ 'x1', 'y1', 'x2', 'y2' ]
+            } );
+        },
+
+        updateText: function ( x1, y1, x2, y2 ) {
+            //left->end
+
+            var label = this.getElement( 'label' ),
+                angle = this.getAngle( x1, y1, x2, y2 ),
+                PI = Math.PI,
+                sin = Math.sin,
+                cos = Math.cos,
+                nor = angle + PI / 2,
+                off = 4;
+
+            var at = ( angle > 0 && angle < PI ) ? 'left' : 'right';
+            if ( y2 == y1 ) {
+                at = 'bottom';
+            }
+
+            var ex = cos( nor ) * off,
+                ey = sin( nor ) * off;
+
+            var pos = Math.random() * 0.4 + 0.3;
+            label.update( {
+                at: at,
+                x: ( x2 - x1 ) * pos + x1 + ex,
+                y: ( y2 - y1 ) * pos + y1 + ey
+            } );
+        },
+
+        moveOffset: function ( offset, x1, y1, x2, y2 ) {
+            if ( offset > 0 ) {
+                var angle = this.getAngle( x1, y1, x2, y2 );
+                this.canvas.setTranslate( offset * Math.cos( angle + Math.PI / 2 ), offset * Math.sin( angle + Math.PI / 2 ) );
+            }
+        },
+
+        getAnimatedParam: function () {
+            return [ 'x1', 'y1', 'x2', 'y2' ];
+        },
+
+        stroke: function ( color ) {
+            this.line.stroke( color );
+        },
+
+        draw: function ( width, x1, y1, x2, y2 ) {
+
+            var seq = [];
+
+            seq.push( 'M', x1, y1 );
+            seq.push( 'L', x2, y2 );
+
+            this.line.setPathData( seq ); //.setRotate( rotate );
+
+            // this.interestPoint = {
+            //     x: 0,
+            //     y: dir * height
+            // };
+        },
+
+        getAngle: function ( x1, y1, x2, y2 ) {
+            return Math.atan2( y2 - y1, x2 - x1 );
+        },
+
+        setArrowAngleAndPosition: function ( x1, y1, x2, y2 ) {
+            var angle = this.getAngle( x1, y1, x2, y2 ) / Math.PI * 180;
+            this.arrow.setTranslate( x2, y2 ).setRotate( angle );
+
+            this.arrow.fill( this.param.color );
+        },
+
+        getInterestPoint: function () {
+            return this.canvas.getTransform().transformPoint( this.interestPoint );
+        }
+
+    } );
+} )( kity, kc );
+
 // {
 //             x1: 0,
 //             y1: 0,
@@ -1310,10 +1494,16 @@ var Line = kc.Line = kity.createClass( "Line", {
         }
 
         if ( x1 == x2 ) {
-            return [ [ x1, b.y1 ], [ x2, b.y2 ] ];
+            return [
+                [ x1, b.y1 ],
+                [ x2, b.y2 ]
+            ];
         }
         if ( y1 == y2 ) {
-            return [ [ b.x1, y1 ], [ b.x2, y2 ] ];
+            return [
+                [ b.x1, y1 ],
+                [ b.x2, y2 ]
+            ];
         }
 
         k = ( x1 - x2 ) / ( y1 - y2 );
@@ -1431,12 +1621,35 @@ var Polyline = kc.Polyline = kity.createClass( "Polyline", {
             }
             if ( close ) {
                 drawer.close();
-                this.polyline.fill( fill );
+
+                var f = fill;
+                var pl = this.polyline;
+                if( kity.Utils.isArray( fill ) ){ //判断fill是否为数组，是则为渐变
+
+                    this.polyline.whenPaperReady(function(paper){
+                        f = new kity.LinearGradientBrush().pipe( function() {
+                            var g;
+                            for( var i = 0; i < fill.length; i++ ){
+                                g = fill[i];
+                                this.addStop( g.pos, g.color||'#000', fill[i].opacity );
+                            }
+                            this.setStartPosition(0, 0);
+                            this.setEndPosition(0, 1);
+                            paper.addResource( this );
+                        });
+                    });
+
+                }
+
+                this.polyline.fill( f );
+
             }
         }
     },
 
     stroke: function ( color, width, dash ) {
+        // if(width === 0) width = 0.001;
+        
         var pen = new kity.Pen();
         pen.setWidth( width );
         pen.setColor( color );
@@ -1637,14 +1850,15 @@ var Label = kc.Label = kity.createClass( "Label", {
             at: 'center',
             margin: 0,
             style: {
-                family: 'Arial'
+                fontFamily: 'Arial',
+                fontSize : 'auto'
             },
             color: 'black',
             rotate: 0
         }, param ) );
         this.text = new kity.Text().setFont( {
-            'size': 12,
-            'family': 'Arial'
+            'fontSize': 'auto',
+            'fontFamily': 'Arial'
         } );
         this.canvas.addShape( this.text );
     },
@@ -1683,7 +1897,7 @@ var Label = kc.Label = kity.createClass( "Label", {
     updateStyle: function ( style ) {
         this.text.setStyle( style );
         this.updateSize();
-        this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
+        // this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
     },
 
     updateAnchor: function ( at, margin, rotate ) {
@@ -1814,10 +2028,6 @@ var Label = kc.Label = kity.createClass( "Label", {
     } );
 } )( kity, kc );
 
-/**
- * @build
- * @require base/ChartElement.js
- */
 
 /* abstract */
 var Coordinate = kc.Coordinate = kity.createClass( "Coordinate", ( function () {
@@ -2040,11 +2250,16 @@ var XYCoordinate = kc.XYCoordinate = kity.createClass( "XYCoordinate", ( functio
  *        坐标系要渲染的高度
  */
 var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoordinate", ( function () {
-    function defaultFormat( number, index ) {
+    function defaultFormat( number, index ){
         if ( number > 1000 ) {
             return number / 1000 + 'K';
         }
-        number = ( ( number * 10 ) | 0 ) / 10;
+
+        var s = number.toString(), arr = s.split('.');
+        if( arr.length > 1 && arr[1].length > 4 ){//4位以上小数
+            return parseFloat(number.toFixed(4));//去掉小数点后无用的0
+        }
+
         return number;
     }
 
@@ -2058,7 +2273,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         t: 0
     };
 
-    var allComponents = [ "xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis" ];
+    var allComponents = [ "xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis", "xAxisArrow", "yAxisArrow" ];
 
     var componentsIniter = {
         "xMesh" : function(){
@@ -2088,17 +2303,21 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             !this.getElement( 'xAxis') && this.addElement( 'xAxis', new kc.Line( {
                 color: '#999'
             } ) );
-            
-            if( this.param.xAxisArrow && !this.xArrow )
-                this.canvas.addShape( this.xArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
         },
         "yAxis" : function(){
             !this.getElement( 'yAxis') && this.addElement( 'yAxis', new kc.Line( {
                 color: '#999'
             } ) );
-
-            if( this.param.yAxisArrow && !this.yArrow )
-                this.canvas.addShape( this.yArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
+        },
+        "xAxisArrow" : function(){
+            var tmp = new kity.Arrow( arrowParam ).fill( '#999' );
+            tmp.canvas = tmp; //这里是hack，让chart可以添加kity对象，而不是chartelement
+            !this.getElement('xAxisArrow') && this.addElement('xAxisArrow', tmp);
+        },
+        "yAxisArrow" : function(){
+            var tmp = new kity.Arrow( arrowParam ).fill( '#999' );
+            tmp.canvas = tmp; //这里是hack，让chart可以添加kity对象，而不是chartelement
+            !this.getElement('yAxisArrow') && this.addElement('yAxisArrow', tmp);
         }
     };
 
@@ -2138,20 +2357,25 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xAxisArrow: null,
                 yAxisArrow: null,
                 xLabelRotate: 0,
-                yLabelRotate: 0
+                yLabelRotate: 0,
+                xLabelFont : null,
+                yLabelFont : null,
+                xAxisStyle : null,
+                yAxisStyle : null,
+                xMeshStyle : null,
+                yMeshStyle : null
             }, param );
 
             this.callBase( mix );
 
             this._initRulers();
-            // this._initElements();
 
         },
         _initRulers: function () {
             this.xRuler = new kc.Ruler();
             this.yRuler = new kc.Ruler();
         },
-        _initElements: function (components) {
+        _initElements: function (components){
             components = ( !components )? allComponents : components;
             this._processComponents( components );
         },
@@ -2178,7 +2402,13 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     'xAxisArrow',
                     'yAxisArrow',
                     'xLabelRotate',
-                    'yLabelRotate'
+                    'yLabelRotate',
+                    'xLabelFont',
+                    'yLabelFont',
+                    'xAxisStyle',
+                    'yAxisStyle',
+                    'xMeshStyle',
+                    'yMeshStyle'
                 ]
             } );
         },
@@ -2251,8 +2481,14 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xAxisArrow,
                 yAxisArrow,
                 xLabelRotate,
-                yLabelRotate
-            ) {
+                yLabelRotate,
+                xLabelFont,
+                yLabelFont,
+                xAxisStyle,
+                yAxisStyle,
+                xMeshStyle,
+                yMeshStyle
+        ){
 
             this._initElements( components );
 
@@ -2262,11 +2498,14 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
             var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
 
+            var xGridArr = dataSet.xAxis && dataSet.xAxis.grid;
+            var yGridArr = dataSet.yAxis && dataSet.yAxis.grid;
+
             var xFormat = formatX || defaultFormat,
                 yFormat = formatY || defaultFormat;
 
-            var xRuler = this.xRuler, xMin, xMax, xGrid, xCount;
-            var yRuler = this.yRuler, yMin, yMax, yGrid, yCount;
+            var xRuler = this.xRuler, xMin, xMax, xCount;
+            var yRuler = this.yRuler, yMin, yMax, yCount;
 
             if( xCategories ){
                 rangeX = [0, xCategories.length-1];
@@ -2277,26 +2516,33 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             if( yCategories ){
                 rangeY = [0, yCategories.length-1];
             }
+
             yMin = kity.Utils.isNumber( minY )? minY : rangeY[ 0 ];
             yMax = rangeY[ 1 ]; 
 
+            var xGrid, yGrid;
 
             xRuler.ref( xMin, xMax ).map( padding.left, width - padding.right );
             if(xCategories){
                 xGrid = xRuler.gridByCategories( xCategories.length );
+            }else if( kity.Utils.isArray(xGridArr) ){
+                xGrid = xRuler.gridByArray( xGridArr );
             }else{
                 xCount = width / 60 | 0;
                 xGrid = xRuler.gridByCount( xCount, null, true, minX );
             }
-            
+          
             yRuler.ref( yMin, yMax ).map( height - padding.top - padding.bottom, 0 );
+
             if(yCategories){
                 yGrid = yRuler.gridByCategories( yCategories.length );
+            }else if( kity.Utils.isArray(yGridArr) ){
+                yGrid = yRuler.gridByArray( yGridArr );
             }else{
                 yCount = height / 40 | 0;
                 yGrid = yRuler.gridByCount( yCount, null, true, minY );
             }
-            
+
             for (var i = 0; i < yGrid.map.length; i++) {
                 yGrid.map[i] = yGrid.map[i] + padding.top;
             }
@@ -2308,19 +2554,49 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xMesh = this.getElement( 'xMesh' ),
                 yMesh = this.getElement( 'yMesh' );
 
-            xAxis && xAxis.update( {
+            xAxis && xAxis.update({
                 x1: 0,
                 y1: height,
                 x2: width,
-                y2: height
-            } );
+                y2: height,
+                width: xAxisStyle.width,
+                color: xAxisStyle.color
+            });
 
-            yAxis && yAxis.update( {
+            yAxis && yAxis.update({
                 x1: 0,
                 y1: 0,
                 x2: 0,
-                y2: height
-            } );
+                y2: height,
+                width: yAxisStyle.width,
+                color: yAxisStyle.color
+            });
+
+            if( unitX ){
+                this.unitXLabel = this.unitXLabel || this.addElement( 'unitXLabel', new kc.Label() );
+                this.unitXLabel.update({
+                    text: unitX.text,
+                    at: 'right',
+                    margin: 0,
+                    style : unitX.font || xLabelFont,
+                    // color: xLabelFont.color || '#000',
+                    x : width + 10,
+                    y : height + 16
+                }); 
+            }
+
+            if( unitY ){
+                this.unitYLabel = this.unitYLabel || this.addElement( 'unitYLabel', new kc.Label() );
+                this.unitYLabel.update({
+                    text: unitY.text,
+                    at: yLabelsAt,
+                    margin: 0,
+                    style: unitY.font || yLabelFont,
+                    color: unitY.font && unitY.font.color || '#000',
+                    x : -8,
+                    y : -14
+                });
+            }
 
             var xLabels = xCategories ? xCategories : xGrid.ref.map( xFormat );
             if(xCat){
@@ -2329,7 +2605,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     labels: xLabels,
                     y: height,
                     step: dataSet.xAxis && dataSet.xAxis.step || 1,
-                    at : xLabelsAt || 'bottom'
+                    at : xLabelsAt || 'bottom',
+                    font : xLabelFont
                 } );
             }
             if(xCategories){
@@ -2346,7 +2623,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     x: 0,
                     step: dataSet.yAxis && dataSet.yAxis.step || 1,
                     at : yLabelsAt || 'left',
-                    margin : margin
+                    margin : margin,
+                    font : yLabelFont
                 } );
             }
             if(yCategories){
@@ -2357,6 +2635,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 rules: xGrid.map,
                 length: height,
                 y: height,
+                width: xMeshStyle.width,
+                color: xMeshStyle.color,
+                dash : xMeshStyle.dash,
                 step: dataSet.xAxis && dataSet.xAxis.step || 1
             } );
 
@@ -2365,15 +2646,19 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 length: width, //xGrid.map[ xGrid.map.length - 1 ],
                 x: 0,
                 y: 0,
+                width: yMeshStyle.width,
+                color: yMeshStyle.color,
+                dash : yMeshStyle.dash,
                 step: dataSet.yAxis && dataSet.yAxis.step || 1
             } );
 
-            this.xArrow && this.xArrow.setTranslate( width, height + 0.5 );
-            this.yArrow && this.yArrow.setRotate( -90 ).setTranslate( 0.5, 0 );
+            var xa, ya;
+            (xa = this.getElement('xAxisArrow')) && xa.setTranslate( width, height + 0.5 );
+            (ya = this.getElement('yAxisArrow')) && ya.setRotate( -90 ).setTranslate( 0.5, 0 );
         },
 
         setCoordinateConf : function( conf ) {
-            var reuslt = {},
+            var result = {},
                 components = [];
 
             var xAxis = conf.xAxis,
@@ -2384,15 +2669,41 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             xAxis.axis.enabled  && components.push( 'xAxis' );
             xAxis.ticks.enabled && components.push( 'xMesh' );
             xAxis.label.enabled && components.push( 'xCat' );
+            xAxis.axis.arrow && components.push( 'xAxisArrow' );
             yAxis.axis.enabled  && components.push( 'yAxis' );
             yAxis.ticks.enabled && components.push( 'yMesh' );
             yAxis.label.enabled && components.push( 'yCat' );
-            reuslt.components = components;
+            yAxis.axis.arrow && components.push( 'yAxisArrow' );
+            result.components = components;
+
+            result.xAxisArrow = xAxis.axis.arrow;
+            result.xAxisStyle = {
+                width : xAxis.axis.width,
+                color : xAxis.axis.color
+            };
+
+            result.yAxisArrow = yAxis.axis.arrow;
+            result.yAxisStyle = {
+                width : yAxis.axis.width,
+                color : yAxis.axis.color
+            };
+
+            result.xMeshStyle = {
+                width : xAxis.ticks.width,
+                color : xAxis.ticks.color,
+                dash : xAxis.ticks.dash
+            };
+
+            result.yMeshStyle = {
+                width : yAxis.ticks.width,
+                color : yAxis.ticks.color,
+                dash : yAxis.ticks.dash
+            };
 
             // 外部空隙
             var xm = xAxis.margin,
                 ym = yAxis.margin;
-            reuslt.margin = {
+            result.margin = {
                 left   : xm.left || 0,
                 right  : xm.right || 0,
                 top    : ym.top || 0,
@@ -2402,7 +2713,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             // 内部空隙
             var xp = xAxis.padding,
                 yp = yAxis.padding;
-            reuslt.padding = {
+            result.padding = {
                 left   : xp.left || 0,
                 right  : xp.right || 0,
                 top    : yp.top || 0,
@@ -2412,27 +2723,38 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             // 指定刻度最小值
             var minX = kity.Utils.queryPath('xAxis.min', conf);
             if( kity.Utils.isNumber( minX ) ){
-                reuslt['minX'] = minX;
+                result['minX'] = minX;
             }
             var minY = kity.Utils.queryPath('yAxis.min', conf);
             if( kity.Utils.isNumber( minY ) ){
-                reuslt['minY'] = minY;
+                result['minY'] = minY;
             }
 
             // 指定范围
-            conf.rangeX && (reuslt.rangeX = conf.rangeX);
-            conf.rangeY && (reuslt.rangeY = conf.rangeY);
+            conf.rangeX && (result.rangeX = conf.rangeX);
+            conf.rangeY && (result.rangeY = conf.rangeY);
 
             // label位置
-            reuslt.yLabelsAt = yAxis.label.at || "left";
-            reuslt.labelMargin = yAxis.label.margin || 10;
+            // result.xLabelsAt = xAxis.label.at || "middle";
+            result.xLabelRotate = xAxis.label.rotate;
+            result.xLabelFont = xAxis.label.font;
 
-            reuslt.xLabelRotate = xAxis.label.rotate;
-            reuslt.yLabelRotate = yAxis.label.rotate;
+            result.yLabelsAt = yAxis.label.at || "left";
+            result.yLabelRotate = yAxis.label.rotate;
+            result.yLabelFont = yAxis.label.font;
 
-            reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
-            reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
+            result.labelMargin = yAxis.label.margin || 10;
 
+            // 坐标轴标签格式化
+            result.formatX = kity.Utils.queryPath('xAxis.label.format', conf);
+            result.formatY = kity.Utils.queryPath('yAxis.label.format', conf);
+
+            // 单位
+            result.unitX = kity.Utils.queryPath('xAxis.unit', conf) || '';
+            result.unitY = kity.Utils.queryPath('yAxis.unit', conf) || '';
+
+            result.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
+            result.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
 
             var confCopy = kity.Utils.copy( conf );
 
@@ -2441,15 +2763,15 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 confCopy.yAxis.categories = confCopy.xAxis.categories;
                 delete( confCopy.xAxis.categories );
 
-                reuslt['minX'] = minY;
-                delete reuslt['minY'];
+                result['minX'] = minY;
+                delete result['minY'];
                 
             }else{
                 delete( confCopy.yAxis.categories );
             }
 
-            reuslt.dataSet = confCopy;
-            return reuslt;
+            result.dataSet = confCopy;
+            return result;
         }
     };
 } )() );
@@ -2495,7 +2817,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             growth = list.length - elementList.length,
             fx = kc.fx && this.param.fx,
             delay = 0,
-            delayBase = 300 / list.length,
+            delayBase = 500 / list.length,
             fxTimers = this.fxTimers;
 
         this.adjust( growth );
@@ -2516,12 +2838,14 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         elementList.forEach( function ( element, index ) {
 
             if ( fx && ( 'animate' in element ) ) {
+                
                 fxTimers.push( setTimeout( function () {
-                    element.animate( list[ index ], me.param.animateDuration || 300 ).timeline.on( 'finish', function () {
+                    element.animate( list[ index ], me.param.animateDuration || 600, me.param.fxEasing || 'ease' ).timeline.on( 'finish', function () {
                         fill++;
                         checkFinish();
                     } );
-                }, delay ) );
+
+                }, list[ index ].delay || delay ) );
 
                 delay += Math.random() * delayBase;
 
@@ -2538,7 +2862,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
     updateClass: function ( elementClass ) {
         if ( !elementClass || this.elementClass == elementClass ) return;
         this.elementClass = elementClass;
-        this.shrink( this.elementList.lenght );
+        this.shrink( this.elementList.length );
     },
 
     adjust: function ( growth ) {
@@ -2558,7 +2882,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             this.elementList.push( element );
             element.update( this.param.common );
             if ( this.param.fx ) {
-                element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+                element.canvas.setOpacity( 0 ).fadeIn( 200, 'ease' );
             } else {
                 element.canvas.setOpacity( 1 );
             }
@@ -2921,6 +3245,7 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 			connectLineWidth: 1,
 			connectLineColor: '#62a9dd',
 
+			originAngle : 0,
 			innerRadius: 0,
 			outerRadius: 0,
 			startAngle: 0,
@@ -2941,10 +3266,10 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
-			updatePies: [ 'innerRadius', 'outerRadius', 'startAngle', 'pieAngle', 'strokeWidth', 'strokeColor' ],
+			updatePies: [ 'innerRadius', 'outerRadius', 'originAngle', 'startAngle', 'pieAngle', 'strokeWidth', 'strokeColor' ],
 			updatePiesColor: [ 'color' ],
-			updateLabel: [ 'labelText', 'labelColor', 'labelPosition', 'outerRadius', 'startAngle', 'pieAngle' ],
-			updateConnectLine: [ 'labelText', 'connectLineWidth', 'connectLineColor', 'labelPosition', 'innerRadius', 'outerRadius', 'startAngle', 'pieAngle' ]
+			updateLabel: [ 'labelText', 'labelColor', 'labelPosition', 'outerRadius', 'originAngle', 'startAngle', 'pieAngle' ],
+			updateConnectLine: [ 'labelText', 'connectLineWidth', 'connectLineColor', 'labelPosition', 'innerRadius', 'outerRadius', 'originAngle', 'startAngle', 'pieAngle' ]
 		} );
 	},
 
@@ -2953,18 +3278,19 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 	},
 
 	updatePiesColor: function ( color ) {
+		// color = kity.Color.parse( color );
 		this.pie.fill( color );
 	},
 
-	updatePies: function ( innerRadius, outerRadius, startAngle, pieAngle, strokeWidth, strokeColor ) {
+	updatePies: function ( innerRadius, outerRadius, originAngle, startAngle, pieAngle, strokeWidth, strokeColor ) {
 
 		this.pie.innerRadius = innerRadius;
 		this.pie.outerRadius = outerRadius;
-		this.pie.startAngle = startAngle;
+		this.pie.startAngle = startAngle - 90 + originAngle;
 		this.pie.pieAngle = pieAngle;
 		this.pie.draw();
-		// this.pie.bringTop();
-
+		this.pie.bringTop();
+		// if(strokeWidth===0)strokeWidth=0.001;
 		var pen = new kity.Pen();
 		pen.setWidth( strokeWidth );
 		pen.setColor( strokeColor );
@@ -2972,11 +3298,11 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 
 	},
 
-	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, startAngle, pieAngle ) {
+	updateLabel: function ( labelText, labelColor, labelPosition, outerRadius, originAngle, startAngle, pieAngle ) {
 		if( labelPosition == 'none' ) return;
 
 		var r = labelPosition == 'inside' ? outerRadius - 30 : outerRadius + 50;
-		var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
+		var a = ( startAngle + pieAngle / 2 - 90 + originAngle ) / 180 * Math.PI;
 
 		this.label.setVisible( true );
 		this.label.update( {
@@ -2990,11 +3316,11 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 
 	},
 
-	updateConnectLine: function ( labelText, connectLineWidth, connectLineColor, labelPosition, innerRadius, outerRadius, startAngle, pieAngle ) {
+	updateConnectLine: function ( labelText, connectLineWidth, connectLineColor, labelPosition, innerRadius, outerRadius, originAngle, startAngle, pieAngle ) {
 		if ( labelPosition != 'outside' || !labelText ) return;
 
 		var r = outerRadius + 30;
-		var a = ( startAngle + pieAngle / 2 ) / 180 * Math.PI;
+		var a = ( startAngle + pieAngle / 2 - 90 + originAngle ) / 180 * Math.PI;
 
 		this.connectLine.update( {
 			x1: ( innerRadius + 2 ) * Math.cos( a ),
@@ -3004,6 +3330,8 @@ var Pie = kc.Pie = kity.createClass( "Pie", {
 			width: connectLineWidth,
 			color: connectLineColor
 		} );
+
+		// this.connectLine.bringBelow();
 
 	}
 
@@ -3073,7 +3401,7 @@ var CircleDot = kc.CircleDot = kity.createClass( "CircleDot", {
         this.circle.fill( color );
     },
     getAnimatedParam: function () {
-        return [ 'radius', 'y' ];
+        return [ 'radius', 'x', 'y' ];
     }
 } );
 
@@ -3419,7 +3747,8 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 			color: 'black',
 			margin: 10,
 			step: 1,
-			rotate: 0
+			rotate: 0,
+			font : {}
 		}, param ) );
 
 		this.addElement( 'labels', new kc.ElementList( {
@@ -3429,13 +3758,12 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 
 	registerUpdateRules: function () {
 		return kity.Utils.extend( this.callBase(), {
-			'updateCategories': [ 'rules', 'labels', 'at', 'margin', 'rotate', 'step' ],
-			'updateColor': 'color',
+			'updateCategories': [ 'rules', 'labels', 'at', 'margin', 'rotate', 'font', 'step' ],
 			'updateCommon': 'common'
 		} );
 	},
 
-	updateCategories: function ( rules, labels, at, margin, rotate, step ) {
+	updateCategories: function ( rules, labels, at, margin, rotate, font, step ) {
 		var i, rule, x, y, list = [];
 
 		// step == 0 不绘制
@@ -3450,28 +3778,22 @@ var Categories = kc.Categories = kity.createClass( 'Categories', {
 			} else if ( at == 'right' ) {
 				x = margin;
 				y = rule;
-			} 
+			}
 
 			list.push({
 				x: x,
 				y: y,
 				at: at,
 				rotate: rotate,
-				text: labels[ i ]
+				text: labels[ i ],
+				style : font,
+				color : font && font.color || 'black'
 			});
 		}
 
 		this.getElement( 'labels' ).update( {
 			list: list,
 			fx: true
-		} );
-	},
-
-	updateColor: function ( color ) {
-		this.getElement( 'labels' ).update( {
-			common: {
-				color: color
-			}
 		} );
 	}
 } );
@@ -3785,19 +4107,19 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
 
     constructor: function ( param ) {
         this.callBase( kity.Utils.extend( {
-            x : 0,
-            y : 0,
-            width : 0,
-            height : 0,
-            color : 'rgba( 255, 255, 255, 0 )',
-            
-            strokeWidth : 0,
-            strokeColor : '#888',
+            x: 0,
+            y: 0,
+            width: 0,
+            height: 0,
+            color: 'rgba( 255, 255, 255, 0 )',
 
-            labelText : null,
-            labelColor : 'red',
-            labelX : 5,
-            labelY : 5
+            strokeWidth: 0,
+            strokeColor: '#888',
+
+            labelText: null,
+            labelColor: 'red',
+            labelX: 5,
+            labelY: 5
 
         }, param ) );
 
@@ -3835,15 +4157,15 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
     drawText: function ( labelText, labelColor, labelX, labelY, width, height ) {
 
         this.label.setVisible( true );
-        this.label.update({
+        this.label.update( {
             text: labelText,
             color: labelColor,
             at: 'bottom',
-            x : labelX,
-            y : labelY
-        });
+            x: labelX,
+            y: labelY
+        } );
 
-        if( width > 0 ){
+        if ( width > 0 ) {
             var textWidth = this.label.getSize().width;
             var con = textWidth > width;
 
@@ -3856,7 +4178,7 @@ var Rectage = kc.Rectage = kity.createClass( "Rectage", {
             // paper.addResource( this.textFilter );
             // this.label.text.applyFilter( this.textFilter );
 
-            if( textWidth > width && textWidth > height ){
+            if ( textWidth > width && textWidth > height ) {
                 this.label.setVisible( false );
             }
 
@@ -4122,9 +4444,35 @@ var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
             //根据数量级和max的值决定分隔情况
             var base = Math.pow( 10, oomV );
             var n = max / base;
-            var part = n / 5;
+            //var part = n / 5;
             // console.log( part );
-            // console.log( max, oom, upper );
+            if ( ( n < 5 || n > 6 ) && base > 1 ) {
+                base = base / 10;
+                n = n * 10;
+                while ( n > 6 ) {
+                    n = n / 2;
+                    base = base * 2;
+                }
+            }
+            //绘制顶端的线段
+            var bd = [
+                [ x1 - 5, y1 ],
+                [ x1, y1 ]
+            ];
+            drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
+            drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
+            for ( var i = 0; i < n; i++ ) {
+                var y2i = y2 - base * i / max * ( y2 - y1 );
+                var bd = [
+                    [ x1 - 5, y2i ],
+                    [ x1, y2i ]
+                ];
+                drawer.moveTo( s( bd[ 0 ][ 0 ] ), s( bd[ 0 ][ 1 ] ) );
+                drawer.lineTo( s( bd[ 1 ][ 0 ] ), s( bd[ 1 ][ 1 ] ) );
+                this.canvas.addShape( new kity.Text( ( base * i ).toLocaleString() ).setX( x1 - 10 ).setY( y2i + 6 ).setTextAnchor( 'end' ).setStyle( {
+                    'font-size': '12px'
+                } ) );
+            }
         } else {
             var length = y2 - y1;
             var space = length / ( divide - 1 );
@@ -4200,6 +4548,169 @@ var AxisLine = kc.AxisLine = kity.createClass( "AxisLine", {
     }
 } );
 
+/**
+ * 具有一个扇环的单点类型
+ *
+ * @param {String} label
+ *        标签显示的文本
+ *
+ * @param {String} labelColor
+ *        标签的颜色
+ *
+ * @param {String} labelPosition
+ *        标签出现的位置，允许取值为：inside, left, top, right, bottom, auto
+ *
+ * @param {Number} pieInnerRadius
+ *        半径大小
+ *
+ * @param {Number} pieOuterRadius
+ *        扇环的大小
+ *
+ * @param {Number} pieAngle
+ *        扇环的角度
+ *
+ * @param {String} pieColor
+ *        扇环的颜色
+ */
+var Clock = kc.Clock = kity.createClass( "Clock", {
+
+	base: kc.AnimatedChartElement,
+
+	constructor: function ( param ) {
+		this.callBase( kity.Utils.extend( {
+			innerRadius: 0,
+			outerRadius: 0,
+			startAngle: 0,
+			pieAngle: 0,
+
+			strokeWidth: 1,
+			strokeColor: '#FFF',
+
+			color: 'red'
+		}, param ) );
+		var selfparam = this.param;
+
+		var circlePathData = "M44.981,0.301c-17.978,0-33.575,10.174-41.362,25.075c-0.113,0.29-0.253,0.567-0.417,0.83 c-0.082,0.165-0.164,0.33-0.246,0.495c-0.031,0.079-0.059,0.159-0.094,0.236l0.143,0.068c-0.069,0.127-0.135,0.256-0.215,0.377 c-0.144,0.43-0.32,0.846-0.575,1.218c-1.429,4.859-3.168,13.391,0.487,17.97C7.996,53.202,15.635,31.68,15.635,31.68l-0.244-0.135 c5.668-10.756,16.936-18.102,29.94-18.102c18.697,0,33.853,15.157,33.853,33.853S64.028,81.15,45.331,81.15 c-9.524,0-18.123-3.939-24.275-10.269c-3.431,2.491-7.767,4.337-13.115,4.406c8.525,11.125,21.941,18.305,37.039,18.305 c25.761,0,46.645-20.884,46.645-46.645C91.626,21.185,70.742,0.301,44.981,0.301z";
+		this.clockedge = new kity.Path().setPathData( circlePathData ).translate( -47, -47 );
+		this.armS = new kity.Rect().setWidth( 7 ).setHeight( 30 ).translate( -4, -20 ).setRadius( 3 );
+		this.armL = new kity.Rect().setWidth( 7 ).setHeight( 40 ).translate( -4, -30 ).setRadius( 3 );
+
+		this.canvas.addShapes( [ this.clockedge, this.armL, this.armS ] );
+	},
+
+	registerUpdateRules: function () {
+		return kity.Utils.extend( this.callBase(), {
+			updateClockColor: [ 'color' ],
+			updateArms: [ 'circle', 'target', 'total', 'duraction' ]
+		} );
+	},
+
+	getAnimatedParam: function () {
+		return [];
+	},
+
+	updateClockColor: function ( color ) {
+		this.clockedge.fill( color );
+		this.armS.fill( color );
+		this.armL.fill( color );
+	},
+	updateArms: function ( circle, target, total, duraction ) {
+		//计算长针要转几度
+		var angles = 360 * target / circle;
+		var armS = this.armS;
+		var armL = this.armL;
+		armL.fxRotate( angles, duraction || 1000 );
+		armS.fxRotate( 360 * target / total, duraction || 1000 );
+	}
+} );
+
+//参数格式
+// {
+//             label: {
+//                 at: 'bottom',
+//                 color: 'black',
+//                 text: null,
+//             },
+//             color: '#62a9dd',
+//             radius: 0,
+//             fxEasing: 'easeOutElastic'
+// }
+var TransformBubble = kc.TransformBubble = kity.createClass( "TransformBubble", {
+
+    base: kc.AnimatedChartElement,
+
+    constructor: function ( param ) {
+        this.callBase( kity.Utils.extend( {
+            shape: 'circle',
+            strokeColor: '#FFF',
+            strokeWidth: 0,
+            color: '#62a9dd',
+            radius: 0,
+            x: 0,
+            y: 0
+        }, param ) );
+        var selfparam = this.param;
+        this.on( 'click', function ( e ) {
+            var chart = e.target.container.container;
+            chart.addTooltip( e );
+        } );
+    },
+    registerUpdateRules: function () {
+        return kity.Utils.extend( this.callBase(), {
+            'updateShape': [ 'shape', 'color', 'strokeColor', 'strokeWidth' ],
+            'updateRadius': [ 'radius' ],
+            'updateRect': [ 'width', 'height' ],
+            'updatePoints': [ 'points' ]
+        } );
+    },
+    updateShape: function ( shape, color, strokeColor, strokeWidth ) { //更新形状
+        if ( this.shape ) {
+            this.shape.remove();
+        }
+        switch ( shape ) {
+        case 'circle':
+            this.shape = new kity.Circle();
+            this.canvas.addShapes( [ this.shape ] );
+            break;
+        case 'col':
+            this.shape = new kity.Rect();
+            this.canvas.addShapes( [ this.shape ] );
+            break;
+        case 'line':
+            this.shape = new kity.Polyline();
+            this.canvas.addShapes( [ this.shape ] );
+            break;
+        default:
+            break;
+        }
+        var pen = new kity.Pen();
+
+        pen.setWidth( strokeWidth );
+        pen.setColor( strokeColor );
+
+        this.shape.stroke( pen );
+        this.shape.fill( color );
+    },
+    updateRadius: function ( radius ) {
+        if ( !this.shape || !this.shape.setRadius ) return false;
+        this.shape.setRadius( radius );
+    },
+    updateRect: function ( width, height ) {
+        this.shape.setWidth( width ).setHeight( height );
+    },
+    updatePoints: function ( points ) {
+        var items = [];
+        for ( var i = 0; i < points.length; i++ ) {
+            var item = points[ i ];
+            items.push( new kity.Point( item.x, item.y ) );
+        }
+        this.shape.setPoints( items );
+    },
+    getAnimatedParam: function () {
+        return [ 'radius', 'x', 'y' ];
+    }
+} );
+
 kc.ChartsConfig = (function(){
 
     var _configs = {};
@@ -4244,19 +4755,26 @@ kc.ChartsConfig.add('base', {
 
         ticks: {
             enabled : true,
-            dash : null,
+            dash : [1],
             width: 1,
             color: '#808080'
         },
 
         axis : {
             enabled : true,
-            arrow : true
+            arrow : false,
+            width : 1,
+            color : '#000'
         },
 
         label : {
             enabled : true,
-            rotate : 0
+            rotate : 0,
+            font : {
+                color : "#000",
+                fontSize : 12,
+                family : "Arial"
+            }
         },
 
         padding : {
@@ -4275,20 +4793,26 @@ kc.ChartsConfig.add('base', {
 
         ticks: {
             enabled : true,
-            dash : null,
-            value: 0,
+            dash : [1],
             width: 1,
             color: '#808080'
         },
 
         axis : {
             enabled : true,
-            arrow : true
+            arrow : false,
+            width : 1,
+            color : '#000'
         },
 
         label : {
             enabled : true,
-            rotate : 0
+            rotate : 0,
+            font : {
+                color : "#000",
+                fontSize : 12,
+                family : "Arial"
+            }
         },
 
         padding : {
@@ -4342,7 +4866,11 @@ kc.ChartsConfig.add('base', {
         level : 'entry'
     },
 
-    enableAnimation : true
+    animation : {
+        enabled : true,
+        duration : 600,
+        mode : 'ease'
+    },
 });
 
 
@@ -4428,8 +4956,11 @@ kc.ChartsConfig.add('area', {
     plotOptions : {
 
         area : {
-            width : 2,
-            dash : null,
+            
+            stroke : {
+                width : 1,
+                color : '#FFF'
+            },
 
             label : {
                 enabled : true,
@@ -4438,7 +4969,12 @@ kc.ChartsConfig.add('area', {
 
             fill : {
                 grandientStopOpacity : 0.5
-            }
+            },
+
+            dot : {
+                enabled : true,
+                radius : 3
+            }    
 
         }
 
@@ -4459,6 +4995,13 @@ kc.ChartsConfig.add('pie', {
             stroke : {
                 width : 1,
                 color : '#FFF'
+            },
+            shadow : {
+                enabled : false,
+                size : 2,
+                x : 1,
+                y : 1,
+                color : "rgba( 0, 0, 0, 0.3 )"
             },
             innerRadius : 40,
             outerRadius : 80,
@@ -4558,6 +5101,10 @@ kc.ChartData = kity.createClass( 'ChartData', {
                 min = all.length > 0 ? Math.min.apply( [], all ) : 0;
                 max = all.length > 0 ? Math.max.apply( [], all ) : 100;
             }
+
+            if( isStacked || isPercentage ){
+                min = 0;
+            }
         }
         
 
@@ -4568,7 +5115,7 @@ kc.ChartData = kity.createClass( 'ChartData', {
                 tmpSum = 0;
 
                 for( j = 0; j < arr.length; j++ ){
-                    tmpSum += ( arr[ j ][ i ] || 0 );
+                    tmpSum += Number(( arr[ j ][ i ] || 0 ));
                     offsetLevel[ j+1 ] = offsetLevel[ j+1 ] || [];
                     offsetLevel[ j+1 ][ i ] = tmpSum;
                 }
@@ -4594,7 +5141,6 @@ kc.ChartData = kity.createClass( 'ChartData', {
                     percentage : percentage
                 };
         }
-
 
         var result = {
                 chart : origin.chart || 'line',
@@ -4697,12 +5243,12 @@ kc.PieData = kity.createClass( 'PieData', {
 
             for( i = 0; i < arr.length; i++ ){
                 offset.push( sum );
-                sum += ( arr[ i ].value || arr[ i ] );
+                sum += kity.Utils.isNumber( arr[ i ].value ) ? arr[ i ].value : arr[ i ] ;
             }
 
             var val, tmp, obj, offsetAngle = 0;
             for( i = 0; i < arr.length; i++ ){
-                val = arr[ i ].value || arr[ i ];
+                val = kity.Utils.isNumber( arr[ i ].value ) ? arr[ i ].value : arr[ i ] ;
                 obj = arr[ i ] = kity.Utils.isObject( arr[ i ] ) ? arr[ i ] : {};
 
                 obj.percent = tmp = val / sum;
@@ -5047,6 +5593,19 @@ kc.TreemapData = kity.createClass( 'TreemapData', (function(){
 
 
 
+kc.SimpleRelationData = kity.createClass( 'SimpleRelationData', {
+    base: kc.Data,
+    
+    format: function () {
+        var origin = this.origin;
+
+        return {
+        	nodes : origin.nodes || [],
+        	edges : origin.edges || []
+        };
+    }
+} );
+
 (function(){
 
 var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
@@ -5078,31 +5637,42 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
     },
 
     drawPlots : function ( config ){
-        var self = this;
-        var list = [], series = config.series, opt = config.plotOptions,
-            outer = opt.pie.outerRadius,
-            inner = opt.pie.innerRadius,
-            increment = opt.pie.incrementRadius
-            lpos = opt.pie.labelPosition;
+        var self = this,
+            list = [],
+            series = config.series,
+            opt = config.plotOptions,
+            param = opt.pie,
+            tmpInner = 0,
+            outer = param.outerRadius,
+            inner = param.innerRadius,
+            increment = param.incrementRadius
+            lpos = param.labelPosition,
+            gap = param.gap || 0,
+            originAngle = param.originAngle || 0,
+            animateAngle = param.animateAngle || 0;
+
 
         for( var i = 0 ; i < series.length; i++ ){
 
             series[ i ].data.map(function( entry, j ){
+                tmpInner = i == 0 ? inner : outer  + i * (increment + gap) - increment;
 
                 list.push({
 
-                    labelText: opt.label.enabled && entry.angle > 10 ? entry.name : null,
+                    labelText: opt.label.enabled && entry.angle > 10 ? (entry.label ? entry.label : entry.value) : null,
                     labelColor: self.getLabelColor( i == 0 ),
                     labelPosition: lpos ? lpos : i == 0 ? 'inside' : 'none',
 
                     connectLineWidth: 1,
                     connectLineColor: self.getEntryColor( entry ),
 
-                    innerRadius : i == 0 ? inner : (outer  + ( i - 1 ) * increment),
-                    outerRadius : outer + increment * i,
-                    startAngle : entry.offsetAngle - 90,
-                    pieAngle: entry.angle,
+                    originAngle : originAngle,
 
+                    innerRadius : tmpInner,
+                    outerRadius : outer + (increment + gap) * i,
+                    startAngle : entry.offsetAngle + animateAngle,
+                    pieAngle: entry.angle,
+                    
                     strokeWidth : opt.pie.stroke.width,
                     strokeColor : opt.pie.stroke.color,
 
@@ -5119,9 +5689,30 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
 
         this.pies.update({
             elementClass : kc.Pie,
+            common : {
+
+            },
             list : list,
-            fx : true
+            fx : config.animation.enabled,
+            animateDuration : config.animation.duration,
+            fxEasing : config.animation.mode
         });
+
+        var shadow = config.plotOptions.pie.shadow;
+        if( shadow.enabled ){
+            var filter = new kity.ProjectionFilter( shadow.size, shadow.x, shadow.y );
+            filter.setColor( shadow.color );
+            this.getPaper().addResource( filter );
+
+            this.pies.getElementList().forEach(function(pie,i){
+                // 判断透明度为0,这里需要修改，用正则表达式
+                var color = list[i].color;
+                if(!(color.indexOf('rgba(') == 0 && color.indexOf('0)') == color.length-2)){
+                    pie.canvas.applyFilter( filter );
+                }
+            });
+
+        }
 
     }
 
@@ -5149,8 +5740,12 @@ var BasePlots = kc.BasePlots = kity.createClass( 'BasePlots', {
         return this.plotsElements;
     },
 
-    getEntryColor : function( entry ){
-         return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
+    getEntryColor : function( entry, index ){
+        var obj = entry.style && entry.style[ index ];
+        if( obj && obj.color ){
+            return obj.color;
+        }
+        return entry.color || this.config.color[ entry.index ] || this.config.finalColor;
     },
 
     update: function ( coordinate, config ) {
@@ -5230,19 +5825,23 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
                 stickParam = {
                     // dir: -1,
                     offset : oxy.measureValueRange( bottom, this.valueAxis ) * dir,
-                    color  : this.getEntryColor( stick ),
+                    color  : this.getEntryColor( stick, j ),
                     width  : width,
                     height : height,
                     rotate : rotateAngle,
+
+                    delay : config.animation.delayInterval*j,
+
                     bind : {
                         data : tmp,
                         indexInSeries : i,
                         indexInCategories : j
                     }
+                    
                 };
 
                 if( opt.label.enabled )
-                    stickParam.label = this.getStickLabelParam( height, tmp, config );;
+                    stickParam.label = this.getStickLabelParam( height, tmp, config );
 
                 stickParam[ this.valueAxis ] = oxy[ measureValueMethod ]( 0 );
                 stickParam[ this.categoryAxis ] = posCategory - left + distance * stick.groupIndex;
@@ -5254,10 +5853,13 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
             
         }
 
+        var anim = config.animation;
         this.getPlotsElements().update({
             elementClass: kc.Bar,
             list: stickList,
-            fx: config.enableAnimation
+            fx: anim.enabled,
+            animateDuration : anim.duration,
+            fxEasing : anim.mode
         });
 
         return config;
@@ -5381,6 +5983,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
                     color      : this.getEntryColor( line ),
                     dash       : line.dash || null,
                     width      : this.getLineWidth(),
+                    animatedDir: 'y',
                     defaultPos : coordinate.param.height,
                     factor     : +new Date,
                     bind       : lineData
@@ -5395,7 +5998,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
         this.getPlotsElements().update({
             elementClass: kc.Polyline,
             list: linesArr,
-            fx: config.enableAnimation
+            fx: config.animation.enabled
         });
         
         this.addDots();
@@ -5461,7 +6064,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
             lineDots.update({
                 elementClass: kc.CircleDot,
                 list: this.dotArr,
-                fx: this.config.enableAnimation
+                fx: this.config.animation.enabled
             });
         }
     }
@@ -5514,43 +6117,44 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
     areas : [],
 
     renderLineByData : function( line ){
-            
+        var offset = line.offsetX || 0;
+        var pointsArr, topPart, bottomPart;
         if( this.config.yAxis.stacked ){
 
             var p = this.config.yAxis.percentage;
             var offsetType = p ? 'percentageOffset' : 'offset';
             var allOffsetType = p ? 'allPercentageOffset' : 'allOffset';
 
-            var arr1 = this.array2points( line[ offsetType ], line.offsetX || 0 );
-            var arr2 = this.array2points( kity.Utils.copy( line[ allOffsetType ][ line.indexInGroup + 1 ] ), offset ).reverse();
+            topPart = this.array2points( line[ offsetType ], offset );
+            bottomPart = this.array2points( kity.Utils.copy( line[ allOffsetType ][ line.indexInGroup + 1 ] ), offset ).reverse();
 
-            pointsArr = arr1.concat( arr2 );
+            // pointsArr = arr1.concat( arr2 );
 
         }else{
 
-            pointsArr = this.array2points( line.data, line.offsetX || 0 );
+            pointsArr = this.array2points( line.data, offset );
             var areaPointArr = kity.Utils.copy( pointsArr );
             var oxy = this.coordinate;
             var x0 = oxy.measurePointX( 0 ),
                 y0 = oxy.measurePointY( oxy.yRuler._ref.from );
 
-            areaPointArr = areaPointArr.concat([
-                [ pointsArr[ pointsArr.length-1 ][ 0 ], y0 ],
-                [ x0, y0 ]
-            ]);
-            pointsArr = areaPointArr;
-        }   
+            var topPart = pointsArr.slice(0),
+                bottomPart = [];
 
-        for(var i in this.areas){
-            this.canvas.removeShape( this.areas[ i ] );
+            var i = pointsArr.length;
+            while( i-- > 0 ){
+                bottomPart.push( [ pointsArr[ i ][ 0 ], y0 ] );
+            }
+
         }
 
-        var area = this.drawPolygon( pointsArr, line );
+        var area = this.drawPolygon( topPart, bottomPart, line );
         this.areas.push( area );
     },
 
-    drawPolygon : function ( pointArr, entry ){
-        var area = new kity.Polygon(pointArr),
+    drawPolygon : function ( topPart, bottomPart, entry ){
+        var pointsArr = topPart.concat(bottomPart);
+        var area = new kity.Polygon(pointsArr),
             paper = this.container.paper,
             color = this.getEntryColor( entry ),
             fill, opacity;
@@ -5560,8 +6164,12 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
             fill = new kity.Color( color ).set( 'a', opacity );
         }else{
             fill = new kity.LinearGradientBrush().pipe( function() {
-                this.addStop( 0, color );
-                this.addStop( 1, color, self.config.plotOptions.area.fill.grandientStopOpacity );
+                var grandient = self.config.plotOptions.area.fill.grandient;
+                var g;
+                for( var i = 0; i < grandient.length; i++ ){
+                    g = grandient[i];
+                    this.addStop( g.pos, g.color||color, grandient[i].opacity );
+                }
                 this.setStartPosition(0, 0);
                 this.setEndPosition(0, 1);
                 paper.addResource( this );
@@ -5571,8 +6179,45 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
         area.fill( fill );
 
         this.canvas.addShape(area);
-
         return area;
+
+        // new effect
+        // var self = this;
+
+        // var begin = topPart.concat(topPart.slice(0).reverse()).slice(0),
+        //     finish = topPart.concat(bottomPart).slice(0);
+
+        // var fill = self.config.plotOptions.area.fill.grandient;
+
+        // var area = new kc.Polyline({
+        //     points     : begin,
+        //     color      : '#ddd',
+        //     width      : 0,
+        //     factor     : +new Date,
+        //     animatedDir: 'y',
+        //     close: true,
+        //     fill: fill
+        // });
+
+        // this.addElement('area', area);
+        // area.update();
+        // // area.polyline.bringBelow();
+
+        // setTimeout(function(){
+
+        //     area.update({
+        //         points     : finish,
+        //         color      : '#ddd',
+        //         width      : 0,
+        //         factor     : +new Date,
+        //         animatedDir: 'y',
+        //         close: true,
+        //         fill: fill
+        //     });
+
+        // }, 1000);
+
+
     }
 
 } );
@@ -5656,7 +6301,7 @@ var ScatterPlots = kc.ScatterPlots = kity.createClass( 'ScatterPlots', {
         this.getPlotsElements().update({
             elementClass: kc.CircleDot,
             list: circleList,
-            fx: config.enableAnimation
+            fx: config.animation.enabled
         });
 
     }
@@ -5685,7 +6330,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     },
 
-    setConfig : function( param, formatter ){
+    _setConfig : function( param, formatter ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
             base = kc.ChartsConfig.init( this.chartType || '' ),
@@ -5701,7 +6346,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     update : function( param ){
         var DataFormatter = arguments[ 1 ] || kc.ChartData;
-        this.setConfig( param, DataFormatter );
+        this._setConfig( param, DataFormatter );
         
         coordConf = this.coordinate.setCoordinateConf( this.config );
         this.coordinate.update( coordConf );
@@ -5780,20 +6425,31 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             container.css('position', 'relative');
         }
 
-        this.tooltip = $('<div></div>').appendTo( container ).css({
-            position : 'absolute',
-            // border : '#888 1px solid',
-            boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
-            borderRadius : '4px',
-            backgroundColor : '#FFF',
-            color : '#888',
-            padding : '6px 10px',
-            left : '-1000px',
-            marginLeft : '10px',
-            fontSize : '10px',
-            lineHeight : '16px'
-        });
+        this.setTooltipContainer();
 
+    },
+
+    setTooltipContainer : function( dom ){
+        if( dom ){
+            this.tooltip = $( dom ).css({
+                position : 'absolute',
+                left : '-3000px',
+            });
+        }else{//默认
+            this.tooltip = $('<div></div>').appendTo( this.container ).css({
+                position : 'absolute',
+                // border : '#888 1px solid',
+                boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
+                borderRadius : '4px',
+                backgroundColor : '#FFF',
+                color : '#888',
+                padding : '6px 10px',
+                left : '-1000px',
+                marginLeft : '10px',
+                fontSize : '10px',
+                lineHeight : '16px'
+            });
+        }
     },
 
     updateTooltip : function( text, x, y ){
@@ -5819,9 +6475,9 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             i, j, entry, label, color, tmp, dataEntry;
 
         this.legend && this.legend.remove();
-        this.legend = $('<div></div>').css({
+        this.legend = $('<div class="kitycharts-legend"></div>').css({
             position : 'absolute',
-            bottom : '10px',
+            bottom : '5px',
             right : '30px',
             height : '26px',
             lineHeight : '26px'
@@ -5846,8 +6502,6 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
                 colorArr.push(color);
             }
 
-
-
         }
 
         var self = this;
@@ -5869,7 +6523,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             }).appendTo( tmp );
 
             $('<div class="kitycharts-legend-label">' + label + '</div>').css({
-                fontSize : '10px',
+                fontSize : '12px',
                 display : 'inline-block'
             }).appendTo( tmp );
         });
@@ -5973,13 +6627,25 @@ var StickChart = kc.StickChart = kity.createClass( 'StickChart', {
 
     setTooltipContent : function( bind ){
     	var j = bind.indexInSeries, i = bind.indexInCategories
-    	var series = this.config.series;
-    	var categories = this.config.xAxis.categories;
-    	var html = '<div style="font-weight:bold">' + categories[ i ] + '</div>';
-    	html += '<div>' + series[ j ].name + ' : ' + series[ j ].data[ i ] + '</div>';
-    	html += '<div> Total : ' + series[ j ].sum[ i ] + '</div>';
 
-    	return html;
+        var func = kity.Utils.queryPath('tooltip.content', this.config);
+        if( func ){
+            return func( i, j );
+        }else{
+            var series = this.config.series;
+            var categories = this.config.xAxis.categories;
+            var html = '<div style="font-weight:bold">' + categories[ i ] + '</div>';
+            var valueAxis = this.getPlots().valueAxis == 'x' ? 'xAxis' : 'yAxis';
+            var unitText = this.config[ valueAxis ].unit && this.config[ valueAxis ].unit.text || '';
+            html += '<div>' + series[ j ].name + ' : ' + series[ j ].data[ i ] + unitText + '</div>';
+
+            if( this.config.yAxis.stacked ){
+                html += '<div> Total : ' + series[ j ].sum[ i ] + '</div>';
+            }
+
+            return html;
+        }
+
     },
 
 } );
@@ -6038,6 +6704,36 @@ var BarChart = kc.BarChart = kity.createClass( 'BarChart', {
 
 })();
 
+var ClockData = kc.ClockData = kity.createClass( 'ClockData', {
+    base: kc.Data
+} );
+var ClockChart = kc.ClockChart = kity.createClass( 'ClockChart', {
+    base: kc.Chart,
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        //add chart elements
+        this.addElement( "clocks", new kc.ElementList() );
+        this.setData( new kc.ClockData() );
+    },
+    renderClocks: function () {
+        var clocks = this.getElement( "clocks" );
+        var data = this.getData().format();
+        var list = data.list;
+        var colors = this.param.colors;
+        for ( var i = 0; i < list.length; i++ ) {
+            list[ i ].color = colors[ 0 ];
+        }
+        clocks.update( {
+            elementClass: kc.Clock,
+            list: list,
+            animateDuration: 1000
+        } );
+    },
+    update: function () {
+        this.renderClocks();
+    }
+} );
+
 (function(){
 
 var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
@@ -6054,14 +6750,14 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         var oxy = this.coordinate,
             param = oxy.param,
             oev = ev.originEvent,
-            x = oev.offsetX,
-            y = oev.offsetY,
+            x = oev.offsetX || oev.layerX,
+            y = oev.offsetY || oev.layerY,
             i,
             self = this,
             maxLength = 0,
             lenArr = [],
             tmpL,
-            lines = self.config.series;;
+            lines = self.config.series;
         
         if( self.isOutOfXRange( x ) ) return;
 
@@ -6119,6 +6815,16 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         this.updateTooltip( this.config.xAxis.categories[ info.indexInCategories ] + ' : ' + info.data, info.position.x, info.position.y );
     },
 
+    update : function( data ){
+        this.callBase( data );
+
+        this.hoverDots.update({
+            elementClass : kc.CircleDot,
+            list : [],
+            fx : false
+        });
+    },
+
     setCirclePosYByIndex : function( index ){
         var i, pY = 0,
             self = this,
@@ -6159,18 +6865,24 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
     },
 
     setTooltipContent : function( index ){
-        var series = this.config.series;
-        var categories = this.config.xAxis.categories;
-        var html = '<div style="font-weight:bold">' + categories[ index ] + '</div>';
-        series.forEach(function( entry, i ){
-            html += '<div>' + entry.name + ' : ' + entry.data[ index ] + '</div>';
-        });
+        var func = kity.Utils.queryPath('tooltip.content', this.config);
 
-        return html;
+        if( func ){
+            return func(index);
+        }else{
+            var series = this.config.series;
+            var categories = this.config.xAxis.categories;
+            var html = '<div style="font-weight:bold">' + categories[ index ] + '</div>';
+            series.forEach(function( entry, i ){
+                html += '<div>' + entry.name + ' : ' + entry.data[ index ] + '</div>';
+            });
+
+            return html;
+        }
     },
 
-    defaultCircleHover : function( binds ){
-        var index = binds[ 0 ].indexInCategories;
+    defaultHover : function( circles ){
+        var index = circles[ 0 ].bind.indexInCategories;
         var series = this.config.series;
         var posArr = [];
         var posX = 0;
@@ -6191,19 +6903,22 @@ var LinearChart = kc.LinearChart = kity.createClass( 'LinearChart', {
         var binds = [];
 
         this.circleArr.forEach(function( dot, i ){
-            binds.push( dot.bind );
+            binds.push( dot );
         });
 
-        var onCircleHover = this.config.interaction.onCircleHover;
-        if( typeof onCircleHover == 'function' ){
-            onCircleHover( binds );
-        }else if( onCircleHover !== null ){
-            this.defaultCircleHover( binds );
+        var onHover = this.config.interaction.onHover;
+        if( typeof onHover == 'function' ){
+            onHover( binds );
+        }else if( onHover !== null ){
+            this.defaultHover( binds );
         }
 
     },
 
     processHover : function( xInfo ){
+
+        if( !this.config.interaction.hover.enabled ) return;
+
     	var self = this;
         var pX = xInfo.posX + this.coordinate.param.margin.left;
         var index = xInfo.index;
@@ -6331,11 +7046,11 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
         var isEmpty = !( 'data_record' in origin );
         var data_record = origin.data_record && origin.data_record.map( function ( r ) {
             return {
-                x: +r.x * 100,
-                y: +r.y * 100,
+                x: +r.x,
+                y: +r.y,
                 label: r.label,
                 value: r.value,
-                percent: +r.percent * 100
+                percent: +r.percent
             };
         } ) || [];
 
@@ -6359,8 +7074,8 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
         return {
             data_dim: +origin.data_dim,
-            data_average_x: isEmpty ? 0 : +origin.data_average_x * 100,
-            data_average_y: isEmpty ? 0 : +origin.data_average_y * 100,
+            data_average_x: isEmpty ? 0 : +origin.data_average_x,
+            data_average_y: isEmpty ? 0 : +origin.data_average_y,
             unit_x: origin.unit_x,
             unit_y: origin.unit_y,
             data_record: data_record,
@@ -6372,7 +7087,7 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
 function appendUnit( unit ) {
     return function ( num ) {
-        return ( ( num * 10 ) | 0 ) / 10 + ( unit || '' );
+        return Math.round( num * 10 ) / 10 + ( unit || '' );
     };
 }
 
@@ -6421,7 +7136,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
     initMarqueeZoom: function () {
         var me = this;
-        var zoomStack = [];
+        var zoomStack = [ null ];
 
         function inRange( x, a, b ) {
             return ( a <= x && x <= b ) || ( a >= x && x >= b );
@@ -6445,7 +7160,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         }
 
         function updateRange( oxy, range, param, data ) {
-            oxy.update( range );
+            oxy.update( range || {
+                rangeX: data.rangeX,
+                rangeY: data.rangeY
+            } );
             me.drawAverage( param, data, oxy );
             me.drawScatter( param, data, oxy );
         }
@@ -6483,11 +7201,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             var oxy = me.getElement( 'oxy' ),
                 param = me.param,
                 data = me.data.format(),
-                range = zoomStack[ zoomStack.length - 1 ];
-            if ( range ) {
-                updateRange( oxy, range, param, data );
-            }
-            if ( zoomStack.length ) zoomStack.pop();
+                range = zoomStack[ zoomStack.length - 2 ];
+            updateRange( oxy, range, param, data );
+            if ( zoomStack.length > 1 ) zoomStack.pop();
         } );
     },
 
@@ -6529,7 +7245,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             yRuler = oxy.getYRuler();
 
         var ax = oxy.param.x + xRuler.measure( data.data_average_x ),
-            ay = oxy.param.y + yRuler.measure( data.data_average_y ),
+            ay = oxy.param.y + yRuler.measure( data.data_average_y ) + oxy.param.heading,
             xLine = this.getElement( 'avg-x-line' ),
             yLine = this.getElement( 'avg-y-line' ),
             xTip = this.getElement( 'avg-x-tip' ),
@@ -6600,7 +7316,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
             aLine.setVisible( true ).animate( {
                 x1: oxy.param.x + xRuler.measure( 0 ),
-                y1: oxy.param.y + yRuler.measure( 0 ),
+                y1: oxy.param.y + yRuler.measure( 0 ) + oxy.param.heading,
                 x2: ax,
                 y2: ay,
                 bound: {
@@ -6632,6 +7348,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return Math.sqrt( data.value );
         }
 
+        function inRange(value, range) {
+            return value >= range.from && value <= range.to;
+        }
+
         if ( dim > 2 ) {
 
             rooted = query.map( sqrt );
@@ -6642,6 +7362,12 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             minRadius = 5;
             maxRadius = 40;
 
+            // 没有差别情况
+            if (minValue == maxValue) {
+                minValue--;
+                maxValue++;
+            }
+
             radiusRuler = new kc.Ruler( minValue, maxValue )
                 .map( minRadius, maxRadius );
         }
@@ -6651,7 +7377,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return {
                 // common params
                 x: oxy.x + xRuler.measure( data.x ),
-                y: oxy.y + yRuler.measure( data.y ),
+                y: oxy.y + yRuler.measure( data.y ) + oxy.param.heading,
 
                 labelText: data.label,
 
@@ -6666,7 +7392,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 percent: data.percent,
                 showPercent: true,
 
-                collapsed: 0
+                collapsed: 0,
+
+                opacity: inRange(data.x, xRuler.ref()) && inRange(data.y, yRuler.ref()) ? 1 : 0
             };
         } ).list();
 
@@ -6683,6 +7411,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return ( x.outerRadius || x.radius ) - ( y.outerRadius || y.radius );
         } );
 
+        // 重叠检测
         if ( dim > 2 && param.enableCollapse ) {
             var i, j;
             for ( i = 0; i < list.length; i++ ) {
@@ -6693,9 +7422,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                         list[ j ].collapsed = 1;
                     }
                 }
+
             }
         }
-
         scatter.update( {
 
             elementClass: {
@@ -6959,7 +7688,7 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 		for ( var i = 0; i < list.length; i++ ) {
 			list[ i ].color = colors[ list[ i ].brandclass ];
 			var circleSize = list[ i ].size;
-			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 27 / list.length );
+			list[ i ].radius = list[ i ].originradius = 2 + Math.pow( list[ i ].size + 1, 25 / list.length );
 			list[ i ].label = {
 				text: list[ i ].brand,
 				color: 'black'
@@ -7176,145 +7905,392 @@ var ForceChart = kc.ForceChart = kity.createClass( 'ForceChart', {
 	}
 } );
 
-var HorizonData = kc.HorizonData = kity.createClass( 'HorizonData', {
-    base: kc.Data,
-    format: function ( format ) {
-        var origin = this.origin;
-        if ( format === undefined ) {
-            return origin;
-        } else if ( format === 'col' ) {
-            //返回每项属性的最大和最小值
-            var series = data.series;
-            var result = {};
-            var dividecount = 0;
-            var ranges = [];
-            var labels = [];
-            for ( var i = 0; i < origin.categories.length; i++ ) {
-                ranges.push( {
-                    max: 0,
-                    min: 0
-                } );
-            }
-            for ( var key in series ) {
-                labels.push( key );
-                dividecount++;
-                var s = series[ key ];
-                for ( var j = 0; j < s.length; j++ ) {
-                    var sa = s[ j ].args;
-                    for ( var k = 0; k < origin.categories.length; k++ ) {
-                        if ( parseFloat( sa[ k ] ) > ranges[ k ].max ) {
-                            ranges[ k ].max = sa[ k ];
-                        } else if ( parseFloat( sa[ k ] ) < ranges[ k ].min ) {
-                            ranges[ k ].min = sa[ k ];
-                        }
-                    }
-                }
-            }
-            result.dividecount = dividecount;
-            result.ranges = ranges;
-            result.labels = labels;
-            return result;
-        }
-    }
-} );
-var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
+ var HorizonData = kc.HorizonData = kity.createClass( 'HorizonData', {
+     base: kc.Data,
+     format: function ( format ) {
+         var origin = this.origin;
+         if ( format === undefined ) {
+             return origin;
+         } else if ( format === 'col' ) {
+             //返回每项属性的最大和最小值
+             var series = origin.series;
+             var result = {};
+             var dividecount = 0;
+             var ranges = [];
+             var labels = [];
+             for ( var i = 0; i < origin.categories.length; i++ ) {
+                 ranges.push( {
+                     max: 0,
+                     min: 0
+                 } );
+             }
+             for ( var key in series ) {
+                 labels.push( key );
+                 dividecount++;
+                 var s = series[ key ];
+                 for ( var j = 0; j < s.length; j++ ) {
+                     var sa = s[ j ].args;
+                     for ( var k = 0; k < origin.categories.length; k++ ) {
+                         if ( parseFloat( sa[ k ] ) > ranges[ k ].max ) {
+                             ranges[ k ].max = sa[ k ];
+                         } else if ( parseFloat( sa[ k ] ) < ranges[ k ].min ) {
+                             ranges[ k ].min = sa[ k ];
+                         }
+                     }
+                 }
+             }
+             result.dividecount = dividecount;
+             result.ranges = ranges;
+             result.labels = labels;
+             return result;
+         }
+     }
+ } );
+ var HorizonChart = kc.HorizonChart = kity.createClass( 'HorizonChart', {
+     base: kc.Chart,
+     constructor: function ( target, param ) {
+         this.callBase( target, param );
+         this.setData( new kc.HorizonData() );
+         this.addElement( "Lines", new kc.ElementList() );
+         this.addElement( "Axis", new kc.ElementList() );
+         this.addElement( "Cate", new kc.ElementList() );
+         var tooltips = this.addElement( "Tooltips", new kc.ElementList() );
+         var me = this;
+         tooltips.on( "listupdatefinish", function ( e ) {
+             var foo = me.toolTipUpdated;
+             foo( e );
+         } );
+     },
+     toolTipUpdated: function ( e ) {
+
+     },
+     highlightLines: function ( args ) {
+         var data = this.getData().format();
+         var key, val;
+         for ( var k in args ) {
+             key = k;
+             val = args[ key ];
+             break;
+         }
+         var lines = this.getElement( 'Lines' ).elementList;
+         var tooltip = [];
+         var tooltips = this.getElement( 'Tooltips' );
+         tooltips.except = []; //无需进行亮度处理的部分
+         for ( var i = 0; i < lines.length; i++ ) {
+             var param = lines[ i ].param;
+             var args = param.args;
+             if ( param[ key ] === val ) {
+                 lines[ i ].update( {
+                     width: 3,
+                     opacity: 1
+                 } );
+                 //更新tooltip
+                 var points = param.points;
+                 for ( var j = 1; j < points.length; j++ ) {
+                     tooltip.push( {
+                         x: points[ j ][ 0 ],
+                         y: points[ j ][ 1 ] - 15,
+                         content: {
+                             color: 'white',
+                             text: ( args[ j - 1 ] || 0 )
+                         }
+                     } );
+                 }
+             } else {
+                 lines[ i ].update( {
+                     width: 0,
+                     opacity: 0
+                 } );
+             }
+         }
+         tooltips.update( {
+             elementClass: kc.Tooltip,
+             list: tooltip
+         } );
+     },
+     showLines: function ( args ) {
+         var lines = this.getElement( 'Lines' ).elementList;
+         for ( var i = 0; i < lines.length; i++ ) {
+             var param = lines[ i ].param;
+             var highlight = true;
+             for ( var key in args ) {
+                 if ( args[ key ] && ( param[ key ] !== args[ key ] ) ) {
+                     highlight = false;
+                     break;
+                 }
+             }
+             if ( !highlight ) {
+                 lines[ i ].update( {
+                     width: 0,
+                     opacity: 0
+                 } );
+             } else if ( param.width < 3 ) {
+                 lines[ i ].update( {
+                     width: 1,
+                     opacity: 0.2
+                 } );
+             }
+         }
+     },
+     unhighlightAll: function () {
+         var tooltips = this.getElement( 'Tooltips' );
+         tooltips.update( {
+             elementClass: kc.Tooltip,
+             list: []
+         } );
+         var lines = this.getElement( 'Lines' ).elementList;
+         for ( var i = 0; i < lines.length; i++ ) {
+             var param = lines[ i ].param;
+             if ( param.width === 3 ) {
+                 lines[ i ].update( {
+                     width: 1,
+                     opacity: 0.2
+                 } );
+             }
+         }
+     },
+     renderChart: function () {
+         var colors = this.param.colors;
+         var data = this.getData().format();
+         var datacol = this.getData().format( 'col' );
+         var labels = datacol.labels;
+         var categories = data.categories;
+         var lLength = labels.length - 1;
+         var container = this.getPaper().container;
+         var _width = container.offsetWidth;
+         var _height = container.offsetHeight;
+         var padding = this.param.padding;
+         var _space = ( _width - padding[ 1 ] - padding[ 3 ] ) / categories.length;
+         var _AxisHeight = _height - padding[ 0 ] - padding[ 2 ]; //y坐标轴的高度
+         var axis = this.getElement( 'Axis' );
+         var lines = this.getElement( 'Lines' );
+         var Cate = this.getElement( 'Cate' );
+         var AxisLines = [];
+         var Polylines = [];
+         var Cates = [];
+         //生成连线和Categories数据
+         var series = data.series;
+         for ( var key in series ) {
+             var s = series[ key ];
+             Cates.push( {
+                 text: key,
+                 at: 'left',
+                 x: padding[ 3 ] - 20,
+                 y: padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength
+             } );
+             for ( var j = 0; j < s.length; j++ ) {
+                 var item = {
+                     points: [
+                         [ padding[ 3 ], padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength ]
+                     ],
+                     color: colors[ parseInt( labels.indexOf( key ) / 4 ) ],
+                     width: 1,
+                     opacity: 0.1,
+                     contry: key,
+                     position: s[ j ].position,
+                     name: s[ j ].name,
+                     elglishname: s[ j ].elglishname,
+                     args: s[ j ].args
+                 };
+                 Polylines.push( item );
+                 var args = s[ j ].args;
+                 for ( var k = 0; k < args.length; k++ ) {
+                     item.points.push(
+                         [ padding[ 3 ] + _space * ( k + 1 ), padding[ 0 ] + ( 1 - ( args[ k ] || 0 ) / datacol.ranges[ k ].max ) * _AxisHeight ]
+                     );
+                 }
+             }
+         };
+         for ( var x = 0; x < categories.length; x++ ) {
+             Cates.push( {
+                 text: categories[ x ],
+                 x: padding[ 3 ] + _space * ( x + 1 ),
+                 y: padding[ 0 ] - 20
+             } );
+         }
+         for ( var i = 0; i <= data.categories.length; i++ ) {
+             var item = {
+                 x1: padding[ 3 ] + _space * i,
+                 y1: padding[ 0 ],
+                 x2: padding[ 3 ] + _space * i,
+                 y2: _height - padding[ 2 ]
+             };
+             if ( i !== 0 ) {
+                 item.max = datacol.ranges[ i - 1 ].max;
+             } else {
+                 item.divide = datacol.dividecount;
+             }
+             AxisLines.push( item );
+         }
+         //绘制线
+         axis.update( {
+             elementClass: kc.AxisLine,
+             list: AxisLines,
+             fx: false
+         } );
+         lines.update( {
+             elementClass: kc.Polyline,
+             list: Polylines,
+             fx: false
+         } );
+         Cate.update( {
+             elementClass: kc.Label,
+             list: Cates,
+             fx: false
+         } );
+     },
+     update: function () {
+         this.renderChart();
+     }
+ } );
+
+(function(){
+
+var SimpleRelationChart = kc.SimpleRelationChart = kity.createClass( 'SimpleRelationChart', {
+
+    mixins : [ kc.ConfigHandler ],
+
     base: kc.Chart,
+
     constructor: function ( target, param ) {
         this.callBase( target, param );
-        this.setData( new kc.HorizonData() );
-        this.addElement( "Lines", new kc.ElementList() );
-        this.addElement( "Axis", new kc.ElementList() );
-        this.addElement( "Cate", new kc.ElementList() );
+        this.config = this.param || {};
+        
+        this.callMixin();
+
+        this.setData( new kc.SimpleRelationData() );
+        this.nodes = this.addElement( 'nodes', new kc.ElementList() );
+        this.edges = this.addElement( 'edges', new kc.ElementList() );
+
     },
-    renderChart: function () {
-        var colors = this.param.colors;
-        var data = this.getData().format();
-        var datacol = this.getData().format( 'col' );
-        var labels = datacol.labels;
-        var categories = data.categories;
-        var lLength = labels.length - 1;
-        var container = this.getPaper().container;
-        var _width = container.offsetWidth;
-        var _height = container.offsetHeight;
-        var padding = this.param.padding;
-        var _space = ( _width - padding[ 1 ] - padding[ 3 ] ) / categories.length;
-        var _AxisHeight = _height - padding[ 0 ] - padding[ 2 ]; //y坐标轴的高度
-        var axis = this.getElement( 'Axis' );
-        var lines = this.getElement( 'Lines' );
-        var Cate = this.getElement( 'Cate' );
-        var AxisLines = [];
-        var Polylines = [];
-        var Cates = [];
-        //生成连线和Categories数据
-        var series = data.series;
-        for ( var key in series ) {
-            var s = series[ key ];
-            console.log( labels.indexOf( key ) );
-            Cates.push( {
-                text: key,
-                at: 'left',
-                x: padding[ 3 ] - 20,
-                y: padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength
-            } );
-            for ( var j = 0; j < s.length; j++ ) {
-                var item = {
-                    points: [
-                        [ padding[ 3 ], padding[ 0 ] + labels.indexOf( key ) * _AxisHeight / lLength ]
-                    ],
-                    color: colors[ labels.indexOf( key ) ] || 'black',
-                    width: 0.3
-                };
-                Polylines.push( item );
-                var args = s[ j ].args;
-                for ( var k = 0; k < args.length; k++ ) {
-                    item.points.push(
-                        [ padding[ 3 ] + _space * ( k + 1 ), padding[ 0 ] + ( 1 - args[ k ] / datacol.ranges[ k ].max ) * _AxisHeight ]
-                    );
-                }
-            }
+
+    update : function( param ){
+
+        var data = this.data.format();
+        this.config = kity.Utils.extend( this.config, data, param );
+        this.renderRelation( data );
+        this.getOption('legend.enabled') && this.addLegend();
+
+    },
+
+    renderNodes : function( data ){
+        this.center = {
+            x : this.paper.getWidth() / 2,
+            y : this.paper.getHeight() / 2
         };
-        for ( var x = 0; x < categories.length; x++ ) {
-            Cates.push( {
-                text: categories[ x ],
-                x: padding[ 3 ] + _space * ( x + 1 ),
-                y: padding[ 0 ] - 20
-            } );
+
+        var radius = this.config.distance || 200,
+            count = data.nodes.length,
+            PI = Math.PI,
+            sin = Math.sin,
+            cos = Math.cos;
+
+        var i,
+            piece = ( 2 * PI ) / count,
+            delX = delY = 0, x, y,
+            id, label, tmp, color;
+
+        this.nodesParam = [];
+
+        for( i = 0; i < count; i++ ){
+
+            delX = cos( piece * i - PI/2 ) * radius;
+            delY = sin( piece * i - PI/2 ) * radius;
+
+            x = this.center.x + delX;
+            y = this.center.y + delY;
+
+            tmp = data.nodes[ i ];
+            id = tmp.id;
+            label = tmp.label;
+
+             this.nodesParam.push({
+                label: {
+                    at: 'bottom',
+                    color: 'black',
+                    text: label
+                },
+                strokeColor : '#FFF',
+                strokeWidth : 0,
+                color : this.param.color[ i ],
+                radius : this.config.radius || 30,
+                fxEasing : 'easeOutElastic',
+                x : x,
+                y : y,
+                bind : {
+                    id : id,
+                    label : label
+                }
+            });
         }
-        for ( var i = 0; i <= data.categories.length; i++ ) {
-            var item = {
-                x1: padding[ 3 ] + _space * i,
-                y1: padding[ 0 ],
-                x2: padding[ 3 ] + _space * i,
-                y2: _height - padding[ 2 ]
-            };
-            if ( i !== 0 ) {
-                item.max = datacol.ranges[ i - 1 ].max;
-            } else {
-                item.divide = datacol.dividecount;
-            }
-            AxisLines.push( item );
-        }
-        //绘制线
-        axis.update( {
-            elementClass: kc.AxisLine,
-            list: AxisLines,
-            fx: false
-        } );
-        lines.update( {
-            elementClass: kc.Polyline,
-            list: Polylines,
-            fx: false
-        } );
-        Cate.update( {
-            elementClass: kc.Label,
-            list: Cates,
-            fx: false
-        } );
+
+        this.nodes.update({
+            elementClass : kc.CircleDot,
+            list : this.nodesParam,
+            fx : true
+        });
     },
-    update: function () {
-        this.renderChart();
+
+    getNodeParamById : function( id ){
+        var nodes = this.nodesParam;
+        for(var i = 0; i < nodes.length; i++ ){
+            if( nodes[ i ].bind.id == id ){
+                return nodes[ i ];
+            }
+        }
+    },
+
+    renderEdges : function( data ){
+        this.edgesParam = [];
+        var i, startNode, endNode, tmp, angle;
+        var sin = Math.sin,
+            cos = Math.cos,
+            atan2 = Math.atan2;
+
+        var gap = 10, color;
+
+        for( i = 0; i < data.edges.length; i++){
+            color = this.param.color[ i ];
+            tmp = data.edges[ i ];
+
+            if(tmp.from == tmp.to) continue;
+
+            startNode = this.getNodeParamById( tmp.from );
+            endNode = this.getNodeParamById( tmp.to );
+
+            angle = atan2( endNode.y - startNode.y, endNode.x - startNode.x );
+
+            this.edgesParam.push({
+                x1: startNode.x + cos(angle) * ( startNode.radius + gap ), 
+                y1: startNode.y + sin(angle) * ( startNode.radius + gap ),
+                x2: endNode.x - cos(angle) * ( endNode.radius + gap ),
+                y2: endNode.y - sin(angle) * ( endNode.radius + gap ),
+                offset: 5,
+                color: startNode.color,
+                width: 2,
+                label: {
+                    color: startNode.color,
+                    text: tmp.label
+                },
+            });
+        }
+
+        this.edges.update({
+            elementClass : kc.ArrowLine,
+            list : this.edgesParam,
+            fx : true
+        });
+    },
+
+    renderRelation : function( data ){
+        this.renderNodes( data );
+        this.renderEdges( data );
     }
+
 } );
+
+
+})();
 
 var RadarData = kc.RadarData = kity.createClass( 'RadarData', {
     base: kc.Data
@@ -7349,7 +8325,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         //计算中点和半径
         var Cx = _width / 2;
         var Cy = _height / 2;
-        var R = ( _width < _height ? _width : _height ) / 2 - 50;
+        var R = param.radius || ( _width < _height ? _width : _height ) / 2 - 50;
         var step = R / 5;
         var Angle = 0;
         //绘制罗圈
@@ -7406,8 +8382,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                 fxEasing: 'ease',
                 close: true,
                 fill: kity.Color.parse( itemColors[ k ] ).set( kity.Color.A, 0.3 ),
-                animatedDir : 'both',
-                factor : +new Date
+                animatedDir: 'both',
+                factor: +new Date
             };
             itemList.push( item );
         }
@@ -7416,26 +8392,30 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             list: itemList
         } );
 
-        if( param.circle && param.circle.enabled ){
+        if ( param.circle && param.circle.enabled ) {
             circles.update( {
                 elementClass: kc.CircleDot,
-                list: circleList,
+                list: circleList
             } );
         }
-
         //绘制label
         for ( var m = 0; m < data.categories.length; m++ ) {
             var categorie = data.categories[ m ];
             var item = {
                 text: categorie,
-                x: Cx + ( R + 30 ) * Math.cos( delta * m ),
-                y: Cy + ( R + 30 ) * Math.sin( delta * m ),
+                x: Cx + ( R + 10 ) * Math.cos( delta * m ),
+                y: Cy + ( R + 10 ) * Math.sin( delta * m ),
             };
+            if ( item.x > Cx ) {
+                item.at = 'right';
+            } else if ( item.x < Cx ) {
+                item.at = 'left';
+            }
             labelList.push( item );
         }
         labels.update( {
             elementClass: kc.Label,
-            list: labelList,
+            list: labelList
         } );
     },
     update: function () {
@@ -7481,11 +8461,34 @@ var CoffeeChart = kc.CoffeeChart = kity.createClass( 'CoffeeChart', {
     }
 } );
 
-var ChinaMapData = kc.MapData = kity.createClass('ChinaMapData', {
+var ChinaMapData = kc.ChinaMapData = kity.createClass('ChinaMapData', {
     base: kc.Data,
 
     format: function() {
         var origin = this.origin;
+
+        var hasVal = function( entry ){
+            return ('value' in entry) && kity.Utils.isNumber( entry.value );
+        }
+
+        var arr = [];
+        for( var i in origin ){
+            hasVal( origin[ i ] ) && arr.push( origin[ i ].value );
+        }
+
+        var max = Math.max.apply( {}, arr ),
+            min = Math.min.apply( {}, arr ),
+            dur = max - min;
+
+        var t,
+            range = 0.999999;
+
+        for( i in origin ){
+            t = origin[ i ];
+            if( hasVal( origin[ i ] ) )
+                t.mapVal = ( t.value - min ) / dur * range;
+        }   
+
         return origin;
     }
 });
@@ -7501,6 +8504,8 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
             maxColor: 'red'
         }, param));
 
+        this.setData( new kc.ChinaMapData() );
+
         this.addElement('map', new kc.Map({
             width: this.param.width,
             height: this.param.height
@@ -7510,6 +8515,8 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
     updateChart: function(param, data) {
         var has = 'hasOwnProperty';
         var map = this.getElement('map');
+
+        var data = this.data.format();
 
         var colors = param.colors.map(kity.Color.parse),
             tweenColor = function (t) {
@@ -7529,6 +8536,10 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
                     v.a + (vv.a - v.a) * t);
             };
 
+        var getColor = function( val ){
+
+        };
+
         var block, defaultColor;
 
         defaultColor = param.defaultColor && new kity.Color(param.defaultColor) || colors[0];
@@ -7543,7 +8554,10 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
         for (var province in china) {
             block = map.findBlockById(province);
             if (!block) continue;
-            var color = data[province].value ? tweenColor(data[province].value) : defaultColor;
+
+            var pro = data[province];
+            var color = pro.color ? kity.Color.parse(pro.color) : data[province].mapVal ? tweenColor(data[province].mapVal) : defaultColor ;
+
             block.animate({
                 color: color
             });
@@ -7568,6 +8582,321 @@ var ChinaMapChart = kc.ChinaMapChart = kity.createClass('ChinaMapChart', {
     
 });
 
+var BubbleData = kc.BubbleData = kity.createClass( 'BubbleData', {
+    base: kc.Data,
+    format: function ( config, mode ) {
+        var origin = this.origin;
+        if ( config === undefined ) {
+            return origin;
+        } else {
+            var list = origin.list,
+                List = [];
+            for ( var i = 0; i < list.length; i++ ) {
+                var item = list[ i ],
+                    obj = {
+                        date: item.date,
+                        series: []
+                    };
+                for ( var j = 0; j < item.series.length; j++ ) {
+                    var series = obj.series;
+                    var S = item.series[ j ];
+                    var o = {};
+                    for ( var key in config ) {
+                        o[ key ] = S[ config[ key ] ];
+                    }
+                    series.push( o );
+                }
+                List.push( obj );
+            }
+            if ( mode !== 'line' ) {
+                return {
+                    list: List
+                };
+            } else {
+                //生成国家-数据列表
+                var Map = {};
+                var L0 = List[ 0 ];
+                var xCates = [ List[ 0 ].date ];
+                //初始化列表
+                for ( var i = 0; i < L0.series.length; i++ ) {
+                    var label = L0.series[ i ].label;
+                    Map[ label ] = [ L0.series[ i ] ];
+                }
+                for ( var j = 1; j < List.length; j++ ) {
+                    var item = List[ j ];
+                    xCates.push( List[ j ].date );
+                    for ( var k = 0; k < item.series.length; k++ ) {
+                        var obj = item.series[ k ];
+                        Map[ obj.label ].push( obj );
+                    }
+                }
+                return {
+                    xCates: xCates,
+                    list: List,
+                    map: Map
+                }
+            }
+        }
+    }
+} );
+var BubbleChart = kc.BubbleChart = kity.createClass( 'BubbleChart', {
+    base: kc.Chart,
+    constructor: function ( target, param ) {
+        this.callBase( target, param );
+        //add chart elements
+        this.addElement( "gridhorizon", new kc.ElementList() );
+        this.addElement( "gridvertical", new kc.ElementList() );
+        this.addElement( "items", new kc.ElementList() );
+        this.addElement( "categories", new kc.ElementList() );
+        this.tooltips = this.addElement( "tooltips", new kc.ElementList() );
+        this.setData( new kc.BubbleData() );
+        this.tooltipList = [];
+    },
+    addTooltip: function ( e ) {
+        var target = e.target;
+        var param = target.param;
+        var label = param.label;
+        var tooltips = this.tooltips;
+        window.clearInterval( this.param.interval );
+        var item = {
+            content: {
+                color: '#787878',
+                text: label,
+            },
+            background: '#e9e9e9'
+        };
+        switch ( this.param.mode ) {
+        case 'circle':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'col':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        case 'line':
+            item.x = param.x;
+            item.y = param.y;
+            break;
+        default:
+            break;
+        }
+        this.tooltipList = this.tooltipList.concat( [ item ] );
+        tooltips.update( {
+            elementClass: kc.Tooltip,
+            list: this.tooltipList
+        } );
+    },
+    renderBubble: function () {
+        var container = this.container;
+        var paperWidth = container.clientWidth;
+        var paperHeight = container.clientHeight;
+        var param = this.param;
+        //根据配置调整相应的字段名称
+        var data = this.getData().format( {
+            x: param.x,
+            y: param.y,
+            size: param.size,
+            label: param.label,
+            type: param.type
+        }, param.mode );
+        var colors = param.colors;
+        var date = param.date;
+        var horizonLines = [];
+        var verticalLines = [];
+        var list = data.list;
+        var padding = param.padding;
+        //寻找特定key的最大值
+        var max = function ( key ) {
+            var max = 0;
+            for ( var i = 0; i < list.length; i++ ) {
+                var item = list[ i ];
+                var series = item.series;
+                for ( var j = 0; j < series.length; j++ ) {
+                    if ( series[ j ][ key ] > max ) max = series[ j ][ key ];
+                }
+            }
+            return max;
+        };
+        //计算数字n的数量级
+        var getOom = function ( n ) {
+            var oom = Math.log( n ) / Math.log( 10 );
+            return Math.floor( oom );
+        };
+        //根据x和y的最大值绘制坐标系
+        var maxX = max( 'x' );
+        var maxY = max( 'y' );
+        //自适应计算坐标系每刻度的长度
+        var getSpace = function ( val ) {
+            var oomV = getOom( val );
+            var base = Math.pow( 10, oomV );
+            var n = val / base;
+            //计算合理的坐标分隔
+            if ( n < 5 || n > 6 ) {
+                base = base / 10;
+                n = n * 10;
+                while ( n > 6 ) {
+                    n = n / 2;
+                    base = base * 2;
+                }
+            }
+            //返回每一刻度的长度和总刻度数
+            return {
+                base: Math.ceil( base ),
+                n: Math.ceil( n )
+            };
+        };
+        //更新坐标系
+        var gridHorizon = this.getElement( 'gridhorizon' );
+        var gridVertical = this.getElement( 'gridvertical' );
+        var items = this.getElement( 'items' );
+        var categories = this.getElement( 'categories' );
+        var spaceX = getSpace( maxX );
+        var spaceY = getSpace( maxY );
+        maxX = spaceX.base * spaceX.n;
+        maxY = spaceY.base * spaceY.n;
+        var chartHeight = paperHeight - padding[ 0 ] - padding[ 2 ];
+        var chartWidth = paperWidth - padding[ 1 ] - padding[ 3 ];
+        var cateList = [];
+        //更新横向刻度
+        var xAxis = [ {
+            x1: padding[ 3 ],
+            y1: paperHeight - padding[ 2 ],
+            x2: paperWidth - padding[ 1 ],
+            y2: paperHeight - padding[ 2 ],
+            color: 'gray'
+        } ];
+        for ( var y = 0; y < spaceY.n; y++ ) {
+            var Y = padding[ 0 ] + chartHeight * y / spaceY.n;
+            xAxis.push( {
+                x1: padding[ 3 ],
+                y1: Y,
+                x2: paperWidth - padding[ 1 ],
+                y2: Y,
+                color: '#cecece'
+            } );
+            cateList.push( {
+                text: spaceY.base * y,
+                at: 'left',
+                x: padding[ 3 ] - 10,
+                y: paperHeight - padding[ 2 ] - chartHeight * y / spaceY.n
+            } );
+        }
+        gridHorizon.update( {
+            elementClass: kc.Line,
+            list: xAxis
+        } );
+        //更新纵向刻度和坐标数据
+        var yAxis = [ {
+            x1: padding[ 3 ],
+            y1: padding[ 0 ],
+            x2: padding[ 3 ],
+            y2: paperHeight - padding[ 2 ],
+            color: 'gray'
+        } ];
+        for ( var x = 1; x <= spaceX.n; x++ ) {
+            var X = padding[ 3 ] + chartWidth * x / spaceX.n;
+            yAxis.push( {
+                x1: X,
+                y1: padding[ 0 ],
+                x2: X,
+                y2: paperHeight - padding[ 2 ],
+                color: '#cecece'
+            } );
+            cateList.push( {
+                x: X,
+                y: paperHeight - padding[ 2 ] + 10,
+                text: spaceX.base * x
+            } );
+        }
+        gridVertical.update( {
+            elementClass: kc.Line,
+            list: yAxis
+        } );
+        categories.update( {
+            elementClass: kc.Label,
+            list: cateList
+        } );
+        var bubbleList = [];
+        if ( param.mode === 'bubble' ) { //气泡模式
+            //获取数据序列
+            var series = list[ date ].series;
+            for ( var i = 0; i < series.length; i++ ) {
+                var item = series[ i ];
+                var X = padding[ 3 ] + item.x * chartWidth / maxX,
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
+                var obj = {
+                    shape: 'circle',
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
+                    radius: Math.log( item.size ),
+                    color: colors[ item.type ],
+                    label: item.label
+                };
+                bubbleList.push( obj );
+            }
+        } else if ( param.mode === 'col' ) { //柱状模式
+            var series = list[ date ].series;
+            var colWidth = chartWidth / series.length; //每一列占据的列宽
+            var colList = [];
+            for ( var i = 0; i < series.length; i++ ) {
+                var item = series[ i ];
+                var X = padding[ 3 ] + colWidth * ( i + 0.2 ),
+                    Y = paperHeight - ( padding[ 2 ] + item.y * chartHeight / maxY );
+                var obj = {
+                    shape: 'col',
+                    x: X,
+                    y: Y,
+                    targetX: X,
+                    targetY: Y,
+                    width: colWidth * 0.6,
+                    height: item.y * chartHeight / maxY,
+                    color: colors[ item.type ],
+                    label: item.label,
+                    radius: 0
+                };
+                bubbleList.push( obj );
+            }
+        } else { //折线图模式
+            var xCates = data.xCates;
+            var map = data.map;
+            var lineSpace = chartWidth / ( xCates.length - 1 );
+            for ( var key in map ) {
+                var item = map[ key ];
+                var points = [];
+                for ( var i = 0; i < item.length; i++ ) {
+                    points.push( {
+                        x: padding[ 3 ] + lineSpace * i,
+                        y: paperHeight - ( padding[ 2 ] + item[ i ].y * chartHeight / maxY ),
+                    } );
+                }
+                bubbleList.push( {
+                    x: 0,
+                    y: 0,
+                    shape: 'line',
+                    points: points,
+                    strokeColor: colors[ item[ 0 ].type ],
+                    color: 'none',
+                    strokeWidth: 2
+                } );
+            }
+        }
+        items.update( {
+            elementClass: kc.TransformBubble,
+            list: bubbleList,
+            animateDuration: param.animateInterval
+        } );
+    },
+    update: function ( args ) {
+        for ( var key in args ) {
+            this.param[ key ] = args[ key ];
+        }
+        this.renderBubble();
+    }
+} );
+
 (function(exports){
 
 var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
@@ -7587,7 +8916,7 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
     },
 
     update : function( param ){
-        this.setConfig( param, kc.PieData );
+        this._setConfig( param, kc.PieData );
         
         this.getPlots().update( this.config );
         this.getOption('legend.enabled') && this.addLegend();
@@ -7603,6 +8932,10 @@ var PieChart = kc.PieChart = kity.createClass( 'PieChart', {
 
     getSeries : function(){
         return this.config.series;
+    },
+
+    getParamList : function(){
+        return this.getPlots().pies.param.list;
     },
 
     bindAction : function(){
@@ -7832,7 +9165,7 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
         this.setData( new kc.TreemapData( param ) );
         this.rects = this.addElement( 'rects', new kc.ElementList() );
 
-        this.tip = this.addElement( 'tip', new kc.Tooltip( {
+        this.tip = this.addElement( 'tip', a = new kc.Tooltip( {
             background: '#FFF',
             at: 'up',
             padding: [ 10, 20, 10, 20 ],
@@ -7840,10 +9173,10 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
             anchorSize: 4
         } ) );
 
-        var filter = new kity.ProjectionFilter( 2, 1, 1 );
-        filter.setColor( "rgba( 0, 0, 0, 0.3 )" );
-        this.paper.addResource( filter );
-        this.tip.canvas.applyFilter( filter );
+        // var filter = new kity.ProjectionFilter( 2, 1, 1 );
+        // filter.setColor( "rgba( 0, 0, 0, 0.3 )" );
+        // this.paper.addResource( filter );
+        // this.tip.canvas.applyFilter( filter );
 
         this._bindAction();
     },
@@ -7933,31 +9266,34 @@ var Treemap = exports.Treemap = kc.Treemap = kity.createClass( 'Treemap', {
                         y : rectPos.y + rectSize.height / 2
                     };
 
-                    var paperWidth = self.paper.getWidth();
+                    var paperWidth = self.paper.getWidth() || self.paper.node.getClientRects()[0].width;
+
                     var tipPos = self.tip.getPosition();
                     var tipSize = self.tip.getSize();
 
                     var at = 'up';
                     var posX = 0, posY = 0;
-                    var gap = fontSize;
+                    var gap = fontSize,
+                        tipHalfWidth = tipSize.width / 2,
+                        tipHalfHeight = tipSize.height / 2;
 
-                    posY = rectCenter.y - tipSize.height / 2 - gap;
+                    posY = rectCenter.y - tipHalfHeight - gap;
 
-                    if( rectCenter.x + tipSize.width / 2 > paperWidth ){
+                    if( rectCenter.x + tipHalfWidth > paperWidth ){
                         at = 'left';
-                        posX = rectCenter.x - tipSize.width / 2 - gap;
+                        posX = rectCenter.x - tipHalfWidth - gap;
                         posY = rectCenter.y;
-                    }else if( rectCenter.x - tipSize.width / 2 < 0 ){
+                    }else if( rectCenter.x - tipHalfWidth < 0 ){
                         at = 'right';
-                        posX = rectCenter.x + tipSize.width / 2 + gap;
+                        posX = rectCenter.x + tipHalfWidth + gap;
                         posY = rectCenter.y;
                     }else{
                         posX = rectCenter.x;
                     }
 
-                    if( rectCenter.y - tipSize.height - gap < 0 ){
+                    if( rectCenter.y - tipHalfHeight - gap < 0 && rectCenter.x + tipHalfWidth <= paperWidth && rectCenter.x - tipHalfWidth >= 0 ){
                         at = 'down';
-                        posY = rectCenter.y + tipSize.height / 2 + gap;
+                        posY = rectCenter.y + tipHalfHeight + gap;
                     }
 
                     self.tip
@@ -7986,11 +9322,11 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
         var isEmpty = !( 'data_record' in origin );
         var data_record = origin.data_record && origin.data_record.map( function ( r ) {
             return {
-                x: +r.x * 100,
-                y: +r.y * 100,
+                x: +r.x,
+                y: +r.y,
                 label: r.label,
                 value: r.value,
-                percent: +r.percent * 100
+                percent: +r.percent
             };
         } ) || [];
 
@@ -8014,8 +9350,8 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
         return {
             data_dim: +origin.data_dim,
-            data_average_x: isEmpty ? 0 : +origin.data_average_x * 100,
-            data_average_y: isEmpty ? 0 : +origin.data_average_y * 100,
+            data_average_x: isEmpty ? 0 : +origin.data_average_x,
+            data_average_y: isEmpty ? 0 : +origin.data_average_y,
             unit_x: origin.unit_x,
             unit_y: origin.unit_y,
             data_record: data_record,
@@ -8027,7 +9363,7 @@ var ScatterData = kc.ScatterData = kity.createClass( 'ScatterData', {
 
 function appendUnit( unit ) {
     return function ( num ) {
-        return ( ( num * 10 ) | 0 ) / 10 + ( unit || '' );
+        return Math.round( num * 10 ) / 10 + ( unit || '' );
     };
 }
 
@@ -8076,7 +9412,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
     initMarqueeZoom: function () {
         var me = this;
-        var zoomStack = [];
+        var zoomStack = [ null ];
 
         function inRange( x, a, b ) {
             return ( a <= x && x <= b ) || ( a >= x && x >= b );
@@ -8100,7 +9436,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
         }
 
         function updateRange( oxy, range, param, data ) {
-            oxy.update( range );
+            oxy.update( range || {
+                rangeX: data.rangeX,
+                rangeY: data.rangeY
+            } );
             me.drawAverage( param, data, oxy );
             me.drawScatter( param, data, oxy );
         }
@@ -8138,11 +9477,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             var oxy = me.getElement( 'oxy' ),
                 param = me.param,
                 data = me.data.format(),
-                range = zoomStack[ zoomStack.length - 1 ];
-            if ( range ) {
-                updateRange( oxy, range, param, data );
-            }
-            if ( zoomStack.length ) zoomStack.pop();
+                range = zoomStack[ zoomStack.length - 2 ];
+            updateRange( oxy, range, param, data );
+            if ( zoomStack.length > 1 ) zoomStack.pop();
         } );
     },
 
@@ -8184,7 +9521,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             yRuler = oxy.getYRuler();
 
         var ax = oxy.param.x + xRuler.measure( data.data_average_x ),
-            ay = oxy.param.y + yRuler.measure( data.data_average_y ),
+            ay = oxy.param.y + yRuler.measure( data.data_average_y ) + oxy.param.heading,
             xLine = this.getElement( 'avg-x-line' ),
             yLine = this.getElement( 'avg-y-line' ),
             xTip = this.getElement( 'avg-x-tip' ),
@@ -8255,7 +9592,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
 
             aLine.setVisible( true ).animate( {
                 x1: oxy.param.x + xRuler.measure( 0 ),
-                y1: oxy.param.y + yRuler.measure( 0 ),
+                y1: oxy.param.y + yRuler.measure( 0 ) + oxy.param.heading,
                 x2: ax,
                 y2: ay,
                 bound: {
@@ -8287,6 +9624,10 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return Math.sqrt( data.value );
         }
 
+        function inRange(value, range) {
+            return value >= range.from && value <= range.to;
+        }
+
         if ( dim > 2 ) {
 
             rooted = query.map( sqrt );
@@ -8297,6 +9638,12 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             minRadius = 5;
             maxRadius = 40;
 
+            // 没有差别情况
+            if (minValue == maxValue) {
+                minValue--;
+                maxValue++;
+            }
+
             radiusRuler = new kc.Ruler( minValue, maxValue )
                 .map( minRadius, maxRadius );
         }
@@ -8306,7 +9653,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return {
                 // common params
                 x: oxy.x + xRuler.measure( data.x ),
-                y: oxy.y + yRuler.measure( data.y ),
+                y: oxy.y + yRuler.measure( data.y ) + oxy.param.heading,
 
                 labelText: data.label,
 
@@ -8321,7 +9668,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                 percent: data.percent,
                 showPercent: true,
 
-                collapsed: 0
+                collapsed: 0,
+
+                opacity: inRange(data.x, xRuler.ref()) && inRange(data.y, yRuler.ref()) ? 1 : 0
             };
         } ).list();
 
@@ -8338,6 +9687,7 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
             return ( x.outerRadius || x.radius ) - ( y.outerRadius || y.radius );
         } );
 
+        // 重叠检测
         if ( dim > 2 && param.enableCollapse ) {
             var i, j;
             for ( i = 0; i < list.length; i++ ) {
@@ -8348,9 +9698,9 @@ var ScatterChart = kc.ScatterChart = kity.createClass( 'ScatterChart', {
                         list[ j ].collapsed = 1;
                     }
                 }
+
             }
         }
-
         scatter.update( {
 
             elementClass: {

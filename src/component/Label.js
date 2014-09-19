@@ -26,14 +26,15 @@ var Label = kc.Label = kity.createClass( "Label", {
             at: 'center',
             margin: 0,
             style: {
-                family: 'Arial'
+                fontFamily: 'Arial',
+                fontSize : 'auto'
             },
             color: 'black',
             rotate: 0
         }, param ) );
         this.text = new kity.Text().setFont( {
-            'size': 12,
-            'family': 'Arial'
+            'fontSize': 'auto',
+            'fontFamily': 'Arial'
         } );
         this.canvas.addShape( this.text );
     },
@@ -72,7 +73,7 @@ var Label = kc.Label = kity.createClass( "Label", {
     updateStyle: function ( style ) {
         this.text.setStyle( style );
         this.updateSize();
-        this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
+        // this.updateAnchor( this.param.at, this.param.margin, this.param.rotate );
     },
 
     updateAnchor: function ( at, margin, rotate ) {

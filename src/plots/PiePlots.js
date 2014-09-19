@@ -29,16 +29,25 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
     },
 
     drawPlots : function ( config ){
-        var self = this;
-        var list = [], series = config.series, opt = config.plotOptions,
-            outer = opt.pie.outerRadius,
-            inner = opt.pie.innerRadius,
-            increment = opt.pie.incrementRadius
-            lpos = opt.pie.labelPosition;
+        var self = this,
+            list = [],
+            series = config.series,
+            opt = config.plotOptions,
+            param = opt.pie,
+            tmpInner = 0,
+            outer = param.outerRadius,
+            inner = param.innerRadius,
+            increment = param.incrementRadius
+            lpos = param.labelPosition,
+            gap = param.gap || 0,
+            originAngle = param.originAngle || 0,
+            animateAngle = param.animateAngle || 0;
+
 
         for( var i = 0 ; i < series.length; i++ ){
 
             series[ i ].data.map(function( entry, j ){
+                tmpInner = i == 0 ? inner : outer  + i * (increment + gap) - increment;
 
                 list.push({
 
@@ -49,11 +58,13 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
                     connectLineWidth: 1,
                     connectLineColor: self.getEntryColor( entry ),
 
-                    innerRadius : i == 0 ? inner : (outer  + ( i - 1 ) * increment),
-                    outerRadius : outer + increment * i,
-                    startAngle : entry.offsetAngle - 90,
-                    pieAngle: entry.angle,
+                    originAngle : originAngle,
 
+                    innerRadius : tmpInner,
+                    outerRadius : outer + (increment + gap) * i,
+                    startAngle : entry.offsetAngle + animateAngle,
+                    pieAngle: entry.angle,
+                    
                     strokeWidth : opt.pie.stroke.width,
                     strokeColor : opt.pie.stroke.color,
 
@@ -70,9 +81,30 @@ var PiePlots = kc.PiePlots = kity.createClass( 'PiePlots', {
 
         this.pies.update({
             elementClass : kc.Pie,
+            common : {
+
+            },
             list : list,
-            fx : true
+            fx : config.animation.enabled,
+            animateDuration : config.animation.duration,
+            fxEasing : config.animation.mode
         });
+
+        var shadow = config.plotOptions.pie.shadow;
+        if( shadow.enabled ){
+            var filter = new kity.ProjectionFilter( shadow.size, shadow.x, shadow.y );
+            filter.setColor( shadow.color );
+            this.getPaper().addResource( filter );
+
+            this.pies.getElementList().forEach(function(pie,i){
+                // 判断透明度为0,这里需要修改，用正则表达式
+                var color = list[i].color;
+                if(!(color.indexOf('rgba(') == 0 && color.indexOf('0)') == color.length-2)){
+                    pie.canvas.applyFilter( filter );
+                }
+            });
+
+        }
 
     }
 

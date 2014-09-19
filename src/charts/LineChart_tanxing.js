@@ -288,7 +288,7 @@
                 multilines.update( {
                     elementClass: kc.Polyline,
                     list: linesArr,
-                    fx: this.config.enableAnimation
+                    fx: this.config.animation.enabled
                 } );
             }
 
@@ -298,7 +298,7 @@
                 lineDots.update( {
                     elementClass: kc.CircleDot,
                     list: dotArr,
-                    fx: this.config.enableAnimation
+                    fx: this.config.animation.enabled
                 } );
             }
 

@@ -10,11 +10,16 @@
  *        坐标系要渲染的高度
  */
 var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoordinate", ( function () {
-    function defaultFormat( number, index ) {
+    function defaultFormat( number, index ){
         if ( number > 1000 ) {
             return number / 1000 + 'K';
         }
-        number = ( ( number * 10 ) | 0 ) / 10;
+
+        var s = number.toString(), arr = s.split('.');
+        if( arr.length > 1 && arr[1].length > 4 ){//4位以上小数
+            return parseFloat(number.toFixed(4));//去掉小数点后无用的0
+        }
+
         return number;
     }
 
@@ -28,7 +33,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
         t: 0
     };
 
-    var allComponents = [ "xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis" ];
+    var allComponents = [ "xMesh", "yMesh", "xCat", "yCat", "xAxis", "yAxis", "xAxisArrow", "yAxisArrow" ];
 
     var componentsIniter = {
         "xMesh" : function(){
@@ -58,17 +63,21 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             !this.getElement( 'xAxis') && this.addElement( 'xAxis', new kc.Line( {
                 color: '#999'
             } ) );
-            
-            if( this.param.xAxisArrow && !this.xArrow )
-                this.canvas.addShape( this.xArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
         },
         "yAxis" : function(){
             !this.getElement( 'yAxis') && this.addElement( 'yAxis', new kc.Line( {
                 color: '#999'
             } ) );
-
-            if( this.param.yAxisArrow && !this.yArrow )
-                this.canvas.addShape( this.yArrow = new kity.Arrow( arrowParam ).fill( '#999' ) );
+        },
+        "xAxisArrow" : function(){
+            var tmp = new kity.Arrow( arrowParam ).fill( '#999' );
+            tmp.canvas = tmp; //这里是hack，让chart可以添加kity对象，而不是chartelement
+            !this.getElement('xAxisArrow') && this.addElement('xAxisArrow', tmp);
+        },
+        "yAxisArrow" : function(){
+            var tmp = new kity.Arrow( arrowParam ).fill( '#999' );
+            tmp.canvas = tmp; //这里是hack，让chart可以添加kity对象，而不是chartelement
+            !this.getElement('yAxisArrow') && this.addElement('yAxisArrow', tmp);
         }
     };
 
@@ -108,20 +117,25 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xAxisArrow: null,
                 yAxisArrow: null,
                 xLabelRotate: 0,
-                yLabelRotate: 0
+                yLabelRotate: 0,
+                xLabelFont : null,
+                yLabelFont : null,
+                xAxisStyle : null,
+                yAxisStyle : null,
+                xMeshStyle : null,
+                yMeshStyle : null
             }, param );
 
             this.callBase( mix );
 
             this._initRulers();
-            // this._initElements();
 
         },
         _initRulers: function () {
             this.xRuler = new kc.Ruler();
             this.yRuler = new kc.Ruler();
         },
-        _initElements: function (components) {
+        _initElements: function (components){
             components = ( !components )? allComponents : components;
             this._processComponents( components );
         },
@@ -148,7 +162,13 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     'xAxisArrow',
                     'yAxisArrow',
                     'xLabelRotate',
-                    'yLabelRotate'
+                    'yLabelRotate',
+                    'xLabelFont',
+                    'yLabelFont',
+                    'xAxisStyle',
+                    'yAxisStyle',
+                    'xMeshStyle',
+                    'yMeshStyle'
                 ]
             } );
         },
@@ -221,8 +241,14 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xAxisArrow,
                 yAxisArrow,
                 xLabelRotate,
-                yLabelRotate
-            ) {
+                yLabelRotate,
+                xLabelFont,
+                yLabelFont,
+                xAxisStyle,
+                yAxisStyle,
+                xMeshStyle,
+                yMeshStyle
+        ){
 
             this._initElements( components );
 
@@ -232,11 +258,14 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             var xCategories = dataSet.xAxis && dataSet.xAxis.categories;
             var yCategories = dataSet.yAxis && dataSet.yAxis.categories;
 
+            var xGridArr = dataSet.xAxis && dataSet.xAxis.grid;
+            var yGridArr = dataSet.yAxis && dataSet.yAxis.grid;
+
             var xFormat = formatX || defaultFormat,
                 yFormat = formatY || defaultFormat;
 
-            var xRuler = this.xRuler, xMin, xMax, xGrid, xCount;
-            var yRuler = this.yRuler, yMin, yMax, yGrid, yCount;
+            var xRuler = this.xRuler, xMin, xMax, xCount;
+            var yRuler = this.yRuler, yMin, yMax, yCount;
 
             if( xCategories ){
                 rangeX = [0, xCategories.length-1];
@@ -247,26 +276,33 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             if( yCategories ){
                 rangeY = [0, yCategories.length-1];
             }
+
             yMin = kity.Utils.isNumber( minY )? minY : rangeY[ 0 ];
             yMax = rangeY[ 1 ]; 
 
+            var xGrid, yGrid;
 
             xRuler.ref( xMin, xMax ).map( padding.left, width - padding.right );
             if(xCategories){
                 xGrid = xRuler.gridByCategories( xCategories.length );
+            }else if( kity.Utils.isArray(xGridArr) ){
+                xGrid = xRuler.gridByArray( xGridArr );
             }else{
                 xCount = width / 60 | 0;
                 xGrid = xRuler.gridByCount( xCount, null, true, minX );
             }
-            
+          
             yRuler.ref( yMin, yMax ).map( height - padding.top - padding.bottom, 0 );
+
             if(yCategories){
                 yGrid = yRuler.gridByCategories( yCategories.length );
+            }else if( kity.Utils.isArray(yGridArr) ){
+                yGrid = yRuler.gridByArray( yGridArr );
             }else{
                 yCount = height / 40 | 0;
                 yGrid = yRuler.gridByCount( yCount, null, true, minY );
             }
-            
+
             for (var i = 0; i < yGrid.map.length; i++) {
                 yGrid.map[i] = yGrid.map[i] + padding.top;
             }
@@ -278,26 +314,32 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 xMesh = this.getElement( 'xMesh' ),
                 yMesh = this.getElement( 'yMesh' );
 
-            xAxis && xAxis.update( {
+            xAxis && xAxis.update({
                 x1: 0,
                 y1: height,
                 x2: width,
-                y2: height
-            } );
+                y2: height,
+                width: xAxisStyle.width,
+                color: xAxisStyle.color
+            });
 
-            yAxis && yAxis.update( {
+            yAxis && yAxis.update({
                 x1: 0,
                 y1: 0,
                 x2: 0,
-                y2: height
-            } );
+                y2: height,
+                width: yAxisStyle.width,
+                color: yAxisStyle.color
+            });
 
             if( unitX ){
                 this.unitXLabel = this.unitXLabel || this.addElement( 'unitXLabel', new kc.Label() );
                 this.unitXLabel.update({
-                    text: '(' + unitX + ')',
+                    text: unitX.text,
                     at: 'right',
                     margin: 0,
+                    style : unitX.font || xLabelFont,
+                    // color: xLabelFont.color || '#000',
                     x : width + 10,
                     y : height + 16
                 }); 
@@ -305,11 +347,12 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
 
             if( unitY ){
                 this.unitYLabel = this.unitYLabel || this.addElement( 'unitYLabel', new kc.Label() );
-
                 this.unitYLabel.update({
-                    text: '(' + unitY + ')',
+                    text: unitY.text,
                     at: yLabelsAt,
                     margin: 0,
+                    style: unitY.font || yLabelFont,
+                    color: unitY.font && unitY.font.color || '#000',
                     x : -8,
                     y : -14
                 });
@@ -322,7 +365,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     labels: xLabels,
                     y: height,
                     step: dataSet.xAxis && dataSet.xAxis.step || 1,
-                    at : xLabelsAt || 'bottom'
+                    at : xLabelsAt || 'bottom',
+                    font : xLabelFont
                 } );
             }
             if(xCategories){
@@ -339,7 +383,8 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                     x: 0,
                     step: dataSet.yAxis && dataSet.yAxis.step || 1,
                     at : yLabelsAt || 'left',
-                    margin : margin
+                    margin : margin,
+                    font : yLabelFont
                 } );
             }
             if(yCategories){
@@ -350,6 +395,9 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 rules: xGrid.map,
                 length: height,
                 y: height,
+                width: xMeshStyle.width,
+                color: xMeshStyle.color,
+                dash : xMeshStyle.dash,
                 step: dataSet.xAxis && dataSet.xAxis.step || 1
             } );
 
@@ -358,15 +406,19 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 length: width, //xGrid.map[ xGrid.map.length - 1 ],
                 x: 0,
                 y: 0,
+                width: yMeshStyle.width,
+                color: yMeshStyle.color,
+                dash : yMeshStyle.dash,
                 step: dataSet.yAxis && dataSet.yAxis.step || 1
             } );
 
-            this.xArrow && this.xArrow.setTranslate( width, height + 0.5 );
-            this.yArrow && this.yArrow.setRotate( -90 ).setTranslate( 0.5, 0 );
+            var xa, ya;
+            (xa = this.getElement('xAxisArrow')) && xa.setTranslate( width, height + 0.5 );
+            (ya = this.getElement('yAxisArrow')) && ya.setRotate( -90 ).setTranslate( 0.5, 0 );
         },
 
         setCoordinateConf : function( conf ) {
-            var reuslt = {},
+            var result = {},
                 components = [];
 
             var xAxis = conf.xAxis,
@@ -377,15 +429,41 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             xAxis.axis.enabled  && components.push( 'xAxis' );
             xAxis.ticks.enabled && components.push( 'xMesh' );
             xAxis.label.enabled && components.push( 'xCat' );
+            xAxis.axis.arrow && components.push( 'xAxisArrow' );
             yAxis.axis.enabled  && components.push( 'yAxis' );
             yAxis.ticks.enabled && components.push( 'yMesh' );
             yAxis.label.enabled && components.push( 'yCat' );
-            reuslt.components = components;
+            yAxis.axis.arrow && components.push( 'yAxisArrow' );
+            result.components = components;
+
+            result.xAxisArrow = xAxis.axis.arrow;
+            result.xAxisStyle = {
+                width : xAxis.axis.width,
+                color : xAxis.axis.color
+            };
+
+            result.yAxisArrow = yAxis.axis.arrow;
+            result.yAxisStyle = {
+                width : yAxis.axis.width,
+                color : yAxis.axis.color
+            };
+
+            result.xMeshStyle = {
+                width : xAxis.ticks.width,
+                color : xAxis.ticks.color,
+                dash : xAxis.ticks.dash
+            };
+
+            result.yMeshStyle = {
+                width : yAxis.ticks.width,
+                color : yAxis.ticks.color,
+                dash : yAxis.ticks.dash
+            };
 
             // 外部空隙
             var xm = xAxis.margin,
                 ym = yAxis.margin;
-            reuslt.margin = {
+            result.margin = {
                 left   : xm.left || 0,
                 right  : xm.right || 0,
                 top    : ym.top || 0,
@@ -395,7 +473,7 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             // 内部空隙
             var xp = xAxis.padding,
                 yp = yAxis.padding;
-            reuslt.padding = {
+            result.padding = {
                 left   : xp.left || 0,
                 right  : xp.right || 0,
                 top    : yp.top || 0,
@@ -405,29 +483,38 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
             // 指定刻度最小值
             var minX = kity.Utils.queryPath('xAxis.min', conf);
             if( kity.Utils.isNumber( minX ) ){
-                reuslt['minX'] = minX;
+                result['minX'] = minX;
             }
             var minY = kity.Utils.queryPath('yAxis.min', conf);
             if( kity.Utils.isNumber( minY ) ){
-                reuslt['minY'] = minY;
+                result['minY'] = minY;
             }
 
             // 指定范围
-            conf.rangeX && (reuslt.rangeX = conf.rangeX);
-            conf.rangeY && (reuslt.rangeY = conf.rangeY);
+            conf.rangeX && (result.rangeX = conf.rangeX);
+            conf.rangeY && (result.rangeY = conf.rangeY);
 
             // label位置
-            reuslt.yLabelsAt = yAxis.label.at || "left";
-            reuslt.labelMargin = yAxis.label.margin || 10;
+            // result.xLabelsAt = xAxis.label.at || "middle";
+            result.xLabelRotate = xAxis.label.rotate;
+            result.xLabelFont = xAxis.label.font;
 
-            reuslt.xLabelRotate = xAxis.label.rotate;
-            reuslt.yLabelRotate = yAxis.label.rotate;
+            result.yLabelsAt = yAxis.label.at || "left";
+            result.yLabelRotate = yAxis.label.rotate;
+            result.yLabelFont = yAxis.label.font;
 
-            reuslt.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
-            reuslt.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
+            result.labelMargin = yAxis.label.margin || 10;
 
-            reuslt.unitX = kity.Utils.queryPath('xAxis.unit.text', conf) || '';
-            reuslt.unitY = kity.Utils.queryPath('yAxis.unit.text', conf) || '';
+            // 坐标轴标签格式化
+            result.formatX = kity.Utils.queryPath('xAxis.label.format', conf);
+            result.formatY = kity.Utils.queryPath('yAxis.label.format', conf);
+
+            // 单位
+            result.unitX = kity.Utils.queryPath('xAxis.unit', conf) || '';
+            result.unitY = kity.Utils.queryPath('yAxis.unit', conf) || '';
+
+            result.x = kity.Utils.queryPath('xAxis.margin.left', conf) || 0;
+            result.y = kity.Utils.queryPath('yAxis.margin.top', conf) || 0;
 
             var confCopy = kity.Utils.copy( conf );
 
@@ -436,15 +523,15 @@ var CategoryCoordinate = kc.CategoryCoordinate = kity.createClass( "CategoryCoor
                 confCopy.yAxis.categories = confCopy.xAxis.categories;
                 delete( confCopy.xAxis.categories );
 
-                reuslt['minX'] = minY;
-                delete reuslt['minY'];
+                result['minX'] = minY;
+                delete result['minY'];
                 
             }else{
                 delete( confCopy.yAxis.categories );
             }
 
-            reuslt.dataSet = confCopy;
-            return reuslt;
+            result.dataSet = confCopy;
+            return result;
         }
     };
 } )() );

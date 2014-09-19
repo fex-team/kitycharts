@@ -13,9 +13,20 @@
             "right" : 30,
             "left" : 70
         },
-
+        "label" : {
+            "at" : "left",
+            "margin" : 0,
+            "font" : {
+                "color" : "green",
+                "fontSize" : "12"
+            }
+        },
         "axis" : {
+            "enabled" : true,
             "arrow" : false
+        },
+        "unit" : {
+            "text" : "天"
         },
         "padding" : {
             "left" : 30,
@@ -27,12 +38,20 @@
         "ticks" : {
             "enabled" : false
         },
+        "unit" : {
+            "text" : "元"
+        },
         "label" : {
             "at" : "left",
-            "margin" : 0
+            "margin" : 10,
+            "font" : {
+                "color" : "blue",
+                "fontSize" : "14"
+            }
         },
         "axis" : {
-            "enabled" : false
+            "enabled" : true,
+            "arrow" : false
         },
         "padding" : {
             "top" : 40,
@@ -62,18 +81,14 @@
         {
             "name": "John",
             "data": [5, 3, 4, 7, 2]
-        }, {
-            "name": "Joe",
-            "data": [3, 4, 4, 2, 5]
-        }, {
-            "name": "Jane",
-            "data": [2, 5, 6, 2, 1]
-        }, {
-            "name": "Janet",
-            "data": [3, 0, 4, 4, 3]
-        }, {
-            "name": "Marry",
-            "data": [4, 1, 2, 3, 5]
+        },
+        {
+            "name": "John",
+            "data": [2, 5, 3, 4, 7]
+        },
+        {
+            "name": "John",
+            "data": [5, 7, 3, 4, 2]
         }
     ]
 

@@ -4,8 +4,11 @@ kc.ChartsConfig.add('area', {
     plotOptions : {
 
         area : {
-            width : 2,
-            dash : null,
+            
+            stroke : {
+                width : 1,
+                color : '#FFF'
+            },
 
             label : {
                 enabled : true,

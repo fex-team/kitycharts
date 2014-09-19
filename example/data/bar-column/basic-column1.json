@@ -34,7 +34,7 @@
             "margin" : 0
         },
         "axis" : {
-            "enabled" : false
+            "arrow" : false
         },
         "padding" : {
             "top" : 10,

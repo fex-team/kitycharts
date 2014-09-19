@@ -17,7 +17,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     },
 
-    setConfig : function( param, formatter ){
+    _setConfig : function( param, formatter ){
 
         var config = kity.Utils.deepExtend( this.config, param ),
             base = kc.ChartsConfig.init( this.chartType || '' ),
@@ -33,7 +33,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
 
     update : function( param ){
         var DataFormatter = arguments[ 1 ] || kc.ChartData;
-        this.setConfig( param, DataFormatter );
+        this._setConfig( param, DataFormatter );
         
         coordConf = this.coordinate.setCoordinateConf( this.config );
         this.coordinate.update( coordConf );
@@ -112,20 +112,31 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             container.css('position', 'relative');
         }
 
-        this.tooltip = $('<div></div>').appendTo( container ).css({
-            position : 'absolute',
-            // border : '#888 1px solid',
-            boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
-            borderRadius : '4px',
-            backgroundColor : '#FFF',
-            color : '#888',
-            padding : '6px 10px',
-            left : '-1000px',
-            marginLeft : '10px',
-            fontSize : '10px',
-            lineHeight : '16px'
-        });
+        this.setTooltipContainer();
 
+    },
+
+    setTooltipContainer : function( dom ){
+        if( dom ){
+            this.tooltip = $( dom ).css({
+                position : 'absolute',
+                left : '-3000px',
+            });
+        }else{//默认
+            this.tooltip = $('<div></div>').appendTo( this.container ).css({
+                position : 'absolute',
+                // border : '#888 1px solid',
+                boxShadow : '0px 1px 5px rgba(0,0,0,0.3)',
+                borderRadius : '4px',
+                backgroundColor : '#FFF',
+                color : '#888',
+                padding : '6px 10px',
+                left : '-1000px',
+                marginLeft : '10px',
+                fontSize : '10px',
+                lineHeight : '16px'
+            });
+        }
     },
 
     updateTooltip : function( text, x, y ){
@@ -178,8 +189,6 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
                 colorArr.push(color);
             }
 
-
-
         }
 
         var self = this;
@@ -201,7 +210,7 @@ var BaseChart = kc.BaseChart = kity.createClass( 'BaseChart', {
             }).appendTo( tmp );
 
             $('<div class="kitycharts-legend-label">' + label + '</div>').css({
-                fontSize : '10px',
+                fontSize : '12px',
                 display : 'inline-block'
             }).appendTo( tmp );
         });

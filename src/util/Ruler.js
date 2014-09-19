@@ -48,8 +48,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             map_grid = [],
             current;
 
-        for ( current = start; current < ref.to + step; current += step ) {
-            ref_grid.push( current );
+        if( kity.Utils.isArray( start ) ){
+            ref_grid = start;
+        }else{
+            for ( current = start; current < ref.to + step; current += step ) {
+                ref_grid.push( current );
+            }
         }
 
         this.ref_grid = ref_grid;
@@ -61,7 +65,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         for ( var i = 0; i < ref_grid.length; i++ ) {
             map_grid.push( this.measure( ref_grid[i] ) );
         }
-        
+
         this.map_grid = map_grid;
 
         return {
@@ -80,19 +84,47 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
     fagm: function ( count ) {
         var dur = this._ref.dur,
             sdur = dur / count,
-            adjust = 1;
+            adjust = 1,
+            flag = 0;
 
-        while(sdur > 100) {
+        if( dur == 0 ){
+            return 1;
+        }
+
+        while(sdur > 10) {
             sdur /= 10;
             adjust *= 10;
+            flag = 1;
         }
 
-        while(sdur < 10) {
+        while(sdur < 1) {
             sdur *= 10;
             adjust /= 10;
+            flag = 0;
+        }
+        
+        switch (Math.floor(sdur)) {
+            case 1:
+                sdur = 1;
+                break;
+            case 2:
+            case 3:
+                sdur = 2;
+                break;
+            case 4:
+            case 5:
+            case 6:
+                sdur = 5;
+                break;
+            case 7:
+            case 8:
+            case 9:
+                sdur = 1;
+                adjust *= 10;
+                break;
         }
 
-        return (sdur | 0) * adjust;
+        return sdur * adjust;
     },
 
     align : function ( value, mod, dir ) {
@@ -110,8 +142,12 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         var ref = this._ref;
         start = kity.Utils.isNumber( start )? start : this.align( ref.from, mod, 'left' );
         var size = mod;
-        while ( size * count < ref.dur ) size += mod;
+        //while ( size * count < ref.dur ) size += mod;
         return this.grid( start, size, alignRef );
+    },
+
+    gridByArray: function( arr ){
+        return this.grid( arr, null, true );
     },
 
     gridByCategories : function( count ){
@@ -148,13 +184,13 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
 
     leanTo: function( num, type ){
         var grid = type == 'map'? this.map_grid : this.ref_grid;
-        if( !grid || grid.length == 0 ) return null;
+        if( !grid || grid.length === 0 ) return null;
 
         if( grid.length == 1 ){
             return {
                 value: grid[ 0 ],
                 index: 0
-            }
+            };
         }
 
         var first = grid[ 0 ];
@@ -162,7 +198,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: first,
                 index: 0
-            }
+            };
         }
 
         var last = grid[ grid.length-1 ];
@@ -170,7 +206,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
             return {
                 value: last,
                 index: grid.length-1
-            }
+            };
         }
 
         var mod = grid[1] - grid[0];
@@ -180,7 +216,7 @@ var Ruler = kc.Ruler = kity.createClass( 'Ruler', {
         return {
             value: result,
             index: index
-        }
+        };
     }
 } );
 

@@ -15,10 +15,18 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
         return kity.Utils.queryPath( path, this.config );
     },
 
+    setConfig : function( config ){
+        this.config = config;
+    },
+
     /*
      * path同getOption参数path
      */
     setOption: function ( path, value ) {
+        if( path.indexOf('series') >= 0 ){
+            console.log('该接口不支持设置series');
+            return;
+        }
 
         var arr = path.split('.');
         arr.unshift('config');
@@ -29,10 +37,13 @@ var ConfigHandler = kc.ConfigHandler = kity.createClass( 'ConfigHandler', {
             p = getPath( i-1, arr );
             if( !eval('"' + cur + '" in this.' + p ) ){ //属性不存在
                 exp = 'this.' + p + '.' + cur + ' = ' + (i == arr.length-1 ? 'value' : '{}');
+                eval( exp );
             }else{ //属性存在
-                exp = 'this.' + p + '.' + cur + ' = value';
+                if( i == arr.length-1 ){
+                    exp = 'this.' + p + '.' + cur + ' = value';
+                    eval( exp );
+                }
             }
-            eval( exp );
 
             i++
         }

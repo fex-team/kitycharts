@@ -37,7 +37,8 @@
             "margin" : 0
         },
         "axis" : {
-            "enabled" : true
+            "enabled" : true,
+            "arrow" : false
         },
         "padding" : {
             "top" : 30,

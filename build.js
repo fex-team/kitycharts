@@ -26,6 +26,7 @@ var dependience = [
     'src/shapex/RegularPolygon.js',
     'src/shapex/Star.js',
 
+    'src/component/ArrowLine.js',
     'src/component/Line.js',
     'src/component/Polyline.js',
     'src/component/ConnectLine.js',
@@ -69,6 +70,7 @@ var dependience = [
     'src/formatter/PieData.js',
     'src/formatter/SunData.js',
     'src/formatter/TreemapData.js',
+    'src/formatter/SimpleRelationData.js',
     'src/plots/PiePlots.js',
 
     'src/plots/BasePlots.js', //base
@@ -98,6 +100,7 @@ var dependience = [
     'src/charts/ScatterChart.js',
     'src/charts/ForceChart.js',
     'src/charts/HorizonChart.js',
+    'src/charts/SimpleRelationChart.js',
     'src/charts/RadarChart.js',
     'src/charts/CoffeeChart.js',
     'src/charts/ChinaMapChart.js',
@@ -154,7 +157,7 @@ function devWrite() {
     }
 }
 
-var env = !( 'window' in this ) ? 'node' : 'script';
+var env = ('window' in this) ? 'script' : 'node';
 
 var task = {
     'node': nodeBuild,

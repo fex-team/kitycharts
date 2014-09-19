@@ -30,7 +30,8 @@
         $.ajax({
             url: '../data/pie/donut.json',
             success: function( data ) {
-                new kc.PieChart('container', data);
+                var p = new kc.PieChart('container', data);
+                p.update();
             }
         });
 

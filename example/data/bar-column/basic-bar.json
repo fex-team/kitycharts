@@ -53,6 +53,12 @@
 
     },
 
+    "interaction" : {
+        "hover" : {
+            "enabled" : true
+        }
+    },
+
     "series": [
         {
             "name": "John",

@@ -67,11 +67,15 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
                     width  : width,
                     height : height,
                     rotate : rotateAngle,
+
+                    delay : config.animation.delayInterval*j,
+
                     bind : {
                         data : tmp,
                         indexInSeries : i,
                         indexInCategories : j
                     }
+                    
                 };
 
                 if( opt.label.enabled )
@@ -87,10 +91,13 @@ var StickPlots = kc.StickPlots = kity.createClass( 'StickPlots', {
             
         }
 
+        var anim = config.animation;
         this.getPlotsElements().update({
             elementClass: kc.Bar,
             list: stickList,
-            fx: config.enableAnimation
+            fx: anim.enabled,
+            animateDuration : anim.duration,
+            fxEasing : anim.mode
         });
 
         return config;

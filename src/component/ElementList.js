@@ -37,7 +37,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             growth = list.length - elementList.length,
             fx = kc.fx && this.param.fx,
             delay = 0,
-            delayBase = 300 / list.length,
+            delayBase = 500 / list.length,
             fxTimers = this.fxTimers;
 
         this.adjust( growth );
@@ -58,12 +58,14 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
         elementList.forEach( function ( element, index ) {
 
             if ( fx && ( 'animate' in element ) ) {
+                
                 fxTimers.push( setTimeout( function () {
-                    element.animate( list[ index ], me.param.animateDuration || 300 ).timeline.on( 'finish', function () {
+                    element.animate( list[ index ], me.param.animateDuration || 600, me.param.fxEasing || 'ease' ).timeline.on( 'finish', function () {
                         fill++;
                         checkFinish();
                     } );
-                }, delay ) );
+
+                }, list[ index ].delay || delay ) );
 
                 delay += Math.random() * delayBase;
 
@@ -80,7 +82,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
     updateClass: function ( elementClass ) {
         if ( !elementClass || this.elementClass == elementClass ) return;
         this.elementClass = elementClass;
-        this.shrink( this.elementList.lenght );
+        this.shrink( this.elementList.length );
     },
 
     adjust: function ( growth ) {
@@ -100,7 +102,7 @@ var ElementList = kc.ElementList = kity.createClass( "ElementList", {
             this.elementList.push( element );
             element.update( this.param.common );
             if ( this.param.fx ) {
-                element.canvas.setOpacity( 0 ).fadeIn( 500, 'ease' );
+                element.canvas.setOpacity( 0 ).fadeIn( 200, 'ease' );
             } else {
                 element.canvas.setOpacity( 1 );
             }

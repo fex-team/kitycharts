@@ -74,7 +74,7 @@ var ScatterPlots = kc.ScatterPlots = kity.createClass( 'ScatterPlots', {
         this.getPlotsElements().update({
             elementClass: kc.CircleDot,
             list: circleList,
-            fx: config.enableAnimation
+            fx: config.animation.enabled
         });
 
     }
