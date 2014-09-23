@@ -29,26 +29,20 @@
 				net:'#ccc'
 			};
 
-			var data = {
-				'categories':['有创新精神','家庭式的','年轻化的','有社会责任感的','有经济实力的','低级趣味','过分关注性感的','老旧传统的'],
-				'series':[
-					{
-						'name':'Messi',
-						'data':[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
-					},
-                    {
-                        'name':'Ronaldo',
-                        'data':[0.5,0.5,0.5,0.8,0.5,0.9,0.5,0.5]
-                    }
-				],
-			};
-			var chart = new kc.RadarChart('chart', { 
-                'colors' : colors,
-                'radius' : 180
-            });
-			chart.getData().update(data);
-
-            data = {
+			// var data = {
+			// 	'categories':['有创新精神','家庭式的','年轻化的','有社会责任感的','有经济实力的','低级趣味','过分关注性感的','老旧传统的'],
+			// 	'series':[
+			// 		{
+			// 			'name':'Messi',
+			// 			'data':[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+			// 		},
+   //                  {
+   //                      'name':'Ronaldo',
+   //                      'data':[0.5,0.5,0.5,0.8,0.5,0.9,0.5,0.5]
+   //                  }
+			// 	],
+			// };
+            var  data = {
                 'categories':['有创新精神','家庭式的','年轻化的','有社会责任感的','有经济实力的','低级趣味','过分关注性感的','老旧传统的'],
                 'series':[
                     {
@@ -57,11 +51,12 @@
                     }
                 ],
             };
-
-            setTimeout(function(){
-                chart.getData().update(data);
-            }, 1000);
-            
+			var chart = new kc.RadarChart('chart', { 
+                'colors' : colors,
+                'radius' : 80,
+                'netStyle' : 'outer'
+            });
+			chart.getData().update(data);
 		})();
 	</script>
 </html>
