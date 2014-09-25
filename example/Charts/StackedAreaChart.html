@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Area Chart</title>
+
+        <script src="../../kity/dist/kity.min.js"></script>
+
+        <script src="../../build.js"></script>
+        <script src="../lib/jquery-2.1.0.min.js"></script>
+        <style>
+            body{
+                background: #1e61ab;
+            }
+
+            #container {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                right: 10px;
+                height: 400px;
+                /*background: #EEE;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            
+        </div>
+    </body>
+    <script>
+        var area = new kc.AreaChart( 'container' );
+
+
+        config = {
+            "chart": {
+                "type": "area"
+            },
+
+            "xAxis": {
+                "categories": [ "Apples", "Oranges", "Pears", "Grapes", "Bananas" ],
+                "ticks" : {
+                    "enabled" : false
+                },
+                "margin" : {
+                    "right" : 30,
+                    "left" : 70
+                },
+
+                "axis" : {
+                    "enabled" : true,
+                    "arrow" : false
+                },
+                "padding" : {
+                    "left" : 30,
+                    "right" : 30
+                }
+            },
+
+            "yAxis": {
+                "ticks" : {
+                    "enabled" : false
+                },
+                "label" : {
+                    "at" : "left",
+                    "margin" : 0
+                },
+                "axis" : {
+                    "enabled" : false
+                },
+                "padding" : {
+                    "top" : 40,
+                    "bottom" : 0
+                },
+                "stacked" : true,
+                "min" : 0
+            },
+
+            "plotOptions" : {
+
+                "area" : {
+                    "dot" : {
+                        "enabled" : false
+                    },
+
+                    "stroke" : {
+                        "width" : 5
+                    },
+
+                    "fill" : {
+                        "gradient" : [
+                            { "pos": 0, "opacity": 1, "color": "#d4c071" },
+                            { "pos": 1, "opacity": 0, "color": "#d4c071" }
+                        ]
+                    }
+                }
+
+            },
+
+            "series": [
+                {
+                    "name": "John",
+                    "color": "#FFF",
+                    "gradient" : [
+                            { "pos": 0, "opacity": 1, "color": "#09f" },
+                            { "pos": 1, "opacity": 1, "color": "#00cbff" }
+                        ],
+                    "data": [5, 3, 4, 7, 2]
+                }, {
+                    "name": "Joe",
+                    "color": "#FFF",
+                    "gradient" : [
+                            { "pos": 0, "opacity": 1, "color": "#6dd119" },
+                            { "pos": 1, "opacity": 1, "color": "#9ff533" }
+                        ],
+                    "data": [3, 4, 4, 2, 5]
+                }, {
+                    "name": "Jane",
+                    "color": "#FFF",
+                    "gradient" : [
+                            { "pos": 0, "opacity": 1, "color": "#a5ab0f" },
+                            { "pos": 1, "opacity": 1, "color": "#9cbe0f" }
+                        ],
+                    "data": [2, 5, 6, 2, 1]
+                }, {
+                    "name": "Janet",
+                    "color": "#FFF",
+                    "gradient" : [
+                            { "pos": 0, "opacity": 1, "color": "#d45a10" },
+                            { "pos": 1, "opacity": 1, "color": "#fb6d17" }
+                        ],
+                    "data": [3, 0, 4, 4, 3]
+                }
+            ]
+
+        };
+
+        // area.update();
+
+        // $.ajax({
+        //     url: '../data/kitycharts/area-stacked.json',
+        //     success: function( data ) {
+                area.update( config );
+
+                // setTimeout(function(){
+                //     area.setOption( 'series' , [
+                //         {
+                //             "name": "John",
+                //             "data": [5, 23, 4, 7, 2],
+                //             "group": "male"
+                //         },
+                //         {
+                //             "name": "John",
+                //             "data": [1, 5, 23, 4, 7],
+                //             "group": "male"
+                //         }
+                //     ] );
+
+                //     area.setOption('color', ['red']);
+                //     area.update();
+                // }, 1000);
+        //     }
+        // });
+
+
+    </script>
+</html>

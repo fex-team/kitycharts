@@ -18,7 +18,7 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
 
     areas : [],
 
-    renderLineByData : function( line ){
+    renderByData : function( line ){
         var offset = line.offsetX || 0;
         var pointsArr, topPart, bottomPart;
         if( this.config.yAxis.stacked ){
@@ -66,11 +66,11 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
             fill = new kity.Color( color ).set( 'a', opacity );
         }else{
             fill = new kity.LinearGradientBrush().pipe( function() {
-                var grandient = self.config.plotOptions.area.fill.grandient;
+                var gradient = entry.gradient || self.config.plotOptions.area.fill.gradient;
                 var g;
-                for( var i = 0; i < grandient.length; i++ ){
-                    g = grandient[i];
-                    this.addStop( g.pos, g.color||color, grandient[i].opacity );
+                for( var i = 0; i < gradient.length; i++ ){
+                    g = gradient[i];
+                    this.addStop( g.pos, g.color||color, gradient[i].opacity );
                 }
                 this.setStartPosition(0, 0);
                 this.setEndPosition(0, 1);
@@ -81,44 +81,8 @@ var AreaPlots = kc.AreaPlots = kity.createClass( 'AreaPlots', {
         area.fill( fill );
 
         this.canvas.addShape(area);
+        area.bringRear();
         return area;
-
-        // new effect
-        // var self = this;
-
-        // var begin = topPart.concat(topPart.slice(0).reverse()).slice(0),
-        //     finish = topPart.concat(bottomPart).slice(0);
-
-        // var fill = self.config.plotOptions.area.fill.grandient;
-
-        // var area = new kc.Polyline({
-        //     points     : begin,
-        //     color      : '#ddd',
-        //     width      : 0,
-        //     factor     : +new Date,
-        //     animatedDir: 'y',
-        //     close: true,
-        //     fill: fill
-        // });
-
-        // this.addElement('area', area);
-        // area.update();
-        // // area.polyline.bringBelow();
-
-        // setTimeout(function(){
-
-        //     area.update({
-        //         points     : finish,
-        //         color      : '#ddd',
-        //         width      : 0,
-        //         factor     : +new Date,
-        //         animatedDir: 'y',
-        //         close: true,
-        //         fill: fill
-        //     });
-
-        // }, 1000);
-
 
     }
 

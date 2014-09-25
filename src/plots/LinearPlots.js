@@ -28,10 +28,17 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
             line = series[ i ];
             line.positions = [];
 
-            this.renderLineByData( line );
-            
-            pointsArr = this.array2points( line.data, offset );
+            this.renderByData( line );
 
+            if( this.config.yAxis.stacked ){
+                var p = this.config.yAxis.percentage;
+                var allOffsetType = p ? 'allPercentageOffset' : 'allOffset';
+
+                pointsArr = this.array2points( line[allOffsetType][i+1], offset );
+            }else{
+                pointsArr = this.array2points( line.data, offset );
+            }
+            
             lineData = {
                 line : line,
                 currentData : line.data[ i ],
@@ -64,7 +71,7 @@ var LinearPlots = kc.LinearPlots = kity.createClass( 'LinearPlots', {
         this.addDots();
     },
 
-    renderLineByData : function( line ){
+    renderByData : function( line ){
         // to be implemented
     },
 
