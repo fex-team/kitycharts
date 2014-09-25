@@ -8,10 +8,10 @@
     "plotOptions": {
         "pie": {
             "shadow": false,
-            "center": [
-                "200",
-                "50%"
-            ]
+            "center": {
+                "x": 200,
+                "y": 200
+            }
         }
     },
     "series": [

@@ -32,23 +32,27 @@
             url: '../data/kitycharts/line-basic.json',
             success: function( data ) {
 
-                // var t = $('<div></div>').appendTo( container ).css({
-                //     // border : '#888 1px solid',
-                //     // boxShadow : '0px 1px 5px rgba(255,0,0,0.3)',
-                //     borderRadius : '4px',
-                //     backgroundColor : 'rgba(0,0,0,0.7)',
-                //     color : '#FFF',
-                //     padding : '6px 10px',
-                //     marginLeft : '10px',
-                //     fontSize : '10px',
-                //     lineHeight : '16px'
-                // });
+                line.setConfig( data );
 
-                // line.setConfig( data );
+                var t = $('<div></div>').appendTo( container ).css({
+                    // border : '#888 1px solid',
+                    // boxShadow : '0px 1px 5px rgba(255,0,0,0.3)',
+                    borderRadius : '4px',
+                    backgroundColor : 'rgba(0,0,0,0.7)',
+                    color : '#FFF',
+                    padding : '6px 10px',
+                    marginLeft : '10px',
+                    fontSize : '10px',
+                    lineHeight : '16px'
+                });
+
+                
                 // line.setTooltipContainer( t[0] );//参数为dom对象
-                // line.setOption('tooltip.content', function( indexInCategories ){
-                //     return indexInCategories;
-                // });
+                line.setOption('tooltip.content', function( indexInCategories ){
+                    return indexInCategories;
+                });
+
+
                 line.setOption('yAxis.grid', [0,2,4,6,8]);
                 line.setOption('yAxis.label.format', function( num ){
                     return num + '万';

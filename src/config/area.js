@@ -16,7 +16,7 @@ kc.ChartsConfig.add('area', {
             },
 
             fill : {
-                grandientStopOpacity : 0.5
+                gradientStopOpacity : 0.5
             },
 
             dot : {

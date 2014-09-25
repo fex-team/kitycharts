@@ -1,0 +1,66 @@
+{
+    "name": "MOTO",
+    "series": [
+        {
+            "name": "网页搜索",
+            "children": [
+                {
+                    "name": "网页搜索",
+                    "children": [
+                        {
+                            "name": "网页搜索",
+                            "children": [
+                                {
+                                    "name": "百科",
+                                    "value": 2,
+                                    "children": [
+                                        {
+                                            "name": "百科",
+                                            "children": [
+                                                {
+                                                    "name": "百科",
+                                                    "value": 1
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "name": "百科",
+                                            "value": 1
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "网页搜索",
+                                    "children": [
+                                        {
+                                            "name": "网页搜索",
+                                            "value": 9,
+                                            "children": [
+                                                {
+                                                    "name": "网页搜索",
+                                                    "value": 9
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "网页搜索",
+                                    "value": 9
+                                }
+                            ]
+                        },
+                        {
+                            "name": "网页搜索",
+                            "value": 11
+                        }
+                    ]
+                },
+                {
+                    "name": "网页搜索",
+                    "value": 11
+                }
+            ]
+        }
+    ]
+}

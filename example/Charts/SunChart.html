@@ -93,13 +93,15 @@
         sunchart.update();
 
         $.ajax({
-            url: '../data/sun/final.json',
-            // url: '../data/sun/big.txt',
+            // url: '../data/sun/final.json',
+            url: '../data/sun/pp.json',
             // dataType : 'text',
             success: function( data ) {
+                var d = data.series[0];
+                console.log(JSON.stringify(d));
                 // var data = convert2Standard( data );
                 // console.log( JSON.stringify(data) );
-                sunchart.getData().update( data );
+                sunchart.getData().update( d );
             }
         });
 

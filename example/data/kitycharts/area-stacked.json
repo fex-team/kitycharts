@@ -15,6 +15,7 @@
         },
 
         "axis" : {
+            "enabled" : true,
             "arrow" : false
         },
         "padding" : {
@@ -23,26 +24,24 @@
         }
     },
 
-    "yAxis": [
-        {
-            "ticks" : {
-                "enabled" : false
-            },
-            "label" : {
-                "at" : "left",
-                "margin" : 0
-            },
-            "axis" : {
-                "enabled" : false
-            },
-            "padding" : {
-                "top" : 40,
-                "bottom" : 0
-            },
-            "stacked" : true,
-            "min" : 0
-        }
-    ],
+    "yAxis": {
+        "ticks" : {
+            "enabled" : false
+        },
+        "label" : {
+            "at" : "left",
+            "margin" : 0
+        },
+        "axis" : {
+            "enabled" : false
+        },
+        "padding" : {
+            "top" : 40,
+            "bottom" : 0
+        },
+        "stacked" : true,
+        "min" : 0
+    },
 
     "plotOptions" : {
 
@@ -52,41 +51,42 @@
             },
 
             "stroke" : {
-                "width" : 0
+                "width" : 5,
+                "color" : "#F00"
             },
 
             "fill" : {
-                "opacity" : 1
+                "grandient" : [
+                    { "pos": 0, "opacity": 1, "color": "#d4c071" },
+                    { "pos": 1, "opacity": 0, "color": "#d4c071" }
+                ]
             }
         }
 
     },
 
     "series": [
-
         {
-            "area" : [
-                {
-                    "name": "John",
-                    "data": [5, 3, 4, 7, 2]
-                }, {
-                    "name": "Joe",
-                    "data": [3, 4, 4, 2, 5]
-                }, {
-                    "name": "Jane",
-                    "data": [2, 5, 6, 2, 1]
-                }, {
-                    "name": "Janet",
-                    "data": [3, 0, 4, 4, 3]
-                }, {
-                    "name": "Marry",
-                    "data": [4, 1, 2, 3, 5]
-                }
-            ]
-
+            "name": "John",
+            "color": "#FFF",
+            "data": [5, 3, 4, 7, 2]
+        }, {
+            "name": "Joe",
+            "color": "#FFF",
+            "data": [3, 4, 4, 2, 5]
+        }, {
+            "name": "Jane",
+            "color": "#FFF",
+            "data": [2, 5, 6, 2, 1]
+        }, {
+            "name": "Janet",
+            "color": "#FFF",
+            "data": [3, 0, 4, 4, 3]
+        }, {
+            "name": "Marry",
+            "color": "#FFF",
+            "data": [4, 1, 2, 3, 5]
         }
-
-
     ]
 
 }
