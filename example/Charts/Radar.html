@@ -56,7 +56,11 @@
                 'radius' : 80,
                 'netStyle' : 'outer'
             });
-			chart.getData().update(data);
+            chart.setColors({
+                items:['pink'],
+                net:'black'
+            });
+            chart.getData().update(data);
 		})();
 	</script>
 </html>

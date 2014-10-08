@@ -8277,6 +8277,9 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         this.addElement( "labels", new kc.ElementList() );
         this.setData( new kc.RadarData() );
     },
+    setColors: function ( colors ) {
+        this.param.colors = colors;
+    },
     render: function () {
         var data = this.getData().format();
         var param = this.param;
@@ -8394,7 +8397,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
             list: labelList
         } );
     },
-    update: function () {
+    update: function ( args ) {
         this.render();
     }
 } );
