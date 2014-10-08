@@ -8280,6 +8280,7 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
     render: function () {
         var data = this.getData().format();
         var param = this.param;
+        var netStyle = param.netStyle;
         var colors = param.colors;
         var divide = data.categories.length;
         var delta = Math.PI * 2 / divide;
@@ -8301,7 +8302,9 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
         var Angle = 0;
         //绘制罗圈
         for ( var j = 0; j < divide; j++ ) {
+            //绘制纬线
             for ( var i = 0; i < 6; i++ ) {
+                if ( netStyle === 'outer' && i !== 5 ) continue;
                 var r = step * i;
                 var item = {
                     x1: Cx + r * Math.cos( Angle ),
@@ -8312,6 +8315,8 @@ var RadarChart = kc.RadarChart = kity.createClass( 'RadarChart', {
                 };
                 lineList.push( item );
             }
+
+            //绘制经线
             var item_d = {
                 x1: Cx,
                 y1: Cy,
